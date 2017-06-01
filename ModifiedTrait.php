@@ -14,6 +14,12 @@ namespace cinghie\traits;
 
 use dektrium\user\models\User;
 
+/*
+ * @property string $modified
+ * @property int $modified_by
+ *
+ * @property User $modifiedBy
+ */
 trait ModifiedTrait
 {
 

@@ -14,6 +14,13 @@ namespace cinghie\traits;
 
 use dektrium\user\models\User;
 
+/*
+ * @property string $created
+ * @property int $created_by
+ *
+ * @property User $createdBy
+ * @property User $modifiedBy
+ */
 trait CreatedTrait
 {
 
@@ -49,7 +56,7 @@ trait CreatedTrait
     }
 
     /**
-     * Check if current user is the author
+     * Check if current user is the created_by
      *
      * @return bool
      */

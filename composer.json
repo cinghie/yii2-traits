@@ -3,8 +3,8 @@
     "description": "Yii2 Traits",
     "keywords": ["yii2", "yii2 traits", "yii2 traits library", "yii2 traits module", "yii2 traits modules"],
     "type": "yii2-extension",
-    "license": "BSD-3-Clause",
     "homepage": "http://github.com/cinghie/yii2-traits",
+    "license": "GNU GENERAL PUBLIC LICENSE VERSION 3",
     "authors": [
         {
             "name": "Gogodigital.it",
@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "*",
+
     },
     "autoload": {
         "psr-4": {

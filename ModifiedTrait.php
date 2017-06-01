@@ -10,7 +10,7 @@
  * @version 0.1.0
  */
 
-namespace cinghie\traits\ModifiedTrait;
+namespace cinghie\traits;
 
 use dektrium\user\models\User;
 

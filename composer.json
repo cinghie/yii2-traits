@@ -14,7 +14,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-
+        "dektrium/yii2-user": "*"
     },
     "autoload": {
         "psr-4": {

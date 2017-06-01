@@ -5,4 +5,5 @@ return [
     'Created By' => 'Creato da',
     'Modified' => 'Data modifica',
     'Modified By' => 'Modificato da',
+    'User Id' => 'Utente'
 ];

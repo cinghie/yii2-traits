@@ -39,7 +39,7 @@ trait StateTrait
     }
 
     /**
-     * Active the item setting state = 1
+     * Active model state (Set 1)
      *
      * @return bool
      */
@@ -51,7 +51,7 @@ trait StateTrait
     }
 
     /**
-     * Inactive the item setting state = 0
+     * Inactive model state (Set 0)
      *
      * @return bool
      */

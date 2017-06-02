@@ -51,20 +51,4 @@ trait UserTrait
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    /**
-     * Get the user_id By user email
-     *
-     * @param $email
-     * @return integer
-     */
-    public function getUserIdByEmail($email)
-    {
-        $user = User::find()
-            ->select(['*'])
-            ->where(['email' => $email])
-            ->one();
-
-        return $user['id'];
-    }
-
 }

@@ -31,7 +31,7 @@ trait ModifiedTrait
         return [
             [['modified'], 'safe'],
             [['modified_by'], 'integer'],
-            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => [ 'modified_by' => 'id' ] ]
+            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['modified_by' => 'id']],
         ];
     }
 

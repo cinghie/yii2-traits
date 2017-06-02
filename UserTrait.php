@@ -29,7 +29,7 @@ trait UserTrait
     {
         return [
             [['user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => [ 'user_id' => 'id' ] ]
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 

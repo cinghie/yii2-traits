@@ -19,7 +19,6 @@ use dektrium\user\models\User;
  * @property int $created_by
  *
  * @property User $createdBy
- * @property User $modifiedBy
  */
 trait CreatedTrait
 {
@@ -32,7 +31,7 @@ trait CreatedTrait
         return [
             [['created'], 'safe'],
             [['created_by'], 'integer'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => [ 'created_by' => 'id' ] ]
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 

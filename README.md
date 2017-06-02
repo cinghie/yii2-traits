@@ -31,7 +31,7 @@ Add in your configuration file the translations
         'translations' => [
             'traits' => [
                 'class' => 'yii\i18n\PhpMessageSource',
-                basePath' => '@vendor/cinghie/yii2-traits/messages',
+                'basePath' => '@vendor/cinghie/yii2-traits/messages',
             ],
         ],
     ],

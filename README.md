@@ -46,7 +46,7 @@ To include a Trait in your Model:
 ```	
 class YourModel extends ActiveRecord 
 {
-    use \cinghue\traits\CreatedTrait;
+    use \cinghie\traits\CreatedTrait;
 }
 ```
 
@@ -94,4 +94,4 @@ Add in your model:
 
     - user_id: Integer userid of User Model
     - function getUser(): Relation with User Model
-    - function getUserIDByEmail($email): Get the user_id By user email    
+    - function getUserIdByEmail($email): Get the user_id By user email    

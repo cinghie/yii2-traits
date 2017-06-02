@@ -57,7 +57,7 @@ trait UserTrait
      * @param $email
      * @return integer
      */
-    public function getUserIDByEmail($email)
+    public function getUserIdByEmail($email)
     {
         $user = User::find()
             ->select(['*'])

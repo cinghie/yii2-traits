@@ -18,7 +18,7 @@ trait UserHelperTrait
 {
 
     /**
-     * Get the user_id By user email
+     * Get the User id by user email
      *
      * @param $email
      * @return integer
@@ -34,7 +34,7 @@ trait UserHelperTrait
     }
 
     /**
-     * Return User's array with current User on first position [ 'user_id' => 'username' ]
+     * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
      *
      * @param $user_id
      * @param $username
@@ -58,14 +58,14 @@ trait UserHelperTrait
     }
 
     /**
-     * Return an array with the User's Roles
+     * Return an array with the User's Roles adding "Public" on first position
      *
      * @return array
      */
     public function getRoles()
     {
         $roles = \Yii::$app->authManager->getRoles();
-        $array = ['public' => 'Public'];
+        $array = [ 'public' => \Yii::t('traits', 'Public') ];
 
         foreach($roles as $role) {
             $array[ucwords($role->name)] = ucwords($role->name);

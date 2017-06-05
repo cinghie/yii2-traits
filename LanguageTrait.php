@@ -39,20 +39,20 @@ trait LanguageTrait
     }
 
     /**
-     * Return languages Select
+     * Return languages Select2
      *
      * @return array
      */
     public function getLanguagesSelect2()
     {
         $languages = \Yii::$app->urlManager->languages;
-        $languagesSelect = array('All' => \Yii::t('traits', 'All Female'));
+        $array = [ 'All' => \Yii::t('traits', 'All Female') ];
 
         foreach($languages as $language) {
-            $languagesSelect[$language] = ucwords($language);
+            $array[$language] = strtoupper($language);
         }
 
-        return $languagesSelect;
+        return $array;
     }
 
 }

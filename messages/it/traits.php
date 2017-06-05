@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Alias' => 'Alias',
     'All Female' => 'Tutte',
     'All Male' => 'Tutti',
     'Created' => 'Data creazione',
@@ -9,5 +10,6 @@ return [
     'Modified' => 'Data modifica',
     'Modified By' => 'Modificato da',
     'State' => 'Stato',
+    'Title' => 'Titolo',
     'User Id' => 'Utente'
 ];

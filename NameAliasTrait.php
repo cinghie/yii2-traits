@@ -14,9 +14,9 @@ namespace cinghie\traits;
 
 /*
  * @property string $alias
- * @property string $title
+ * @property string $name
  */
-trait TitleAliasTrait
+trait NameAliasTrait
 {
 
     /**
@@ -25,8 +25,8 @@ trait TitleAliasTrait
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['title', 'alias'], 'string', 'max' => 255],
+            [['name'], 'required'],
+            [['name', 'alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
         ];
     }
@@ -37,30 +37,30 @@ trait TitleAliasTrait
     public function attributeLabels()
     {
         return [
-            'alias' => \Yii::t('traits', 'Alias'),
-            'title' => \Yii::t('traits', 'Title'),
+            'alias' => \Yii::t('newsletters', 'Alias'),
+            'name' => \Yii::t('newsletters', 'Name'),
         ];
     }
 
     /**
      * Generate URL alias by string
      *
-     * @param string $title
+     * @param string $name
      * @return string
      */
-    public function generateAlias($title)
+    public function generateAlias($name)
     {
         // remove any '-' from the string they will be used as concatonater
-        $title = str_replace('-', ' ', $title);
-        $title = str_replace('_', ' ', $title);
+        $name = str_replace('-', ' ', $name);
+        $name = str_replace('_', ' ', $name);
 
         // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $title = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $title);
+        $name = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $name);
 
         // lowercase and trim
-        $title = trim(strtolower($title));
+        $name = trim(strtolower($name));
 
-        return $title;
+        return $name;
     }
 
 }

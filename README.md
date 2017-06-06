@@ -57,9 +57,6 @@ public function rules()
 {
     return array_merge(
         CreatedTrait::rules(), 
-        ModifiedTrait::rules(), 
-        StateTrait::rules(), 
-        UserTrait::rules(), 
         [your_rules]
     );
 }    
@@ -68,9 +65,6 @@ public function attributeLabels()
 {
     return array_merge(
         CreatedTrait::attributeLabels(), 
-        ModifiedTrait::attributeLabels(), 
-        StateTrait::attributeLabels(), 
-        UserTrait::attributeLabels(), 
         [your_attributeLabels]
     );
 }   

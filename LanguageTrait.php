@@ -39,7 +39,7 @@ trait LanguageTrait
     }
 
     /**
-     * Return languages Select2
+     * Return an array with languages allowed
      *
      * @return array
      */

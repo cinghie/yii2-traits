@@ -43,7 +43,7 @@ trait NameAliasTrait
     }
 
     /**
-     * Generate URL alias by string
+     * Generate URL alias by name
      *
      * @param string $name
      * @return string

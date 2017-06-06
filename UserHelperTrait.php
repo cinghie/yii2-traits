@@ -18,6 +18,23 @@ trait UserHelperTrait
 {
 
     /**
+     * Return an array with the User's Roles adding "Public" on first position
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = \Yii::$app->authManager->getRoles();
+        $array = ['public' => \Yii::t('traits', 'Public')];
+
+        foreach($roles as $role) {
+            $array[ucwords($role->name)] = ucwords($role->name);
+        }
+
+        return $array;
+    }
+
+    /**
      * Get the User id by user email
      *
      * @param $email
@@ -52,23 +69,6 @@ trait UserHelperTrait
 
         foreach($users as $user) {
             $array[$user['id']] = ucwords($user['username']);
-        }
-
-        return $array;
-    }
-
-    /**
-     * Return an array with the User's Roles adding "Public" on first position
-     *
-     * @return array
-     */
-    public function getRoles()
-    {
-        $roles = \Yii::$app->authManager->getRoles();
-        $array = [ 'public' => \Yii::t('traits', 'Public') ];
-
-        foreach($roles as $role) {
-            $array[ucwords($role->name)] = ucwords($role->name);
         }
 
         return $array;

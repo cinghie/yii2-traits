@@ -70,6 +70,13 @@ Add in your model:
     - function isCurrentUserCreator(): Check if current user is the created_by
     - function isUserCreator($user_id): Check if user_id params is the created_by
     
+### LanguageTrait
+
+Add in your model: 
+
+    - language: String language
+    - function getLanguagesSelect2(): Return an array with languages allowed
+
 ### ModifiedTrait
 
 Add in your model: 
@@ -80,6 +87,14 @@ Add in your model:
     - function isCurrentUserModifier(): Check if current user is the modified_by
     - function isUserModifier($user_id): Check if user_id params is the modified_by    
 
+### NameAliasTrait
+
+Add in your model: 
+
+    - alias: string alias
+    - name: string name  
+    - function generateAlias($name): Generate URL alias by name
+    
 ### StateTrait
 
 Add in your model: 
@@ -88,10 +103,25 @@ Add in your model:
     - function active(): Active model state (Set 1)
     - function inactive():  Inactive model state (Set 0)
     
+### TitleAliasTrait
+
+Add in your model: 
+
+    - alias: string alias
+    - title: string title  
+    - function generateAlias($title): Generate URL alias by title
+    
 ### UserTrait
 
 Add in your model: 
 
     - user_id: Integer userid of User Model
-    - function getUser(): Relation with User Model
-    - function getUserIdByEmail($email): Get the user_id By user email    
+    - function getUser(): Relation with User Model   
+    
+### UserHelperTrait
+
+Add in your model: 
+
+    - function getRoles(): Return an array with the User's Roles 
+    - function getUserIdByEmail($email): Get the user_id By user email 
+    - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)

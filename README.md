@@ -50,6 +50,32 @@ class YourModel extends ActiveRecord
 }
 ```
 
+Merge rules() and attributeLabels():
+
+```	
+public function rules()
+{
+    return array_merge(
+        CreatedTrait::rules(), 
+        ModifiedTrait::rules(), 
+        StateTrait::rules(), 
+        UserTrait::rules(), 
+        [your_rules]
+    );
+}    
+
+public function attributeLabels()
+{
+    return array_merge(
+        CreatedTrait::attributeLabels(), 
+        ModifiedTrait::attributeLabels(), 
+        StateTrait::attributeLabels(), 
+        UserTrait::attributeLabels(), 
+        [your_attributeLabels]
+    );
+}   
+```
+
 All functions implemented in the Traits can be called like as any function of the model
 
 ```

@@ -123,4 +123,32 @@ trait ModifiedTrait
         ]);
     }
 
+    /**
+     * Generate DetailView for Modified View
+     *
+     * @return array
+     */
+    public function getModifiedDetailView($model)
+    {
+        return ['attribute' => 'created'];
+    }
+
+    /**
+     * Generate DetailView for ModifiedBy View
+     *
+     * @return array
+     */
+    public function getModifiedByDetailView($model)
+    {
+        return [
+            'attribute' => 'modified_by',
+            'format' => 'raw',
+            'value' => $model->created_by ? \kartik\helpers\Html::a($model->modifiedBy->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->modifiedBy]))) : \Yii::t('traits', 'Nobody'),
+            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
+    }
+
 }

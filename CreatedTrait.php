@@ -123,4 +123,32 @@ trait CreatedTrait
         ]);
     }
 
+    /**
+     * Generate DetailView for Created View
+     *
+     * @return array
+     */
+    public function getCreatedDetailView($model)
+    {
+        return ['attribute' => 'created'];
+    }
+
+    /**
+     * Generate DetailView for CreatedBy View
+     *
+     * @return array
+     */
+    public function getCreatedByDetailView($model)
+    {
+        return [
+            'attribute' => 'created_by',
+            'format' => 'raw',
+            'value' => $model->created_by ? \kartik\helpers\Html::a($model->createdBy->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->createdBy]))) : \Yii::t('traits', 'Nobody'),
+            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
+    }
+
 }

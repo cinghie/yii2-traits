@@ -92,4 +92,50 @@ trait StateTrait
         ]);
     }
 
+    /**
+     * Generate GridView for State View
+     *
+     * @return string
+     */
+    public function getStateGridView($model)
+    {
+        if($model->state) {
+            return \kartik\helpers\Html::a(
+                '<span class="glyphicon glyphicon-ok text-success"></span>',
+                ['changestate', 'id' => $model->id],
+                ['data-method' => 'post']
+            );
+        } else {
+            return \kartik\helpers\Html::a(
+                '<span class="glyphicon glyphicon-remove text-danger"></span>',
+                ['changestate', 'id' => $model->id],
+                ['data-method' => 'post']
+            );
+        }
+    }
+
+    /**
+     * Generate DetailView for State View
+     *
+     * @return array
+     */
+    public function getStateDetailView($model)
+    {
+        return [
+            'attribute' => 'state',
+            'format' => 'raw',
+            'value' => $model->state ? '<span class="label label-success">'.\Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'.\Yii::t('traits', 'Deactivated').'</span>',
+            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'widgetOptions' => [
+                'pluginOptions' => [
+                    'onText' => 'Yes',
+                    'offText' => 'No',
+                ]
+            ],
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
+    }
+
 }

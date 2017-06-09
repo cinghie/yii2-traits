@@ -66,4 +66,22 @@ trait UserTrait
         ]);
     }
 
+    /**
+     * Generate DetailView for User View
+     *
+     * @return array
+     */
+    public function getUserDetailView($model)
+    {
+        return [
+            'attribute' => 'user_id',
+            'format' => 'raw',
+            'value' => $model->user_id ? \kartik\helpers\Html::a($model->user->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->user_id]))) : \Yii::t('traits', 'Nobody'),
+            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
+    }
+
 }

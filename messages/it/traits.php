@@ -15,6 +15,7 @@ return [
     'MimeType' => 'MimeType',
     'Modified' => 'Data modifica',
     'Modified By' => 'Modificato da',
+    'Nobody' => 'Nessuno',
     'State' => 'Stato',
     'Title' => 'Titolo',
     'User Id' => 'Utente'

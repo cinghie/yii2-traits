@@ -51,4 +51,19 @@ trait UserTrait
         return $this->hasOne(User::className(), ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
+    /**
+     * Generate User Form Widget
+     *
+     * @return User widget
+     */
+    public function getUserWidget($form,$model)
+    {
+        $value = $model->isNewRecord && !$model->user_id ? \Yii::t('newsletters', 'Nobody') : $model->user->username;
+
+        return $form->field($model, 'user_id')->textInput([
+            'disabled' => true,
+            'value' => $value
+        ]);
+    }
+
 }

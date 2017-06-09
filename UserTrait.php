@@ -58,7 +58,7 @@ trait UserTrait
      */
     public function getUserWidget($form,$model)
     {
-        $value = $model->isNewRecord && !$model->user_id ? \Yii::t('newsletters', 'Nobody') : $model->user->username;
+        $value = $model->isNewRecord && !$model->user_id ? \Yii::t('traits', 'Nobody') : $model->user->username;
 
         return $form->field($model, 'user_id')->textInput([
             'disabled' => true,

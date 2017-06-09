@@ -85,6 +85,7 @@ if( $model->isCurrentUserCreator() ) {
 Add in your model: 
 
     - access: string of Auth Item
+    - getAccessWidget($form,$model): Generate Access Form Widget
 
 ### AttachmentTrait
 

@@ -31,4 +31,21 @@ trait AccessTrait
         ];
     }
 
+    /**
+     * Generate Access Form Widget
+     *
+     * @return \kartik\widgets\Select2 widget
+     */
+    public function getAccessWidget($form,$model)
+    {
+        return $form->field($model, 'access')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => $model->getRolesSelect2(),
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-log-in"></i>'
+                ]
+            ],
+        ]);
+    }
+
 }

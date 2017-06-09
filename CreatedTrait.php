@@ -51,7 +51,7 @@ trait CreatedTrait
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by'])->from(User::tableName() . ' AS user');
+        return $this->hasOne(User::className(), ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
     }
 
     /**

@@ -51,7 +51,7 @@ trait ModifiedTrait
      */
     public function getModifiedBy()
     {
-        return $this->hasOne(User::className(), ['id' => 'modified_by'])->from(User::tableName() . ' AS user');
+        return $this->hasOne(User::className(), ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
     /**

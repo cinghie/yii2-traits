@@ -146,6 +146,8 @@ Add in your model:
     - alias: string alias
     - name: string name  
     - function generateAlias($name): Generate URL alias by name
+    - getNameWidget($form,$model): Generate Name Form Widget
+    - getAliasWidget($form,$model): Generate Alias Form Widget
     
 ### StateTrait
 
@@ -162,6 +164,8 @@ Add in your model:
     - alias: string alias
     - title: string title  
     - function generateAlias($title): Generate URL alias by title
+    - getTitleWidget($form,$model): Generate Title Form Widget
+    - getAliasWidget($form,$model): Generate Alias Form Widget
 
 ### UserHelperTrait
 

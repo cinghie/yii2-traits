@@ -63,4 +63,32 @@ trait NameAliasTrait
         return $name;
     }
 
+    /**
+     * Generate Name Form Widget
+     */
+    public function getNameWidget($form,$model)
+    {
+        return $form->field($model, 'name',[
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
+                ]
+            ],
+        ])->textInput(['maxlength' => true]);
+    }
+
+    /**
+     * Generate Alias Form Widget
+     */
+    public function getAliasWidget($form,$model)
+    {
+        return $form->field($model, 'alias', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
+                ]
+            ]
+        ] )->textInput(['maxlength' => 255]);
+    }
+
 }

@@ -1,7 +1,15 @@
 Yii2 Traits
 ------------
 
-Yii2 Traits is a library with most used Traits
+Yii2 Traits is a library with most used Traits, to minimize code on development new Modules.
+It contains a large number of features already implemented:
+
+    - attributes
+    - attributeLabels()
+    - rules(()
+    - messages
+    - common functions
+    - widgets
 
 ## Installation
 

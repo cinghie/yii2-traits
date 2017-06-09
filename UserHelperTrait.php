@@ -18,6 +18,22 @@ trait UserHelperTrait
 {
 
     /**
+     * Get the User id by user email
+     *
+     * @param $email
+     * @return integer
+     */
+    public function getUserIdByEmail($email)
+    {
+        $user = User::find()
+            ->select(['*'])
+            ->where(['email' => $email])
+            ->one();
+
+        return $user['id'];
+    }
+
+    /**
      * Return an array with current User
      *
      * @return array
@@ -44,22 +60,6 @@ trait UserHelperTrait
         }
 
         return $array;
-    }
-
-    /**
-     * Get the User id by user email
-     *
-     * @param $email
-     * @return integer
-     */
-    public function getUserIdByEmail($email)
-    {
-        $user = User::find()
-            ->select(['*'])
-            ->where(['email' => $email])
-            ->one();
-
-        return $user['id'];
     }
 
     /**

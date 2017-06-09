@@ -80,6 +80,33 @@ if( $model->isCurrentUserCreator() ) {
 
 ## Traits
 
+### AccessTrait
+
+Add in your model: 
+
+    - access: string of Auth Item
+
+### AttachmentTrait
+
+Add in your model: 
+
+    - extension: string extension of Attachment
+    - filename: string filename of Attachment
+    - mimetype: string mimetype of Attachment
+    - function generateMd5FileName($filename, $extension): Generate a MD5 filename by original filename
+
+### CacheTrait
+
+Add in your model: 
+
+    - function actionCache()
+    - function actionFlushCache($id)
+    - function actionFlushCacheKey($id, $key)
+    - function actionFlushCacheTag($id, $tag)
+    - function getCache($id)
+    - function findCaches(array $cachesNames = [])
+    - function isCacheClass($className)
+
 ### CreatedTrait
 
 Add in your model: 
@@ -130,6 +157,14 @@ Add in your model:
     - alias: string alias
     - title: string title  
     - function generateAlias($title): Generate URL alias by title
+
+### UserHelperTrait
+
+Add in your model: 
+
+    - function getRoles(): Return an array with the User's Roles 
+    - function getUserIdByEmail($email): Get the user_id By user email 
+    - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)    
     
 ### UserTrait
 
@@ -137,11 +172,3 @@ Add in your model:
 
     - user_id: Integer userid of User Model
     - function getUser(): Relation with User Model   
-    
-### UserHelperTrait
-
-Add in your model: 
-
-    - function getRoles(): Return an array with the User's Roles 
-    - function getUserIdByEmail($email): Get the user_id By user email 
-    - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)

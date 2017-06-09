@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Access' => 'Accesso',
     'Alias' => 'Alias',
     'All Female' => 'Tutte',
     'All Male' => 'Tutti',

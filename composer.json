@@ -13,9 +13,9 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.11",
-        "dektrium/yii2-rbac": "^0.9.12",
-        "dektrium/yii2-user": "^1.0.0"
+        "yiisoft/yii2": "*",
+        "dektrium/yii2-rbac": "*",
+        "dektrium/yii2-user": "*"
     },
     "autoload": {
         "psr-4": {

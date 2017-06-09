@@ -18,11 +18,23 @@ trait UserHelperTrait
 {
 
     /**
+     * Return an array with current User
+     *
+     * @return array
+     */
+    public function getCurrentUserSelect2()
+    {
+        $currentUser = \Yii::$app->user->identity;
+
+        return [$currentUser->id => $currentUser->username];
+    }
+
+    /**
      * Return an array with the User's Roles adding "Public" on first position
      *
      * @return array
      */
-    public function getRoles()
+    public function getRolesSelect2()
     {
         $roles = \Yii::$app->authManager->getRoles();
         $array = ['public' => \Yii::t('traits', 'Public')];

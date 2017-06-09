@@ -83,4 +83,44 @@ trait CreatedTrait
         }
     }
 
+    /**
+     * Generate Created Form Widget
+     *
+     * @return \kartik\widgets\DateTimePicker widget
+     */
+    public function getCreatedWidget($form,$model)
+    {
+        $created = $model->isNewRecord ? date("Y-m-d H:i:s") : $model->created;
+
+        return $form->field($model, 'created')->widget(\kartik\widgets\DateTimePicker::classname(), [
+            'options' => [
+                'value' => $created,
+            ],
+            'pluginOptions' => [
+                'autoclose'      => true,
+                'format'         => 'yyyy-mm-dd hh:ii:ss',
+                'todayHighlight' => true,
+            ]
+        ]);
+    }
+
+    /**
+     * Generate CreatedBy Form Widget
+     *
+     * @return \kartik\widgets\Select2 widget
+     */
+    public function getCreatedByWidget($form,$model)
+    {
+        $created_by = $model->isNewRecord ? $model->getCurrentUserSelect2() : [$model->created_by => $model->createdBy->username];
+
+        return $form->field($model, 'created_by')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => $created_by,
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                ]
+            ],
+        ]);
+    }
+
 }

@@ -46,13 +46,30 @@ trait LanguageTrait
     public function getLanguagesSelect2()
     {
         $languages = \Yii::$app->urlManager->languages;
-        $array = [ 'All' => \Yii::t('traits', 'All Female') ];
+        $array = ['all' => \Yii::t('traits', 'All Female')];
 
         foreach($languages as $language) {
             $array[$language] = strtoupper($language);
         }
 
         return $array;
+    }
+
+    /**
+     * Generate Language Form Widget
+     *
+     * @return \kartik\widgets\Select2 widget
+     */
+    public function getLanguageWidget($form,$model)
+    {
+        return $form->field($model, 'language')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => $model->getLanguagesSelect2(),
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-globe"></i>'
+                ]
+            ],
+        ]);
     }
 
 }

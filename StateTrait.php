@@ -61,5 +61,35 @@ trait StateTrait
             'state' => 0
         ]);
     }
+    /**
+     * Return an array with states
+     *
+     * @return array
+     */
+    public function getStateSelect2()
+    {
+        return [
+            "1" => \Yii::t('traits', 'Actived'),
+            "0" => \Yii::t('traits', 'Inactived')
+        ];
+    }
+
+
+    /**
+     * Generate State Form Widget
+     *
+     * @return \kartik\widgets\Select2 widget
+     */
+    public function getStateWidget($form,$model)
+    {
+        return $form->field($model, 'state')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => $model->getStateSelect2(),
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-check"></i>'
+                ]
+            ],
+        ]);
+    }
 
 }

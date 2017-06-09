@@ -116,6 +116,8 @@ Add in your model:
     - function getCreatedBy(): Relation with User Model
     - function isCurrentUserCreator(): Check if current user is the created_by
     - function isUserCreator($user_id): Check if user_id params is the created_by
+    - function getCreatedWidget($form,$model): Generate Created Form Widget
+    - function getCreatedByWidget($form,$model): Generate CreatedBy Form Widget
     
 ### LanguageTrait
 
@@ -123,6 +125,7 @@ Add in your model:
 
     - language: String language
     - function getLanguagesSelect2(): Return an array with languages allowed
+    - function getLanguageWidget($form,$model): Generate Language Form Widget
 
 ### ModifiedTrait
 
@@ -132,7 +135,9 @@ Add in your model:
     - modified_by: Integer userid of modified Model 
     - function getModifiedBy(): Relation with User Model
     - function isCurrentUserModifier(): Check if current user is the modified_by
-    - function isUserModifier($user_id): Check if user_id params is the modified_by    
+    - function isUserModifier($user_id): Check if user_id params is the modified_by
+    - function getModifiedWidget($form,$model): Generate Modified Form Widget
+    - function getModifiedByWidget($form,$model): Generate ModifiedBy Form Widget
 
 ### NameAliasTrait
 

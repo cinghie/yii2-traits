@@ -82,4 +82,45 @@ trait ModifiedTrait
         }
     }
 
+    /**
+     * Generate Modified Form Widget
+     *
+     * @return \kartik\widgets\DateTimePicker widget
+     */
+    public function getModifiedWidget($form,$model)
+    {
+        $modified = $model->isNewRecord ? "0000-00-00 00:00:00" : ($model->modified ? $model->modified : "0000-00-00 00:00:00");
+
+        return $form->field($model, 'modified')->widget(\kartik\widgets\DateTimePicker::classname(), [
+            'disabled' => true,
+            'options' => [
+                'value' => $modified,
+            ],
+            'pluginOptions' => [
+                'autoclose'      => true,
+                'format'         => 'yyyy-mm-dd hh:ii:ss',
+                'todayHighlight' => true,
+            ]
+        ]);
+    }
+
+    /**
+     * Generate ModifiedBy Form Widget
+     *
+     * @return \kartik\widgets\Select2 widget
+     */
+    public function getModifiedByWidget($form,$model)
+    {
+        $modified_by = $model->isNewRecord ? NULL : [$model->modified_by => $model->modifiedBy->username];
+
+        return $form->field($model, 'modified_by')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => $modified_by,
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                ]
+            ],
+        ]);
+    }
+
 }

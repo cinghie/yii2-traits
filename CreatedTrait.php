@@ -124,7 +124,7 @@ trait CreatedTrait
     }
 
     /**
-     * Generate DetailView for Created View
+     * Generate DetailView for Created
      *
      * @return array
      */
@@ -134,7 +134,7 @@ trait CreatedTrait
     }
 
     /**
-     * Generate DetailView for CreatedBy View
+     * Generate DetailView for CreatedBy
      *
      * @return array
      */

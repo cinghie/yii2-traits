@@ -18,7 +18,7 @@ trait ViewsHelper
 {
 
     /**
-     * Generate DetailView for EntryInformations
+     * Generate DetailView for Entry Informations
      *
      * @return string
      */
@@ -43,7 +43,7 @@ trait ViewsHelper
                 $model->getModifiedByDetailView($model),
                 $model->getModifiedDetailView($model),
             ]
-        ]);;
+        ]);
     }
 
 }

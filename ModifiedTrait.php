@@ -124,7 +124,7 @@ trait ModifiedTrait
     }
 
     /**
-     * Generate DetailView for Modified View
+     * Generate DetailView for Modified
      *
      * @return array
      */
@@ -134,7 +134,7 @@ trait ModifiedTrait
     }
 
     /**
-     * Generate DetailView for ModifiedBy View
+     * Generate DetailView for ModifiedBy
      *
      * @return array
      */

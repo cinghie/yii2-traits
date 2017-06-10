@@ -93,7 +93,7 @@ trait StateTrait
     }
 
     /**
-     * Generate GridView for State View
+     * Generate GridView for State
      *
      * @return string
      */
@@ -115,7 +115,7 @@ trait StateTrait
     }
 
     /**
-     * Generate DetailView for State View
+     * Generate DetailView for State
      *
      * @return array
      */

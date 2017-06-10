@@ -67,7 +67,22 @@ trait UserTrait
     }
 
     /**
-     * Generate DetailView for User View
+     * Generate GridView for User
+     *
+     * @return string
+     */
+    public function getUserGridView($model)
+    {
+        if (isset($model->user->id)) {
+            $url = urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->user_id]));
+            return \yii\helpers\Html::a($model->user->username,$url);
+        } else {
+            return '<span class="fa fa-ban text-danger"></span>';
+        }
+    }
+
+    /**
+     * Generate DetailView for User
      *
      * @return array
      */

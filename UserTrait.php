@@ -13,6 +13,9 @@
 namespace cinghie\traits;
 
 use dektrium\user\models\User;
+use kartik\detail\DetailView;
+use kartik\helpers\Html;
+use yii\helpers\Url;
 
 /*
  * @property int $user_id
@@ -54,13 +57,14 @@ trait UserTrait
     /**
      * Generate User Form Widget
      *
-     * @return User widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getUserWidget($form,$model)
+    public function getUserWidget($form)
     {
-        $value = $model->isNewRecord && !$model->user_id ? \Yii::t('traits', 'Nobody') : $model->user->username;
+        $value = $this->isNewRecord && !$this->user_id ? \Yii::t('traits', 'Nobody') : $this->user->username;
 
-        return $form->field($model, 'user_id')->textInput([
+        return $form->field($this, 'user_id')->textInput([
             'disabled' => true,
             'value' => $value
         ]);
@@ -71,11 +75,11 @@ trait UserTrait
      *
      * @return string
      */
-    public function getUserGridView($model)
+    public function getUserGridView()
     {
-        if (isset($model->user->id)) {
-            $url = urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->user_id]));
-            return \yii\helpers\Html::a($model->user->username,$url);
+        if (isset($this->user->id)) {
+            $url = urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]));
+            return Html::a($this->user->username,$url);
         } else {
             return '<span class="fa fa-ban text-danger"></span>';
         }
@@ -86,13 +90,13 @@ trait UserTrait
      *
      * @return array
      */
-    public function getUserDetailView($model)
+    public function getUserDetailView()
     {
         return [
             'attribute' => 'user_id',
-            'format' => 'raw',
-            'value' => $model->user_id ? \kartik\helpers\Html::a($model->user->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->user_id]))) : \Yii::t('traits', 'Nobody'),
-            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'format' => 'html',
+            'value' => $this->user_id ? Html::a($this->user->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]))) : \Yii::t('traits', 'Nobody'),
+            'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

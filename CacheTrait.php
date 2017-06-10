@@ -36,7 +36,7 @@ trait CacheTrait
     public function actionFlushCache($id)
     {
         if ($this->getCache($id)->flush()) {
-            \Yii::$app->session->setFlash('success', \Yii::t('essentials', 'Cache has been successfully flushed'));
+            \Yii::$app->session->setFlash('success', \Yii::t('traits', 'Cache has been successfully flushed'));
         };
         return $this->redirect(['cache']);
     }
@@ -49,7 +49,7 @@ trait CacheTrait
     public function actionFlushCacheKey($id, $key)
     {
         if ($this->getCache($id)->delete($key)) {
-            \Yii::$app->session->setFlash('success', \Yii::t('essentials', 'Cache entry has been successfully deleted'));
+            \Yii::$app->session->setFlash('success', \Yii::t('traits', 'Cache entry has been successfully deleted'));
         };
         return $this->redirect(['cache']);
     }
@@ -63,7 +63,7 @@ trait CacheTrait
     public function actionFlushCacheTag($id, $tag)
     {
         TagDependency::invalidate($this->getCache($id), $tag);
-        \Yii::$app->session->setFlash('success', \Yii::t('essentials', 'TagDependency was invalidated'));
+        \Yii::$app->session->setFlash('success', \Yii::t('traits', 'TagDependency was invalidated'));
         return $this->redirect(['cache']);
     }
 

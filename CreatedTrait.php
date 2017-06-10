@@ -13,6 +13,11 @@
 namespace cinghie\traits;
 
 use dektrium\user\models\User;
+use kartik\widgets\DateTimePicker;
+use kartik\detail\DetailView;
+use kartik\helpers\Html;
+use kartik\widgets\Select2;
+use yii\helpers\Url;
 
 /*
  * @property string $created
@@ -61,7 +66,7 @@ trait CreatedTrait
      */
     public function isCurrentUserCreator()
     {
-        if ( \Yii::$app->user->identity->id == $this->created_by ) {
+        if (\Yii::$app->user->identity->id == $this->created_by) {
             return true;
         } else {
             return false;
@@ -76,7 +81,7 @@ trait CreatedTrait
      */
     public function isUserCreator($user_id)
     {
-        if ( $user_id == $this->created_by ) {
+        if ($user_id == $this->created_by) {
             return true;
         } else {
             return false;
@@ -86,13 +91,14 @@ trait CreatedTrait
     /**
      * Generate Created Form Widget
      *
-     * @return \kartik\widgets\DateTimePicker widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getCreatedWidget($form,$model)
+    public function getCreatedWidget($form)
     {
-        $created = $model->isNewRecord ? date("Y-m-d H:i:s") : $model->created;
+        $created = $this->isNewRecord ? date("Y-m-d H:i:s") : $this->created;
 
-        return $form->field($model, 'created')->widget(\kartik\widgets\DateTimePicker::classname(), [
+        return $form->field($this, 'created')->widget(DateTimePicker::classname(), [
             'options' => [
                 'value' => $created,
             ],
@@ -107,13 +113,14 @@ trait CreatedTrait
     /**
      * Generate CreatedBy Form Widget
      *
-     * @return \kartik\widgets\Select2 widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getCreatedByWidget($form,$model)
+    public function getCreatedByWidget($form)
     {
-        $created_by = $model->isNewRecord ? $model->getCurrentUserSelect2() : [$model->created_by => $model->createdBy->username];
+        $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
-        return $form->field($model, 'created_by')->widget(\kartik\widgets\Select2::classname(), [
+        return $form->field($this, 'created_by')->widget(Select2::classname(), [
             'data' => $created_by,
             'addon' => [
                 'prepend' => [
@@ -124,11 +131,28 @@ trait CreatedTrait
     }
 
     /**
+     * Generate GridView for CreatedBy
+     *
+     * @return string
+     */
+    public function getCreatedGridView()
+    {
+        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
+        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : "";
+
+        if($this->created_by) {
+            return Html::a($createdBy,$url);
+        } else {
+            return \Yii::t('traits', 'Nobody');
+        }
+    }
+
+    /**
      * Generate DetailView for Created
      *
      * @return array
      */
-    public function getCreatedDetailView($model)
+    public function getCreatedDetailView()
     {
         return ['attribute' => 'created'];
     }
@@ -138,13 +162,13 @@ trait CreatedTrait
      *
      * @return array
      */
-    public function getCreatedByDetailView($model)
+    public function getCreatedByDetailView()
     {
         return [
             'attribute' => 'created_by',
-            'format' => 'raw',
-            'value' => $model->created_by ? \kartik\helpers\Html::a($model->createdBy->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->createdBy]))) : \Yii::t('traits', 'Nobody'),
-            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'format' => 'html',
+            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : \Yii::t('traits', 'Nobody'),
+            'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

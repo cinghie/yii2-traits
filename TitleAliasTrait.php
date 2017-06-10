@@ -65,10 +65,13 @@ trait TitleAliasTrait
 
     /**
      * Generate Title Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getTitleWidget($form,$model)
+    public function getTitleWidget($form)
     {
-        return $form->field($model, 'title',[
+        return $form->field($this, 'title',[
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
@@ -79,10 +82,13 @@ trait TitleAliasTrait
 
     /**
      * Generate Alias Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getAliasWidget($form,$model)
+    public function getAliasWidget($form)
     {
-        return $form->field($model, 'alias', [
+        return $form->field($this, 'alias', [
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'

@@ -12,6 +12,8 @@
 
 namespace cinghie\traits;
 
+use kartik\widgets\Select2;
+
 /*
  * @property string $language
  */
@@ -58,12 +60,13 @@ trait LanguageTrait
     /**
      * Generate Language Form Widget
      *
-     * @return \kartik\widgets\Select2 widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getLanguageWidget($form,$model)
+    public function getLanguageWidget($form)
     {
-        return $form->field($model, 'language')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => $model->getLanguagesSelect2(),
+        return $form->field($this, 'language')->widget(Select2::classname(), [
+            'data' => $this->getLanguagesSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-globe"></i>'

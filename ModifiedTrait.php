@@ -13,6 +13,10 @@
 namespace cinghie\traits;
 
 use dektrium\user\models\User;
+use kartik\detail\DetailView;
+use kartik\helpers\Html;
+use kartik\widgets\Select2;
+use yii\helpers\Url;
 
 /*
  * @property string $modified
@@ -60,7 +64,7 @@ trait ModifiedTrait
      */
     public function isCurrentUserModifier()
     {
-        if ( \Yii::$app->user->identity->id == $this->modified_by ) {
+        if (\Yii::$app->user->identity->id == $this->modified_by) {
             return true;
         } else {
             return false;
@@ -75,7 +79,7 @@ trait ModifiedTrait
      */
     public function isUserModifier($user_id)
     {
-        if ( $user_id == $this->modified_by ) {
+        if ($user_id == $this->modified_by) {
             return true;
         } else {
             return false;
@@ -85,13 +89,14 @@ trait ModifiedTrait
     /**
      * Generate Modified Form Widget
      *
-     * @return \kartik\widgets\DateTimePicker widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getModifiedWidget($form,$model)
+    public function getModifiedWidget($form)
     {
-        $modified = $model->isNewRecord ? "0000-00-00 00:00:00" : ($model->modified ? $model->modified : "0000-00-00 00:00:00");
+        $modified = $this->isNewRecord ? "0000-00-00 00:00:00" : ($this->modified ? $this->modified : "0000-00-00 00:00:00");
 
-        return $form->field($model, 'modified')->widget(\kartik\widgets\DateTimePicker::classname(), [
+        return $form->field($this, 'modified')->widget(\kartik\widgets\DateTimePicker::classname(), [
             'disabled' => true,
             'options' => [
                 'value' => $modified,
@@ -107,13 +112,14 @@ trait ModifiedTrait
     /**
      * Generate ModifiedBy Form Widget
      *
-     * @return \kartik\widgets\Select2 widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getModifiedByWidget($form,$model)
+    public function getModifiedByWidget($form)
     {
-        $modified_by = $model->isNewRecord ? NULL : [$model->modified_by => $model->modifiedBy->username];
+        $modified_by = $this->isNewRecord ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
-        return $form->field($model, 'modified_by')->widget(\kartik\widgets\Select2::classname(), [
+        return $form->field($this, 'modified_by')->widget(Select2::classname(), [
             'data' => $modified_by,
             'addon' => [
                 'prepend' => [
@@ -124,13 +130,30 @@ trait ModifiedTrait
     }
 
     /**
+     * Generate GridView for ModifiedBy
+     *
+     * @return string
+     */
+    public function getModifiedGridView()
+    {
+        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
+        $modifiedBy = isset($this->modifiedBy->username) ? $this->modifiedBy->username : "";
+
+        if($this->modified_by) {
+            return Html::a($modifiedBy,$url);
+        } else {
+            return \Yii::t('traits', 'Nobody');
+        }
+    }
+
+    /**
      * Generate DetailView for Modified
      *
      * @return array
      */
-    public function getModifiedDetailView($model)
+    public function getModifiedDetailView()
     {
-        return ['attribute' => 'created'];
+        return ['attribute' => 'modified'];
     }
 
     /**
@@ -138,13 +161,13 @@ trait ModifiedTrait
      *
      * @return array
      */
-    public function getModifiedByDetailView($model)
+    public function getModifiedByDetailView()
     {
         return [
             'attribute' => 'modified_by',
-            'format' => 'raw',
-            'value' => $model->created_by ? \kartik\helpers\Html::a($model->modifiedBy->username,urldecode(\yii\helpers\Url::toRoute(['/user/admin/update', 'id' => $model->modifiedBy]))) : \Yii::t('traits', 'Nobody'),
-            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'format' => 'html',
+            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : \Yii::t('traits', 'Nobody'),
+            'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

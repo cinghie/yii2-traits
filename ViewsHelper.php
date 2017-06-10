@@ -36,12 +36,12 @@ trait ViewsHelper
                 'type' => DetailView::TYPE_INFO,
             ],
             'attributes' => [
-                $model->getUserDetailView($model),
-                $model->getStateDetailView($model),
-                $model->getCreatedByDetailView($model),
-                $model->getCreatedDetailView($model),
-                $model->getModifiedByDetailView($model),
-                $model->getModifiedDetailView($model),
+                $model->getUserDetailView(),
+                $model->getStateDetailView(),
+                $model->getCreatedByDetailView(),
+                $model->getCreatedDetailView(),
+                $model->getModifiedByDetailView(),
+                $model->getModifiedDetailView(),
             ]
         ]);
     }

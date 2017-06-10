@@ -37,8 +37,8 @@ trait NameAliasTrait
     public function attributeLabels()
     {
         return [
-            'alias' => \Yii::t('newsletters', 'Alias'),
-            'name' => \Yii::t('newsletters', 'Name'),
+            'alias' => \Yii::t('traits', 'Alias'),
+            'name' => \Yii::t('traits', 'Name'),
         ];
     }
 
@@ -65,10 +65,13 @@ trait NameAliasTrait
 
     /**
      * Generate Name Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getNameWidget($form,$model)
+    public function getNameWidget($form)
     {
-        return $form->field($model, 'name',[
+        return $form->field($this, 'name',[
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
@@ -79,10 +82,13 @@ trait NameAliasTrait
 
     /**
      * Generate Alias Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getAliasWidget($form,$model)
+    public function getAliasWidget($form)
     {
-        return $form->field($model, 'alias', [
+        return $form->field($this, 'alias', [
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'

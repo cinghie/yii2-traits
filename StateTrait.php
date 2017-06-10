@@ -12,6 +12,10 @@
 
 namespace cinghie\traits;
 
+use kartik\detail\DetailView;
+use kartik\helpers\Html;
+use kartik\widgets\Select2;
+
 /*
  * @property int $state
  */
@@ -78,12 +82,13 @@ trait StateTrait
     /**
      * Generate State Form Widget
      *
-     * @return \kartik\widgets\Select2 widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getStateWidget($form,$model)
+    public function getStateWidget($form)
     {
-        return $form->field($model, 'state')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => $model->getStateSelect2(),
+        return $form->field($this, 'state')->widget(Select2::classname(), [
+            'data' => $this->getStateSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-check"></i>'
@@ -97,18 +102,18 @@ trait StateTrait
      *
      * @return string
      */
-    public function getStateGridView($model)
+    public function getStateGridView()
     {
-        if($model->state) {
-            return \kartik\helpers\Html::a(
+        if($this->state) {
+            return Html::a(
                 '<span class="glyphicon glyphicon-ok text-success"></span>',
-                ['changestate', 'id' => $model->id],
+                ['changestate', 'id' => $this->id],
                 ['data-method' => 'post']
             );
         } else {
-            return \kartik\helpers\Html::a(
+            return Html::a(
                 '<span class="glyphicon glyphicon-remove text-danger"></span>',
-                ['changestate', 'id' => $model->id],
+                ['changestate', 'id' => $this->id],
                 ['data-method' => 'post']
             );
         }
@@ -119,13 +124,13 @@ trait StateTrait
      *
      * @return array
      */
-    public function getStateDetailView($model)
+    public function getStateDetailView()
     {
         return [
             'attribute' => 'state',
-            'format' => 'raw',
-            'value' => $model->state ? '<span class="label label-success">'.\Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'.\Yii::t('traits', 'Deactivated').'</span>',
-            'type' => \kartik\detail\DetailView::INPUT_SWITCH,
+            'format' => 'html',
+            'value' => $this->state ? '<span class="label label-success">'.\Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'.\Yii::t('traits', 'Deactivated').'</span>',
+            'type' => DetailView::INPUT_SWITCH,
             'widgetOptions' => [
                 'pluginOptions' => [
                     'onText' => 'Yes',

@@ -2,8 +2,10 @@
 
 namespace cinghie\traits;
 
-use dektrium\rbac\models\Assignment;
-use dektrium\rbac\models\AuthItem;
+use kartik\detail\DetailView;
+use kartik\helpers\Html;
+use kartik\widgets\Select2;
+use yii\helpers\Url;
 
 /**
  * @property integer $access
@@ -34,18 +36,49 @@ trait AccessTrait
     /**
      * Generate Access Form Widget
      *
-     * @return \kartik\widgets\Select2 widget
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function getAccessWidget($form,$model)
+    public function getAccessWidget($form)
     {
-        return $form->field($model, 'access')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => $model->getRolesSelect2(),
+        return $form->field($this, 'access')->widget(Select2::classname(), [
+            'data' => $this->getRolesSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-log-in"></i>'
                 ]
             ],
         ]);
+    }
+
+    /**
+     * Generate GridView for Access
+     *
+     * @return string
+     */
+    public function getAccessGridView()
+    {
+        $url = urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]));;
+
+        return Html::a($this->access,$url);
+    }
+
+    /**
+     * Generate DetailView for Access
+     *
+     * @return array
+     */
+    public function getAccessDetailView()
+    {
+        return [
+            'attribute' => 'access',
+            'format' => 'html',
+            'value' => $this->access ? Html::a($this->access,urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]))) : \Yii::t('traits', 'Nobody'),
+            'type' => DetailView::INPUT_SWITCH,
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
     }
 
 }

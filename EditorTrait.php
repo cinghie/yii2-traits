@@ -20,11 +20,13 @@ trait EditorTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
+     * @param string $requestEditor
      * @return \kartik\form\ActiveField
+     * @internal param string $editor
      */
-    public function getEditorWidget($form,$field)
+    public function getEditorWidget($form,$field,$requestEditor = "")
     {
-        $editor = Yii::$app->controller->module->editor;
+        $editor = $requestEditor != "" ? $requestEditor : Yii::$app->controller->module->editor;
 
         switch ($editor)
         {

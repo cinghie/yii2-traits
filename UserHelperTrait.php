@@ -14,6 +14,11 @@ namespace cinghie\traits;
 
 use dektrium\user\models\User;
 
+/**
+ * Trait UserHelperTrait
+ *
+ * @package cinghie\traits
+ */
 trait UserHelperTrait
 {
 

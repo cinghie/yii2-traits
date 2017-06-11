@@ -8,6 +8,9 @@ use kartik\widgets\Select2;
 use yii\helpers\Url;
 
 /**
+ * Trait AccessTrait
+ *
+ * @package cinghie\traits
  * @property integer $access
  */
 trait AccessTrait

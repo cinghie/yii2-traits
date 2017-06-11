@@ -12,7 +12,10 @@
 
 namespace cinghie\traits;
 
-/*
+/**
+ * Trait TitleAliasTrait
+ *
+ * @package cinghie\traits
  * @property string $alias
  * @property string $title
  */

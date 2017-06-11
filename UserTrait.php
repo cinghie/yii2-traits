@@ -17,9 +17,11 @@ use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use yii\helpers\Url;
 
-/*
- * @property int $user_id
+/**
+ * Trait UserTrait
  *
+ * @package cinghie\traits
+ * @property int $user_id
  * @property User user
  */
 trait UserTrait

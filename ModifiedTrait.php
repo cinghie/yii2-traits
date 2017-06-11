@@ -18,10 +18,12 @@ use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
 
-/*
+/**
+ * Trait ModifiedTrait
+ *
+ * @package cinghie\traits
  * @property string $modified
  * @property int $modified_by
- *
  * @property User $modifiedBy
  */
 trait ModifiedTrait

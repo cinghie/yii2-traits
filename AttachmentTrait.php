@@ -13,6 +13,9 @@
 namespace cinghie\traits;
 
 /**
+ * Trait AttachmentTrait
+ *
+ * @package cinghie\traits
  * @property string $extension
  * @property string $filename
  * @property string $mimetype

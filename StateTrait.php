@@ -16,7 +16,10 @@ use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
 
-/*
+/**
+ * Trait StateTrait
+ *
+ * @package cinghie\traits
  * @property int $state
  */
 trait StateTrait

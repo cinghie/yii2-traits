@@ -14,7 +14,10 @@ namespace cinghie\traits;
 
 use kartik\widgets\Select2;
 
-/*
+/**
+ * Trait LanguageTrait
+ *
+ * @package cinghie\traits
  * @property string $language
  */
 trait LanguageTrait

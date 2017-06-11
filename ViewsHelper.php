@@ -14,6 +14,11 @@ namespace cinghie\traits;
 
 use kartik\detail\DetailView;
 
+/**
+ * Trait ViewsHelper
+ *
+ * @package cinghie\traits
+ */
 trait ViewsHelper
 {
 
@@ -22,10 +27,10 @@ trait ViewsHelper
      *
      * @return string
      */
-    public function getEntryInformationsDetailView($model)
+    public function getEntryInformationsDetailView()
     {
         return DetailView::widget([
-            'model' => $model,
+            'model' => $this,
             'enableEditMode' => false,
             'deleteOptions' => false,
             'condensed' => true,
@@ -36,12 +41,12 @@ trait ViewsHelper
                 'type' => DetailView::TYPE_INFO,
             ],
             'attributes' => [
-                $model->getUserDetailView(),
-                $model->getStateDetailView(),
-                $model->getCreatedByDetailView(),
-                $model->getCreatedDetailView(),
-                $model->getModifiedByDetailView(),
-                $model->getModifiedDetailView(),
+                $this->getUserDetailView(),
+                $this->getStateDetailView(),
+                $this->getCreatedByDetailView(),
+                $this->getCreatedDetailView(),
+                $this->getModifiedByDetailView(),
+                $this->getModifiedDetailView(),
             ]
         ]);
     }

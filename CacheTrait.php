@@ -17,6 +17,11 @@ use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
 use yii\web\HttpException;
 
+/**
+ * Trait CacheTrait
+ *
+ * @package cinghie\traits
+ */
 trait CacheTrait
 {
 

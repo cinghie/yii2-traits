@@ -19,10 +19,12 @@ use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
 
-/*
+/**
+ * Trait CreatedTrait
+ *
+ * @package cinghie\traits
  * @property string $created
  * @property int $created_by
- *
  * @property User $createdBy
  */
 trait CreatedTrait

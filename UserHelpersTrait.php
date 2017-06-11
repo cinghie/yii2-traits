@@ -17,7 +17,7 @@ use dektrium\user\models\User;
 /**
  * Trait UserHelperTrait
  */
-trait UserHelperTrait
+trait UserHelpersTrait
 {
 
     /**

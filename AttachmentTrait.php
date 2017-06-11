@@ -12,10 +12,11 @@
 
 namespace cinghie\traits;
 
+use Yii;
+
 /**
  * Trait AttachmentTrait
  *
- * @package cinghie\traits
  * @property string $extension
  * @property string $filename
  * @property string $mimetype
@@ -40,9 +41,9 @@ trait AttachmentTrait
     public function attributeLabels()
     {
         return [
-            'extension' => \Yii::t('traits', 'Extension'),
-            'filename' => \Yii::t('traits', 'Filename'),
-            'mimetype' => \Yii::t('traits', 'MimeType'),
+            'extension' => Yii::t('traits', 'Extension'),
+            'filename' => Yii::t('traits', 'Filename'),
+            'mimetype' => Yii::t('traits', 'MimeType'),
         ];
     }
 

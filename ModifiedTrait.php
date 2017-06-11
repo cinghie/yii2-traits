@@ -13,15 +13,16 @@
 namespace cinghie\traits;
 
 use dektrium\user\models\User;
+use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use Yii;
 use yii\helpers\Url;
 
 /**
  * Trait ModifiedTrait
  *
- * @package cinghie\traits
  * @property string $modified
  * @property int $modified_by
  * @property User $modifiedBy
@@ -47,8 +48,8 @@ trait ModifiedTrait
     public function attributeLabels()
     {
         return [
-            'modified' => \Yii::t('traits', 'Modified'),
-            'modified_by' => \Yii::t('traits', 'Modified By'),
+            'modified' => Yii::t('traits', 'Modified'),
+            'modified_by' => Yii::t('traits', 'Modified By'),
         ];
     }
 
@@ -66,7 +67,7 @@ trait ModifiedTrait
      */
     public function isCurrentUserModifier()
     {
-        if (\Yii::$app->user->identity->id == $this->modified_by) {
+        if (Yii::$app->user->identity->id == $this->modified_by) {
             return true;
         } else {
             return false;
@@ -96,9 +97,10 @@ trait ModifiedTrait
      */
     public function getModifiedWidget($form)
     {
+        /** @var $this \yii\base\Model */
         $modified = $this->isNewRecord ? "0000-00-00 00:00:00" : ($this->modified ? $this->modified : "0000-00-00 00:00:00");
 
-        return $form->field($this, 'modified')->widget(\kartik\widgets\DateTimePicker::classname(), [
+        return $form->field($this, 'modified')->widget(DateTimePicker::classname(), [
             'disabled' => true,
             'options' => [
                 'value' => $modified,
@@ -119,6 +121,7 @@ trait ModifiedTrait
      */
     public function getModifiedByWidget($form)
     {
+        /** @var $this \yii\base\Model */
         $modified_by = $this->isNewRecord ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
         return $form->field($this, 'modified_by')->widget(Select2::classname(), [
@@ -144,7 +147,7 @@ trait ModifiedTrait
         if($this->modified_by) {
             return Html::a($modifiedBy,$url);
         } else {
-            return \Yii::t('traits', 'Nobody');
+            return Yii::t('traits', 'Nobody');
         }
     }
 
@@ -168,7 +171,7 @@ trait ModifiedTrait
         return [
             'attribute' => 'modified_by',
             'format' => 'html',
-            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : \Yii::t('traits', 'Nobody'),
+            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'

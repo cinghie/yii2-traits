@@ -16,8 +16,6 @@ use kartik\detail\DetailView;
 
 /**
  * Trait ViewsHelper
- *
- * @package cinghie\traits
  */
 trait ViewsHelper
 {

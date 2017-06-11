@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use yii\caching\Cache;
 use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
@@ -19,8 +20,6 @@ use yii\web\HttpException;
 
 /**
  * Trait CacheTrait
- *
- * @package cinghie\traits
  */
 trait CacheTrait
 {
@@ -41,7 +40,7 @@ trait CacheTrait
     public function actionFlushCache($id)
     {
         if ($this->getCache($id)->flush()) {
-            \Yii::$app->session->setFlash('success', \Yii::t('traits', 'Cache has been successfully flushed'));
+            Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
         };
         return $this->redirect(['cache']);
     }
@@ -54,7 +53,7 @@ trait CacheTrait
     public function actionFlushCacheKey($id, $key)
     {
         if ($this->getCache($id)->delete($key)) {
-            \Yii::$app->session->setFlash('success', \Yii::t('traits', 'Cache entry has been successfully deleted'));
+            Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
         };
         return $this->redirect(['cache']);
     }
@@ -68,7 +67,7 @@ trait CacheTrait
     public function actionFlushCacheTag($id, $tag)
     {
         TagDependency::invalidate($this->getCache($id), $tag);
-        \Yii::$app->session->setFlash('success', \Yii::t('traits', 'TagDependency was invalidated'));
+        Yii::$app->session->setFlash('success', Yii::t('traits', 'TagDependency was invalidated'));
         return $this->redirect(['cache']);
     }
 
@@ -82,7 +81,7 @@ trait CacheTrait
         if (!in_array($id, array_keys($this->findCaches()))) {
             throw new HttpException(400, 'Given cache name is not a name of cache component');
         }
-        return \Yii::$app->get($id);
+        return Yii::$app->get($id);
     }
 
     /**
@@ -94,7 +93,7 @@ trait CacheTrait
     private function findCaches(array $cachesNames = [])
     {
         $caches = [];
-        $components = \Yii::$app->getComponents();
+        $components = Yii::$app->getComponents();
         $findAll = ($cachesNames == []);
         foreach ($components as $name => $component) {
             if (!$findAll && !in_array($name, $cachesNames)) {

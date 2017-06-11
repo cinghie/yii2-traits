@@ -22,7 +22,6 @@ use yii\helpers\Url;
 /**
  * Trait CreatedTrait
  *
- * @package cinghie\traits
  * @property string $created
  * @property int $created_by
  * @property User $createdBy
@@ -98,6 +97,7 @@ trait CreatedTrait
      */
     public function getCreatedWidget($form)
     {
+        /** @var $this \yii\base\Model */
         $created = $this->isNewRecord ? date("Y-m-d H:i:s") : $this->created;
 
         return $form->field($this, 'created')->widget(DateTimePicker::classname(), [
@@ -120,6 +120,7 @@ trait CreatedTrait
      */
     public function getCreatedByWidget($form)
     {
+        /** @var $this \yii\base\Model */
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
         return $form->field($this, 'created_by')->widget(Select2::classname(), [

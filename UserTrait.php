@@ -15,12 +15,12 @@ namespace cinghie\traits;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
+use Yii;
 use yii\helpers\Url;
 
 /**
  * Trait UserTrait
  *
- * @package cinghie\traits
  * @property int $user_id
  * @property User user
  */
@@ -44,7 +44,7 @@ trait UserTrait
     public function attributeLabels()
     {
         return [
-            'user_id' => \Yii::t('traits', 'User Id'),
+            'user_id' => Yii::t('traits', 'User Id'),
         ];
     }
 
@@ -64,8 +64,9 @@ trait UserTrait
      */
     public function getUserWidget($form)
     {
-        $value = $this->isNewRecord && !$this->user_id ? \Yii::t('traits', 'Nobody') : $this->user->username;
+        $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
 
+        /** @var $this \yii\base\Model */
         return $form->field($this, 'user_id')->textInput([
             'disabled' => true,
             'value' => $value
@@ -97,7 +98,7 @@ trait UserTrait
         return [
             'attribute' => 'user_id',
             'format' => 'html',
-            'value' => $this->user_id ? Html::a($this->user->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]))) : \Yii::t('traits', 'Nobody'),
+            'value' => $this->user_id ? Html::a($this->user->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'

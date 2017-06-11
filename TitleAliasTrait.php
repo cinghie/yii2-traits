@@ -12,10 +12,11 @@
 
 namespace cinghie\traits;
 
+use Yii;
+
 /**
  * Trait TitleAliasTrait
  *
- * @package cinghie\traits
  * @property string $alias
  * @property string $title
  */
@@ -40,8 +41,8 @@ trait TitleAliasTrait
     public function attributeLabels()
     {
         return [
-            'alias' => \Yii::t('traits', 'Alias'),
-            'title' => \Yii::t('traits', 'Title'),
+            'alias' => Yii::t('traits', 'Alias'),
+            'title' => Yii::t('traits', 'Title'),
         ];
     }
 
@@ -74,6 +75,7 @@ trait TitleAliasTrait
      */
     public function getTitleWidget($form)
     {
+        /** @var $this \yii\base\Model */
         return $form->field($this, 'title',[
             'addon' => [
                 'prepend' => [
@@ -91,6 +93,7 @@ trait TitleAliasTrait
      */
     public function getAliasWidget($form)
     {
+        /** @var $this \yii\base\Model */
         return $form->field($this, 'alias', [
             'addon' => [
                 'prepend' => [

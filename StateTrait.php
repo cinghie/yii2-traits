@@ -15,11 +15,11 @@ namespace cinghie\traits;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use Yii;
 
 /**
  * Trait StateTrait
  *
- * @package cinghie\traits
  * @property int $state
  */
 trait StateTrait
@@ -41,7 +41,7 @@ trait StateTrait
     public function attributeLabels()
     {
         return [
-            'state' => \Yii::t('traits', 'State'),
+            'state' => Yii::t('traits', 'State'),
         ];
     }
 
@@ -76,8 +76,8 @@ trait StateTrait
     public function getStateSelect2()
     {
         return [
-            "1" => \Yii::t('traits', 'Actived'),
-            "0" => \Yii::t('traits', 'Inactived')
+            "1" => Yii::t('traits', 'Actived'),
+            "0" => Yii::t('traits', 'Inactived')
         ];
     }
 
@@ -90,6 +90,7 @@ trait StateTrait
      */
     public function getStateWidget($form)
     {
+        /** @var $this \yii\base\Model */
         return $form->field($this, 'state')->widget(Select2::classname(), [
             'data' => $this->getStateSelect2(),
             'addon' => [
@@ -132,7 +133,7 @@ trait StateTrait
         return [
             'attribute' => 'state',
             'format' => 'html',
-            'value' => $this->state ? '<span class="label label-success">'.\Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'.\Yii::t('traits', 'Deactivated').'</span>',
+            'value' => $this->state ? '<span class="label label-success">'. Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'. Yii::t('traits', 'Deactivated').'</span>',
             'type' => DetailView::INPUT_SWITCH,
             'widgetOptions' => [
                 'pluginOptions' => [

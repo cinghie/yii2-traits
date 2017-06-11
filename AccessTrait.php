@@ -5,12 +5,12 @@ namespace cinghie\traits;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use Yii;
 use yii\helpers\Url;
 
 /**
  * Trait AccessTrait
  *
- * @package cinghie\traits
  * @property integer $access
  */
 trait AccessTrait
@@ -32,7 +32,7 @@ trait AccessTrait
     public function attributeLabels()
     {
         return [
-            'access' => \Yii::t('traits', 'Access'),
+            'access' => Yii::t('traits', 'Access'),
         ];
     }
 
@@ -44,6 +44,8 @@ trait AccessTrait
      */
     public function getAccessWidget($form)
     {
+        /** @var \yii\base\Model $this */
+
         return $form->field($this, 'access')->widget(Select2::classname(), [
             'data' => $this->getRolesSelect2(),
             'addon' => [
@@ -76,7 +78,7 @@ trait AccessTrait
         return [
             'attribute' => 'access',
             'format' => 'html',
-            'value' => $this->access ? Html::a($this->access,urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]))) : \Yii::t('traits', 'Nobody'),
+            'value' => $this->access ? Html::a($this->access,urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'

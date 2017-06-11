@@ -17,7 +17,7 @@ use kartik\detail\DetailView;
 /**
  * Trait ViewsHelper
  */
-trait ViewsHelper
+trait ViewsHelpersTrait
 {
 
     /**

@@ -14,8 +14,13 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
+        "2amigos/yii2-ckeditor-widget": "*",
+        "2amigos/yii2-tinymce-widget": "*",
+        "asofter/yii2-imperavi-redactor": "*",
         "dektrium/yii2-rbac": "*",
-        "dektrium/yii2-user": "*"
+        "dektrium/yii2-user": "*",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-widgets": "*"
     },
     "autoload": {
         "psr-4": {

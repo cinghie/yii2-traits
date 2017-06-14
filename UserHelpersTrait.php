@@ -23,17 +23,17 @@ trait UserHelpersTrait
     /**
      * Get the User id by user email
      *
-     * @param $email
-     * @return integer
+     * @param string $email
+     * @return User[] array
      */
-    public function getUserIdByEmail($email)
+    public function getUserByEmail()
     {
         $user = User::find()
             ->select(['*'])
-            ->where(['email' => $email])
+            ->where(['email' => $this->email])
             ->one();
 
-        return $user['id'];
+        return $user;
     }
 
     /**
@@ -68,8 +68,8 @@ trait UserHelpersTrait
     /**
      * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
      *
-     * @param $user_id
-     * @param $username
+     * @param int  $user_id
+     * @param string $username
      * @return array
      */
     public function getUsersSelect2($user_id,$username)

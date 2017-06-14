@@ -19,7 +19,9 @@
         "asofter/yii2-imperavi-redactor": "*",
         "dektrium/yii2-rbac": "*",
         "dektrium/yii2-user": "*",
+        "kartik-v/yii2-detail-view": "*",
         "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-helpers": "*",
         "kartik-v/yii2-widgets": "*"
     },
     "autoload": {

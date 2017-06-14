@@ -58,6 +58,7 @@ trait ModifiedTrait
      */
     public function getModifiedBy()
     {
+        /** @var $this \yii\db\ActiveRecord */
         return $this->hasOne(User::className(), ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
@@ -67,7 +68,10 @@ trait ModifiedTrait
      */
     public function isCurrentUserModifier()
     {
-        if (Yii::$app->user->identity->id == $this->modified_by) {
+        /** @var User $currentUser */
+        $currentUser = Yii::$app->user->identity;
+
+        if ($currentUser->id == $this->modified_by) {
             return true;
         } else {
             return false;

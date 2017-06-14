@@ -12,12 +12,13 @@
 
 namespace cinghie\traits;
 
+use Yii;
+use yii\helpers\Url;
 use dektrium\user\models\User;
 use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
-use yii\helpers\Url;
 
 /**
  * Trait CreatedTrait
@@ -47,8 +48,8 @@ trait CreatedTrait
     public function attributeLabels()
     {
         return [
-            'created' => \Yii::t('traits', 'Created'),
-            'created_by' => \Yii::t('traits', 'Created By'),
+            'created' => Yii::t('traits', 'Created'),
+            'created_by' => Yii::t('traits', 'Created By'),
         ];
     }
 
@@ -57,6 +58,7 @@ trait CreatedTrait
      */
     public function getCreatedBy()
     {
+        /** @var $this \yii\db\ActiveRecord */
         return $this->hasOne(User::className(), ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
     }
 
@@ -67,7 +69,10 @@ trait CreatedTrait
      */
     public function isCurrentUserCreator()
     {
-        if (\Yii::$app->user->identity->id == $this->created_by) {
+        /** @var User $currentUser */
+        $currentUser = Yii::$app->user->identity;
+
+        if ($currentUser->id == $this->created_by) {
             return true;
         } else {
             return false;
@@ -146,7 +151,7 @@ trait CreatedTrait
         if($this->created_by) {
             return Html::a($createdBy,$url);
         } else {
-            return \Yii::t('traits', 'Nobody');
+            return Yii::t('traits', 'Nobody');
         }
     }
 
@@ -170,7 +175,7 @@ trait CreatedTrait
         return [
             'attribute' => 'created_by',
             'format' => 'html',
-            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : \Yii::t('traits', 'Nobody'),
+            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
             'valueColOptions'=> [
                 'style'=>'width:30%'

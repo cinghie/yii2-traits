@@ -53,6 +53,7 @@ trait UserTrait
      */
     public function getUser()
     {
+        /** @var $this \yii\db\ActiveRecord */
         return $this->hasOne(User::className(), ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 

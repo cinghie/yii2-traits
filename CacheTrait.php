@@ -29,6 +29,7 @@ trait CacheTrait
      */
     public function actionCache()
     {
+        /** @var $this yii\web\View */
         $dataProvider = new ArrayDataProvider(['allModels'=>$this->findCaches()]);
         return $this->render('cache', ['dataProvider'=>$dataProvider]);
     }
@@ -39,6 +40,7 @@ trait CacheTrait
      */
     public function actionFlushCache($id)
     {
+        /** @var $this yii\web\Response */
         if ($this->getCache($id)->flush()) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
         };
@@ -52,6 +54,7 @@ trait CacheTrait
      */
     public function actionFlushCacheKey($id, $key)
     {
+        /** @var $this yii\web\Response */
         if ($this->getCache($id)->delete($key)) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
         };
@@ -66,6 +69,7 @@ trait CacheTrait
      */
     public function actionFlushCacheTag($id, $tag)
     {
+        /** @var $this yii\web\Response */
         TagDependency::invalidate($this->getCache($id), $tag);
         Yii::$app->session->setFlash('success', Yii::t('traits', 'TagDependency was invalidated'));
         return $this->redirect(['cache']);

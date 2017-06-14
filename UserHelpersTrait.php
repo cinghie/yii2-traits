@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use dektrium\user\models\User;
 
 /**
@@ -23,7 +24,7 @@ trait UserHelpersTrait
     /**
      * Get the User id by user email
      *
-     * @param string $email
+     * @internal param string $email
      * @return User[] array
      */
     public function getUserByEmail()
@@ -39,11 +40,13 @@ trait UserHelpersTrait
     /**
      * Return an array with current User
      *
+     * @internal param User $currentUser
      * @return array
      */
     public function getCurrentUserSelect2()
     {
-        $currentUser = \Yii::$app->user->identity;
+        /** @var User $currentUser */
+        $currentUser = Yii::$app->user->identity;
 
         return [$currentUser->id => $currentUser->username];
     }
@@ -55,8 +58,8 @@ trait UserHelpersTrait
      */
     public function getRolesSelect2()
     {
-        $roles = \Yii::$app->authManager->getRoles();
-        $array = ['public' => \Yii::t('traits', 'Public')];
+        $roles = Yii::$app->authManager->getRoles();
+        $array = ['public' => Yii::t('traits', 'Public')];
 
         foreach($roles as $role) {
             $array[ucwords($role->name)] = ucwords($role->name);

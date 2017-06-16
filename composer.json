@@ -12,20 +12,19 @@
             "homepage": "http://www.gogodigital.it/"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "~2.0.12",
-        "yiisoft/yii2-imagine": "^2.1.0",
-        "2amigos/yii2-ckeditor-widget": "^2.1.0",
-        "2amigos/yii2-tinymce-widget": "^1.1.2",
-        "asofter/yii2-imperavi-redactor": "^0.0.3",
-        "dektrium/yii2-rbac": "^0.3.0",
-        "dektrium/yii2-user": "^0.9.11",
-        "kartik-v/yii2-detail-view": "^1.7.5",
-        "kartik-v/yii2-grid": "^3.1.5",
-        "kartik-v/yii2-helpers": "^1.3.6",
-        "kartik-v/yii2-markdown": "^1.3.0",
-        "kartik-v/yii2-widgets": "^3.4.0"
+        "yiisoft/yii2-imagine": "*",
+        "2amigos/yii2-ckeditor-widget": "*",
+        "2amigos/yii2-tinymce-widget": "*",
+        "asofter/yii2-imperavi-redactor": "*",
+        "dektrium/yii2-rbac": "*",
+        "dektrium/yii2-user": "*",
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-helpers": "*",
+        "kartik-v/yii2-markdown": "*",
+        "kartik-v/yii2-widgets": "*"
     },
     "autoload": {
         "psr-4": {

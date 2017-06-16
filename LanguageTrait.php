@@ -44,23 +44,6 @@ trait LanguageTrait
     }
 
     /**
-     * Return an array with languages allowed
-     *
-     * @return array
-     */
-    public function getLanguagesSelect2()
-    {
-        $languages = Yii::$app->urlManager->languages;
-        $array = ['all' => Yii::t('traits', 'All Female')];
-
-        foreach($languages as $language) {
-            $array[$language] = strtoupper($language);
-        }
-
-        return $array;
-    }
-
-    /**
      * Generate Language Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
@@ -77,6 +60,23 @@ trait LanguageTrait
                 ]
             ],
         ]);
+    }
+
+    /**
+     * Return an array with languages allowed
+     *
+     * @return array
+     */
+    public function getLanguagesSelect2()
+    {
+        $languages = Yii::$app->urlManager->languages;
+        $array = ['all' => Yii::t('traits', 'All Female')];
+
+        foreach($languages as $language) {
+            $array[$language] = strtoupper($language);
+        }
+
+        return $array;
     }
 
 }

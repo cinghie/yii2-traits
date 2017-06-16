@@ -47,24 +47,21 @@ trait TitleAliasTrait
     }
 
     /**
-     * Generate URL alias by title
+     * Generate Alias Form Widget
      *
-     * @param string $title
-     * @return string
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function generateAlias($title)
+    public function getAliasWidget($form)
     {
-        // remove any '-' from the string they will be used as concatonater
-        $title = str_replace('-', ' ', $title);
-        $title = str_replace('_', ' ', $title);
-
-        // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $title = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $title);
-
-        // lowercase and trim
-        $title = trim(strtolower($title));
-
-        return $title;
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'alias', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
+                ]
+            ]
+        ] )->textInput(['maxlength' => 255]);
     }
 
     /**
@@ -86,21 +83,24 @@ trait TitleAliasTrait
     }
 
     /**
-     * Generate Alias Form Widget
+     * Generate URL alias by title
      *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
+     * @param string $title
+     * @return string
      */
-    public function getAliasWidget($form)
+    public function generateAlias($title)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'alias', [
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
-                ]
-            ]
-        ] )->textInput(['maxlength' => 255]);
+        // remove any '-' from the string they will be used as concatonater
+        $title = str_replace('-', ' ', $title);
+        $title = str_replace('_', ' ', $title);
+
+        // remove any duplicate whitespace, and ensure all characters are alphanumeric
+        $title = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $title);
+
+        // lowercase and trim
+        $title = trim(strtolower($title));
+
+        return $title;
     }
 
 }

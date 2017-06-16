@@ -47,24 +47,21 @@ trait NameAliasTrait
     }
 
     /**
-     * Generate URL alias by name
+     * Generate Alias Form Widget
      *
-     * @param string $name
-     * @return string
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function generateAlias($name)
+    public function getAliasWidget($form)
     {
-        // remove any '-' from the string they will be used as concatonater
-        $name = str_replace('-', ' ', $name);
-        $name = str_replace('_', ' ', $name);
-
-        // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $name = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $name);
-
-        // lowercase and trim
-        $name = trim(strtolower($name));
-
-        return $name;
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'alias', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
+                ]
+            ]
+        ] )->textInput(['maxlength' => 255]);
     }
 
     /**
@@ -86,21 +83,24 @@ trait NameAliasTrait
     }
 
     /**
-     * Generate Alias Form Widget
+     * Generate URL alias by name
      *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
+     * @param string $name
+     * @return string
      */
-    public function getAliasWidget($form)
+    public function generateAlias($name)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'alias', [
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
-                ]
-            ]
-        ] )->textInput(['maxlength' => 255]);
+        // remove any '-' from the string they will be used as concatonater
+        $name = str_replace('-', ' ', $name);
+        $name = str_replace('_', ' ', $name);
+
+        // remove any duplicate whitespace, and ensure all characters are alphanumeric
+        $name = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $name);
+
+        // lowercase and trim
+        $name = trim(strtolower($name));
+
+        return $name;
     }
 
 }

@@ -22,7 +22,7 @@ trait UserHelpersTrait
 {
 
     /**
-     * Get the User id by user email
+     * Get the User by user email
      *
      * @internal param string $email
      * @return User[] array

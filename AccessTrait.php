@@ -57,7 +57,7 @@ trait AccessTrait
     }
 
     /**
-     * Generate GridView for Access
+     * Generate GridView Access
      *
      * @return string
      */
@@ -69,7 +69,7 @@ trait AccessTrait
     }
 
     /**
-     * Generate DetailView for Access
+     * Generate DetailView Access
      *
      * @return array
      */

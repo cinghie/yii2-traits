@@ -63,6 +63,95 @@ trait CreatedTrait
     }
 
     /**
+     * Generate Created Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getCreatedWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        $created = $this->isNewRecord ? date("Y-m-d H:i:s") : $this->created;
+
+        return $form->field($this, 'created')->widget(DateTimePicker::classname(), [
+            'options' => [
+                'value' => $created,
+            ],
+            'pluginOptions' => [
+                'autoclose'      => true,
+                'format'         => 'yyyy-mm-dd hh:ii:ss',
+                'todayHighlight' => true,
+            ]
+        ]);
+    }
+
+    /**
+     * Generate DetailView for Created
+     *
+     * @return array
+     */
+    public function getCreatedDetailView()
+    {
+        return ['attribute' => 'created'];
+    }
+
+    /**
+     * Generate CreatedBy Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getCreatedByWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
+
+        return $form->field($this, 'created_by')->widget(Select2::classname(), [
+            'data' => $created_by,
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                ]
+            ],
+        ]);
+    }
+
+    /**
+     * Generate GridView for CreatedBy
+     *
+     * @return string
+     */
+    public function getCreatedByGridView()
+    {
+        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
+        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : "";
+
+        if($this->created_by) {
+            return Html::a($createdBy,$url);
+        } else {
+            return Yii::t('traits', 'Nobody');
+        }
+    }
+
+    /**
+     * Generate DetailView for CreatedBy
+     *
+     * @return array
+     */
+    public function getCreatedByDetailView()
+    {
+        return [
+            'attribute' => 'created_by',
+            'format' => 'html',
+            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
+            'type' => DetailView::INPUT_SWITCH,
+            'valueColOptions'=> [
+                'style'=>'width:30%'
+            ]
+        ];
+    }
+
+    /**
      * Check if current user is the created_by
      *
      * @return bool
@@ -92,95 +181,6 @@ trait CreatedTrait
         } else {
             return false;
         }
-    }
-
-    /**
-     * Generate Created Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getCreatedWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        $created = $this->isNewRecord ? date("Y-m-d H:i:s") : $this->created;
-
-        return $form->field($this, 'created')->widget(DateTimePicker::classname(), [
-            'options' => [
-                'value' => $created,
-            ],
-            'pluginOptions' => [
-                'autoclose'      => true,
-                'format'         => 'yyyy-mm-dd hh:ii:ss',
-                'todayHighlight' => true,
-            ]
-        ]);
-    }
-
-    /**
-     * Generate CreatedBy Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getCreatedByWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
-
-        return $form->field($this, 'created_by')->widget(Select2::classname(), [
-            'data' => $created_by,
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
-                ]
-            ],
-        ]);
-    }
-
-    /**
-     * Generate GridView for CreatedBy
-     *
-     * @return string
-     */
-    public function getCreatedGridView()
-    {
-        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
-        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : "";
-
-        if($this->created_by) {
-            return Html::a($createdBy,$url);
-        } else {
-            return Yii::t('traits', 'Nobody');
-        }
-    }
-
-    /**
-     * Generate DetailView for Created
-     *
-     * @return array
-     */
-    public function getCreatedDetailView()
-    {
-        return ['attribute' => 'created'];
-    }
-
-    /**
-     * Generate DetailView for CreatedBy
-     *
-     * @return array
-     */
-    public function getCreatedByDetailView()
-    {
-        return [
-            'attribute' => 'created_by',
-            'format' => 'html',
-            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
-            'type' => DetailView::INPUT_SWITCH,
-            'valueColOptions'=> [
-                'style'=>'width:30%'
-            ]
-        ];
     }
 
 }

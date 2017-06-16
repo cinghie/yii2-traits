@@ -63,37 +63,6 @@ trait ModifiedTrait
     }
 
     /**
-     * check if current user is the modified_by
-     * @return bool
-     */
-    public function isCurrentUserModifier()
-    {
-        /** @var User $currentUser */
-        $currentUser = Yii::$app->user->identity;
-
-        if ($currentUser->id == $this->modified_by) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Check if user_id params is the modified_by
-     *
-     * @param User $user_id
-     * @return bool
-     */
-    public function isUserModifier($user_id)
-    {
-        if ($user_id == $this->modified_by) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Generate Modified Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
@@ -115,6 +84,16 @@ trait ModifiedTrait
                 'todayHighlight' => true,
             ]
         ]);
+    }
+
+    /**
+     * Generate DetailView for Modified
+     *
+     * @return array
+     */
+    public function getModifiedDetailView()
+    {
+        return ['attribute' => 'modified'];
     }
 
     /**
@@ -143,7 +122,7 @@ trait ModifiedTrait
      *
      * @return string
      */
-    public function getModifiedGridView()
+    public function getModifiedByGridView()
     {
         $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
         $modifiedBy = isset($this->modifiedBy->username) ? $this->modifiedBy->username : "";
@@ -153,16 +132,6 @@ trait ModifiedTrait
         } else {
             return Yii::t('traits', 'Nobody');
         }
-    }
-
-    /**
-     * Generate DetailView for Modified
-     *
-     * @return array
-     */
-    public function getModifiedDetailView()
-    {
-        return ['attribute' => 'modified'];
     }
 
     /**
@@ -181,6 +150,37 @@ trait ModifiedTrait
                 'style'=>'width:30%'
             ]
         ];
+    }
+
+    /**
+     * check if current user is the modified_by
+     * @return bool
+     */
+    public function isCurrentUserModifier()
+    {
+        /** @var User $currentUser */
+        $currentUser = Yii::$app->user->identity;
+
+        if ($currentUser->id == $this->modified_by) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Check if user_id params is the modified_by
+     *
+     * @param User $user_id
+     * @return bool
+     */
+    public function isUserModifier($user_id)
+    {
+        if ($user_id == $this->modified_by) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

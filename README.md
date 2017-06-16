@@ -224,7 +224,6 @@ Add in your model:
 
     - user_id: Integer userid of User Model
     - function getUser(): Relation with User Model   
-<<<<<<< HEAD
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User
@@ -233,7 +232,4 @@ Add in your model:
 
 Add in your model: 
 
-    - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations       
-    
-=======
->>>>>>> origin/master
+    - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations

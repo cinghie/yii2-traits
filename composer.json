@@ -12,6 +12,7 @@
             "homepage": "http://www.gogodigital.it/"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "~2.0.12",
         "yiisoft/yii2-imagine": "^2.1.0",

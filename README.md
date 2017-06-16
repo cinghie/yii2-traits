@@ -44,7 +44,19 @@ Add in your configuration file the translations
         ],
     ],
                    	
-]	
+],
+'modules' => [ 
+    
+    // Module Kartik-v Grid
+    'gridview' =>  [
+	    'class' => '\kartik\grid\Module',
+	],
+
+	// Module Kartik-v Markdown Editor
+	'markdown' => [
+	    'class' => 'kartik\markdown\Module',
+	],
+],
 ```
 
 ## Usage Example
@@ -212,6 +224,7 @@ Add in your model:
 
     - user_id: Integer userid of User Model
     - function getUser(): Relation with User Model   
+<<<<<<< HEAD
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User
@@ -222,3 +235,5 @@ Add in your model:
 
     - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations       
     
+=======
+>>>>>>> origin/master

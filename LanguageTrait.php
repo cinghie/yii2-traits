@@ -44,6 +44,24 @@ trait LanguageTrait
     }
 
     /**
+	 * Get language code (only 3 chars)
+	 *
+	 * @return string
+	 */
+    public function getLang() {
+        return substr($this->language,0,2);
+    }
+
+    /**
+     * Get language tag ()
+     *
+     * @return string
+     */
+    public function getLangTag() {
+        return $this->language;
+    }
+
+    /**
      * Generate Language Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form

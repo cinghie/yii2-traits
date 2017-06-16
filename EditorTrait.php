@@ -12,10 +12,11 @@
 
 namespace cinghie\traits;
 
-use dosamigos\ckeditor\CKEditor;
-use dosamigos\tinymce\TinyMce;
 use Yii;
 use yii\imperavi\Widget as Imperavi;
+use dosamigos\ckeditor\CKEditor;
+use dosamigos\tinymce\TinyMce;
+use kartik\markdown\MarkdownEditor;
 
 /**
  * Trait EditorTrait
@@ -43,11 +44,14 @@ trait EditorTrait
             case "ckeditor":
                 return $this->getCKEditorWidget($form,$field);
                 break;
-            case "tinymce":
-                return $this->getTinyMCEWidget($form,$field);
-                break;
             case "imperavi":
                 return $this->getImperaviWidget($form,$field);
+                break;
+            case "markdown":
+                return $this->getMarkdownWidget($form,$field);
+                break;
+            case "tinymce":
+                return $this->getTinyMCEWidget($form,$field);
                 break;
             default:
                 return $this->getNoEditorWidget($form,$field);
@@ -113,6 +117,22 @@ trait EditorTrait
                 'clips'
             ],
         ]);
+    }
+
+    /**
+     * Get a Markdown Editor Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @param string $field
+     * @return \kartik\form\ActiveField
+     */
+    public function getMarkdownWidget($form,$field)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, $field)->widget(
+            MarkdownEditor::classname(),
+            ['height' => 300, 'encodeLabels' => true]
+        );
     }
 
     /**

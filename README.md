@@ -44,7 +44,19 @@ Add in your configuration file the translations
         ],
     ],
                    	
-]	
+],
+'modules' => [ 
+    
+    // Module Kartik-v Grid
+    'gridview' =>  [
+	    'class' => '\kartik\grid\Module',
+	],
+
+	// Module Kartik-v Markdown Editor
+	'markdown' => [
+	    'class' => 'kartik\markdown\Module',
+	],
+],
 ```
 
 ## Usage Example

@@ -49,12 +49,12 @@ Add in your configuration file the translations
     
     // Module Kartik-v Grid
     'gridview' =>  [
-	'class' => '\kartik\grid\Module',
+        'class' => '\kartik\grid\Module',
     ],
 
     // Module Kartik-v Markdown Editor
     'markdown' => [
-	'class' => 'kartik\markdown\Module',
+        'class' => 'kartik\markdown\Module',
     ],
     
 ],
@@ -182,11 +182,17 @@ Add in your model:
 
 Add in your model: 
 
-    - alias: string alias
     - name: string name  
     - function getAliasWidget($form): Generate Alias Form Widget
     - function getNameWidget($form): Generate Name Form Widget
-    - function generateAlias($name): Generate URL alias by name
+ 
+### SeoTrait
+
+Add in your model:     
+
+    - alias: string alias
+    - function generateAlias($name): Generate URL alias by string
+    - function getAliasWidget($form): Generate Alias Form Widget
     
 ### StateTrait
 
@@ -204,11 +210,8 @@ Add in your model:
 
 Add in your model: 
 
-    - alias: string alias
     - title: string title  
-    - getAliasWidget($form): Generate Alias Form Widget
     - getTitleWidget($form): Generate Title Form Widget
-    - function generateAlias($title): Generate URL alias by title
 
 ### UserHelperTrait
 

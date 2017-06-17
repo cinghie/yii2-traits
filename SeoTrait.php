@@ -100,7 +100,7 @@ trait SeoTrait
     }
 
     /**
-     * Generate Author Form Widget
+     * Generate Copyright Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
      * @return string
@@ -115,6 +115,42 @@ trait SeoTrait
                 ]
             ]
         ])->textInput(['maxlength' => 50]);
+    }
+
+    /**
+     * Generate Meta Description Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return string
+     */
+    public function getMetaDescriptionWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'metadesc', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-info-sign"></i>'
+                ]
+            ]
+        ])->textarea(['rows' => 4]);
+    }
+
+    /**
+     * Generate Meta Key Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return string
+     */
+    public function getMetaKeyWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'metakey', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-tags"></i>'
+                ]
+            ]
+        ])->textarea(['rows' => 4]);
     }
 
     /**
@@ -133,24 +169,24 @@ trait SeoTrait
     }
 
     /**
-     * Generate URL alias by name
+     * Generate URL alias by string
      *
-     * @param string $name
+     * @param string $string
      * @return string
      */
-    public function generateAlias($name)
+    public function generateAlias($string)
     {
         // remove any '-' from the string they will be used as concatonater
-        $name = str_replace('-', ' ', $name);
-        $name = str_replace('_', ' ', $name);
+        $string = str_replace('-', ' ', $string);
+        $string = str_replace('_', ' ', $string);
 
         // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $name = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $name);
+        $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
 
         // lowercase and trim
-        $name = trim(strtolower($name));
+        $string = trim(strtolower($string));
 
-        return $name;
+        return $string;
     }
 
 }

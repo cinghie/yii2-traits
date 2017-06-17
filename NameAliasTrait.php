@@ -17,22 +17,22 @@ use Yii;
 /**
  * Trait NameAliasTrait
  *
- * @property string $alias
  * @property string $name
  */
 trait NameAliasTrait
 {
+
+    use SeoTrait;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
+        return array_merge(SeoTrait::rules(),[
             [['name'], 'required'],
-            [['name', 'alias'], 'string', 'max' => 255],
-            [['alias'], 'unique'],
-        ];
+            [['name'], 'string', 'max' => 255],
+        ]);
     }
 
     /**
@@ -40,28 +40,9 @@ trait NameAliasTrait
      */
     public function attributeLabels()
     {
-        return [
-            'alias' => Yii::t('traits', 'Alias'),
+        return array_merge(SeoTrait::attributeLabels(),[
             'name' => Yii::t('traits', 'Name'),
-        ];
-    }
-
-    /**
-     * Generate Alias Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getAliasWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'alias', [
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
-                ]
-            ]
-        ] )->textInput(['maxlength' => 255]);
+        ]);
     }
 
     /**
@@ -80,27 +61,6 @@ trait NameAliasTrait
                 ]
             ],
         ])->textInput(['maxlength' => true]);
-    }
-
-    /**
-     * Generate URL alias by name
-     *
-     * @param string $name
-     * @return string
-     */
-    public function generateAlias($name)
-    {
-        // remove any '-' from the string they will be used as concatonater
-        $name = str_replace('-', ' ', $name);
-        $name = str_replace('_', ' ', $name);
-
-        // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $name = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $name);
-
-        // lowercase and trim
-        $name = trim(strtolower($name));
-
-        return $name;
     }
 
 }

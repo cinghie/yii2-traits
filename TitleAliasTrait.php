@@ -17,22 +17,22 @@ use Yii;
 /**
  * Trait TitleAliasTrait
  *
- * @property string $alias
  * @property string $title
  */
 trait TitleAliasTrait
 {
+
+    use SeoTrait;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
+        return array_merge(SeoTrait::rules(),[
             [['title'], 'required'],
-            [['title', 'alias'], 'string', 'max' => 255],
-            [['alias'], 'unique'],
-        ];
+            [['title'], 'string', 'max' => 255],
+        ]);
     }
 
     /**
@@ -40,28 +40,9 @@ trait TitleAliasTrait
      */
     public function attributeLabels()
     {
-        return [
-            'alias' => Yii::t('traits', 'Alias'),
+        return array_merge(SeoTrait::attributeLabels(),[
             'title' => Yii::t('traits', 'Title'),
-        ];
-    }
-
-    /**
-     * Generate Alias Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getAliasWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'alias', [
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
-                ]
-            ]
-        ] )->textInput(['maxlength' => 255]);
+        ]);
     }
 
     /**
@@ -80,27 +61,6 @@ trait TitleAliasTrait
                 ]
             ],
         ])->textInput(['maxlength' => true]);
-    }
-
-    /**
-     * Generate URL alias by title
-     *
-     * @param string $title
-     * @return string
-     */
-    public function generateAlias($title)
-    {
-        // remove any '-' from the string they will be used as concatonater
-        $title = str_replace('-', ' ', $title);
-        $title = str_replace('_', ' ', $title);
-
-        // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $title = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $title);
-
-        // lowercase and trim
-        $title = trim(strtolower($title));
-
-        return $title;
     }
 
 }

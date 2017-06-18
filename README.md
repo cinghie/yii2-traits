@@ -237,3 +237,6 @@ Add in your model:
 Add in your model: 
 
     - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
+    - function getSaveButton(): Return action save button
+    - function getCancelButton(): Return action cancel button
+    - function getExitButton(): Return action exit button

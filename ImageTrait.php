@@ -22,6 +22,32 @@ use Yii;
 trait ImageTrait
 {
 
+    /**
+     * Get Allowed images
+     *
+     * @return array
+     */
+    public function getImagesAllowed()
+    {
+        return Yii::$app->controller->module->imageType;
+    }
 
+    /**
+     * Get Allowed images in Accept Format
+     *
+     * @return array
+     */
+    public function getImagesAccept()
+    {
+        $imageAccept = [];
+        $imagesAllowed = $this->getImagesAllowed();
+
+        foreach ($imagesAllowed as $imageAllowed)
+        {
+            $imageAccept[] = 'image/'.$imageAllowed;
+        }
+
+        return $imageAccept;
+    }
 
 }

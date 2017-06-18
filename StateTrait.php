@@ -62,7 +62,7 @@ trait StateTrait
      *
      * @return bool
      */
-    public function inactive()
+    public function deactive()
     {
         return (bool)$this->updateAttributes([
             'state' => 0

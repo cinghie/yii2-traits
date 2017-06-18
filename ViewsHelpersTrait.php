@@ -24,6 +24,83 @@ trait ViewsHelpersTrait
 {
 
     /**
+     * Return action create button
+     *
+     * @return string
+     */
+    public function getCreateButton()
+    {
+        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), Url::to(['create']));
+    }
+
+    /**
+     * Return action update button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getUpdateButton()
+    {
+        return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
+    }
+
+    /**
+     * Return action delete button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getDeleteButton()
+    {
+        return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), '#', ['class' => 'btn btn-mini btn-delete']);
+    }
+
+    /**
+     * Return action preview button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getPreviewButton()
+    {
+        return $this->getStandardButton('fa fa-eye text-blue', Yii::t('traits','Preview'), '#', ['class' => 'btn btn-mini btn-preview']);
+    }
+
+    /**
+     * Return action active button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getActiveButton()
+    {
+        return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), '#', ['class' => 'btn btn-mini btn-active']);
+    }
+
+    /**
+     * Return action deactive button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getDeactiveButton()
+    {
+        return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), '#', ['class' => 'btn btn-mini btn-deactive']);
+    }
+
+    /**
+     * Return action reset button
+     *
+     * $param int $id
+     * @return string
+     */
+    public function getResetButton()
+    {
+        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), Url::to(['index']), ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
+    }
+
+
+    /**
      * Return action save button
      *
      * @return string
@@ -42,22 +119,34 @@ trait ViewsHelpersTrait
      */
     public function getCancelButton()
     {
-        return '<div class="pull-right text-center" style="margin-right: 25px;">'.
-            Html::a('<i class="fa fa-times-circle text-red"></i>', Url::to(['']), ['class' => 'btn btn-mini btn-cancel']).'
-            <div>'.Yii::t('traits','Cancel').'</div></div>';
+        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), Url::to(['']));
     }
 
     /**
      * Return action exit button
      *
-     * @param array $url
+     * @param string $url
      * @return string
      */
-    public function getExitButton($url)
+    public function getExitButton()
+    {
+        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), Url::to('index'));
+    }
+
+    /**
+     * Return standard button
+     *
+     * @param $icon
+     * @param string $title
+     * @param string $url
+     * @return string
+     */
+    public function getStandardButton($icon,$title,$url,$class = ['class' => 'btn btn-mini'])
     {
         return '<div class="pull-right text-center" style="margin-right: 25px;">'.
-            Html::a('<i class="fa fa-sign-out text-blue"></i>', $url ,['class' => 'btn btn-mini btn-exit']).'
-            <div>'.Yii::t('traits','Exit').'</div></div>';
+                    Html::a('<i class="'.$icon.'"></i>', $url , $class).'
+                    <div>'.$title.'</div>
+                </div>';
     }
 
     /**

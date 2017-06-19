@@ -36,7 +36,6 @@ trait ViewsHelpersTrait
     /**
      * Return action update button
      *
-     * $param int $id
      * @return string
      */
     public function getUpdateButton()
@@ -45,9 +44,30 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return javascript for action update button
+     *
+     * @param string $w
+     * @return string
+     */
+    public function getUpdateButtonJavascript($w)
+    {
+        return '$("a.btn-update").click(function() {
+            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+        
+            if(selectedId.length == 0) {
+                alert("'.Yii::t("traits", "Select at least one item").'");
+            } else if(selectedId.length>1){
+                alert("'.Yii::t("traits", "Select only 1 item").'");
+            } else {
+                var url = "'.Url::to(['update']).'?id="+selectedId[0];
+                window.location.href= url;
+            }
+        });';
+    }
+
+    /**
      * Return action delete button
      *
-     * $param int $id
      * @return string
      */
     public function getDeleteButton()
@@ -56,9 +76,38 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return javascript for action delete button
+     *
+     * @param string $w
+     * @return string
+     */
+    public function getDeleteButtonJavascript($w)
+    {
+        return '$("a.btn-delete").click(function() {
+            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+
+            if(selectedId.length == 0) {
+                alert("'.Yii::t("traits", "Select at least one item").'");
+            } else {
+                var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
+
+                if (choose == true) {
+                    $.ajax({
+                        type: \'POST\',
+                        url : "'.Url::to(['deletemultiple']).'?id="+selectedId,
+                        data : {ids: selectedId},
+                        success : function() {
+                            $.pjax.reload({container:"'.$w.'"});
+                        }
+                    });
+                }
+            }
+        });';
+    }
+
+    /**
      * Return action preview button
      *
-     * $param int $id
      * @return string
      */
     public function getPreviewButton()
@@ -67,9 +116,30 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return javascript for action preview button
+     *
+     * @param string $w
+     * @return string
+     */
+    public function getPreviewButtonJavascript($w)
+    {
+        return '$("a.btn-preview").click(function() {
+            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+
+            if(selectedId.length == 0) {
+                alert("'.Yii::t("traits", "Select at least one item").'");
+            } else if(selectedId.length>1){
+                alert("'.Yii::t("traits", "Select only 1 item").'");
+            } else {
+                var url = "'.Url::to(['view']).'?id="+selectedId[0];
+                window.open(url,"_blank");
+            }
+        });';
+    }
+
+    /**
      * Return action active button
      *
-     * $param int $id
      * @return string
      */
     public function getActiveButton()
@@ -78,9 +148,34 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return javascript for action active button
+     *
+     * @param string $w
+     * @return string
+     */
+    public function getActiveButtonJavascript($w)
+    {
+        return '$("a.btn-active").click(function() {
+            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+        
+            if(selectedId.length == 0) {
+                alert("'.Yii::t("traits", "Select at least one item").'");
+            } else {
+                $.ajax({
+                    type: \'POST\',
+                    url : "'.Url::to(['activemultiple']).'?id="+selectedId,
+                    data : {ids: selectedId},
+                    success : function() {
+                        $.pjax.reload({container:"'.$w.'"});
+                    }
+                });
+            }
+        });';
+    }
+
+    /**
      * Return action deactive button
      *
-     * $param int $id
      * @return string
      */
     public function getDeactiveButton()
@@ -89,16 +184,40 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return javascript for action deactive button
+     *
+     * @param string $w
+     * @return string
+     */
+    public function getDeactiveButtonJavascript($w)
+    {
+        return '$("a.btn-deactive").click(function() {
+            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+        
+            if(selectedId.length == 0) {
+                alert("'.Yii::t("traits", "Select at least one item").'");
+            } else {
+                $.ajax({
+                    type: \'POST\',
+                    url : "'.Url::to(['deactivemultiple']).'?id="+selectedId,
+                    data : {ids: selectedId},
+                    success : function() {
+                        $.pjax.reload({container:"'.$w.'"});
+                    }
+                });
+            }
+        });';
+    }
+
+    /**
      * Return action reset button
      *
-     * $param int $id
      * @return string
      */
     public function getResetButton()
     {
         return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), Url::to(['index']), ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
     }
-
 
     /**
      * Return action save button
@@ -125,8 +244,7 @@ trait ViewsHelpersTrait
     /**
      * Return action exit button
      *
-     * @param string $url
-     * @return string
+     * @internal param string $url
      */
     public function getExitButton()
     {
@@ -136,9 +254,10 @@ trait ViewsHelpersTrait
     /**
      * Return standard button
      *
-     * @param $icon
+     * @param string $icon
      * @param string $title
      * @param string $url
+     * @param array $class
      * @return string
      */
     public function getStandardButton($icon,$title,$url,$class = ['class' => 'btn btn-mini'])
@@ -147,6 +266,74 @@ trait ViewsHelpersTrait
                     Html::a('<i class="'.$icon.'"></i>', $url , $class).'
                     <div>'.$title.'</div>
                 </div>';
+    }
+
+    /**
+     * Return Javascript for Button Actions
+     *
+     * @param array $actions
+     * @return string
+     */
+    public function getStandardButtonJavascript($actions)
+    {
+        $javascript = "$(document).ready(function() {";
+
+        foreach ($actions as $action)
+        {
+
+        }
+
+        $javascript .= "});";
+
+        return '
+            $(document).ready(function()
+            {
+                $("a.btn-update").click(function() {
+                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
+        
+                    if(selectedId.length == 0) {
+                        alert("'.Yii::t("traits", "Select at least one item").'");
+                    } else if(selectedId.length>1){
+                        alert("'.Yii::t("traits", "Select only 1 item").'");
+                    } else {
+                        var url = "'.Url::to(['/articles/categories/update']).'?id="+selectedId[0];
+                        window.location.href= url;
+                    }
+                });
+                $("a.btn-delete").click(function() {
+                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
+        
+                    if(selectedId.length == 0) {
+                        alert("'.Yii::t("traits", "Select at least one item").'");
+                    } else {
+                        var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
+        
+                        if (choose == true) {
+                            $.ajax({
+                                type: \'POST\',
+                                url : "'.Url::to(['/articles/categories/deletemultiple']).'?id="+selectedId,
+                                data : {ids: selectedId},
+                                success : function() {
+                                    $.pjax.reload({container:"#w1"});
+                                }
+                            });
+                        }
+                    }
+                });
+                $("a.btn-preview").click(function() {
+                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
+        
+                    if(selectedId.length == 0) {
+                        alert("'.Yii::t("traits", "Select at least one item").'");
+                    } else if(selectedId.length>1){
+                        alert("'.Yii::t("traits", "Select only 1 item").'");
+                    } else {
+                        var url = "'.Url::to(['/articles/categories/view']).'?id="+selectedId[0];
+                        window.open(url,"_blank");
+                    }
+                });
+            });
+        ';
     }
 
     /**

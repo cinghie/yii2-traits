@@ -50,10 +50,10 @@ trait ImageTrait
     /**
      * Generate Image Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
      * @return string
+     * @throws \Exception
      */
-    public function getImageWidget($form)
+    public function getImageWidget()
     {
         /** @var $this \yii\base\Model */
         $image = "<label class=\"control-label\" for=\"items-photo_name\">".Yii::t('traits','Image')."</label>";

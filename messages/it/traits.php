@@ -42,6 +42,7 @@ return [
     "Nobody" => "Nessuno",
     "Not Actived" => "Non Attivo",
     "Options" => "Opzioni",
+    "Public" => "Public",
     "Reset" => "Reset",
     "Reset Grid" => "Reset",
     "Save" => "Salva",

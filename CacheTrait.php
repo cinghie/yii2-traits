@@ -26,6 +26,7 @@ trait CacheTrait
 
     /**
      * @return mixed
+     * @throws \yii\base\InvalidCallException
      */
     public function actionCache()
     {
@@ -43,7 +44,7 @@ trait CacheTrait
         /** @var $this yii\web\Response */
         if ($this->getCache($id)->flush()) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
-        };
+        }
         return $this->redirect(['cache']);
     }
 

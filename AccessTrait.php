@@ -70,6 +70,7 @@ trait AccessTrait
      * Generate GridView Access
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getAccessGridView()
     {

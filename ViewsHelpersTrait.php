@@ -340,6 +340,7 @@ trait ViewsHelpersTrait
      * Generate DetailView for Entry Informations
      *
      * @return string
+     * @throws \Exception
      */
     public function getEntryInformationsDetailView()
     {

@@ -62,7 +62,8 @@ trait UserHelpersTrait
         $array = ['public' => Yii::t('traits', 'Public')];
 
         foreach($roles as $role) {
-            $array[ucwords($role->name)] = ucwords($role->name);
+            $role_name = ucwords($role->name);
+            $array[$role_name] = $role_name;
         }
 
         return $array;

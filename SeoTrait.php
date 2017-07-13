@@ -177,8 +177,7 @@ trait SeoTrait
     public function generateAlias($string)
     {
         // remove any '-' from the string they will be used as concatonater
-        $string = str_replace('-', ' ', $string);
-        $string = str_replace('_', ' ', $string);
+        $string = str_replace(array('-','_'), ' ', $string);
 
         // remove any duplicate whitespace, and ensure all characters are alphanumeric
         $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);

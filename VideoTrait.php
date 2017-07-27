@@ -93,7 +93,7 @@ trait VideoTrait
      */
     public function getVideoTypeWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this \yii\base\Model | \cinghie\traits\VideoTrait */
         return $form->field($this, 'video_type')->widget(Select2::classname(), [
             'data' => $this->getVideoTypeSelect2(),
             'addon' => [
@@ -139,6 +139,5 @@ trait VideoTrait
             ]
         ])->textInput(['maxlength' => 255]);
     }
-
 
 }

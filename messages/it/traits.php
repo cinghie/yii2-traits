@@ -64,7 +64,7 @@ return [
     "Update {modelClass}: " => "Modifica {modelClass}: ",
     "User Id" => "Utente",
     "Video ID" => "ID Video",
-    "Video Type" => "Tipo Video",
     "Video Caption" => "Caption Video",
-    "Video Credits" => "Crediti Video"
+    "Video Credits" => "Crediti Video",
+    "Video Type" => "Tipo Video"
 ];

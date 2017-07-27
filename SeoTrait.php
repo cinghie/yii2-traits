@@ -19,6 +19,11 @@ use kartik\widgets\Select2;
  * Trait SeoTrait
  *
  * @property string $alias
+ * @property string $robots
+ * @property string $author
+ * @property string $copyright
+ * @property string $metadesc
+ * @property string $metakey
  */
 trait SeoTrait
 {
@@ -29,7 +34,10 @@ trait SeoTrait
     public function rules()
     {
         return [
+            [['metadesc', 'metakey'], 'string'],
             [['alias'], 'string', 'max' => 255],
+            [['author', 'copyright'], 'string', 'max' => 50],
+            [['robots'], 'string', 'max' => 20],
             [['alias'], 'unique'],
         ];
     }
@@ -41,6 +49,11 @@ trait SeoTrait
     {
         return [
             'alias' => Yii::t('traits', 'Alias'),
+            'author' => Yii::t('traits', 'Author'),
+            'copyright' => Yii::t('traits', 'Copyright'),
+            'metadesc' => Yii::t('traits', 'Metadesc'),
+            'metakey' => Yii::t('traits', 'Metakey'),
+            'robots' => Yii::t('traits', 'Robots'),
         ];
     }
 

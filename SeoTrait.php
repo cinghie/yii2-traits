@@ -145,7 +145,7 @@ trait SeoTrait
                     'content'=>'<i class="glyphicon glyphicon-info-sign"></i>'
                 ]
             ]
-        ])->textarea(['rows' => 4]);
+        ])->textarea(['rows' => 5]);
     }
 
     /**
@@ -163,7 +163,7 @@ trait SeoTrait
                     'content'=>'<i class="glyphicon glyphicon-tags"></i>'
                 ]
             ]
-        ])->textarea(['rows' => 4]);
+        ])->textarea(['rows' => 5]);
     }
 
     /**

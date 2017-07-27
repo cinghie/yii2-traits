@@ -18,7 +18,9 @@ use kartik\widgets\FileInput;
 /**
  * Trait ImageTrait
  *
- * @property string $title
+ * @property string $image
+ * @property string $image_caption
+ * @property string image_credits
  */
 trait ImageTrait
 {

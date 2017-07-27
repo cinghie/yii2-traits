@@ -12,11 +12,12 @@
 
 namespace cinghie\traits;
 
+use Yii;
+use yii\helpers\Url;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
-use Yii;
-use yii\helpers\Url;
+use kartik\widgets\Select2;
 
 /**
  * Trait UserTrait
@@ -61,17 +62,33 @@ trait UserTrait
      * Generate User Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     * @param boolean $disabled
      * @return \kartik\form\ActiveField
      */
-    public function getUserWidget($form)
+    public function getUserWidget($form,$disabled = false)
     {
-        $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
+        if($disabled) {
 
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'user_id')->textInput([
-            'disabled' => true,
-            'value' => $value
-        ]);
+            $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
+
+            /** @var $this \yii\base\Model */
+            return $form->field($this, 'user_id')->textInput([
+                'disabled' => true,
+                'value' => $value
+            ]);
+
+        } else {
+
+            return $form->field($this, 'user_id')->widget(Select2::classname(), [
+                'data' => $this->getUsersSelect2(),
+                'addon' => [
+                    'prepend' => [
+                        'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                    ]
+                ],
+            ]);
+
+        }
     }
 
     /**

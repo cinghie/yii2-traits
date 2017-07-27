@@ -38,6 +38,35 @@ trait UserHelpersTrait
     }
 
     /**
+     * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
+     *
+     * @param int  $user_id
+     * @param string $username
+     * @return array
+     */
+    public function getUsersSelect2($user_id = 0, $username = "")
+    {
+        if(!$user_id || !$username) {
+            $user_id = Yii::$app->user->identity->id;
+            $username = Yii::$app->user->identity->username;
+        }
+
+        $users = User::find()
+            ->select(['id','username'])
+            ->where(['blocked_at' => null, 'unconfirmed_email' => null])
+            ->andWhere(['!=', 'id', $user_id])
+            ->all();
+
+        $array[$user_id] = ucwords($username);
+
+        foreach($users as $user) {
+            $array[$user['id']] = ucwords($user['username']);
+        }
+
+        return $array;
+    }
+
+    /**
      * Return an array with current User
      *
      * @internal param User $currentUser
@@ -64,30 +93,6 @@ trait UserHelpersTrait
         foreach($roles as $role) {
             $role_name = ucwords($role->name);
             $array[$role_name] = $role_name;
-        }
-
-        return $array;
-    }
-
-    /**
-     * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
-     *
-     * @param int  $user_id
-     * @param string $username
-     * @return array
-     */
-    public function getUsersSelect2($user_id,$username)
-    {
-        $users = User::find()
-            ->select(['id','username'])
-            ->where(['blocked_at' => null, 'unconfirmed_email' => null])
-            ->andWhere(['!=', 'id', $user_id])
-            ->all();
-
-        $array[$user_id] = ucwords($username);
-
-        foreach($users as $user) {
-            $array[$user['id']] = ucwords($user['username']);
         }
 
         return $array;

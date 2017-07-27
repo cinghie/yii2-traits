@@ -105,7 +105,7 @@ trait ModifiedTrait
     public function getModifiedByWidget($form)
     {
         /** @var $this \yii\base\Model */
-        $modified_by = $this->isNewRecord ? NULL : [$this->modified_by => $this->modifiedBy->username];
+        $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
         return $form->field($this, 'modified_by')->widget(Select2::classname(), [
             'data' => $modified_by,

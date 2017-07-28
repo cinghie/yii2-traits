@@ -244,7 +244,7 @@ trait ViewsHelpersTrait
     /**
      * Return action exit button
      *
-     * @internal param string $url
+     * @return string
      */
     public function getExitButton()
     {

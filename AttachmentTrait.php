@@ -30,8 +30,9 @@ trait AttachmentTrait
     public function rules()
     {
         return [
+            [['size'], 'integer', 'max' => 32],
             [['extension'], 'string', 'max' => 12],
-            [['filename','mimetype'], 'string', 'max' => 255]
+            [['alias', 'filename', 'mimetype', 'title'], 'string', 'max' => 255]
         ];
     }
 
@@ -41,9 +42,12 @@ trait AttachmentTrait
     public function attributeLabels()
     {
         return [
+            'alias' => Yii::t('traits', 'Alias'),
             'extension' => Yii::t('traits', 'Extension'),
             'filename' => Yii::t('traits', 'Filename'),
             'mimetype' => Yii::t('traits', 'MimeType'),
+            'size' => Yii::t('traits', 'Size'),
+            'title' => Yii::t('traits', 'Title'),
         ];
     }
 

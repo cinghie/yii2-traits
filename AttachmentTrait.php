@@ -30,7 +30,7 @@ trait AttachmentTrait
     public function rules()
     {
         return [
-            [['size'], 'integer', 'max' => 32],
+            [['size'], 'integer'],
             [['extension'], 'string', 'max' => 12],
             [['alias', 'filename', 'mimetype', 'title'], 'string', 'max' => 255]
         ];
@@ -61,6 +61,29 @@ trait AttachmentTrait
     public function generateMd5FileName($filename, $extension)
     {
         return md5( uniqid($filename, FALSE) ) . '.' . $extension;
+    }
+
+    /**
+     * Transform size in readly size
+     *
+     * @return string
+     */
+    public function getSize()
+    {
+        $bytes = sprintf('%u', $this->size);
+
+        if ($bytes > 0)
+        {
+            $unit = (int)log($bytes, 1024);
+            $units = array('B', 'KB', 'MB', 'GB');
+
+            if (array_key_exists($unit, $units) === true)
+            {
+                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
+            }
+        }
+
+        return $bytes;
     }
 
 }

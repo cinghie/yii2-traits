@@ -67,11 +67,12 @@ trait UserTrait
      */
     public function getUserWidget($form,$disabled = false)
     {
+        /** @var $this \yii\base\Model */
+
         if($disabled) {
 
             $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
 
-            /** @var $this \yii\base\Model */
             return $form->field($this, 'user_id')->textInput([
                 'disabled' => true,
                 'value' => $value

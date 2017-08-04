@@ -22,17 +22,15 @@ use Yii;
 trait NameAliasTrait
 {
 
-    use SeoTrait;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return array_merge(SeoTrait::rules(),[
+        return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
-        ]);
+        ];
     }
 
     /**
@@ -40,9 +38,10 @@ trait NameAliasTrait
      */
     public function attributeLabels()
     {
-        return array_merge(SeoTrait::attributeLabels(),[
+        return [
+            'alias' => Yii::t('traits', 'Alias'),
             'name' => Yii::t('traits', 'Name'),
-        ]);
+        ];
     }
 
     /**

@@ -18,6 +18,7 @@ use Yii;
  * Trait NameAliasTrait
  *
  * @property string $name
+ * @property string $alias
  */
 trait NameAliasTrait
 {
@@ -29,7 +30,8 @@ trait NameAliasTrait
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['alias'], 'unique'],
+            [['alias','name'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,6 +44,24 @@ trait NameAliasTrait
             'alias' => Yii::t('traits', 'Alias'),
             'name' => Yii::t('traits', 'Name'),
         ];
+    }
+
+    /**
+     * Generate Alias Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getAliasWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'alias', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
+                ]
+            ]
+        ] )->textInput(['maxlength' => 255]);
     }
 
     /**

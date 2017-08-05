@@ -18,7 +18,6 @@ use kartik\widgets\Select2;
 /**
  * Trait SeoTrait
  *
- * @property string $alias
  * @property string $robots
  * @property string $author
  * @property string $copyright
@@ -35,10 +34,8 @@ trait SeoTrait
     {
         return [
             [['metadesc', 'metakey'], 'string'],
-            [['alias'], 'string', 'max' => 255],
             [['author', 'copyright'], 'string', 'max' => 50],
             [['robots'], 'string', 'max' => 20],
-            [['alias'], 'unique'],
         ];
     }
 
@@ -48,31 +45,12 @@ trait SeoTrait
     public function attributeLabels()
     {
         return [
-            'alias' => Yii::t('traits', 'Alias'),
             'author' => Yii::t('traits', 'Author'),
             'copyright' => Yii::t('traits', 'Copyright'),
             'metadesc' => Yii::t('traits', 'Metadesc'),
             'metakey' => Yii::t('traits', 'Metakey'),
             'robots' => Yii::t('traits', 'Robots'),
         ];
-    }
-
-    /**
-     * Generate Alias Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getAliasWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'alias', [
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
-                ]
-            ]
-        ] )->textInput(['maxlength' => 255]);
     }
 
     /**

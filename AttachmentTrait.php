@@ -52,6 +52,60 @@ trait AttachmentTrait
     }
 
     /**
+     * Generate Extension Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getExtensionWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'extension',[
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="fa fa-file-o"></i>'
+                ]
+            ],
+        ])->textInput(['disabled' => true]);
+    }
+
+    /**
+     * Generate MimeType Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getMimeTypeWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'mimetype',[
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="fa fa-file"></i>'
+                ]
+            ],
+        ])->textInput(['disabled' => true]);
+    }
+
+    /**
+     * Generate Size Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getSizeWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'size',[
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="fa fa-balance-scale"></i>'
+                ]
+            ],
+        ])->textInput(['disabled' => true, 'value' => $this->formatSize()]);
+    }
+
+    /**
      * Generate a MD5 filename by original filename
      *
      * @param string $filename
@@ -64,11 +118,11 @@ trait AttachmentTrait
     }
 
     /**
-     * Transform size in readly size
+     * Format size in readable size
      *
      * @return string
      */
-    public function getSize()
+    public function formatSize()
     {
         $bytes = sprintf('%u', $this->size);
 

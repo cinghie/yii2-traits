@@ -106,6 +106,36 @@ trait AttachmentTrait
     }
 
     /**
+     * Generate Attachment type from mimetype
+     *
+     * return string
+     */
+    public function getAttachmentType()
+    {
+        $mimetype = explode("/",$this->mimetype);
+        $type = $mimetype[0];
+
+        return $type;
+    }
+
+    /**
+     * Get Attachmente Type Image by Type
+     *
+     * return string
+     */
+    public function getAttachmentTypeImage()
+    {
+        $type = [
+            'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
+            'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
+            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+            'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
+        ];
+
+        return $type[$this->getAttachmentType()];
+    }
+
+    /**
      * Generate a MD5 filename by original filename
      *
      * @param string $filename

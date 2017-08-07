@@ -112,10 +112,7 @@ trait AttachmentTrait
      */
     public function getAttachmentType()
     {
-        $mimetype = explode("/",$this->mimetype);
-        $type = $mimetype[0];
-
-        return $type;
+        return explode("/",$this->mimetype);
     }
 
     /**
@@ -123,16 +120,40 @@ trait AttachmentTrait
      *
      * return string
      */
-    public function getAttachmentTypeImage()
+    public function getAttachmentTypeIcon()
     {
-        $type = [
+        $applications = [
+            'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+        ];
+
+        $types = [
             'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
             'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
             'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
             'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
         ];
 
-        return $type[$this->getAttachmentType()];
+        $mimetype = $this->getAttachmentType();
+
+        foreach($types as $type => $icon)
+        {
+            if (isset($mimetype[$type])) {
+
+                return $icon;
+
+            }
+        }
+
+        foreach($applications as $application => $icon)
+        {
+            if (isset($mimetype[1][$application])) {
+
+                return $icon;
+
+            }
+        }
+
+        return '<i class="fa fa-file-o" aria-hidden="true"></i>';
     }
 
     /**

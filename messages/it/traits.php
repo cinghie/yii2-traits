@@ -9,6 +9,7 @@ return [
     "All Male" => "Tutti",
     "Are you sure you want to delete this item?" => "Vuoi cancellare questo elemento?",
     "Author" => "Autore",
+    "Browse &hellip;" => "Sfoglia",
     "Cache" => "Cache",
     "Cache has been successfully flushed" => "Cache cancellata correttamente",
     "Cache entry has been successfully deleted" => "Elemento della Cache cancellato correttamente",

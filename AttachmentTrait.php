@@ -13,6 +13,7 @@
 namespace cinghie\traits;
 
 use Yii;
+use kartik\widgets\FileInput;
 
 /**
  * Trait AttachmentTrait
@@ -49,6 +50,52 @@ trait AttachmentTrait
             'size' => Yii::t('traits', 'Size'),
             'title' => Yii::t('traits', 'Title'),
         ];
+    }
+
+    /**
+     * Generate File Ipunt Form Widget
+     *
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
+     */
+    public function getFileWidget($form)
+    {
+        /** @var $this \yii\base\Model */
+        if($this->filename) {
+
+            return $form->field($this, 'filename')->widget(FileInput::classname(), [
+                'options' => [
+                    'accept' => Yii::$app->controller->module->attachType
+                ],
+                'pluginOptions' => [
+                    'allowedFileExtensions'=>['jpg','jpeg','png'],
+                    'previewFileType' => 'image',
+                    'showPreview' => true,
+                    'showCaption' => true,
+                    'showRemove' => false,
+                    'showUpload' => true,
+                    'initialPreview' => $this->getFileUrl(),
+                    'initialPreviewAsData' => true,
+                    //'initialPreviewConfig' => $initialPreviewConfig,
+                    'overwriteInitial' => true
+                ],
+            ]);
+
+        } else {
+
+            return $form->field($this, 'filename')->widget(FileInput::classname(), [
+                'options' => [
+                    'accept' => Yii::$app->controller->module->attachType
+                ],
+                'pluginOptions' => [
+                    'previewFileType' => 'image',
+                    'showUpload'      => false,
+                    'browseLabel'     => Yii::t('traits', 'Browse &hellip;'),
+                ],
+            ]);
+
+        }
+
     }
 
     /**
@@ -123,11 +170,22 @@ trait AttachmentTrait
     public function getAttachmentTypeIcon()
     {
         $applications = [
+            'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
             'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+            'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+        ];
+
+        $texts = [
+            'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+            'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+            'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
         ];
 
         $types = [
             'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
+            'archive' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
             'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
             'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
             'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
@@ -146,12 +204,22 @@ trait AttachmentTrait
 
         foreach($applications as $application => $icon)
         {
-            if (isset($mimetype[1][$application])) {
+            if (isset($mimetype[1]) && $mimetype[1] === $application) {
 
                 return $icon;
 
             }
         }
+
+        foreach($texts as $text => $icon)
+        {
+            if (isset($mimetype[1]) && $mimetype[1] === $text) {
+
+                return $icon;
+
+            }
+        }
+
 
         return '<i class="fa fa-file-o" aria-hidden="true"></i>';
     }

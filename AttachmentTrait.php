@@ -53,6 +53,83 @@ trait AttachmentTrait
     }
 
     /**
+     * return file attached
+     *
+     * @return string
+     */
+    public function getFileUrl()
+    {
+        return Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename;
+    }
+
+    /**
+     * delete file attached
+     *
+     * @return boolean
+     */
+    public function deleteFile()
+    {
+        $file = Yii::getAlias(Yii::$app->controller->module->attachPath).$this->filename;
+
+        // check if image exists on server
+        if ( empty($this->filename) || !file_exists($file) ) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (unlink($file)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Generate a MD5 filename by original filename
+     *
+     * @param string $filename
+     * @param string $extension
+     * @return string
+     */
+    public function generateMd5FileName($filename, $extension)
+    {
+        return md5( uniqid($filename, FALSE) ) . '.' . $extension;
+    }
+
+    /**
+     * Generate Attachment type from mimetype
+     *
+     * @return string[]
+     */
+    public function getAttachmentType()
+    {
+        return explode("/",$this->mimetype);
+    }
+
+    /**
+     * Format size in readable size
+     *
+     * @return string
+     */
+    public function formatSize()
+    {
+        $bytes = sprintf('%u', $this->size);
+
+        if ($bytes > 0)
+        {
+            $unit = (int)log($bytes, 1024);
+            $units = array('B', 'KB', 'MB', 'GB');
+
+            if (array_key_exists($unit, $units) === true)
+            {
+                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
+            }
+        }
+
+        return $bytes;
+    }
+
+    /**
      * Generate File Ipunt Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
@@ -68,15 +145,17 @@ trait AttachmentTrait
                     'accept' => Yii::$app->controller->module->attachType
                 ],
                 'pluginOptions' => [
-                    'allowedFileExtensions'=>['jpg','jpeg','png'],
+                    'allowedFileExtensions' => ['pdf','jpg','jpeg','png'],
                     'previewFileType' => 'image',
                     'showPreview' => true,
                     'showCaption' => true,
-                    'showRemove' => false,
-                    'showUpload' => true,
+                    'showRemove' => true,
+                    'showUpload' => false,
                     'initialPreview' => $this->getFileUrl(),
                     'initialPreviewAsData' => true,
-                    //'initialPreviewConfig' => $initialPreviewConfig,
+                    'initialPreviewConfig' => [
+                        [ 'caption' => $this->filename, 'size' => $this->size ]
+                    ],
                     'overwriteInitial' => true
                 ],
             ]);
@@ -153,19 +232,9 @@ trait AttachmentTrait
     }
 
     /**
-     * Generate Attachment type from mimetype
-     *
-     * return string
-     */
-    public function getAttachmentType()
-    {
-        return explode("/",$this->mimetype);
-    }
-
-    /**
      * Get Attachmente Type Image by Type
      *
-     * return string
+     * @return string
      */
     public function getAttachmentTypeIcon()
     {
@@ -174,6 +243,7 @@ trait AttachmentTrait
             'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
             'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
             'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+            'vnd.ms-excel' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
         ];
 
         $texts = [
@@ -187,7 +257,6 @@ trait AttachmentTrait
             'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
             'archive' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
             'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
-            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
             'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
         ];
 
@@ -195,68 +264,26 @@ trait AttachmentTrait
 
         foreach($types as $type => $icon)
         {
-            if (isset($mimetype[$type])) {
-
+            if (isset($mimetype[0]) && $mimetype[0] === $type) {
                 return $icon;
-
             }
         }
 
         foreach($applications as $application => $icon)
         {
             if (isset($mimetype[1]) && $mimetype[1] === $application) {
-
                 return $icon;
-
             }
         }
 
         foreach($texts as $text => $icon)
         {
             if (isset($mimetype[1]) && $mimetype[1] === $text) {
-
                 return $icon;
-
             }
         }
-
 
         return '<i class="fa fa-file-o" aria-hidden="true"></i>';
-    }
-
-    /**
-     * Generate a MD5 filename by original filename
-     *
-     * @param string $filename
-     * @param string $extension
-     * @return string
-     */
-    public function generateMd5FileName($filename, $extension)
-    {
-        return md5( uniqid($filename, FALSE) ) . '.' . $extension;
-    }
-
-    /**
-     * Format size in readable size
-     *
-     * @return string
-     */
-    public function formatSize()
-    {
-        $bytes = sprintf('%u', $this->size);
-
-        if ($bytes > 0)
-        {
-            $unit = (int)log($bytes, 1024);
-            $units = array('B', 'KB', 'MB', 'GB');
-
-            if (array_key_exists($unit, $units) === true)
-            {
-                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
-            }
-        }
-
-        return $bytes;
     }
 
 }

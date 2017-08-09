@@ -47,6 +47,26 @@ trait TitleAliasTrait
     }
 
     /**
+     * Generate URL alias by string
+     *
+     * @param string $string
+     * @return string
+     */
+    public function generateAlias($string)
+    {
+        // remove any '-' from the string they will be used as concatonater
+        $string = str_replace(array('-','_'), ' ', $string);
+
+        // remove any duplicate whitespace, and ensure all characters are alphanumeric
+        $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
+
+        // lowercase and trim
+        $string = trim(strtolower($string));
+
+        return $string;
+    }
+
+    /**
      * Generate Alias Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form

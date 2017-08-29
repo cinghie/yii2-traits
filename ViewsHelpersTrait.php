@@ -252,6 +252,18 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return action send button
+     *
+     * @return string
+     */
+    public function getSendButton()
+    {
+        return '<div class="pull-right text-center" style="margin-right: 25px;">'.
+            Html::submitButton('<i class="fa fa-paper-plane text-orange"></i>', ['value' => $this->id, 'class' => 'btn btn-mini btn-save']).
+            '<div>'.Yii::t('traits','Send').'</div></div>';
+    }
+
+    /**
      * Return standard button
      *
      * @param string $icon

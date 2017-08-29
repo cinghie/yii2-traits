@@ -56,6 +56,7 @@ return [
     "Search" => "Cerca",
     "Select only 1 item" => "Seleziona solo 1 elemento!",
     "Select at least one item" => "Seleziona almeno 1 elemento!",
+    "Send" => "Invia",
     "Settings" => "Impostazioni",
     "Size" => "Dimensione",
     "State" => "Stato",

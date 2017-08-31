@@ -258,9 +258,25 @@ trait ViewsHelpersTrait
      */
     public function getSendButton()
     {
-        return '<div class="pull-right text-center" style="margin-right: 25px;">'.
-            Html::submitButton('<i class="fa fa-paper-plane text-orange"></i>', ['value' => $this->id, 'class' => 'btn btn-mini btn-save']).
-            '<div>'.Yii::t('traits','Send').'</div></div>';
+        return $this->getStandardButton('fa fa-paper-plane text-orange', Yii::t('traits','Send'), '#', ['class' => 'btn btn-mini btn-send']);
+    }
+
+    /**
+     * Return javascript for action deactive button
+     *
+     * @return string
+     */
+    public function getSendButtonJavascript()
+    {
+        return 'var selectedId = '.$this->id.'
+
+        $("a.btn-send").click(function() {
+            $.ajax({
+                type: \'POST\',
+                url : "'.Url::to(['send']).'?id="+selectedId,
+                data : {id: selectedId},
+            });
+        });';
     }
 
     /**

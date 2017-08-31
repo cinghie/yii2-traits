@@ -271,11 +271,15 @@ trait ViewsHelpersTrait
         return 'var selectedId = '.$this->id.'
 
         $("a.btn-send").click(function() {
-            $.ajax({
-                type: \'POST\',
-                url : "'.Url::to(['send']).'?id="+selectedId,
-                data : {id: selectedId},
-            });
+        if (confirm(\'Are you sure you want to send?\')) {
+                $.ajax({
+                    type: \'POST\',
+                    url : "'.Url::to(['send']).'?id="+selectedId,
+                    data : {id: selectedId},
+                    success: function(result){
+                    alert(result);
+                }});
+            }
         });';
     }
 

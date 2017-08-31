@@ -71,11 +71,14 @@ trait UserTrait
 
         if($disabled) {
 
-            $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
-
-            return $form->field($this, 'user_id')->textInput([
+            return $form->field($this, 'user_id')->widget(Select2::classname(), [
+                'data' => $this->getUsersSelect2(),
                 'disabled' => true,
-                'value' => $value
+                'addon' => [
+                    'prepend' => [
+                        'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                    ]
+                ],
             ]);
 
         } else {

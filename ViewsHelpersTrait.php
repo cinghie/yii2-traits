@@ -36,12 +36,13 @@ trait ViewsHelpersTrait
     /**
      * Return action update button
      *
+     * @param int $id
      * @return string
      */
     public function getUpdateButton($id = 0)
     {
         if($id) {
-            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), Url::to(['update', 'id' => $id]), ['class' => 'btn btn-mini btn-update']);
+            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), ['update', 'id' => $id], ['class' => 'btn btn-mini btn-update']);
         } else {
             return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
         }
@@ -72,6 +73,7 @@ trait ViewsHelpersTrait
     /**
      * Return action delete button
      *
+     * @param int $id
      * @return string
      */
     public function getDeleteButton($id = 0)
@@ -154,6 +156,7 @@ trait ViewsHelpersTrait
     /**
      * Return action active button
      *
+     * @param int $id
      * @return string
      */
     public function getActiveButton($id = 0)
@@ -199,6 +202,7 @@ trait ViewsHelpersTrait
     /**
      * Return action deactive button
      *
+     * @param int $id
      * @return string
      */
     public function getDeactiveButton($id = 0)
@@ -248,7 +252,7 @@ trait ViewsHelpersTrait
      */
     public function getResetButton()
     {
-        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), Url::to(['index']), ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
+        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), ['index'], ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
     }
 
     /**
@@ -270,7 +274,7 @@ trait ViewsHelpersTrait
      */
     public function getCancelButton()
     {
-        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), Url::to(['']));
+        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), ['']);
     }
 
     /**
@@ -280,7 +284,7 @@ trait ViewsHelpersTrait
      */
     public function getExitButton()
     {
-        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), Url::to('index'));
+        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), ['index']);
     }
 
     /**
@@ -320,7 +324,7 @@ trait ViewsHelpersTrait
      *
      * @param string $icon
      * @param string $title
-     * @param string $url
+     * @param string | array $url
      * @param array $class
      * @return string
      */
@@ -330,74 +334,6 @@ trait ViewsHelpersTrait
                     Html::a('<i class="'.$icon.'"></i>', $url , $class).'
                     <div>'.$title.'</div>
                 </div>';
-    }
-
-    /**
-     * Return Javascript for Button Actions
-     *
-     * @param array $actions
-     * @return string
-     */
-    public function getStandardButtonJavascript($actions)
-    {
-        $javascript = "$(document).ready(function() {";
-
-        foreach ($actions as $action)
-        {
-
-        }
-
-        $javascript .= "});";
-
-        return '
-            $(document).ready(function()
-            {
-                $("a.btn-update").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else if(selectedId.length>1){
-                        alert("'.Yii::t("traits", "Select only 1 item").'");
-                    } else {
-                        var url = "'.Url::to(['/articles/categories/update']).'?id="+selectedId[0];
-                        window.location.href= url;
-                    }
-                });
-                $("a.btn-delete").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else {
-                        var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
-        
-                        if (choose == true) {
-                            $.ajax({
-                                type: \'POST\',
-                                url : "'.Url::to(['/articles/categories/deletemultiple']).'?id="+selectedId,
-                                data : {ids: selectedId},
-                                success : function() {
-                                    $.pjax.reload({container:"#w1"});
-                                }
-                            });
-                        }
-                    }
-                });
-                $("a.btn-preview").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else if(selectedId.length>1){
-                        alert("'.Yii::t("traits", "Select only 1 item").'");
-                    } else {
-                        var url = "'.Url::to(['/articles/categories/view']).'?id="+selectedId[0];
-                        window.open(url,"_blank");
-                    }
-                });
-            });
-        ';
     }
 
     /**

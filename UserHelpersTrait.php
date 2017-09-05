@@ -44,7 +44,7 @@ trait UserHelpersTrait
      * @param string $username
      * @return array
      */
-    public function getUsersSelect2($user_id = 0, $username = "")
+    public function getUsersSelect2($user_id = 0, $username = '')
     {
         if(!$user_id || !$username) {
             $user_id = Yii::$app->user->identity->id;

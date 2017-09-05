@@ -12,12 +12,12 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use dektrium\user\models\User;
 use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
-use Yii;
 use yii\helpers\Url;
 
 /**
@@ -71,9 +71,9 @@ trait ModifiedTrait
     public function getModifiedWidget($form)
     {
         /** @var $this \yii\base\Model */
-        $modified = $this->isNewRecord ? "0000-00-00 00:00:00" : ($this->modified ? $this->modified : "0000-00-00 00:00:00");
+        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
-        return $form->field($this, 'modified')->widget(DateTimePicker::classname(), [
+        return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
             'disabled' => true,
             'options' => [
                 'value' => $modified,
@@ -107,7 +107,7 @@ trait ModifiedTrait
         /** @var $this \yii\base\Model */
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
-        return $form->field($this, 'modified_by')->widget(Select2::classname(), [
+        return $form->field($this, 'modified_by')->widget(Select2::className(), [
             'data' => $modified_by,
             'addon' => [
                 'prepend' => [
@@ -121,11 +121,12 @@ trait ModifiedTrait
      * Generate GridView for ModifiedBy
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getModifiedByGridView()
     {
         $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
-        $modifiedBy = isset($this->modifiedBy->username) ? $this->modifiedBy->username : "";
+        $modifiedBy = isset($this->modifiedBy->username) ? $this->modifiedBy->username : '';
 
         if($this->modified_by) {
             return Html::a($modifiedBy,$url);
@@ -138,6 +139,7 @@ trait ModifiedTrait
      * Generate DetailView for ModifiedBy
      *
      * @return array
+     * @throws \yii\base\InvalidParamException
      */
     public function getModifiedByDetailView()
     {
@@ -161,7 +163,7 @@ trait ModifiedTrait
         /** @var User $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-        if ($currentUser->id == $this->modified_by) {
+        if ($currentUser->id === $this->modified_by) {
             return true;
         } else {
             return false;
@@ -176,7 +178,7 @@ trait ModifiedTrait
      */
     public function isUserModifier($user_id)
     {
-        if ($user_id == $this->modified_by) {
+        if ($user_id === $this->modified_by) {
             return true;
         } else {
             return false;

@@ -30,7 +30,7 @@ trait ViewsHelpersTrait
      */
     public function getCreateButton()
     {
-        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), Url::to(['create']));
+        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), ['create']);
     }
 
     /**
@@ -53,6 +53,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getUpdateButtonJavascript($w)
     {
@@ -60,9 +61,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else if(selectedId.length>1){
-                alert("'.Yii::t("traits", "Select only 1 item").'");
+                alert("'.Yii::t('traits', 'Select only 1 item').'");
             } else {
                 var url = "'.Url::to(['update']).'?id="+selectedId[0];
                 window.location.href= url;
@@ -96,6 +97,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getDeleteButtonJavascript($w)
     {
@@ -103,9 +105,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
 
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
-                var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
+                var choose = confirm("'.Yii::t('traits', 'Do you want delete selected items?').'");
 
                 if (choose == true) {
                     $.ajax({
@@ -136,6 +138,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getPreviewButtonJavascript($w)
     {
@@ -143,9 +146,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
 
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else if(selectedId.length>1){
-                alert("'.Yii::t("traits", "Select only 1 item").'");
+                alert("'.Yii::t('traits', 'Select only 1 item').'");
             } else {
                 var url = "'.Url::to(['view']).'?id="+selectedId[0];
                 window.open(url,"_blank");
@@ -178,6 +181,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getActiveButtonJavascript($w)
     {
@@ -185,7 +189,7 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
@@ -224,6 +228,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getDeactiveButtonJavascript($w)
     {
@@ -231,7 +236,7 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
@@ -301,6 +306,7 @@ trait ViewsHelpersTrait
      * Return javascript for action deactive button
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getSendButtonJavascript()
     {

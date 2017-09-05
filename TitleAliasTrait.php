@@ -47,23 +47,21 @@ trait TitleAliasTrait
     }
 
     /**
-     * Generate URL alias by string
+     * Generate Title Form Widget
      *
-     * @param string $string
-     * @return string
+     * @param \kartik\widgets\ActiveForm $form
+     * @return \kartik\form\ActiveField
      */
-    public function generateAlias($string)
+    public function getTitleWidget($form)
     {
-        // remove any '-' from the string they will be used as concatonater
-        $string = str_replace(array('-','_'), ' ', $string);
-
-        // remove any duplicate whitespace, and ensure all characters are alphanumeric
-        $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
-
-        // lowercase and trim
-        $string = trim(strtolower($string));
-
-        return $string;
+        /** @var $this \yii\base\Model */
+        return $form->field($this, 'title',[
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
+                ]
+            ],
+        ])->textInput(['maxlength' => true]);
     }
 
     /**
@@ -85,21 +83,23 @@ trait TitleAliasTrait
     }
 
     /**
-     * Generate Title Form Widget
+     * Generate URL alias by string
      *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
+     * @param string $string
+     * @return string
      */
-    public function getTitleWidget($form)
+    public function generateAlias($string)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'title',[
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
-                ]
-            ],
-        ])->textInput(['maxlength' => true]);
+        // remove any '-' from the string they will be used as concatonater
+        $string = str_replace(array('-','_'), ' ', $string);
+
+        // remove any duplicate whitespace, and ensure all characters are alphanumeric
+        $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
+
+        // lowercase and trim
+        $string = trim(strtolower($string));
+
+        return $string;
     }
 
 }

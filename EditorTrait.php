@@ -35,22 +35,22 @@ trait EditorTrait
      * @return \kartik\form\ActiveField
      * @internal param string $editor
      */
-    public function getEditorWidget($form,$field,$requestEditor = "")
+    public function getEditorWidget($form,$field,$requestEditor = '')
     {
-        $editor = $requestEditor != "" ? $requestEditor : Yii::$app->controller->module->editor;
+        $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
 
         switch ($editor)
         {
-            case "ckeditor":
+            case 'ckeditor':
                 return $this->getCKEditorWidget($form,$field);
                 break;
-            case "imperavi":
+            case 'imperavi':
                 return $this->getImperaviWidget($form,$field);
                 break;
-            case "markdown":
+            case 'markdown':
                 return $this->getMarkdownWidget($form,$field);
                 break;
-            case "tinymce":
+            case 'tinymce':
                 return $this->getTinyMCEWidget($form,$field);
                 break;
             default:
@@ -88,11 +88,11 @@ trait EditorTrait
             'options' => ['rows' => 6],
             'clientOptions' => [
                 'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
+                    'advlist autolink lists link charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table contextmenu paste'
                 ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
             ]
         ]);
     }
@@ -130,7 +130,7 @@ trait EditorTrait
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, $field)->widget(
-            MarkdownEditor::classname(),
+            MarkdownEditor::className(),
             ['height' => 300, 'encodeLabels' => true]
         );
     }

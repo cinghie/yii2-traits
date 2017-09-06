@@ -71,9 +71,9 @@ trait CreatedTrait
     public function getCreatedWidget($form)
     {
         /** @var $this \yii\base\Model */
-        $created = $this->isNewRecord ? date("Y-m-d H:i:s") : $this->created;
+        $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
-        return $form->field($this, 'created')->widget(DateTimePicker::classname(), [
+        return $form->field($this, 'created')->widget(DateTimePicker::className(), [
             'options' => [
                 'value' => $created,
             ],
@@ -106,7 +106,7 @@ trait CreatedTrait
         /** @var $this \yii\base\Model */
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
-        return $form->field($this, 'created_by')->widget(Select2::classname(), [
+        return $form->field($this, 'created_by')->widget(Select2::className(), [
             'data' => $created_by,
             'addon' => [
                 'prepend' => [
@@ -120,11 +120,12 @@ trait CreatedTrait
      * Generate GridView for CreatedBy
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getCreatedByGridView()
     {
         $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
-        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : "";
+        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : '';
 
         if($this->created_by) {
             return Html::a($createdBy,$url);
@@ -137,6 +138,7 @@ trait CreatedTrait
      * Generate DetailView for CreatedBy
      *
      * @return array
+     * @throws \yii\base\InvalidParamException
      */
     public function getCreatedByDetailView()
     {
@@ -161,7 +163,7 @@ trait CreatedTrait
         /** @var User $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-        if ($currentUser->id == $this->created_by) {
+        if ($currentUser->id === $this->created_by) {
             return true;
         } else {
             return false;
@@ -176,7 +178,7 @@ trait CreatedTrait
      */
     public function isUserCreator($user_id)
     {
-        if ($user_id == $this->created_by) {
+        if ($user_id === $this->created_by) {
             return true;
         } else {
             return false;

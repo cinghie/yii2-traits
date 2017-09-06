@@ -8,6 +8,7 @@ return [
     "All Female" => "Tutte",
     "All Male" => "Tutti",
     "Are you sure you want to delete this item?" => "Vuoi cancellare questo elemento?",
+    "Are you sure you want to send this item?" => "Vuoi inviare questo elemento?",
     "Author" => "Autore",
     "Browse &hellip;" => "Sfoglia",
     "Cache" => "Cache",

@@ -56,7 +56,7 @@ trait AccessTrait
     {
         /** @var \yii\base\Model $this */
 
-        return $form->field($this, 'access')->widget(Select2::classname(), [
+        return $form->field($this, 'access')->widget(Select2::className(), [
             'data' => $this->getRolesSelect2(),
             'addon' => [
                 'prepend' => [
@@ -74,7 +74,7 @@ trait AccessTrait
      */
     public function getAccessGridView()
     {
-        $url = urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]));;
+        $url = urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]));
 
         return Html::a($this->access,$url);
     }
@@ -83,6 +83,7 @@ trait AccessTrait
      * Generate DetailView Access
      *
      * @return array
+     * @throws \yii\base\InvalidParamException
      */
     public function getAccessDetailView()
     {

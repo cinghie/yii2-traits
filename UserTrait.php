@@ -71,16 +71,21 @@ trait UserTrait
 
         if($disabled) {
 
-            $value = $this->isNewRecord && !$this->user_id ? Yii::t('traits', 'Nobody') : $this->user->username;
+            $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
 
-            return $form->field($this, 'user_id')->textInput([
+            return $form->field($this, 'user_id')->widget(Select2::className(), [
                 'disabled' => true,
-                'value' => $value
+                'value' => $value,
+                'addon' => [
+                    'prepend' => [
+                        'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                    ]
+                ],
             ]);
 
         } else {
 
-            return $form->field($this, 'user_id')->widget(Select2::classname(), [
+            return $form->field($this, 'user_id')->widget(Select2::className(), [
                 'data' => $this->getUsersSelect2(),
                 'addon' => [
                     'prepend' => [
@@ -96,6 +101,7 @@ trait UserTrait
      * Generate GridView for User
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getUserGridView()
     {
@@ -111,6 +117,7 @@ trait UserTrait
      * Generate DetailView for User
      *
      * @return array
+     * @throws \yii\base\InvalidParamException
      */
     public function getUserDetailView()
     {

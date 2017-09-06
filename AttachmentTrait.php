@@ -53,83 +53,6 @@ trait AttachmentTrait
     }
 
     /**
-     * return file attached
-     *
-     * @return string
-     */
-    public function getFileUrl()
-    {
-        return Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename;
-    }
-
-    /**
-     * delete file attached
-     *
-     * @return boolean
-     */
-    public function deleteFile()
-    {
-        $file = Yii::getAlias(Yii::$app->controller->module->attachPath).$this->filename;
-
-        // check if image exists on server
-        if ( empty($this->filename) || !file_exists($file) ) {
-            return false;
-        }
-
-        // check if uploaded file can be deleted on server
-        if (unlink($file)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Generate a MD5 filename by original filename
-     *
-     * @param string $filename
-     * @param string $extension
-     * @return string
-     */
-    public function generateMd5FileName($filename, $extension)
-    {
-        return md5( uniqid($filename, FALSE) ) . '.' . $extension;
-    }
-
-    /**
-     * Generate Attachment type from mimetype
-     *
-     * @return string[]
-     */
-    public function getAttachmentType()
-    {
-        return explode("/",$this->mimetype);
-    }
-
-    /**
-     * Format size in readable size
-     *
-     * @return string
-     */
-    public function formatSize()
-    {
-        $bytes = sprintf('%u', $this->size);
-
-        if ($bytes > 0)
-        {
-            $unit = (int)log($bytes, 1024);
-            $units = array('B', 'KB', 'MB', 'GB');
-
-            if (array_key_exists($unit, $units) === true)
-            {
-                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
-            }
-        }
-
-        return $bytes;
-    }
-
-    /**
      * Generate File Ipunt Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
@@ -140,7 +63,7 @@ trait AttachmentTrait
         /** @var $this \yii\base\Model */
         if($this->filename) {
 
-            return $form->field($this, 'filename')->widget(FileInput::classname(), [
+            return $form->field($this, 'filename')->widget(FileInput::className(), [
                 'options' => [
                     'accept' => Yii::$app->controller->module->attachType
                 ],
@@ -162,7 +85,7 @@ trait AttachmentTrait
 
         } else {
 
-            return $form->field($this, 'filename')->widget(FileInput::classname(), [
+            return $form->field($this, 'filename')->widget(FileInput::className(), [
                 'options' => [
                     'accept' => Yii::$app->controller->module->attachType
                 ],
@@ -229,6 +152,85 @@ trait AttachmentTrait
                 ]
             ],
         ])->textInput(['disabled' => true, 'value' => $this->formatSize()]);
+    }
+
+    /**
+     * return file attached
+     *
+     * @return string
+     * @throws \yii\base\InvalidParamException
+     */
+    public function getFileUrl()
+    {
+        return Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename;
+    }
+
+    /**
+     * delete file attached
+     *
+     * @return boolean
+     * @throws \yii\base\InvalidParamException
+     */
+    public function deleteFile()
+    {
+        $file = Yii::getAlias(Yii::$app->controller->module->attachPath).$this->filename;
+
+        // check if image exists on server
+        if ( empty($this->filename) || !file_exists($file) ) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (unlink($file)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Generate Attachment type from mimetype
+     *
+     * @return string[]
+     */
+    public function getAttachmentType()
+    {
+        return explode('/',$this->mimetype);
+    }
+
+    /**
+     * Format size in readable size
+     *
+     * @return string
+     */
+    public function formatSize()
+    {
+        $bytes = sprintf('%u', $this->size);
+
+        if ($bytes > 0)
+        {
+            $unit = (int)log($bytes, 1024);
+            $units = array('B', 'KB', 'MB', 'GB');
+
+            if (array_key_exists($unit, $units) === true)
+            {
+                return sprintf('%d %s', $bytes / (1024 ** $unit), $units[$unit]);
+            }
+        }
+
+        return $bytes;
+    }
+
+    /**
+     * Generate a MD5 filename by original filename
+     *
+     * @param string $filename
+     * @param string $extension
+     * @return string
+     */
+    public function generateMd5FileName($filename, $extension)
+    {
+        return md5( uniqid($filename, FALSE) ) . '.' . $extension;
     }
 
     /**

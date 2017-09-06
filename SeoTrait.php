@@ -62,7 +62,7 @@ trait SeoTrait
     public function getRobotsWidget($form)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, 'robots')->widget(Select2::classname(), [
+        return $form->field($this, 'robots')->widget(Select2::className(), [
             'data' => $this->getRobotsOptions(),
             'addon' => [
                 'prepend' => [
@@ -152,10 +152,10 @@ trait SeoTrait
     public function getRobotsOptions()
     {
         return [
-            "index, follow" => "index, follow",
-            "no index, no follow" => "no index, no follow",
-            "no index, follow" => "no index, follow",
-            "index, no follow" => "index, no follow"
+            'index, follow' => 'index, follow',
+            'no index, no follow' => 'no index, no follow',
+            'no index, follow' => 'no index, follow',
+            'index, no follow' => 'index, no follow'
         ];
     }
 

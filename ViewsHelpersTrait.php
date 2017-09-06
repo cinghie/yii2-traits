@@ -30,17 +30,22 @@ trait ViewsHelpersTrait
      */
     public function getCreateButton()
     {
-        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), Url::to(['create']));
+        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), ['create']);
     }
 
     /**
      * Return action update button
      *
+     * @param int $id
      * @return string
      */
-    public function getUpdateButton()
+    public function getUpdateButton($id = 0)
     {
-        return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
+        if($id) {
+            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), ['update', 'id' => $id], ['class' => 'btn btn-mini btn-update']);
+        } else {
+            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
+        }
     }
 
     /**
@@ -48,6 +53,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getUpdateButtonJavascript($w)
     {
@@ -55,9 +61,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else if(selectedId.length>1){
-                alert("'.Yii::t("traits", "Select only 1 item").'");
+                alert("'.Yii::t('traits', 'Select only 1 item').'");
             } else {
                 var url = "'.Url::to(['update']).'?id="+selectedId[0];
                 window.location.href= url;
@@ -68,11 +74,22 @@ trait ViewsHelpersTrait
     /**
      * Return action delete button
      *
+     * @param int $id
      * @return string
      */
-    public function getDeleteButton()
+    public function getDeleteButton($id = 0)
     {
-        return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), '#', ['class' => 'btn btn-mini btn-delete']);
+        if($id) {
+            return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), ['delete', 'id' => $id], [
+                'class' => 'btn btn-mini btn-delete',
+                'data' => [
+                    'confirm' => Yii::t('traits', 'Do you want delete selected items?'),
+                    'method' => 'post',
+                ],
+            ]);
+        } else {
+            return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), '#', ['class' => 'btn btn-mini btn-delete']);
+        }
     }
 
     /**
@@ -80,6 +97,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getDeleteButtonJavascript($w)
     {
@@ -87,9 +105,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
 
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
-                var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
+                var choose = confirm("'.Yii::t('traits', 'Do you want delete selected items?').'");
 
                 if (choose == true) {
                     $.ajax({
@@ -120,6 +138,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getPreviewButtonJavascript($w)
     {
@@ -127,9 +146,9 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
 
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else if(selectedId.length>1){
-                alert("'.Yii::t("traits", "Select only 1 item").'");
+                alert("'.Yii::t('traits', 'Select only 1 item').'");
             } else {
                 var url = "'.Url::to(['view']).'?id="+selectedId[0];
                 window.open(url,"_blank");
@@ -140,11 +159,21 @@ trait ViewsHelpersTrait
     /**
      * Return action active button
      *
+     * @param int $id
      * @return string
      */
-    public function getActiveButton()
+    public function getActiveButton($id = 0)
     {
-        return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), '#', ['class' => 'btn btn-mini btn-active']);
+        if($id) {
+            return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), ['changestate', 'id' => $id], [
+                'class' => 'btn btn-mini btn-active',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]);
+        } else {
+            return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), '#', ['class' => 'btn btn-mini btn-active']);
+        }
     }
 
     /**
@@ -152,6 +181,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getActiveButtonJavascript($w)
     {
@@ -159,7 +189,7 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
@@ -176,11 +206,21 @@ trait ViewsHelpersTrait
     /**
      * Return action deactive button
      *
+     * @param int $id
      * @return string
      */
-    public function getDeactiveButton()
+    public function getDeactiveButton($id = 0)
     {
-        return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), '#', ['class' => 'btn btn-mini btn-deactive']);
+        if($id) {
+            return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), ['changestate', 'id' => $id], [
+                'class' => 'btn btn-mini btn-deactive',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]);
+        } else {
+            return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), '#', ['class' => 'btn btn-mini btn-deactive']);
+        }
     }
 
     /**
@@ -188,6 +228,7 @@ trait ViewsHelpersTrait
      *
      * @param string $w
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getDeactiveButtonJavascript($w)
     {
@@ -195,7 +236,7 @@ trait ViewsHelpersTrait
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
             if(selectedId.length == 0) {
-                alert("'.Yii::t("traits", "Select at least one item").'");
+                alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
@@ -216,7 +257,7 @@ trait ViewsHelpersTrait
      */
     public function getResetButton()
     {
-        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), Url::to(['index']), ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
+        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), ['index'], ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
     }
 
     /**
@@ -238,7 +279,7 @@ trait ViewsHelpersTrait
      */
     public function getCancelButton()
     {
-        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), Url::to(['']));
+        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), ['']);
     }
 
     /**
@@ -248,7 +289,7 @@ trait ViewsHelpersTrait
      */
     public function getExitButton()
     {
-        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), Url::to('index'));
+        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), ['index']);
     }
 
     /**
@@ -265,13 +306,14 @@ trait ViewsHelpersTrait
      * Return javascript for action deactive button
      *
      * @return string
+     * @throws \yii\base\InvalidParamException
      */
     public function getSendButtonJavascript()
     {
         return 'var selectedId = '.$this->id.'
 
         $("a.btn-send").click(function() {
-        if (confirm(\'Are you sure you want to send?\')) {
+        if (confirm("'.Yii::t('traits','Are you sure you want to send this item?').'")) {
                 $.ajax({
                     type: \'POST\',
                     url : "'.Url::to(['send']).'?id="+selectedId,
@@ -288,7 +330,7 @@ trait ViewsHelpersTrait
      *
      * @param string $icon
      * @param string $title
-     * @param string $url
+     * @param string | array $url
      * @param array $class
      * @return string
      */
@@ -298,74 +340,6 @@ trait ViewsHelpersTrait
                     Html::a('<i class="'.$icon.'"></i>', $url , $class).'
                     <div>'.$title.'</div>
                 </div>';
-    }
-
-    /**
-     * Return Javascript for Button Actions
-     *
-     * @param array $actions
-     * @return string
-     */
-    public function getStandardButtonJavascript($actions)
-    {
-        $javascript = "$(document).ready(function() {";
-
-        foreach ($actions as $action)
-        {
-
-        }
-
-        $javascript .= "});";
-
-        return '
-            $(document).ready(function()
-            {
-                $("a.btn-update").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else if(selectedId.length>1){
-                        alert("'.Yii::t("traits", "Select only 1 item").'");
-                    } else {
-                        var url = "'.Url::to(['/articles/categories/update']).'?id="+selectedId[0];
-                        window.location.href= url;
-                    }
-                });
-                $("a.btn-delete").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else {
-                        var choose = confirm("'.Yii::t("traits", "Do you want delete selected items?").'");
-        
-                        if (choose == true) {
-                            $.ajax({
-                                type: \'POST\',
-                                url : "'.Url::to(['/articles/categories/deletemultiple']).'?id="+selectedId,
-                                data : {ids: selectedId},
-                                success : function() {
-                                    $.pjax.reload({container:"#w1"});
-                                }
-                            });
-                        }
-                    }
-                });
-                $("a.btn-preview").click(function() {
-                    var selectedId = $("#w1").yiiGridView("getSelectedRows");
-        
-                    if(selectedId.length == 0) {
-                        alert("'.Yii::t("traits", "Select at least one item").'");
-                    } else if(selectedId.length>1){
-                        alert("'.Yii::t("traits", "Select only 1 item").'");
-                    } else {
-                        var url = "'.Url::to(['/articles/categories/view']).'?id="+selectedId[0];
-                        window.open(url,"_blank");
-                    }
-                });
-            });
-        ';
     }
 
     /**

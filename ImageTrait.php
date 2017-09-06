@@ -59,7 +59,7 @@ trait ImageTrait
     public function getImageWidget()
     {
         /** @var $this \yii\base\Model */
-        $image = "<label class=\"control-label\" for=\"items-photo_name\">".Yii::t('traits','Image')."</label>";
+        $image = '<label class="control-label" for="items-photo_name">' .Yii::t('traits','Image'). '</label>';
         $image .= FileInput::widget([
             'model' => $this,
             'attribute' => 'image',

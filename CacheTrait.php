@@ -26,6 +26,7 @@ trait CacheTrait
 
     /**
      * @return mixed
+     * @throws \yii\base\ViewNotFoundException
      * @throws \yii\base\InvalidCallException
      */
     public function actionCache()
@@ -38,6 +39,8 @@ trait CacheTrait
     /**
      * @param $id
      * @return \yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\HttpException
      */
     public function actionFlushCache($id)
     {
@@ -52,13 +55,15 @@ trait CacheTrait
      * @param $id
      * @param $key
      * @return \yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\HttpException
      */
     public function actionFlushCacheKey($id, $key)
     {
         /** @var $this yii\web\Response */
         if ($this->getCache($id)->delete($key)) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
-        };
+        }
         return $this->redirect(['cache']);
     }
 
@@ -67,6 +72,8 @@ trait CacheTrait
      * @param $tag
      *
      * @return \yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\HttpException
      */
     public function actionFlushCacheTag($id, $tag)
     {
@@ -79,6 +86,7 @@ trait CacheTrait
     /**
      * @param $id
      * @return \yii\caching\Cache|null
+     * @throws \yii\base\InvalidConfigException
      * @throws HttpException
      */
     protected function getCache($id)
@@ -99,7 +107,7 @@ trait CacheTrait
     {
         $caches = [];
         $components = Yii::$app->getComponents();
-        $findAll = ($cachesNames == []);
+        $findAll = ($cachesNames === []);
         foreach ($components as $name => $component) {
             if (!$findAll && !in_array($name, $cachesNames)) {
                 continue;

@@ -117,7 +117,16 @@ Add in your model:
     - extension: string extension of Attachment
     - filename: string filename of Attachment
     - mimetype: string mimetype of Attachment
+    - function getFileWidget($form): Generate File Ipunt Form Widget
+    - function getExtensionWidget($form): Generate Extension Form Widget
+    - function getMimeTypeWidget($form): Generate MimeType Form Widget
+    - function getSizeWidget($form): Generate Size Form Widget
+    - function getFileUrl(): return file attached
+    - function deleteFile(): delete file attached
+    - function getAttachmentType(): Generate Attachment type from mimetype
+    - function formatSize(): Format size in readable size
     - function generateMd5FileName($filename, $extension): Generate a MD5 filename by original filename
+    - function getAttachmentTypeIcon(): Get Attachmente Type Image by Type
 
 ### CacheTrait
 
@@ -155,6 +164,20 @@ Add in your model:
     - function getTinyMCEWidget($form,$field): Get a TinyMCE Editor Widget
     - function getImperaviWidget($form,$field): Get a Imperavi Editor Widget
     - function getNoEditorWidget($form,$field): Get a No-Editor Widget
+
+### ImageTrait
+
+Add in your model: 
+
+    - image: string name of the image
+    - image_caption: string caption of the image
+    - image_credits: string credits of the image
+    - function getImageWidget(): Generate Image Form Widget
+    - function getImageCaptionWidget($form): Generate Image Caption Form Widget
+    - function getImageCreditsWidget($form): Generate Image Credits Form Widget
+    - function getUploadMaxSize(): Get Upload Max Size
+    - function getImagesAllowed(): Get Allowed images
+    - function getImagesAccept(): Get Allowed images in Accept Format
     
 ### LanguageTrait
 

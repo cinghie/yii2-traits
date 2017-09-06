@@ -30,9 +30,10 @@ trait ImageTrait
      */
     public function rules()
     {
+        $getimageallowed = ImageTrait::getImagesAllowed();
         return [
             [['image_caption', 'image_credits'], 'string', 'max' => 255],
-            [['image'], 'file', 'extensions' => $this->getImagesAllowed(),],
+            [['image'], 'file', 'extensions' => $getimageallowed,],
             [['image'], 'safe'],
         ];
     }

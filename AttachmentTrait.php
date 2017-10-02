@@ -214,7 +214,7 @@ trait AttachmentTrait
 
             if (array_key_exists($unit, $units) === true)
             {
-                return sprintf('%d %s', $bytes / (1024 ** $unit), $units[$unit]);
+                return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
             }
         }
 

@@ -13,18 +13,18 @@
 namespace cinghie\traits;
 
 use Yii;
-use yii\helpers\Url;
 use dektrium\user\models\User;
 use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use yii\helpers\Url;
 
 /**
  * Trait CreatedTrait
  *
  * @property string $created
- * @property int $created_by
+ * @property integer $created_by
  * @property User $createdBy
  */
 trait CreatedTrait

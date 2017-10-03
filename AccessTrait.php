@@ -12,10 +12,10 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
-use Yii;
 use yii\helpers\Url;
 
 /**

@@ -91,7 +91,7 @@ trait CacheTrait
      */
     protected function getCache($id)
     {
-        if (!in_array($id, array_keys($this->findCaches()))) {
+        if (!array_key_exists($id, $this->findCaches())) {
             throw new HttpException(400, 'Given cache name is not a name of cache component');
         }
         return Yii::$app->get($id);

@@ -24,7 +24,7 @@ use yii\helpers\Url;
  * Trait ModifiedTrait
  *
  * @property string $modified
- * @property int $modified_by
+ * @property integer $modified_by
  * @property User $modifiedBy
  */
 trait ModifiedTrait

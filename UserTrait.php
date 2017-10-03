@@ -13,16 +13,16 @@
 namespace cinghie\traits;
 
 use Yii;
-use yii\helpers\Url;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use yii\helpers\Url;
 
 /**
  * Trait UserTrait
  *
- * @property int $user_id
+ * @property integer $user_id
  * @property User user
  */
 trait UserTrait

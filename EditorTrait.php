@@ -13,10 +13,10 @@
 namespace cinghie\traits;
 
 use Yii;
-use yii\imperavi\Widget as Imperavi;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\tinymce\TinyMce;
 use kartik\markdown\MarkdownEditor;
+use yii\imperavi\Widget as Imperavi;
 
 /**
  * Trait EditorTrait

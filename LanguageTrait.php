@@ -44,7 +44,7 @@ trait LanguageTrait
     }
 
     /**
-	 * Get language code (only 3 chars)
+	 * Get language code (only 2 chars)
 	 *
 	 * @return string
 	 */
@@ -53,7 +53,7 @@ trait LanguageTrait
     }
 
     /**
-     * Get language tag ()
+     * Get language tag (5 chars)
      *
      * @return string
      */

@@ -36,7 +36,7 @@ trait ViewsHelpersTrait
     /**
      * Return action update button
      *
-     * @param int $id
+     * @param integer $id
      * @return string
      */
     public function getUpdateButton($id = 0)
@@ -74,7 +74,7 @@ trait ViewsHelpersTrait
     /**
      * Return action delete button
      *
-     * @param int $id
+     * @param integer $id
      * @return string
      */
     public function getDeleteButton($id = 0)
@@ -159,7 +159,7 @@ trait ViewsHelpersTrait
     /**
      * Return action active button
      *
-     * @param int $id
+     * @param integer $id
      * @return string
      */
     public function getActiveButton($id = 0)
@@ -206,7 +206,7 @@ trait ViewsHelpersTrait
     /**
      * Return action deactive button
      *
-     * @param int $id
+     * @param integer $id
      * @return string
      */
     public function getDeactiveButton($id = 0)

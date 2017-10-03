@@ -17,8 +17,8 @@ use Yii;
 /**
  * Trait NameAliasTrait
  *
- * @property string $name
  * @property string $alias
+ * @property string $name
  */
 trait NameAliasTrait
 {

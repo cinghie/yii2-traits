@@ -22,6 +22,38 @@ trait UserHelpersTrait
 {
 
     /**
+     * Return an array with current User
+     *
+     * @internal param User $currentUser
+     * @return array
+     */
+    public function getCurrentUserSelect2()
+    {
+        /** @var User $currentUser */
+        $currentUser = Yii::$app->user->identity;
+
+        return [$currentUser->id => $currentUser->username];
+    }
+
+    /**
+     * Return an array with the User's Roles adding "Public" on first position
+     *
+     * @return array
+     */
+    public function getRolesSelect2()
+    {
+        $roles = Yii::$app->authManager->getRoles();
+        $array = ['public' => Yii::t('traits', 'Public')];
+
+        foreach($roles as $role) {
+            $role_name = ucwords($role->name);
+            $array[$role_name] = $role_name;
+        }
+
+        return $array;
+    }
+
+    /**
      * Get the User by user email
      *
      * @internal param string $email
@@ -61,38 +93,6 @@ trait UserHelpersTrait
 
         foreach($users as $user) {
             $array[$user['id']] = ucwords($user['username']);
-        }
-
-        return $array;
-    }
-
-    /**
-     * Return an array with current User
-     *
-     * @internal param User $currentUser
-     * @return array
-     */
-    public function getCurrentUserSelect2()
-    {
-        /** @var User $currentUser */
-        $currentUser = Yii::$app->user->identity;
-
-        return [$currentUser->id => $currentUser->username];
-    }
-
-    /**
-     * Return an array with the User's Roles adding "Public" on first position
-     *
-     * @return array
-     */
-    public function getRolesSelect2()
-    {
-        $roles = Yii::$app->authManager->getRoles();
-        $array = ['public' => Yii::t('traits', 'Public')];
-
-        foreach($roles as $role) {
-            $role_name = ucwords($role->name);
-            $array[$role_name] = $role_name;
         }
 
         return $array;

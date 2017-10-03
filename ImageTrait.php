@@ -20,7 +20,7 @@ use kartik\widgets\FileInput;
  *
  * @property string $image
  * @property string $image_caption
- * @property string image_credits
+ * @property string $image_credits
  */
 trait ImageTrait
 {

@@ -12,15 +12,15 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
-use Yii;
 
 /**
  * Trait StateTrait
  *
- * @property int $state
+ * @property integer $state
  */
 trait StateTrait
 {

@@ -17,8 +17,8 @@ use Yii;
 /**
  * Trait TitleAliasTrait
  *
- * @property string $title
  * @property string $alias
+ * @property string $title
  */
 trait TitleAliasTrait
 {
@@ -97,7 +97,7 @@ trait TitleAliasTrait
         $string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
 
         // lowercase and trim
-        $string = trim(strtolower($string));
+        $string = strtolower(trim($string));
 
         return $string;
     }

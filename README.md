@@ -101,22 +101,18 @@ if( $model->isCurrentUserCreator() ) {
 
 ## Traits
 
-### AccessTrait
+### AccessTrait 
 
-Add in your model: 
-
-    - access: string of Auth Item
+    - integer $access
     - getAccessWidget($form): Generate Access Form Widget
     - function getAccessGridView(): Generate GridView Access
     - function getAccessDetailView(): Generate DetailView Access
 
 ### AttachmentTrait
 
-Add in your model: 
-
-    - extension: string extension of Attachment
-    - filename: string filename of Attachment
-    - mimetype: string mimetype of Attachment
+    - string $extension
+    - string $filename
+    - string $mimetype
     - function getFileWidget($form): Generate File Ipunt Form Widget
     - function getExtensionWidget($form): Generate Extension Form Widget
     - function getMimeTypeWidget($form): Generate MimeType Form Widget
@@ -130,8 +126,6 @@ Add in your model:
 
 ### CacheTrait
 
-Add in your model: 
-
     - function actionCache()
     - function actionFlushCache($id)
     - function actionFlushCacheKey($id, $key)
@@ -142,10 +136,9 @@ Add in your model:
 
 ### CreatedTrait
 
-Add in your model: 
-
-    - created: Datetime of created Model
-    - created_by: Integer userid of created Model 
+    - string $created
+    - integer $created_by
+    - User $createdBy
     - function getCreatedBy(): Relation with User Model
     - function getCreatedWidget($form): Generate Created Form Widget
     - function getCreatedDetailView(): Generate DetailView for Created
@@ -157,8 +150,6 @@ Add in your model:
   
 ### EditorTrait
 
-Add in your model: 
-
     - function getEditorWidget($form,$field,$requestEditor = ""): Generate Editor Widget
     - function getCKEditorWidget($form,$field): Get a CKEditor Editor Widget
     - function getTinyMCEWidget($form,$field): Get a TinyMCE Editor Widget
@@ -167,11 +158,9 @@ Add in your model:
 
 ### ImageTrait
 
-Add in your model: 
-
-    - image: string name of the image
-    - image_caption: string caption of the image
-    - image_credits: string credits of the image
+    - string $image
+    - string $image_caption
+    - string $image_credits
     - function getImageWidget(): Generate Image Form Widget
     - function getImageCaptionWidget($form): Generate Image Caption Form Widget
     - function getImageCreditsWidget($form): Generate Image Credits Form Widget
@@ -181,49 +170,54 @@ Add in your model:
     
 ### LanguageTrait
 
-Add in your model: 
-
-    - language: String language
+    - string $language
+    - function getLang(): Get language code (2 chars)
+    - function getLangTag(): Get language tag (5 chars)
     - function getLanguageWidget($form): Generate Language Form Widget
     - function getLanguagesSelect2(): Return an array with languages allowed
 
 ### ModifiedTrait
 
-Add in your model: 
-
-    - modified: Datetime of modified Model
-    - modified_by: Integer userid of modified Model 
+    - string $modified
+    - integer $modified_by
+    - User $modifiedBy
     - function getModifiedBy(): Relation with User Model
     - function getModifiedWidget($form): Generate Modified Form Widget
     - function getModifiedDetailView(): Generate DetailView for Modified
     - function getModifiedByWidget($form): Generate ModifiedBy Form Widget
     - function getModifiedByGridView(): Generate GridView for ModifiedBy
+    - function getModifiedByDetailView(): Generate DetailView for ModifiedBy
     - function isCurrentUserModifier(): Check if current user is the modified_by
     - function isUserModifier($user_id): Check if user_id params is the modified_by
 
 ### NameAliasTrait
 
-Add in your model: 
-
-    - name: string name  
+    - string $alias
+    - string $name  
     - function getAliasWidget($form): Generate Alias Form Widget
     - function getNameWidget($form): Generate Name Form Widget
- 
-### SeoTrait
-
-Add in your model:     
-
-    - alias: string alias
-    - function generateAlias($name): Generate URL alias by string
     - function getAliasWidget($form): Generate Alias Form Widget
+    - function generateAlias($name): Generate URL alias by string
+ 
+### SeoTrait    
+
+    - string $robots
+    - string $author
+    - string $copyright
+    - string $metadesc
+    - string $metakey    
+    - function getRobotsWidget($form): Generate Robots Form Widget
+    - function getAuthorWidget($form): Generate Author Form Widget
+    - function getCopyrightWidget($form): Generate Copyright Form Widget
+    - function getMetaDescriptionWidget($form): Generate Meta Description Form Widget
+    - function getMetaKeyWidget($form): Generate Meta Key Form Widget
+    - function getRobotsOptions(): Get Robots Options
     
 ### StateTrait
 
-Add in your model: 
-
-    - state: Integer for state active (1) o inactive (0)
+    - integer $state
     - function active(): Active model state (Set 1)
-    - function inactive():  Inactive model state (Set 0)
+    - function deactive():  Inactive model state (Set 0)
     - function getStateWidget($form): Generate State Form Widget
     - function getStateGridView(): Generate GridView for State
     - function getStateDetailView(): Generate DetailView for State
@@ -231,35 +225,61 @@ Add in your model:
     
 ### TitleAliasTrait
 
-Add in your model: 
-
-    - title: string title  
-    - getTitleWidget($form): Generate Title Form Widget
+    - string $alias
+    - string $title  
+    - function getTitleWidget($form): Generate Title Form Widget
+    - function getAliasWidget($form): Generate Alias Form Widget
+    - function generateAlias($name): Generate URL alias by string
 
 ### UserHelperTrait
 
-Add in your model: 
-
-    - function getUserByEmail($email): Get the User by user email
     - function getCurrentUserSelect2(): Return an array with current User
     - function getRolesSelect2(): Return an array with the User's Roles adding "Public" on first position
+    - function getUserByEmail($email): Get the User by user email
     - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)    
     
 ### UserTrait
 
-Add in your model: 
-
-    - user_id: Integer userid of User Model
+    - integer $user_id
+    - User user
     - function getUser(): Relation with User Model   
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User
     
+### VideoTrait
+
+    - string $video
+    - string $video_caption
+    - string $video_credits
+    - string $video_type
+    - function getVideoTypeSelect2(): Return array for Video Type
+    - function getVideoIDWidget($form): Generate Video ID Form Widget
+    - function getVideoTypeWidget($form): Generate Video Type Form Widget
+    - function getVideoCaptionWidget($form): Generate Video Caption Form Widget
+    - function getVideoCreditsWidget($form): Generate Video Credits Form Widget
+    
 ### ViewsHelperTrait
 
-Add in your model: 
+    - function getCreateButton(): Return action create button
+    - function getUpdateButton($id = 0): Return action update button
+    - function getUpdateButtonJavascript($w): Return javascript for action update button
+    - function getDeleteButton($id = 0): Return action delete button
+    - function getDeleteButtonJavascript($w): Return javascript for action delete button
+    - function getPreviewButton(): Return action preview button
+    - function getPreviewButtonJavascript($w): Return javascript for action preview button
+    - function getActiveButton($id = 0): Return action active button
+    - function getActiveButtonJavascript($w): Return javascript for action active button
+    - function getDeactiveButton($id = 0): Return action deactive button
+    - function getDeactiveButtonJavascript($w): Return javascript for action deactive button
+    - function getResetButton(): Return action reset button
 
-    - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
     - function getSaveButton(): Return action save button
     - function getCancelButton(): Return action cancel button
     - function getExitButton(): Return action exit button
+    - function getSendButton(): Return action send button
+    - function getSendButtonJavascript(): Return javascript for action deactive button
+
+    - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
+
+

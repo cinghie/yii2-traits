@@ -7,7 +7,7 @@
  * @github https://github.com/cinghie/yii2-traits
  * @license GNU GENERAL PUBLIC LICENSE VERSION 3
  * @package yii2-traits
- * @version 0.1.0
+ * @version 1.0.0
  */
 
 namespace cinghie\traits;

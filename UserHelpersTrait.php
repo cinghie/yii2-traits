@@ -7,7 +7,7 @@
  * @github https://github.com/cinghie/yii2-traits
  * @license GNU GENERAL PUBLIC LICENSE VERSION 3
  * @package yii2-traits
- * @version 0.1.0
+ * @version 1.0.0
  */
 
 namespace cinghie\traits;
@@ -72,7 +72,7 @@ trait UserHelpersTrait
     /**
      * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
      *
-     * @param int  $user_id
+     * @param integer $user_id
      * @param string $username
      * @return array
      */

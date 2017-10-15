@@ -49,6 +49,8 @@ return [
     "Not Actived" => "Non Attivo",
     "Options" => "Opzioni",
     "Preview" => "Anteprima",
+    "Parent" => "Genitore",
+    "Parentid" => "Genitore",
     "Public" => "Public",
     "Reset" => "Reset",
     "Reset Grid" => "Reset",

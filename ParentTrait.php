@@ -20,7 +20,7 @@ use yii\helpers\Url;
 /**
  * Trait ParentTrait
  *
- * @property integer $parenn_id
+ * @property integer $parent_id
  */
 trait ParentTrait
 {
@@ -48,25 +48,33 @@ trait ParentTrait
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getParent($className)
+	public function getParent()
 	{
-		return $this->hasOne($className, ['id' => 'parent_id']);
+		return $this->hasOne($this::className(), ['id' => 'parent_id']);
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getChild($className)
+	public function getParents()
 	{
-		return $this->hasOne($className, ['parent_id' => 'id']);
+		return $this->hasMany($this::className(), ['id' => 'parent_id']);
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getChilds($className)
+	public function getChild()
 	{
-		return $this->hasMany($className, ['parent_id' => 'id']);
+		return $this->hasOne($this::className(), ['parent_id' => 'id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getChilds()
+	{
+		return $this->hasMany($this::className(), ['parent_id' => 'id']);
 	}
 
 	/**

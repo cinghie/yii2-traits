@@ -198,6 +198,12 @@ if( $model->isCurrentUserCreator() ) {
     - function getNameWidget($form): Generate Name Form Widget
     - function getAliasWidget($form): Generate Alias Form Widget
     - function generateAlias($name): Generate URL alias by string
+    
+### ParentTrait      
+
+    - integer $parent_id
+    - getParentWidget($form,$items): Generate Parent Form Widget
+    - getParentGridView($field,$url,$hideItem): Generate Parent Grid View
  
 ### SeoTrait    
 

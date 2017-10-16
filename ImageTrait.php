@@ -14,6 +14,8 @@ namespace cinghie\traits;
 
 use Yii;
 use kartik\widgets\FileInput;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * Trait ImageTrait
@@ -118,6 +120,23 @@ trait ImageTrait
             ]
         ])->textInput(['maxlength' => true]);
     }
+
+	/**
+	 * Generate GridView for Image
+	 *
+	 * @params string $field
+	 * @param Url $url
+	 * @return string
+	 * @throws \yii\base\InvalidParamException
+	 */
+	public function getImageGridView()
+	{
+		if ($this->image) {
+			return Html::img($model->getImageThumbUrl("small"),['width' => '36px']);
+		} else {
+			return '<span class="fa fa-ban text-danger"></span>';
+		}
+	}
 
     /**
      * Get Upload Max Size

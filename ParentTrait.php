@@ -12,6 +12,9 @@
 
 namespace cinghie\traits;
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 /**
  * Trait ParentTrait
  *
@@ -68,15 +71,29 @@ trait ParentTrait
 	 * Generate GridView for Parent
 	 *
 	 * @params string $field
-	 * @param URL $url
+	 * @param Url $url
 	 * @return string
 	 * @throws \yii\base\InvalidParamException
 	 */
-	public function getParentGridView($field,$url)
+	public function getParentGridView($field,$url,$hideItem)
 	{
-		if (isset($model->parent_id->id)) {
+		if (isset($this->parent->id) && !$hideItem) {
+
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-			return Html::a($this->parent_id->$field,$url);
+			return Html::a($this->parent->$field,$url);
+
+		} elseif (isset($hideItem) && $hideItem ) {
+
+			if($this->parent_id == $hideItem) {
+
+				return '<span class="fa fa-ban text-danger"></span>';
+
+			} else {
+
+				$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
+				return Html::a($this->parent->$field,$url);
+			}
+
 		} else {
 			return '<span class="fa fa-ban text-danger"></span>';
 		}

@@ -32,6 +32,7 @@ trait ParentTrait
 	{
 		return [
 			[['parent_id'], 'integer'],
+			[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => $this::className(), 'targetAttribute' => ['parent_id' => 'id']],
 		];
 	}
 
@@ -50,7 +51,7 @@ trait ParentTrait
 	 */
 	public function getParent()
 	{
-		return $this->hasOne($this::className(), ['id' => 'parent_id']);
+		return $this->hasOne(self::className(), ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
 	}
 
 	/**
@@ -58,7 +59,7 @@ trait ParentTrait
 	 */
 	public function getParents()
 	{
-		return $this->hasMany($this::className(), ['id' => 'parent_id']);
+		return $this->hasMany(self::className(), ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
 	}
 
 	/**
@@ -66,7 +67,7 @@ trait ParentTrait
 	 */
 	public function getChild()
 	{
-		return $this->hasOne($this::className(), ['parent_id' => 'id']);
+		return $this->hasOne(self::className(), ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
 	}
 
 	/**
@@ -74,7 +75,7 @@ trait ParentTrait
 	 */
 	public function getChilds()
 	{
-		return $this->hasMany($this::className(), ['parent_id' => 'id']);
+		return $this->hasMany(self::className(), ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
 	}
 
 	/**
@@ -104,7 +105,7 @@ trait ParentTrait
 	 * @return string
 	 * @throws \yii\base\InvalidParamException
 	 */
-	public function getParentGridView($field,$url,$hideItem)
+	public function getParentGridView($field,$url,$hideItem = false)
 	{
 		if (isset($this->parent->id) && !$hideItem) {
 

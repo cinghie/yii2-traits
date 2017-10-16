@@ -12,8 +12,8 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use kartik\widgets\Select2;
-use yii\base\Object;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -82,11 +82,13 @@ trait ParentTrait
 	 * Generate Parent Form Widget
 	 *
 	 * @param \kartik\widgets\ActiveForm $form
-	 * @param Object $items
+	 * @param [] $items
 	 * @return \kartik\form\ActiveField
 	 */
 	public function getParentWidget($form,$items)
 	{
+		/** @var $this \yii\base\Model */
+
 		return $form->field($this, 'parent_id')->widget(Select2::classname(), [
 			'data' => $items,
 			'addon' => [
@@ -94,19 +96,21 @@ trait ParentTrait
 					'content'=>'<i class="glyphicon glyphicon-folder-open"></i>'
 				]
 			],
-		]);;
+		]);
 	}
 
 	/**
 	 * Generate GridView for Parent
 	 *
 	 * @params string $field
-	 * @param Url $url
+	 * @param string $url
 	 * @return string
 	 * @throws \yii\base\InvalidParamException
 	 */
 	public function getParentGridView($field,$url,$hideItem = false)
 	{
+		/** @var $this \yii\base\Model */
+
 		if (isset($this->parent->id) && !$hideItem) {
 
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
@@ -114,7 +118,7 @@ trait ParentTrait
 
 		} elseif (isset($hideItem) && $hideItem ) {
 
-			if($this->parent_id == $hideItem) {
+			if($this->parent_id === $hideItem) {
 
 				return '<span class="fa fa-ban text-danger"></span>';
 
@@ -125,6 +129,7 @@ trait ParentTrait
 			}
 
 		} else {
+
 			return '<span class="fa fa-ban text-danger"></span>';
 		}
 	}

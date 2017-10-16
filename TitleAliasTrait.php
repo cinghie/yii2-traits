@@ -48,11 +48,14 @@ trait TitleAliasTrait
 
 	/**
 	 * Set alias
+	 *
+	 * @param [] $post
+	 * @param string Sfield
 	 */
-	public function setAlias($post)
+	public function setAlias($post,$field)
 	{
 		if($post['alias'] === '') {
-			$this->alias = $this->generateAlias($post['title']);
+			$this->alias = $this->generateAlias($post[$field]);
 		}
 	}
 

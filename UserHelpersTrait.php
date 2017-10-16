@@ -43,12 +43,13 @@ trait UserHelpersTrait
     public function getRolesSelect2()
     {
         $roles = Yii::$app->authManager->getRoles();
-        $array = ['public' => Yii::t('traits', 'Public')];
 
         foreach($roles as $role) {
             $role_name = ucwords($role->name);
             $array[$role_name] = $role_name;
         }
+
+        $array = array_merge(array('Public'=>$array['Public']), $array);
 
         return $array;
     }

@@ -46,6 +46,16 @@ trait TitleAliasTrait
         ];
     }
 
+	/**
+	 * Set alias
+	 */
+	public function setAlias($post)
+	{
+		if($post['alias'] === '') {
+			$this->alias = $this->generateAlias($post['title']);
+		}
+	}
+
     /**
      * Generate Title Form Widget
      *

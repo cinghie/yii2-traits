@@ -164,6 +164,7 @@ if( $model->isCurrentUserCreator() ) {
     - function getImageWidget(): Generate Image Form Widget
     - function getImageCaptionWidget($form): Generate Image Caption Form Widget
     - function getImageCreditsWidget($form): Generate Image Credits Form Widget
+    - function getImageGridView(): Generate GridView for Image
     - function getUploadMaxSize(): Get Upload Max Size
     - function getImagesAllowed(): Get Allowed images
     - function getImagesAccept(): Get Allowed images in Accept Format

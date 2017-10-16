@@ -12,6 +12,8 @@
 
 namespace cinghie\traits;
 
+use kartik\widgets\Select2;
+use yii\base\Object;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -65,6 +67,25 @@ trait ParentTrait
 	public function getChilds($className)
 	{
 		return $this->hasMany($className, ['parent_id' => 'id']);
+	}
+
+	/**
+	 * Generate Parent Form Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param Object $items
+	 * @return \kartik\form\ActiveField
+	 */
+	public function getParentWidget($form,$items)
+	{
+		return $form->field($this, 'parent_id')->widget(Select2::classname(), [
+			'data' => $items,
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="glyphicon glyphicon-folder-open"></i>'
+				]
+			],
+		]);;
 	}
 
 	/**

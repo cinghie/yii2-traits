@@ -45,11 +45,13 @@ trait UserHelpersTrait
         $roles = Yii::$app->authManager->getRoles();
 
         foreach($roles as $role) {
-            $role_name = ucwords($role->name);
+            $role_name = $role->name;
             $array[$role_name] = $role_name;
         }
 
-        $array = array_merge(array('Public'=>$array['Public']), $array);
+        if($this->isNewRecord) {
+	        $array = array_merge(array('public'=>$array['public']), $array);
+        }
 
         return $array;
     }

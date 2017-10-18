@@ -132,7 +132,7 @@ trait ImageTrait
 	public function getImageGridView()
 	{
 		if ($this->image) {
-			return Html::img($model->getImageThumbUrl("small"),['width' => '36px']);
+			return Html::img($this->getImageThumbUrl("small"),['width' => '36px']);
 		} else {
 			return '<span class="fa fa-ban text-danger"></span>';
 		}

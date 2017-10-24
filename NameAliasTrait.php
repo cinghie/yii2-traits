@@ -29,7 +29,6 @@ trait NameAliasTrait
     public function rules()
     {
         return [
-            [['name'], 'required'],
             [['alias'], 'unique'],
             [['alias','name'], 'string', 'max' => 255],
         ];

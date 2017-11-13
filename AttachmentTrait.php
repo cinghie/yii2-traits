@@ -106,7 +106,7 @@ trait AttachmentTrait
     }
 
 	/**
-	 * Generate File Ipunt Form Widget
+	 * Generate Files Ipunt Form Widget
 	 *
 	 * @param array $attachType
 	 * @param string $attachURL

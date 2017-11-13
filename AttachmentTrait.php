@@ -126,7 +126,7 @@ trait AttachmentTrait
 		$initialPreviewConfig = array();
 
 		if(count($attachments)) {
-			
+
 			foreach($attachments as $attach) {
 				$initialPreviewConfig[$i]['caption'] = $attach['title'];
 				$initialPreviewConfig[$i]['size'] = $attach['size'];

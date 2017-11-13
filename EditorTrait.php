@@ -109,6 +109,7 @@ trait EditorTrait
         /** @var $this \yii\base\Model */
         return $form->field($this, $field)->widget(Imperavi::className(), [
             'options' => [
+            	'lang' => substr(Yii::$app->language,0,2),
                 'css' => 'wym.css',
                 'minHeight' => 250,
             ],

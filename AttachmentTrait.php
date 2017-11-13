@@ -14,6 +14,7 @@ namespace cinghie\traits;
 
 use Yii;
 use kartik\widgets\FileInput;
+use yii\helpers\Url;
 
 /**
  * Trait AttachmentTrait
@@ -52,27 +53,29 @@ trait AttachmentTrait
         ];
     }
 
-    /**
-     * Generate File Ipunt Form Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
-     */
-    public function getFileWidget($form)
+	/**
+	 * Generate File Ipunt Form Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param array $attachType
+	 *
+	 * @return \kartik\form\ActiveField
+	 */
+    public function getFileWidget($form,$attachType)
     {
         /** @var $this \yii\base\Model */
         if($this->filename) {
 
             return $form->field($this, 'filename')->widget(FileInput::className(), [
-                'options' => [
-                    'accept' => Yii::$app->controller->module->attachType
-                ],
+	            'options'=>[
+		            'multiple'=> true
+	            ],
                 'pluginOptions' => [
-                    'allowedFileExtensions' => ['pdf','jpg','jpeg','png'],
-                    'previewFileType' => 'image',
+                    'allowedFileExtensions' => $attachType,
+                    'previewFileType' => 'any',
                     'showPreview' => true,
                     'showCaption' => true,
-                    'showRemove' => true,
+                    'showRemove' => false,
                     'showUpload' => false,
                     'initialPreview' => $this->getFileUrl(),
                     'initialPreviewAsData' => true,
@@ -86,13 +89,15 @@ trait AttachmentTrait
         } else {
 
             return $form->field($this, 'filename')->widget(FileInput::className(), [
-                'options' => [
-                    'accept' => Yii::$app->controller->module->attachType
-                ],
+	            'options'=>[
+		            'multiple' => true
+	            ],
                 'pluginOptions' => [
-                    'previewFileType' => 'image',
-                    'showUpload'      => false,
-                    'browseLabel'     => Yii::t('traits', 'Browse &hellip;'),
+	                'allowedFileExtensions' => $attachType,
+	                'previewFileType' => 'any',
+	                'showRemove' => false,
+                    'showUpload' => false,
+                    'browseLabel' => Yii::t('traits', 'Upload'),
                 ],
             ]);
 
@@ -100,10 +105,88 @@ trait AttachmentTrait
 
     }
 
+	/**
+	 * Generate File Ipunt Form Widget
+	 *
+	 * @param array $attachType
+	 * @param string $attachURL
+	 *
+	 * @return string
+	 * @throws \Exception
+	 * @internal param \kartik\widgets\ActiveForm $form
+	 *
+	 */
+	public function getFilesWidget($attachType,$attachURL)
+	{
+		$attachments = $this->getAttachs();
+		$html = '';
+
+		$i = 0;
+		$initialPreview = array();
+		$initialPreviewConfig = array();
+
+		if(count($attachments)) {
+			
+			foreach($attachments as $attach) {
+				$initialPreviewConfig[$i]['caption'] = $attach['title'];
+				$initialPreviewConfig[$i]['size'] = $attach['size'];
+				$initialPreviewConfig[$i]['url'] = Url::to(['attachments/deleteonfly', 'id' => $attach['id']]);
+				$initialPreview[] = $attachURL.$attach['filename'];
+				$i++;
+			}
+
+			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
+			$html .= FileInput::widget([
+				'model' => $this,
+				'attribute' => 'attachments[]',
+				'name' => 'attachments[]',
+				'options'=>[
+					'multiple'=>true,
+				],
+				'pluginOptions' => [
+					'allowedFileExtensions' => $attachType,
+					'previewFileType' => 'any',
+					'showPreview' => true,
+					'showCaption' => true,
+					'showRemove' => false,
+					'showUpload' => false,
+					'initialPreview' => $initialPreview,
+					'initialPreviewAsData' => true,
+					'initialPreviewConfig' => $initialPreviewConfig,
+					'overwriteInitial' => true
+				]
+			]);
+
+		} else {
+
+			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
+			$html .= FileInput::widget([
+				'model' => $this,
+				'attribute' => 'attachments[]',
+				'name' => 'attachments[]',
+				'options'=>[
+					'multiple'=>true,
+				],
+				'pluginOptions' => [
+					'allowedFileExtensions' => $attachType,
+					'previewFileType' => 'any',
+					'showPreview' => true,
+					'showCaption' => true,
+					'showRemove' => false,
+					'showUpload' => false
+				]
+			]);
+
+		}
+
+		return $html;
+	}
+
     /**
      * Generate Extension Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getExtensionWidget($form)
@@ -122,6 +205,7 @@ trait AttachmentTrait
      * Generate MimeType Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getMimeTypeWidget($form)
@@ -140,6 +224,7 @@ trait AttachmentTrait
      * Generate Size Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getSizeWidget($form)
@@ -226,6 +311,7 @@ trait AttachmentTrait
      *
      * @param string $filename
      * @param string $extension
+     *
      * @return string
      */
     public function generateMd5FileName($filename, $extension)

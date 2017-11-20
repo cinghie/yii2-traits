@@ -54,7 +54,7 @@ trait EditorTrait
                 return $this->getTinyMCEWidget($form,$field);
                 break;
             default:
-                return $this->getNoEditorWidget($form,$field);
+                return $this->getNoEditorWidget($form,$field,$maxLength = false);
         }
     }
 
@@ -136,17 +136,17 @@ trait EditorTrait
         );
     }
 
-    /**
-     * Get a No-Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     * @return \kartik\form\ActiveField
-     */
-    public function getNoEditorWidget($form,$field)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->textarea(['rows' => 6]);
-    }
+	/**
+	 * Get a No-Editor Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param string $field
+	 * @return \kartik\form\ActiveField
+	 */
+	public function getNoEditorWidget($form,$field,$maxLength)
+	{
+		/** @var $this \yii\base\Model */
+		return $form->field($this, $field)->textarea(['maxLength' => $maxLength,'rows' => 6]);
+	}
 
 }

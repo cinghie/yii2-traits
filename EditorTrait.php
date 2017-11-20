@@ -141,9 +141,10 @@ trait EditorTrait
 	 *
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
+	 * @param boolean $maxLength
 	 * @return \kartik\form\ActiveField
 	 */
-	public function getNoEditorWidget($form,$field,$maxLength)
+	public function getNoEditorWidget($form,$field,$maxLength = false)
 	{
 		/** @var $this \yii\base\Model */
 		return $form->field($this, $field)->textarea(['maxLength' => $maxLength,'rows' => 6]);

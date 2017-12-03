@@ -153,7 +153,7 @@ trait AttachmentTrait
 					'initialPreview' => $initialPreview,
 					'initialPreviewAsData' => true,
 					'initialPreviewConfig' => $initialPreviewConfig,
-					'overwriteInitial' => true
+					'overwriteInitial' => false
 				]
 			]);
 

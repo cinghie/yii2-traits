@@ -115,7 +115,8 @@ trait ViewsHelpersTrait
                         url : "'.Url::to(['deletemultiple']).'?id="+selectedId,
                         data : {ids: selectedId},
                         success : function() {
-                            $.pjax.reload({container:"'.$w.'"});
+                            var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                            $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                         }
                     });
                 }
@@ -196,7 +197,8 @@ trait ViewsHelpersTrait
                     url : "'.Url::to(['activemultiple']).'?id="+selectedId,
                     data : {ids: selectedId},
                     success : function() {
-                        $.pjax.reload({container:"'.$w.'"});
+                        var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                        $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                     }
                 });
             }
@@ -243,7 +245,8 @@ trait ViewsHelpersTrait
                     url : "'.Url::to(['deactivemultiple']).'?id="+selectedId,
                     data : {ids: selectedId},
                     success : function() {
-                        $.pjax.reload({container:"'.$w.'"});
+                        var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                        $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                     }
                 });
             }
@@ -319,8 +322,9 @@ trait ViewsHelpersTrait
                     url : "'.Url::to(['send']).'?id="+selectedId,
                     data : {id: selectedId},
                     success: function(result){
-                    alert(result);
-                }});
+                        alert(result);
+                    }
+                });
             }
         });';
     }

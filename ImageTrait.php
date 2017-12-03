@@ -75,7 +75,7 @@ trait ImageTrait
                 'showPreview' => true,
                 'showCaption' => true,
                 'showRemove' => true,
-                'showUpload' => true,
+                'showUpload' => false,
                 'initialPreview' => $this->image ? $this->getImageUrl() : false,
                 'initialPreviewAsData' => $this->image ? true : false,
                 'overwriteInitial' => $this->image ? true : false

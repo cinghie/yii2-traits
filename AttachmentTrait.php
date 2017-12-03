@@ -63,7 +63,6 @@ trait AttachmentTrait
 	 */
     public function getFileWidget($form,$attachType)
     {
-        /** @var $this \yii\base\Model */
         if($this->filename) {
 
             return $form->field($this, 'filename')->widget(FileInput::className(), [
@@ -86,22 +85,20 @@ trait AttachmentTrait
                 ],
             ]);
 
-        } else {
-
-            return $form->field($this, 'filename')->widget(FileInput::className(), [
-	            'options'=>[
-		            'multiple' => true
-	            ],
-                'pluginOptions' => [
-	                'allowedFileExtensions' => $attachType,
-	                'previewFileType' => 'any',
-	                'showRemove' => false,
-                    'showUpload' => false,
-                    'browseLabel' => Yii::t('traits', 'Upload'),
-                ],
-            ]);
-
         }
+
+	    return $form->field($this, 'filename')->widget(FileInput::className(), [
+		    'options'=>[
+			    'multiple' => true
+		    ],
+		    'pluginOptions' => [
+			    'allowedFileExtensions' => $attachType,
+			    'previewFileType' => 'any',
+			    'showRemove' => false,
+			    'showUpload' => false,
+			    'browseLabel' => Yii::t('traits', 'Upload'),
+		    ],
+	    ]);
 
     }
 
@@ -114,7 +111,6 @@ trait AttachmentTrait
 	 * @return string
 	 * @throws \Exception
 	 * @internal param \kartik\widgets\ActiveForm $form
-	 *
 	 */
 	public function getFilesWidget($attachType,$attachURL)
 	{

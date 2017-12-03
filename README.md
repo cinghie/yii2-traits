@@ -241,10 +241,11 @@ if( $model->isCurrentUserCreator() ) {
 
 ### UserHelperTrait
 
+    - function getUserByEmail($email): Get the User by user email
+    - function getCurentUserProfile($field = ''):  Get current User Profile object or fied if on param
     - function getCurrentUserSelect2(): Return an array with current User
     - function getRolesSelect2(): Return an array with the User's Roles adding "Public" on first position
-    - function getUserByEmail($email): Get the User by user email
-    - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)    
+    - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)
     
 ### UserTrait
 

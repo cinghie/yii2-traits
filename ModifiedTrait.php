@@ -66,14 +66,14 @@ trait ModifiedTrait
      * Generate Modified Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getModifiedWidget($form)
     {
-        /** @var $this \yii\base\Model */
         $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
-        return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
+	    return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
             'disabled' => true,
             'options' => [
                 'value' => $modified,
@@ -100,11 +100,11 @@ trait ModifiedTrait
      * Generate ModifiedBy Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getModifiedByWidget($form)
     {
-        /** @var $this \yii\base\Model */
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
         return $form->field($this, 'modified_by')->widget(Select2::className(), [
@@ -130,9 +130,9 @@ trait ModifiedTrait
 
         if($this->modified_by) {
             return Html::a($modifiedBy,$url);
-        } else {
-            return Yii::t('traits', 'Nobody');
         }
+
+	    return Yii::t('traits', 'Nobody');
     }
 
     /**
@@ -155,7 +155,8 @@ trait ModifiedTrait
     }
 
     /**
-     * check if current user is the modified_by
+     * Check if current user is the modified_by
+     *
      * @return bool
      */
     public function isCurrentUserModifier()
@@ -163,26 +164,19 @@ trait ModifiedTrait
         /** @var User $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-        if ($currentUser->id === $this->modified_by) {
-            return true;
-        } else {
-            return false;
-        }
+	    return $currentUser->id === $this->modified_by;
     }
 
     /**
      * Check if user_id params is the modified_by
      *
      * @param User $user_id
+     *
      * @return bool
      */
     public function isUserModifier($user_id)
     {
-        if ($user_id === $this->modified_by) {
-            return true;
-        } else {
-            return false;
-        }
+	    return $user_id === $this->modified_by;
     }
 
 }

@@ -73,6 +73,7 @@ trait StateTrait
      * Generate State Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getStateWidget($form)
@@ -101,13 +102,13 @@ trait StateTrait
                 ['changestate', 'id' => $this->id],
                 ['data-method' => 'post']
             );
-        } else {
-            return Html::a(
-                '<span class="glyphicon glyphicon-remove text-danger"></span>',
-                ['changestate', 'id' => $this->id],
-                ['data-method' => 'post']
-            );
         }
+
+	    return Html::a(
+		    '<span class="glyphicon glyphicon-remove text-danger"></span>',
+		    ['changestate', 'id' => $this->id],
+		    ['data-method' => 'post']
+	    );
     }
 
     /**

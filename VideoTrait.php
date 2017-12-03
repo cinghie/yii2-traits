@@ -71,6 +71,7 @@ trait VideoTrait
      * Generate Video ID Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getVideoIDWidget($form)
@@ -89,6 +90,7 @@ trait VideoTrait
      * Generate Video Type Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getVideoTypeWidget($form)
@@ -108,6 +110,7 @@ trait VideoTrait
      * Generate Video Caption Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getVideoCaptionWidget($form)
@@ -126,6 +129,7 @@ trait VideoTrait
      * Generate Video Credits Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getVideoCreditsWidget($form)

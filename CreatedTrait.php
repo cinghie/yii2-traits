@@ -66,11 +66,11 @@ trait CreatedTrait
      * Generate Created Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getCreatedWidget($form)
     {
-        /** @var $this \yii\base\Model */
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
         return $form->field($this, 'created')->widget(DateTimePicker::className(), [
@@ -99,11 +99,11 @@ trait CreatedTrait
      * Generate CreatedBy Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getCreatedByWidget($form)
     {
-        /** @var $this \yii\base\Model */
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
         return $form->field($this, 'created_by')->widget(Select2::className(), [
@@ -129,9 +129,9 @@ trait CreatedTrait
 
         if($this->created_by) {
             return Html::a($createdBy,$url);
-        } else {
-            return Yii::t('traits', 'Nobody');
         }
+
+	    return Yii::t('traits', 'Nobody');
     }
 
     /**
@@ -163,26 +163,19 @@ trait CreatedTrait
         /** @var User $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-        if ($currentUser->id === $this->created_by) {
-            return true;
-        } else {
-            return false;
-        }
+	    return $currentUser->id === $this->created_by;
     }
 
     /**
      * Check if user_id params is the created_by
      *
      * @param User $user_id
+     *
      * @return bool
      */
     public function isUserCreator($user_id)
     {
-        if ($user_id === $this->created_by) {
-            return true;
-        } else {
-            return false;
-        }
+	    return $user_id === $this->created_by;
     }
 
 }

@@ -38,6 +38,7 @@ trait CacheTrait
 
     /**
      * @param $id
+     *
      * @return \yii\web\Response
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\HttpException
@@ -54,6 +55,7 @@ trait CacheTrait
     /**
      * @param $id
      * @param $key
+     *
      * @return \yii\web\Response
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\HttpException
@@ -85,6 +87,7 @@ trait CacheTrait
 
     /**
      * @param $id
+     *
      * @return \yii\caching\Cache|null
      * @throws \yii\base\InvalidConfigException
      * @throws HttpException
@@ -101,6 +104,7 @@ trait CacheTrait
      * Returns array of caches in the system, keys are cache components names, values are class names.
      *
      * @param array $cachesNames caches to be found
+     *
      * @return array
      */
     private function findCaches(array $cachesNames = [])
@@ -127,6 +131,7 @@ trait CacheTrait
      * Checks if given class is a Cache class.
      *
      * @param string $className class name.
+     *
      * @return boolean
      */
     private function isCacheClass($className)

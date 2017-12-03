@@ -32,6 +32,7 @@ trait EditorTrait
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
      * @param string $requestEditor
+     *
      * @return \kartik\form\ActiveField
      * @internal param string $editor
      */
@@ -63,6 +64,7 @@ trait EditorTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
+     *
      * @return \kartik\form\ActiveField
      */
     public function getCKEditorWidget($form,$field)
@@ -79,6 +81,7 @@ trait EditorTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
+     *
      * @return \kartik\form\ActiveField
      */
     public function getTinyMCEWidget($form,$field)
@@ -102,6 +105,7 @@ trait EditorTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
+     *
      * @return \kartik\form\ActiveField
      */
     public function getImperaviWidget($form,$field)
@@ -125,6 +129,7 @@ trait EditorTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
+     *
      * @return \kartik\form\ActiveField
      */
     public function getMarkdownWidget($form,$field)
@@ -142,6 +147,7 @@ trait EditorTrait
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
 	 * @param boolean $maxLength
+	 *
 	 * @return \kartik\form\ActiveField
 	 */
 	public function getNoEditorWidget($form,$field,$maxLength = false)

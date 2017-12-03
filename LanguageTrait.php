@@ -65,6 +65,7 @@ trait LanguageTrait
      * Generate Language Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getLanguageWidget($form)

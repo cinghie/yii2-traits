@@ -37,21 +37,23 @@ trait ViewsHelpersTrait
      * Return action update button
      *
      * @param integer $id
+     *
      * @return string
      */
     public function getUpdateButton($id = 0)
     {
         if($id) {
             return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), ['update', 'id' => $id], ['class' => 'btn btn-mini btn-update']);
-        } else {
-            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
         }
+
+	    return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
     }
 
     /**
      * Return javascript for action update button
      *
      * @param string $w
+     *
      * @return string
      * @throws \yii\base\InvalidParamException
      */
@@ -75,6 +77,7 @@ trait ViewsHelpersTrait
      * Return action delete button
      *
      * @param integer $id
+     *
      * @return string
      */
     public function getDeleteButton($id = 0)
@@ -87,15 +90,16 @@ trait ViewsHelpersTrait
                     'method' => 'post',
                 ],
             ]);
-        } else {
-            return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), '#', ['class' => 'btn btn-mini btn-delete']);
         }
+
+	    return $this->getStandardButton('fa fa-trash text-red', Yii::t('traits','Delete'), '#', ['class' => 'btn btn-mini btn-delete']);
     }
 
     /**
      * Return javascript for action delete button
      *
      * @param string $w
+     *
      * @return string
      * @throws \yii\base\InvalidParamException
      */
@@ -138,6 +142,7 @@ trait ViewsHelpersTrait
      * Return javascript for action preview button
      *
      * @param string $w
+     *
      * @return string
      * @throws \yii\base\InvalidParamException
      */
@@ -161,6 +166,7 @@ trait ViewsHelpersTrait
      * Return action active button
      *
      * @param integer $id
+     *
      * @return string
      */
     public function getActiveButton($id = 0)
@@ -172,15 +178,16 @@ trait ViewsHelpersTrait
                     'method' => 'post',
                 ],
             ]);
-        } else {
-            return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), '#', ['class' => 'btn btn-mini btn-active']);
         }
+
+	    return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), '#', ['class' => 'btn btn-mini btn-active']);
     }
 
     /**
      * Return javascript for action active button
      *
      * @param string $w
+     *
      * @return string
      * @throws \yii\base\InvalidParamException
      */
@@ -209,6 +216,7 @@ trait ViewsHelpersTrait
      * Return action deactive button
      *
      * @param integer $id
+     *
      * @return string
      */
     public function getDeactiveButton($id = 0)
@@ -220,15 +228,16 @@ trait ViewsHelpersTrait
                     'method' => 'post',
                 ],
             ]);
-        } else {
-            return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), '#', ['class' => 'btn btn-mini btn-deactive']);
         }
+
+	    return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), '#', ['class' => 'btn btn-mini btn-deactive']);
     }
 
     /**
      * Return javascript for action deactive button
      *
      * @param string $w
+     *
      * @return string
      * @throws \yii\base\InvalidParamException
      */
@@ -336,9 +345,10 @@ trait ViewsHelpersTrait
      * @param string $title
      * @param string | array $url
      * @param array $class
+     *
      * @return string
      */
-    public function getStandardButton($icon,$title,$url,$class = ['class' => 'btn btn-mini'])
+    public function getStandardButton($icon,$title,$url, array $class = [ 'class' => 'btn btn-mini' ] )
     {
         return '<div class="pull-right text-center" style="margin-right: 25px;">'.
                     Html::a('<i class="'.$icon.'"></i>', $url , $class).'

@@ -57,6 +57,7 @@ trait SeoTrait
      * Generate Robots Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return string
      */
     public function getRobotsWidget($form)
@@ -76,6 +77,7 @@ trait SeoTrait
      * Generate Author Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return string
      */
     public function getAuthorWidget($form)
@@ -94,6 +96,7 @@ trait SeoTrait
      * Generate Copyright Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return string
      */
     public function getCopyrightWidget($form)
@@ -112,6 +115,7 @@ trait SeoTrait
      * Generate Meta Description Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return string
      */
     public function getMetaDescriptionWidget($form)
@@ -130,6 +134,7 @@ trait SeoTrait
      * Generate Meta Key Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return string
      */
     public function getMetaKeyWidget($form)

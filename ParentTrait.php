@@ -83,13 +83,13 @@ trait ParentTrait
 	 *
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param [] $items
+	 *
 	 * @return \kartik\form\ActiveField
 	 */
 	public function getParentWidget($form,$items)
 	{
 		/** @var $this \yii\base\Model */
-
-		return $form->field($this, 'parent_id')->widget(Select2::classname(), [
+		return $form->field($this, 'parent_id')->widget(Select2::className(), [
 			'data' => $items,
 			'addon' => [
 				'prepend' => [
@@ -102,36 +102,32 @@ trait ParentTrait
 	/**
 	 * Generate GridView for Parent
 	 *
-	 * @params string $field
+	 * @param string $field
 	 * @param string $url
+	 * @param bool $hideItem
+	 *
 	 * @return string
 	 * @throws \yii\base\InvalidParamException
 	 */
 	public function getParentGridView($field,$url,$hideItem = false)
 	{
 		/** @var $this \yii\base\Model */
-
 		if (isset($this->parent->id) && !$hideItem) {
+			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
+			return Html::a($this->parent->$field,$url);
+		}
+
+		if (isset($hideItem) && $hideItem)
+		{
+			if($this->parent_id === $hideItem) {
+				return '<span class="fa fa-ban text-danger"></span>';
+			}
 
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
 			return Html::a($this->parent->$field,$url);
-
-		} elseif (isset($hideItem) && $hideItem ) {
-
-			if($this->parent_id === $hideItem) {
-
-				return '<span class="fa fa-ban text-danger"></span>';
-
-			} else {
-
-				$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-				return Html::a($this->parent->$field,$url);
-			}
-
-		} else {
-
-			return '<span class="fa fa-ban text-danger"></span>';
 		}
+
+		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
 }

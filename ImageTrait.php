@@ -15,7 +15,6 @@ namespace cinghie\traits;
 use Yii;
 use kartik\widgets\FileInput;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 /**
  * Trait ImageTrait
@@ -124,18 +123,16 @@ trait ImageTrait
 	/**
 	 * Generate GridView for Image
 	 *
-	 * @params string $field
-	 * @param Url $url
 	 * @return string
 	 * @throws \yii\base\InvalidParamException
 	 */
 	public function getImageGridView()
 	{
 		if ($this->image) {
-			return Html::img($this->getImageThumbUrl("small"),['width' => '36px']);
-		} else {
-			return '<span class="fa fa-ban text-danger"></span>';
+			return Html::img($this->getImageThumbUrl( 'small' ),[ 'width' => '36px']);
 		}
+
+		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
     /**
@@ -168,8 +165,7 @@ trait ImageTrait
         $imageAccept = [];
         $imagesAllowed = $this->getImagesAllowed();
 
-        foreach ($imagesAllowed as $imageAllowed)
-        {
+        foreach ($imagesAllowed as $imageAllowed) {
             $imageAccept[] = 'image/'.$imageAllowed;
         }
 

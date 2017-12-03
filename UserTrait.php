@@ -63,14 +63,13 @@ trait UserTrait
      *
      * @param \kartik\widgets\ActiveForm $form
      * @param boolean $disabled
+     *
      * @return \kartik\form\ActiveField
      */
     public function getUserWidget($form,$disabled = false)
     {
-        /** @var $this \yii\base\Model */
-
-        if($disabled) {
-
+        if($disabled)
+        {
             $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
 
             return $form->field($this, 'user_id')->widget(Select2::className(), [
@@ -82,19 +81,16 @@ trait UserTrait
                     ]
                 ],
             ]);
-
-        } else {
-
-            return $form->field($this, 'user_id')->widget(Select2::className(), [
-                'data' => $this->getUsersSelect2(),
-                'addon' => [
-                    'prepend' => [
-                        'content'=>'<i class="glyphicon glyphicon-user"></i>'
-                    ]
-                ],
-            ]);
-
         }
+
+	    return $form->field($this, 'user_id')->widget(Select2::className(), [
+		    'data' => $this->getUsersSelect2(),
+		    'addon' => [
+			    'prepend' => [
+				    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+			    ]
+		    ],
+	    ]);
     }
 
     /**
@@ -108,9 +104,9 @@ trait UserTrait
         if (isset($this->user->id)) {
             $url = urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]));
             return Html::a($this->user->username,$url);
-        } else {
-            return '<span class="fa fa-ban text-danger"></span>';
         }
+
+	    return '<span class="fa fa-ban text-danger"></span>';
     }
 
     /**

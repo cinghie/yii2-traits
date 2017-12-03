@@ -21,11 +21,43 @@ use dektrium\user\models\User;
 trait UserHelpersTrait
 {
 
+	/**
+	 * Get the User by user email
+	 *
+	 * @return User[] array
+	 * @internal param string $email
+	 */
+	public function getUserByEmail()
+	{
+		$user = User::find()
+			->select(['*'])
+		    ->where(['email' => $this->email])
+		    ->one();
+
+		return $user;
+	}
+
+	/**
+	 * Get current User Profile object or fied if on param
+	 *
+	 * @param string $field
+	 *
+	 * @return \dektrium\user\models\Profile || string || int
+	 */
+	public function getCurentUserProfile($field = '')
+	{
+		if($field) {
+			return Yii::$app->user->identity->profile->$field;
+		}
+
+		return Yii::$app->user->identity->profile;
+	}
+
     /**
      * Return an array with current User
      *
-     * @internal param User $currentUser
      * @return array
+     * @internal param User $currentUser
      */
     public function getCurrentUserSelect2()
     {
@@ -42,6 +74,7 @@ trait UserHelpersTrait
      */
     public function getRolesSelect2()
     {
+    	$array = [];
         $roles = Yii::$app->authManager->getRoles();
 
         foreach($roles as $role) {
@@ -57,26 +90,11 @@ trait UserHelpersTrait
     }
 
     /**
-     * Get the User by user email
-     *
-     * @internal param string $email
-     * @return User[] array
-     */
-    public function getUserByEmail()
-    {
-        $user = User::find()
-            ->select(['*'])
-            ->where(['email' => $this->email])
-            ->one();
-
-        return $user;
-    }
-
-    /**
      * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
      *
      * @param integer $user_id
      * @param string $username
+     *
      * @return array
      */
     public function getUsersSelect2($user_id = 0, $username = '')

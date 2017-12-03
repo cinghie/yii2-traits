@@ -62,6 +62,7 @@ trait NameAliasTrait
      * Generate Name Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getNameWidget($form)
@@ -80,6 +81,7 @@ trait NameAliasTrait
      * Generate Alias Form Widget
      *
      * @param \kartik\widgets\ActiveForm $form
+     *
      * @return \kartik\form\ActiveField
      */
     public function getAliasWidget($form)
@@ -98,6 +100,7 @@ trait NameAliasTrait
      * Generate URL alias by string
      *
      * @param string $string
+     *
      * @return string
      */
     public function generateAlias($string)

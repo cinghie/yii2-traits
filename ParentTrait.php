@@ -28,7 +28,7 @@ trait ParentTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
+	public static function rules()
 	{
 		return [
 			[['parent_id'], 'integer'],
@@ -39,7 +39,7 @@ trait ParentTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels()
+	public static function attributeLabels()
 	{
 		return [
 			'parent_id' => Yii::t('traits', 'Parent'),

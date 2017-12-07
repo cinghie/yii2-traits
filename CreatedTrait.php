@@ -33,7 +33,7 @@ trait CreatedTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['created'], 'safe'],
@@ -45,7 +45,7 @@ trait CreatedTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'created' => Yii::t('traits', 'Created'),

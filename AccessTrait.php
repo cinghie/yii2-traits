@@ -29,7 +29,7 @@ trait AccessTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return  [
             [['access'], 'string', 'max' => 64],
@@ -39,7 +39,7 @@ trait AccessTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'access' => Yii::t('traits', 'Access'),

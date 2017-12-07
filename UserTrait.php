@@ -31,7 +31,7 @@ trait UserTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['user_id'], 'integer'],
@@ -42,7 +42,7 @@ trait UserTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'user_id' => Yii::t('traits', 'User Id'),

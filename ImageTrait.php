@@ -29,7 +29,7 @@ trait ImageTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         $getimageallowed = ImageTrait::getImagesAllowed();
         return [
@@ -42,7 +42,7 @@ trait ImageTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'image' => Yii::t('traits', 'Image'),

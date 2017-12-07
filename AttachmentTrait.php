@@ -29,7 +29,7 @@ trait AttachmentTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['size'], 'integer'],
@@ -41,7 +41,7 @@ trait AttachmentTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'alias' => Yii::t('traits', 'Alias'),

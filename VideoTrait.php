@@ -29,7 +29,7 @@ trait VideoTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['video_caption', 'video_credits'], 'string', 'max' => 255],
@@ -41,7 +41,7 @@ trait VideoTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'video' => Yii::t('traits', 'Video ID'),

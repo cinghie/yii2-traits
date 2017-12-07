@@ -28,7 +28,7 @@ trait StateTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['state'], 'integer']
@@ -38,7 +38,7 @@ trait StateTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'state' => Yii::t('traits', 'State'),

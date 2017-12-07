@@ -30,7 +30,7 @@ trait SeoTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['metadesc', 'metakey'], 'string'],
@@ -42,7 +42,7 @@ trait SeoTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'author' => Yii::t('traits', 'Author'),

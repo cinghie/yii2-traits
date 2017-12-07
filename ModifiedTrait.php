@@ -33,7 +33,7 @@ trait ModifiedTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['modified'], 'safe'],
@@ -45,7 +45,7 @@ trait ModifiedTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'modified' => Yii::t('traits', 'Modified'),

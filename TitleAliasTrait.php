@@ -26,7 +26,7 @@ trait TitleAliasTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['alias'], 'unique'],
@@ -37,7 +37,7 @@ trait TitleAliasTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'alias' => Yii::t('traits', 'Alias'),

@@ -26,7 +26,7 @@ trait LanguageTrait
     /**
      * @inheritdoc
      */
-    public function rules()
+    public static function rules()
     {
         return [
             [['language'], 'string', 'max' => 7],
@@ -36,7 +36,7 @@ trait LanguageTrait
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public static function attributeLabels()
     {
         return [
             'language' => Yii::t('traits', 'Language'),

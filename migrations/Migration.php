@@ -7,7 +7,7 @@
  * @github https://github.com/cinghie/yii2-traits
  * @license GNU GENERAL PUBLIC LICENSE VERSION 3
  * @package yii2-traits
- * @version 1.1.2
+ * @version 1.1.1
  */
 
 namespace cinghie\traits\migrations;

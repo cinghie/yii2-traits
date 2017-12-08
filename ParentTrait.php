@@ -28,11 +28,11 @@ trait ParentTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
+	public static function rules()
 	{
 		return [
 			[['parent_id'], 'integer'],
-			[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => $this::className(), 'targetAttribute' => ['parent_id' => 'id']],
+			[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
 		];
 	}
 

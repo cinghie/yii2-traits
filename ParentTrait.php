@@ -28,7 +28,7 @@ trait ParentTrait
 	/**
 	 * @inheritdoc
 	 */
-	public static function rules()
+	public function rules()
 	{
 		return [
 			[['parent_id'], 'integer'],

@@ -34,7 +34,7 @@ trait ImageTrait
         $getimageallowed = ImageTrait::getImagesAllowed();
         return [
             [['image_caption', 'image_credits'], 'string', 'max' => 255],
-            [['image'], 'file', 'extensions' => $getimageallowed,],
+            [['image'], 'file', 'extensions' => $getimageallowed],
             [['image'], 'safe'],
         ];
     }
@@ -114,7 +114,7 @@ trait ImageTrait
         return $form->field($this, 'image_credits', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon-barcode"></i>'
+                    'content'=>'<i class="fa fa-barcode"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);

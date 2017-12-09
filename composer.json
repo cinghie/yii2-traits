@@ -18,6 +18,7 @@
         "2amigos/yii2-ckeditor-widget": "*",
         "2amigos/yii2-tinymce-widget": "*",
         "asofter/yii2-imperavi-redactor": "*",
+        "cocur/slugify": "*",
         "dektrium/yii2-rbac": "*",
         "dektrium/yii2-user": "*",
         "kartik-v/yii2-detail-view": "*",

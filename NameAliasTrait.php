@@ -13,6 +13,7 @@
 namespace cinghie\traits;
 
 use Yii;
+use Cocur\Slugify\Slugify;
 
 /**
  * Trait NameAliasTrait
@@ -53,8 +54,11 @@ trait NameAliasTrait
 	 */
 	public function setAlias($post,$field)
 	{
+		$slugifyOptions = Yii::$app->controller->module->slugifyOptions;
+		$slugify = new Slugify($slugifyOptions);
+
 		if($post['alias'] === '') {
-			$this->alias = $this->generateAlias($post[$field]);
+			$this->alias = $slugify->slugify($post[$field]);
 		}
 	}
 

@@ -15,6 +15,7 @@ namespace cinghie\traits;
 use Yii;
 use kartik\widgets\FileInput;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * Trait ImageTrait
@@ -77,6 +78,7 @@ trait ImageTrait
                 'showUpload' => false,
                 'initialPreview' => $this->image ? $this->getImageUrl() : false,
                 'initialPreviewAsData' => $this->image ? true : false,
+                'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deleteimage', 'id' => $this->id])] ],
                 'overwriteInitial' => $this->image ? true : false
             ]
         ]);

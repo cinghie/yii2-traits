@@ -29,7 +29,7 @@ trait UserHelpersTrait
 	 */
 	public function getUserByEmail()
 	{
-		$user = User::find()
+		$user = Yii::$app->user->identityClass::find()
 			->select(['*'])
 		    ->where(['email' => $this->email])
 		    ->one();
@@ -104,7 +104,7 @@ trait UserHelpersTrait
             $username = Yii::$app->user->identity->username;
         }
 
-        $users = User::find()
+        $users = Yii::$app->user->identityClass::find()
             ->select(['id','username'])
             ->where(['blocked_at' => null, 'unconfirmed_email' => null])
             ->andWhere(['!=', 'id', $user_id])

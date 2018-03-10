@@ -106,7 +106,7 @@ trait UserHelpersTrait
 
         $users = Yii::$app->user->identityClass::find()
             ->select(['id','username'])
-            ->where(['blocked_at' => null, 'unconfirmed_email' => null])
+            //->where(['blocked_at' => null, 'unconfirmed_email' => null])
             ->andWhere(['!=', 'id', $user_id])
             ->all();
 

@@ -71,7 +71,7 @@ trait ModifiedTrait
      */
     public function getModifiedWidget($form)
     {
-        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
+        $modified = $this->isNewRecord ? date('Y-m-d H:i:s') : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
 	    return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
             'disabled' => true,

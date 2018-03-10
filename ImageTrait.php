@@ -30,9 +30,9 @@ trait ImageTrait
     /**
      * @inheritdoc
      */
-    public static function rules()
+    public function rules()
     {
-        $getimageallowed = ImageTrait::getImagesAllowed();
+        $getimageallowed = $this->getImagesAllowed();
         return [
             [['image_caption', 'image_credits'], 'string', 'max' => 255],
             [['image'], 'file', 'extensions' => $getimageallowed],
@@ -43,7 +43,7 @@ trait ImageTrait
     /**
      * @inheritdoc
      */
-    public static function attributeLabels()
+    public function attributeLabels()
     {
         return [
             'image' => Yii::t('traits', 'Image'),

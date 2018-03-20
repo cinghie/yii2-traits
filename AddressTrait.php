@@ -32,7 +32,7 @@ trait AddressTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
+	public static function rules()
 	{
 		return [
 			[['latitude', 'longitude'], 'number'],
@@ -46,7 +46,7 @@ trait AddressTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels()
+	public static function attributeLabels()
 	{
 		return [
 			'latitude' => Yii::t('traits', 'Latitude'),

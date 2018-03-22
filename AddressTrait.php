@@ -17,6 +17,7 @@ use Yii;
 /**
  * Trait AddressTrait
  *
+ * @property string $name
  * @property string $latitude
  * @property string $longitude
  * @property string $street
@@ -36,7 +37,7 @@ trait AddressTrait
 	{
 		return [
 			[['latitude', 'longitude'], 'number'],
-			[['street'], 'string', 'max' => 255],
+			[['name','street'], 'string', 'max' => 255],
 			[['number'], 'string', 'max' => 12],
 			[['postal_code'], 'string', 'max' => 30],
 			[['city', 'state', 'country'], 'string', 'max' => 50],
@@ -51,6 +52,7 @@ trait AddressTrait
 		return [
 			'latitude' => Yii::t('traits', 'Latitude'),
 			'longitude' => Yii::t('traits', 'Longitude'),
+			'name' => Yii::t('traits', 'Name'),
 			'street' => Yii::t('traits', 'Street'),
 			'number' => Yii::t('traits', 'Number'),
 			'postal_code' => Yii::t('traits', 'Postal Code'),

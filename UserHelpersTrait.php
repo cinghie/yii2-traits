@@ -40,12 +40,12 @@ trait UserHelpersTrait
 	/**
 	 * Get current User
 	 *
-	 * @return \yii\web\IdentityInterface
+	 * @return \yii\web\IdentityInterface || string || int
 	 */
 	public function getCurrentUser($field = '')
 	{
 		if($field) {
-			return Yii::$app->user->identity>$field;
+			return Yii::$app->user->identity->$field;
 		}
 
 		return Yii::$app->user->identity;

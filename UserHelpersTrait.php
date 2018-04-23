@@ -38,6 +38,8 @@ trait UserHelpersTrait
 	}
 
 	/**
+	 * Get current User
+	 *
 	 * @return \yii\web\IdentityInterface
 	 */
 	public function getCurrentUser($field = '')
@@ -56,7 +58,7 @@ trait UserHelpersTrait
 	 *
 	 * @return \dektrium\user\models\Profile || string || int
 	 */
-	public function getCurentUserProfile($field = '')
+	public function getCurrentUserProfile($field = '')
 	{
 		if($field) {
 			return Yii::$app->user->identity->profile->$field;

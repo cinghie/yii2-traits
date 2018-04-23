@@ -252,6 +252,9 @@ if( $model->isCurrentUserCreator() ) {
     - integer $user_id
     - User user
     - function getUser(): Relation with User Model   
+    - function getCurrentUser($field = ""): Get current User or current user field
+    - function getCurrentUserProfile($field = ""): Get current User Profile or current user field
+    - function getUser(): Relation with User Model   
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User

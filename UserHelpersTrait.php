@@ -38,6 +38,18 @@ trait UserHelpersTrait
 	}
 
 	/**
+	 * @return \yii\web\IdentityInterface
+	 */
+	public function getCurrentUser($field = '')
+	{
+		if($field) {
+			return Yii::$app->user->identity>$field;
+		}
+
+		return Yii::$app->user->identity;
+	}
+
+	/**
 	 * Get current User Profile object or fied if on param
 	 *
 	 * @param string $field

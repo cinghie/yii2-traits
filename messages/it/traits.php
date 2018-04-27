@@ -37,6 +37,7 @@ return [
     'Extension' => 'Estensione',
     'Exit' => 'Esci',
     'Filename' => 'Nome File',
+    'Google Maps API KEY Missing' => 'Google Maps API Key Mancante',
     'Image' => 'Immagine',
     'Image Caption' => 'Caption Immagine',
     'Image Credits' => 'Crediti Immagine',

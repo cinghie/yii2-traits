@@ -62,4 +62,38 @@ trait AddressTrait
 		];
 	}
 
+	/**
+	 * Get latitude and longitude from Google Maps
+	 *
+	 * @param string $address
+	 * @return array
+	 */
+	public function getLatLng($address, $key = null)
+	{
+		$settings = Yii::$app->settings;
+
+		if($settings->get('googleMapsAPIKey', 'POISettings')) {
+			$apiKEY = $settings->get('googleMapsAPIKey', 'POISettings');
+		} elseif ($key) {
+			$apiKEY = $key;
+		} else {
+			throw new \Exception(Yii::t('traits','Google Maps API KEY Missing'));
+		}
+
+		$latLng  = array();
+		$address = str_replace(" ","+",$address);
+		$address = str_replace("++","+",$address);
+		$geocode = file_get_contents("https://maps.google.com/maps/api/geocode/json?address=".$address."&sensor=false&key=".$apiKEY);
+		$output  = json_decode($geocode);
+
+		if ($output->results) {
+			$lat = $output->results[0]->geometry->location->lat;
+			$lng = $output->results[0]->geometry->location->lng;
+			$latLng['latitude']  = $lat;
+			$latLng['longitude'] = $lng;
+		}
+
+		return $latLng;
+	}
+
 }

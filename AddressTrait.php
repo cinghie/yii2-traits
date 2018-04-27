@@ -72,8 +72,8 @@ trait AddressTrait
 	{
 		$settings = Yii::$app->settings;
 
-		if($settings->get('googleMapsAPIKey', 'POISettings')) {
-			$apiKEY = $settings->get('googleMapsAPIKey', 'POISettings');
+		if($settings->get('googleMapsAPIKey', 'API')) {
+			$apiKEY = $settings->get('googleMapsAPIKey', 'API');
 		} elseif ($key) {
 			$apiKEY = $key;
 		} else {

@@ -89,5 +89,6 @@ return [
     'Video ID' => 'ID Video',
     'Video Caption' => 'Caption Video',
     'Video Credits' => 'Crediti Video',
-    'Video Type' => 'Tipo Video'
+    'Video Type' => 'Tipo Video',
+    'You are not allowed to access this page' => 'Accesso non permesso!',
 ];

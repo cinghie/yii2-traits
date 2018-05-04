@@ -32,7 +32,7 @@ trait ParentTrait
 	{
 		return [
 			[['parent_id'], 'integer'],
-			[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
+			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
 		];
 	}
 

@@ -38,7 +38,7 @@ trait CreatedTrait
         return [
             [['created'], 'safe'],
             [['created_by'], 'integer'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->user->identityClass, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -59,7 +59,7 @@ trait CreatedTrait
     public function getCreatedBy()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
+        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'created_by'])->from(Yii::$app->user->identityClass::tableName() . ' AS createdBy');
     }
 
     /**

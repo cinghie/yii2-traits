@@ -35,7 +35,7 @@ trait UserTrait
     {
         return [
             [['user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->user->identityClass, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -55,7 +55,7 @@ trait UserTrait
     public function getUser()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'user_id'])->from(User::tableName() . ' AS user');
+        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'user_id'])->from(Yii::$app->user->identityClass::tableName() . ' AS user');
     }
 
     /**

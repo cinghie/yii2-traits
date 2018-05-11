@@ -38,7 +38,7 @@ trait ModifiedTrait
         return [
             [['modified'], 'safe'],
             [['modified_by'], 'integer'],
-            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['modified_by' => 'id']],
+            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->user->identityClass, 'targetAttribute' => ['modified_by' => 'id']],
         ];
     }
 
@@ -59,7 +59,7 @@ trait ModifiedTrait
     public function getModifiedBy()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
+        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'modified_by'])->from(Yii::$app->user->identityClass::tableName() . ' AS modifiedBy');
     }
 
     /**
@@ -71,7 +71,7 @@ trait ModifiedTrait
      */
     public function getModifiedWidget($form)
     {
-        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
+        $modified = $this->isNewRecord ? date('Y-m-d H:i:s') : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
 	    return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
             'disabled' => true,

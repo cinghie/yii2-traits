@@ -12,8 +12,8 @@
 
 namespace cinghie\traits;
 
-use Yii;
 use kartik\widgets\Select2;
+use Yii;
 
 /**
  * Trait LanguageTrait
@@ -88,7 +88,7 @@ trait LanguageTrait
      */
     public function getLanguagesSelect2()
     {
-        $languages = Yii::$app->urlManager->languages;
+        $languages = $this->getLanguages();
         $array = ['all' => Yii::t('traits', 'All Female')];
 
         /** @var array $languages */
@@ -99,4 +99,17 @@ trait LanguageTrait
         return $array;
     }
 
+    /**
+     * Get languages
+     *
+     * @return array|mixed
+     */
+    public function getLanguages()
+    {
+        if (Yii::$app->urlManager->canGetProperty('languages')) {
+            return Yii::$app->urlManager->languages;
+        }
+
+        return [Yii::$app->language];
+    }
 }

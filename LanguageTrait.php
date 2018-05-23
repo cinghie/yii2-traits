@@ -71,7 +71,7 @@ trait LanguageTrait
     public function getLanguageWidget($form)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, 'language')->widget(Select2::className(), [
+        return $form->field($this, 'language')->widget(Select2::class, [
             'data' => $this->getLanguagesSelect2(),
             'addon' => [
                 'prepend' => [

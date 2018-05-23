@@ -70,7 +70,7 @@ trait EditorTrait
     public function getCKEditorWidget($form,$field)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(CKEditor::className(), [
+        return $form->field($this, $field)->widget(CKEditor::class, [
             'options' => ['rows' => 6],
             'preset' => 'advanced'
         ]);
@@ -87,7 +87,7 @@ trait EditorTrait
     public function getTinyMCEWidget($form,$field)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(TinyMce::className(), [
+        return $form->field($this, $field)->widget(TinyMce::class, [
             'options' => ['rows' => 6],
             'clientOptions' => [
                 'plugins' => [
@@ -111,7 +111,7 @@ trait EditorTrait
     public function getImperaviWidget($form,$field)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(Imperavi::className(), [
+        return $form->field($this, $field)->widget(Imperavi::class, [
             'options' => [
             	'lang' => substr(Yii::$app->language,0,2),
                 'css' => 'wym.css',
@@ -136,7 +136,7 @@ trait EditorTrait
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, $field)->widget(
-            MarkdownEditor::className(),
+            MarkdownEditor::class,
             ['height' => 300, 'encodeLabels' => true]
         );
     }

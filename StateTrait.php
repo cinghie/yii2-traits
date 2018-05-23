@@ -79,7 +79,7 @@ trait StateTrait
     public function getStateWidget($form)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, 'state')->widget(Select2::className(), [
+        return $form->field($this, 'state')->widget(Select2::class, [
             'data' => $this->getStateSelect2(),
             'addon' => [
                 'prepend' => [

@@ -56,7 +56,7 @@ trait AccessTrait
     public function getAccessWidget($form)
     {
         /** @var \yii\base\Model $this */
-        return $form->field($this, 'access')->widget(Select2::className(), [
+        return $form->field($this, 'access')->widget(Select2::class, [
             'data' => $this->getRolesSelect2(),
             'addon' => [
                 'prepend' => [

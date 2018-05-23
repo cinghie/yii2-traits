@@ -65,7 +65,7 @@ trait AttachmentTrait
     {
         if($this->filename) {
 
-            return $form->field($this, 'filename')->widget(FileInput::className(), [
+            return $form->field($this, 'filename')->widget(FileInput::class, [
 	            'options'=>[
 		            'multiple'=> true
 	            ],
@@ -87,7 +87,7 @@ trait AttachmentTrait
 
         }
 
-	    return $form->field($this, 'filename')->widget(FileInput::className(), [
+	    return $form->field($this, 'filename')->widget(FileInput::class, [
 		    'options'=>[
 			    'multiple' => true
 		    ],

@@ -63,7 +63,7 @@ trait SeoTrait
     public function getRobotsWidget($form)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, 'robots')->widget(Select2::className(), [
+        return $form->field($this, 'robots')->widget(Select2::class, [
             'data' => $this->getRobotsOptions(),
             'addon' => [
                 'prepend' => [

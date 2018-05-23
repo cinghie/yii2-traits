@@ -96,7 +96,7 @@ trait VideoTrait
     public function getVideoTypeWidget($form)
     {
         /** @var $this \yii\base\Model | \cinghie\traits\VideoTrait */
-        return $form->field($this, 'video_type')->widget(Select2::className(), [
+        return $form->field($this, 'video_type')->widget(Select2::class, [
             'data' => $this->getVideoTypeSelect2(),
             'addon' => [
                 'prepend' => [

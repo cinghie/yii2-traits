@@ -38,7 +38,7 @@ trait CreatedTrait
         return [
             [['created'], 'safe'],
             [['created_by'], 'integer'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -59,7 +59,7 @@ trait CreatedTrait
     public function getCreatedBy()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
+        return $this->hasOne(User::class, ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
     }
 
     /**
@@ -73,7 +73,7 @@ trait CreatedTrait
     {
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
-        return $form->field($this, 'created')->widget(DateTimePicker::className(), [
+        return $form->field($this, 'created')->widget(DateTimePicker::class, [
             'options' => [
                 'value' => $created,
             ],
@@ -106,7 +106,7 @@ trait CreatedTrait
     {
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
-        return $form->field($this, 'created_by')->widget(Select2::className(), [
+        return $form->field($this, 'created_by')->widget(Select2::class, [
             'data' => $created_by,
             'addon' => [
                 'prepend' => [

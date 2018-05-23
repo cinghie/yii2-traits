@@ -51,7 +51,7 @@ trait ParentTrait
 	 */
 	public function getParent()
 	{
-		return $this->hasOne(self::className(), ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
+		return $this->hasOne(self::class, ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
 	}
 
 	/**
@@ -59,7 +59,7 @@ trait ParentTrait
 	 */
 	public function getParents()
 	{
-		return $this->hasMany(self::className(), ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
+		return $this->hasMany(self::class, ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
 	}
 
 	/**
@@ -67,7 +67,7 @@ trait ParentTrait
 	 */
 	public function getChild()
 	{
-		return $this->hasOne(self::className(), ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
+		return $this->hasOne(self::class, ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
 	}
 
 	/**
@@ -75,7 +75,7 @@ trait ParentTrait
 	 */
 	public function getChilds()
 	{
-		return $this->hasMany(self::className(), ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
+		return $this->hasMany(self::class, ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
 	}
 
 	/**
@@ -89,7 +89,7 @@ trait ParentTrait
 	public function getParentWidget($form,$items)
 	{
 		/** @var $this \yii\base\Model */
-		return $form->field($this, 'parent_id')->widget(Select2::className(), [
+		return $form->field($this, 'parent_id')->widget(Select2::class, [
 			'data' => $items,
 			'addon' => [
 				'prepend' => [

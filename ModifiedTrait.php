@@ -38,7 +38,7 @@ trait ModifiedTrait
         return [
             [['modified'], 'safe'],
             [['modified_by'], 'integer'],
-            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['modified_by' => 'id']],
+            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modified_by' => 'id']],
         ];
     }
 
@@ -59,7 +59,7 @@ trait ModifiedTrait
     public function getModifiedBy()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
+        return $this->hasOne(User::class, ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
     /**
@@ -73,7 +73,7 @@ trait ModifiedTrait
     {
         $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
-	    return $form->field($this, 'modified')->widget(DateTimePicker::className(), [
+	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [
             'disabled' => true,
             'options' => [
                 'value' => $modified,
@@ -107,7 +107,7 @@ trait ModifiedTrait
     {
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
-        return $form->field($this, 'modified_by')->widget(Select2::className(), [
+        return $form->field($this, 'modified_by')->widget(Select2::class, [
             'data' => $modified_by,
             'addon' => [
                 'prepend' => [

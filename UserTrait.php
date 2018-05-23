@@ -35,7 +35,7 @@ trait UserTrait
     {
         return [
             [['user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -55,7 +55,7 @@ trait UserTrait
     public function getUser()
     {
         /** @var $this \yii\db\ActiveRecord */
-        return $this->hasOne(User::className(), ['id' => 'user_id'])->from(User::tableName() . ' AS user');
+        return $this->hasOne(User::class, ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
     /**
@@ -72,7 +72,7 @@ trait UserTrait
         {
             $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
 
-            return $form->field($this, 'user_id')->widget(Select2::className(), [
+            return $form->field($this, 'user_id')->widget(Select2::class, [
                 'disabled' => true,
                 'value' => $value,
                 'addon' => [
@@ -83,7 +83,7 @@ trait UserTrait
             ]);
         }
 
-	    return $form->field($this, 'user_id')->widget(Select2::className(), [
+	    return $form->field($this, 'user_id')->widget(Select2::class, [
 		    'data' => $this->getUsersSelect2(),
 		    'addon' => [
 			    'prepend' => [

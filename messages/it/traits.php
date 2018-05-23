@@ -86,6 +86,7 @@ return [
     'Street' => 'Strada',
     'TagDependency was invalidated' => 'TagDependency invalidata',
     'Text' => 'Testo',
+    'The requested page does not exist.' => 'La pagina richiesta non esiste.',
     'Title' => 'Titolo',
     'Update' => 'Modifica',
     'Update {modelClass}: ' => 'Modifica {modelClass}: ',

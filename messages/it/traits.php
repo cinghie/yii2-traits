@@ -42,6 +42,7 @@ return [
     'Image' => 'Immagine',
     'Image Caption' => 'Caption Immagine',
     'Image Credits' => 'Crediti Immagine',
+    'ID' => 'ID',
     'Inactived' => 'Inattivo',
     'Yes' => 'Si',
     'Language' => 'Lingua',

@@ -37,52 +37,27 @@ trait EditorTrait
 	 * @return \kartik\form\ActiveField | string
 	 * @throws \Exception
 	 */
-    public function getEditorWidget($form,$field,$requestEditor = '')
+    public function getEditorWidget($form, $field, $requestEditor = '')
     {
         $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
 
-        if($form !== null)
-        {
-	        switch ($editor)
-	        {
-		        case 'ckeditor':
-			        return $this->getCKEditorWidget($form,$field);
-			        break;
-		        case 'imperavi':
-			        return $this->getImperaviWidget($form,$field);
-			        break;
-		        case 'markdown':
-			        return $this->getMarkdownWidget($form,$field);
-			        break;
-		        case 'tinymce':
-			        return $this->getTinyMCEWidget($form,$field);
-			        break;
-		        default:
-			        return $this->getNoEditorWidget($form,$field,$maxLength = false);
-	        }
-
-        } else {
-
-	        switch ($editor)
-	        {
-		        case 'ckeditor':
-			        return $this->getCKEditorWidget($form,$field);
-			        break;
-		        case 'imperavi':
-			        return $this->getImperaviWidgetWithoutForm($field);
-			        break;
-		        case 'markdown':
-			        return $this->getMarkdownWidget($form,$field);
-			        break;
-		        case 'tinymce':
-			        return $this->getTinyMCEWidget($form,$field);
-			        break;
-		        default:
-			        return $this->getNoEditorWidgetWithoutForm($field,$maxLength = false);
-	        }
-        }
-
-
+	    switch ($editor)
+	    {
+		    case 'ckeditor':
+			    return $this->getCKEditorWidget($form, $field, $options = ['rows' => 6], $preset = 'basic');
+			    break;
+		    case 'imperavi':
+			    return $this->getImperaviWidget($form, $field, $options = ['css' => 'wym.css', 'minHeight' => 250], $plugins = ['fullscreen', 'clips']);
+			    break;
+		    case 'markdown':
+			    return $this->getMarkdownWidget($form, $field, $options = ['height' => 250, 'encodeLabels' => true]);
+			    break;
+		    case 'tinymce':
+			    return $this->getTinyMCEWidget($form, $field, $options = ['rows' => 14]);
+			    break;
+		    default:
+			    return $this->getNoEditorWidget($form, $field, $maxLength = false);
+	    }
     }
 
     /**
@@ -91,39 +66,23 @@ trait EditorTrait
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
      *
-     * @return \kartik\form\ActiveField
+     * @return \kartik\form\ActiveField | string
      */
-    public function getCKEditorWidget($form,$field)
+    public function getCKEditorWidget($form, $field, $options, $preset)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(CKEditor::class, [
-            'options' => ['rows' => 6],
-            'preset' => 'advanced'
-        ]);
-    }
+        if($form !== null) {
+	        /** @var $this \yii\base\Model */
+	        return $form->field($this, $field)->widget(CKEditor::class, [
+		        'options' => $options,
+		        'preset' => $preset
+	        ]);
+        }
 
-    /**
-     * Get a TinyMCE Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     *
-     * @return \kartik\form\ActiveField
-     */
-    public function getTinyMCEWidget($form,$field)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(TinyMce::class, [
-            'options' => ['rows' => 6],
-            'clientOptions' => [
-                'plugins' => [
-                    'advlist autolink lists link charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table contextmenu paste'
-                ],
-                'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
-            ]
-        ]);
+	    return CKEditor::widget([
+	    	'name' => $field,
+		    'options' => $options,
+		    'preset' => $preset
+	    ]);
     }
 
 	/**
@@ -132,48 +91,27 @@ trait EditorTrait
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
 	 *
-	 * @return \kartik\form\ActiveField
+	 * @return \kartik\form\ActiveField | string
 	 * @throws \Exception
 	 */
-    public function getImperaviWidget($form,$field)
+    public function getImperaviWidget($form, $field, $options, $plugins)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(Imperavi::class, [
-            'options' => [
-	            'css' => 'wym.css',
-            	'lang' => substr(Yii::$app->language,0,2),
-                'minHeight' => 250,
-            ],
-            'plugins' => [
-                'fullscreen',
-                'clips'
-            ],
-        ]);
-    }
+	    $options['lang'] = substr(Yii::$app->language, 0, 2);
 
-	/**
-	 * Get a Imperavi Editor Widget without $form
-	 *
-	 * @param string $field
-	 *
-	 * @return string
-	 * @throws \Exception
-	 */
-	public function getImperaviWidgetWithoutForm($field)
-	{
-		return \vova07\imperavi\Widget::widget([
-			'name' => $field,
-			'settings' => [
-				'css' => 'wym.css',
-				'lang' => substr(Yii::$app->language,0,2),
-				'minHeight' => 250,
-				'plugins' => [
-					'fullscreen',
-					'clips'
-				],
-			],
-		]);
-	}
+	    if($form !== null) {
+		    /** @var $this \yii\base\Model */
+		    return $form->field($this, $field)->widget(Imperavi::class, [
+			    'options' => $options,
+			    'plugins' => $plugins
+		    ]);
+	    }
+
+	    return Imperavi::widget([
+	    	'attribute' => $field,
+		    'options' => $options,
+		    'plugins' => $plugins
+	    ]);
+    }
 
     /**
      * Get a Markdown Editor Widget
@@ -181,15 +119,22 @@ trait EditorTrait
      * @param \kartik\widgets\ActiveForm $form
      * @param string $field
      *
-     * @return \kartik\form\ActiveField
+     * @return \kartik\form\ActiveField | string
      */
-    public function getMarkdownWidget($form,$field)
+    public function getMarkdownWidget($form, $field, $options)
     {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, $field)->widget(
-            MarkdownEditor::class,
-            ['height' => 300, 'encodeLabels' => true]
-        );
+	    if($form !== null) {
+		    /** @var $this \yii\base\Model */
+		    return $form->field($this, $field)->widget(
+			    MarkdownEditor::class,
+			    $options
+		    );
+	    }
+
+	    return MarkdownEditor::widget([
+		    'name' => $field,
+		    'options' => $options
+	    ]);
     }
 
 	/**
@@ -199,31 +144,53 @@ trait EditorTrait
 	 * @param string $field
 	 * @param boolean $maxLength
 	 *
-	 * @return \kartik\form\ActiveField
+	 * @return \kartik\form\ActiveField | string
 	 */
-	public function getNoEditorWidget($form,$field,$maxLength = false)
+	public function getNoEditorWidget($form, $field, $maxLength = false)
 	{
-		/** @var $this \yii\base\Model */
-		return $form->field($this, $field)->textarea([
+		if($form !== null) {
+			/** @var $this \yii\base\Model */
+			return $form->field($this, $field)->textarea([
+				'maxLength' => $maxLength,
+				'rows' => 6
+			]);
+		}
+
+		return Html::textarea($field, '', [
+			'class' => 'form-control',
 			'maxLength' => $maxLength,
 			'rows' => 6
 		]);
 	}
 
 	/**
-	 * Get a No-Editor Widget
+	 * Get a TinyMCE Editor Widget
 	 *
+	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
-	 * @param boolean $maxLength
 	 *
-	 * @return string
+	 * @return \kartik\form\ActiveField | string
 	 */
-	public function getNoEditorWidgetWithoutForm($field,$maxLength = false)
+	public function getTinyMCEWidget($form, $field, $options)
 	{
-		return Html::textarea($field, '', [
-			'class' => 'form-control',
-			'maxLength' => $maxLength,
-			'rows' => 6
+		if($form !== null) {
+			/** @var $this \yii\base\Model */
+			return $form->field($this, $field)->widget(TinyMce::class, [
+				'clientOptions' => [
+					'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+				],
+				'language' => Yii::$app->language,
+				'options' => $options
+			]);
+		}
+
+		return TinyMce::widget([
+			'name' => $field,
+			'clientOptions' => [
+				'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+			],
+			'language' => Yii::$app->language,
+			'options' => $options
 		]);
 	}
 

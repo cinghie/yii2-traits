@@ -47,7 +47,22 @@ trait NameAliasTrait
     }
 
 	/**
-	 * Set alias
+	 * Generate alias from name
+	 *
+	 * @param string Sname
+	 *
+	 * @return string
+	 */
+	public function generateAlias($name)
+	{
+		$slugifyOptions = Yii::$app->controller->module->slugifyOptions;
+		$slugify = new Slugify($slugifyOptions);
+
+		return $slugify->slugify($name);
+	}
+
+	/**
+	 * Set alias from post
 	 *
 	 * @param [] $post
 	 * @param string Sfield
@@ -107,7 +122,7 @@ trait NameAliasTrait
      *
      * @return string
      */
-    public function generateAlias($string)
+    public function purgeAlias($string)
     {
         // remove any '-' from the string they will be used as concatonater
         $string = str_replace(array('-','_'), ' ', $string);

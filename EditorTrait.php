@@ -16,6 +16,7 @@ use Yii;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\tinymce\TinyMce;
 use kartik\markdown\MarkdownEditor;
+use yii\helpers\Html;
 use yii\imperavi\Widget as Imperavi;
 
 /**
@@ -77,7 +78,7 @@ trait EditorTrait
 			        return $this->getTinyMCEWidget($form,$field);
 			        break;
 		        default:
-			        return $this->getNoEditorWidget($form,$field,$maxLength = false);
+			        return $this->getNoEditorWidgetWithoutForm($field,$maxLength = false);
 	        }
         }
 
@@ -203,7 +204,27 @@ trait EditorTrait
 	public function getNoEditorWidget($form,$field,$maxLength = false)
 	{
 		/** @var $this \yii\base\Model */
-		return $form->field($this, $field)->textarea(['maxLength' => $maxLength,'rows' => 6]);
+		return $form->field($this, $field)->textarea([
+			'maxLength' => $maxLength,
+			'rows' => 6
+		]);
+	}
+
+	/**
+	 * Get a No-Editor Widget
+	 *
+	 * @param string $field
+	 * @param boolean $maxLength
+	 *
+	 * @return string
+	 */
+	public function getNoEditorWidgetWithoutForm($field,$maxLength = false)
+	{
+		return Html::textarea($field, '', [
+			'class' => 'form-control',
+			'maxLength' => $maxLength,
+			'rows' => 6
+		]);
 	}
 
 }

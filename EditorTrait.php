@@ -26,37 +26,62 @@ use yii\imperavi\Widget as Imperavi;
 trait EditorTrait
 {
 
-    /**
-     * Generate Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     * @param string $requestEditor
-     *
-     * @return \kartik\form\ActiveField
-     * @internal param string $editor
-     */
+	/**
+	 * Generate Editor Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param string $field
+	 * @param string $requestEditor
+	 *
+	 * @return \kartik\form\ActiveField | string
+	 * @throws \Exception
+	 */
     public function getEditorWidget($form,$field,$requestEditor = '')
     {
         $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
 
-        switch ($editor)
+        if($form !== null)
         {
-            case 'ckeditor':
-                return $this->getCKEditorWidget($form,$field);
-                break;
-            case 'imperavi':
-                return $this->getImperaviWidget($form,$field);
-                break;
-            case 'markdown':
-                return $this->getMarkdownWidget($form,$field);
-                break;
-            case 'tinymce':
-                return $this->getTinyMCEWidget($form,$field);
-                break;
-            default:
-                return $this->getNoEditorWidget($form,$field,$maxLength = false);
+	        switch ($editor)
+	        {
+		        case 'ckeditor':
+			        return $this->getCKEditorWidget($form,$field);
+			        break;
+		        case 'imperavi':
+			        return $this->getImperaviWidget($form,$field);
+			        break;
+		        case 'markdown':
+			        return $this->getMarkdownWidget($form,$field);
+			        break;
+		        case 'tinymce':
+			        return $this->getTinyMCEWidget($form,$field);
+			        break;
+		        default:
+			        return $this->getNoEditorWidget($form,$field,$maxLength = false);
+	        }
+
+        } else {
+
+	        switch ($editor)
+	        {
+		        case 'ckeditor':
+			        return $this->getCKEditorWidget($form,$field);
+			        break;
+		        case 'imperavi':
+			        return $this->getImperaviWidgetWithoutForm($field);
+			        break;
+		        case 'markdown':
+			        return $this->getMarkdownWidget($form,$field);
+			        break;
+		        case 'tinymce':
+			        return $this->getTinyMCEWidget($form,$field);
+			        break;
+		        default:
+			        return $this->getNoEditorWidget($form,$field,$maxLength = false);
+	        }
         }
+
+
     }
 
     /**
@@ -100,21 +125,22 @@ trait EditorTrait
         ]);
     }
 
-    /**
-     * Get a Imperavi Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     *
-     * @return \kartik\form\ActiveField
-     */
+	/**
+	 * Get a Imperavi Editor Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param string $field
+	 *
+	 * @return \kartik\form\ActiveField
+	 * @throws \Exception
+	 */
     public function getImperaviWidget($form,$field)
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, $field)->widget(Imperavi::class, [
             'options' => [
+	            'css' => 'wym.css',
             	'lang' => substr(Yii::$app->language,0,2),
-                'css' => 'wym.css',
                 'minHeight' => 250,
             ],
             'plugins' => [
@@ -123,6 +149,30 @@ trait EditorTrait
             ],
         ]);
     }
+
+	/**
+	 * Get a Imperavi Editor Widget without $form
+	 *
+	 * @param string $field
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function getImperaviWidgetWithoutForm($field)
+	{
+		return \vova07\imperavi\Widget::widget([
+			'name' => $field,
+			'settings' => [
+				'css' => 'wym.css',
+				'lang' => substr(Yii::$app->language,0,2),
+				'minHeight' => 250,
+				'plugins' => [
+					'fullscreen',
+					'clips'
+				],
+			],
+		]);
+	}
 
     /**
      * Get a Markdown Editor Widget

@@ -60,14 +60,17 @@ trait EditorTrait
 	    }
     }
 
-    /**
-     * Get a CKEditor Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     *
-     * @return \kartik\form\ActiveField | string
-     */
+	/**
+	 * Get a CKEditor Editor Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param string $field
+	 * @param array $options
+	 * @param string $preset
+	 *
+	 * @return \kartik\form\ActiveField | string
+	 * @throws \Exception
+	 */
     public function getCKEditorWidget($form, $field, $options, $preset)
     {
         if($form !== null) {
@@ -90,6 +93,8 @@ trait EditorTrait
 	 *
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
+	 * @param array $options
+	 * @param array $plugins
 	 *
 	 * @return \kartik\form\ActiveField | string
 	 * @throws \Exception
@@ -113,14 +118,16 @@ trait EditorTrait
 	    ]);
     }
 
-    /**
-     * Get a Markdown Editor Widget
-     *
-     * @param \kartik\widgets\ActiveForm $form
-     * @param string $field
-     *
-     * @return \kartik\form\ActiveField | string
-     */
+	/**
+	 * Get a Markdown Editor Widget
+	 *
+	 * @param \kartik\widgets\ActiveForm $form
+	 * @param string $field
+	 * @param array $options
+	 *
+	 * @return \kartik\form\ActiveField | string
+	 * @throws \Exception
+	 */
     public function getMarkdownWidget($form, $field, $options)
     {
 	    if($form !== null) {
@@ -168,8 +175,10 @@ trait EditorTrait
 	 *
 	 * @param \kartik\widgets\ActiveForm $form
 	 * @param string $field
+	 * @param array $options
 	 *
 	 * @return \kartik\form\ActiveField | string
+	 * @throws \Exception
 	 */
 	public function getTinyMCEWidget($form, $field, $options)
 	{

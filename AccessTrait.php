@@ -90,8 +90,8 @@ trait AccessTrait
         return [
             'attribute' => 'access',
             'format' => 'html',
-            'value' => $this->access ? Html::a($this->access,urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
+            'value' => $this->access ? Html::a($this->access,urldecode(Url::toRoute(['/rbac/role/update', 'name' => $this->access]))) : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

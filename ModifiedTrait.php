@@ -73,6 +73,7 @@ trait ModifiedTrait
     {
         $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
 
+	    /** @var \yii\base\Model $this */
 	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [
             'disabled' => true,
             'options' => [
@@ -107,6 +108,7 @@ trait ModifiedTrait
     {
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
+	    /** @var \yii\base\Model $this */
         return $form->field($this, 'modified_by')->widget(Select2::class, [
             'data' => $modified_by,
             'addon' => [
@@ -146,8 +148,8 @@ trait ModifiedTrait
         return [
             'attribute' => 'modified_by',
             'format' => 'html',
-            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
+            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

@@ -51,7 +51,7 @@ trait VideoTrait
         ];
     }
 
-    /*
+    /**
      * Return array for Video Type
      *
      * @return array

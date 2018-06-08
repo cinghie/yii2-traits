@@ -121,16 +121,16 @@ trait StateTrait
         return [
             'attribute' => 'state',
             'format' => 'html',
-            'value' => $this->state ? '<span class="label label-success">'. Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'. Yii::t('traits', 'Deactivated').'</span>',
             'type' => DetailView::INPUT_SWITCH,
+            'value' => $this->state ? '<span class="label label-success">'. Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'. Yii::t('traits', 'Deactivated').'</span>',
+            'valueColOptions'=> [
+	            'style'=>'width:30%'
+            ],
             'widgetOptions' => [
                 'pluginOptions' => [
                     'onText' => 'Yes',
                     'offText' => 'No',
                 ]
-            ],
-            'valueColOptions'=> [
-                'style'=>'width:30%'
             ]
         ];
     }

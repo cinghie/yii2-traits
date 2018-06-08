@@ -66,7 +66,10 @@ trait AddressTrait
 	 * Get latitude and longitude from Google Maps
 	 *
 	 * @param string $address
+	 * @param string $key
+	 *
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function getLatLng($address, $key = null)
 	{

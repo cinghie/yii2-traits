@@ -73,7 +73,8 @@ trait CreatedTrait
     {
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
-        return $form->field($this, 'created')->widget(DateTimePicker::class, [
+	    /** @var $this \yii\base\Model */
+	    return $form->field($this, 'created')->widget(DateTimePicker::class, [
             'options' => [
                 'value' => $created,
             ],
@@ -106,6 +107,7 @@ trait CreatedTrait
     {
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
+	    /** @var $this \yii\base\Model */
         return $form->field($this, 'created_by')->widget(Select2::class, [
             'data' => $created_by,
             'addon' => [
@@ -145,8 +147,8 @@ trait CreatedTrait
         return [
             'attribute' => 'created_by',
             'format' => 'html',
-            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
+            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

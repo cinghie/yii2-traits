@@ -64,39 +64,39 @@ trait AttachmentTrait
     public function getFileWidget($form,$attachType)
     {
         if($this->filename) {
-
-            return $form->field($this, 'filename')->widget(FileInput::class, [
+	        /** @var \yii\base\Model $this */
+	        return $form->field($this, 'filename')->widget(FileInput::class, [
 	            'options'=>[
 		            'multiple'=> true
 	            ],
                 'pluginOptions' => [
                     'allowedFileExtensions' => $attachType,
+                    'initialPreview' => $this->getFileUrl(),
+                    'initialPreviewAsData' => true,
+                    'initialPreviewConfig' => [
+	                    ['caption' => $this->filename, 'size' => $this->size]
+                    ],
+                    'overwriteInitial' => true,
                     'previewFileType' => 'any',
                     'showPreview' => true,
                     'showCaption' => true,
                     'showRemove' => false,
-                    'showUpload' => false,
-                    'initialPreview' => $this->getFileUrl(),
-                    'initialPreviewAsData' => true,
-                    'initialPreviewConfig' => [
-                        [ 'caption' => $this->filename, 'size' => $this->size ]
-                    ],
-                    'overwriteInitial' => true
+                    'showUpload' => false
                 ],
             ]);
-
         }
 
+	    /** @var \yii\base\Model $this */
 	    return $form->field($this, 'filename')->widget(FileInput::class, [
 		    'options'=>[
 			    'multiple' => true
 		    ],
 		    'pluginOptions' => [
 			    'allowedFileExtensions' => $attachType,
+			    'browseLabel' => Yii::t('traits', 'Upload'),
 			    'previewFileType' => 'any',
 			    'showRemove' => false,
 			    'showUpload' => false,
-			    'browseLabel' => Yii::t('traits', 'Upload'),
 		    ],
 	    ]);
 
@@ -110,7 +110,6 @@ trait AttachmentTrait
 	 *
 	 * @return string
 	 * @throws \Exception
-	 * @internal param \kartik\widgets\ActiveForm $form
 	 */
 	public function getFilesWidget($attachType,$attachURL)
 	{
@@ -121,8 +120,8 @@ trait AttachmentTrait
 		$initialPreview = array();
 		$initialPreviewConfig = array();
 
-		if(count($attachments)) {
-
+		if(count($attachments))
+		{
 			foreach($attachments as $attach) {
 				$initialPreviewConfig[$i]['caption'] = $attach['title'];
 				$initialPreviewConfig[$i]['size'] = $attach['size'];
@@ -172,7 +171,6 @@ trait AttachmentTrait
 					'showUpload' => false
 				]
 			]);
-
 		}
 
 		return $html;
@@ -293,8 +291,7 @@ trait AttachmentTrait
             $unit = (int)log($bytes, 1024);
             $units = array('B', 'KB', 'MB', 'GB');
 
-            if (array_key_exists($unit, $units) === true)
-            {
+            if (array_key_exists($unit, $units) === true) {
                 return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
             }
         }

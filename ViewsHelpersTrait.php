@@ -285,7 +285,7 @@ trait ViewsHelpersTrait
     }
 
     /**
-     * Return action annull button
+     * Return action cancel button
      *
      * @return string
      */
@@ -338,17 +338,17 @@ trait ViewsHelpersTrait
         });';
     }
 
-    /**
-     * Return standard button
-     *
-     * @param string $icon
-     * @param string $title
-     * @param string | array $url
-     * @param array $aClass
-     * @param array $divClass
-     *
-     * @return string
-     */
+	/**
+	 * Return standard button
+	 *
+	 * @param string $icon
+	 * @param string $title
+	 * @param string | array $url
+	 * @param array $aClass
+	 * @param string $divClass
+	 *
+	 * @return string
+	 */
     public function getStandardButton($icon,$title,$url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center' )
     {
         return '<div class="'.$divClass.'" style="margin-right: 25px;">'.

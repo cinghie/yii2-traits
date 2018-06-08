@@ -72,6 +72,7 @@ trait UserTrait
         {
             $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
 
+	        /** @var \yii\base\Model $this */
             return $form->field($this, 'user_id')->widget(Select2::class, [
                 'disabled' => true,
                 'value' => $value,
@@ -83,6 +84,7 @@ trait UserTrait
             ]);
         }
 
+	    /** @var \yii\base\Model $this */
 	    return $form->field($this, 'user_id')->widget(Select2::class, [
 		    'data' => $this->getUsersSelect2(),
 		    'addon' => [
@@ -120,8 +122,8 @@ trait UserTrait
         return [
             'attribute' => 'user_id',
             'format' => 'html',
-            'value' => $this->user_id ? Html::a($this->user->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]))) : Yii::t('traits', 'Nobody'),
             'type' => DetailView::INPUT_SWITCH,
+            'value' => $this->user_id ? Html::a($this->user->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->user_id]))) : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]

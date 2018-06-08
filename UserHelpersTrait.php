@@ -25,7 +25,6 @@ trait UserHelpersTrait
 	 * Get the User by user email
 	 *
 	 * @return User[] array
-	 * @internal param string $email
 	 */
 	public function getUserByEmail()
 	{
@@ -40,7 +39,9 @@ trait UserHelpersTrait
 	/**
 	 * Get current User
 	 *
-	 * @return \yii\web\IdentityInterface || string || int
+	 * @param string $field
+	 *
+	 * @return \yii\web\IdentityInterface | string | int
 	 */
 	public function getCurrentUser($field = '')
 	{
@@ -56,7 +57,7 @@ trait UserHelpersTrait
 	 *
 	 * @param string $field
 	 *
-	 * @return \dektrium\user\models\Profile || string || int
+	 * @return \dektrium\user\models\Profile | string | int
 	 */
 	public function getCurrentUserProfile($field = '')
 	{
@@ -71,7 +72,6 @@ trait UserHelpersTrait
      * Return an array with current User
      *
      * @return array
-     * @internal param User $currentUser
      */
     public function getCurrentUserSelect2()
     {
@@ -113,7 +113,7 @@ trait UserHelpersTrait
      */
     public function getUsersSelect2($user_id = 0, $username = '')
     {
-        if(!$user_id || !$username) {
+        if(!$user_id | !$username) {
             $user_id = Yii::$app->user->identity->id;
             $username = Yii::$app->user->identity->username;
         }

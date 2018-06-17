@@ -313,7 +313,7 @@ trait ViewsHelpersTrait
     {
 	    $title = $title ? $title : Yii::t('traits','Exit');
 
-        return $this->getStandardButton($icon, $title,'Exit');
+        return $this->getStandardButton($icon, $title, $url);
     }
 
     /**

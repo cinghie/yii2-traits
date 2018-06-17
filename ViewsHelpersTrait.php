@@ -284,24 +284,36 @@ trait ViewsHelpersTrait
             '<div>'.Yii::t('traits','Save').'</div></div>';
     }
 
-    /**
-     * Return action cancel button
-     *
-     * @return string
-     */
-    public function getCancelButton()
+	/**
+	 * Return action cancel button
+	 *
+	 * @param string $icon
+	 * @param string $title
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getCancelButton($icon = 'fa fa-times-circle text-red', $title = '',  $url = [''])
     {
-        return $this->getStandardButton('fa fa-times-circle text-red', Yii::t('traits','Cancel'), ['']);
+    	$title = $title ? $title : Yii::t('traits','Cancel');
+
+        return $this->getStandardButton($icon, $title, $url);
     }
 
-    /**
-     * Return action exit button
-     *
-     * @return string
-     */
-    public function getExitButton()
+	/**
+	 * Return action exit button
+	 *
+	 * @param string $icon
+	 * @param string $title
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', $url = ['index'])
     {
-        return $this->getStandardButton('fa fa-sign-out text-blue', Yii::t('traits','Exit'), ['index']);
+	    $title = $title ? $title : Yii::t('traits','Cancel');
+
+        return $this->getStandardButton($icon, $title,'Exit'), $url);
     }
 
     /**

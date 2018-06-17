@@ -311,9 +311,9 @@ trait ViewsHelpersTrait
 	 */
     public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', $url = ['index'])
     {
-	    $title = $title ? $title : Yii::t('traits','Cancel');
+	    $title = $title ? $title : Yii::t('traits','Exit');
 
-        return $this->getStandardButton($icon, $title,'Exit'), $url);
+        return $this->getStandardButton($icon, $title,'Exit');
     }
 
     /**

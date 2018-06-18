@@ -12,10 +12,13 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
+use kartik\form\ActiveField;
+use kartik\markdown\MarkdownEditor;
+use kartik\widgets\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\tinymce\TinyMce;
-use kartik\markdown\MarkdownEditor;
 use yii\helpers\Html;
 use yii\imperavi\Widget as Imperavi;
 
@@ -30,48 +33,50 @@ trait EditorTrait
 	/**
 	 * Generate Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
 	 * @param string $requestEditor
+	 * @param string $value
 	 *
-	 * @return \kartik\form\ActiveField | string
-	 * @throws \Exception
+	 * @return ActiveField | string
+	 * @throws Exception
 	 */
-    public function getEditorWidget($form, $field, $requestEditor = '')
+    public function getEditorWidget($form, $field, $requestEditor = '', $value = '')
     {
         $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
 
 	    switch ($editor)
 	    {
 		    case 'ckeditor':
-			    return $this->getCKEditorWidget($form, $field, $options = ['rows' => 6], $preset = 'basic');
+			    return $this->getCKEditorWidget($form, $field, $value, $options = ['rows' => 6], $preset = 'basic');
 			    break;
 		    case 'imperavi':
-			    return $this->getImperaviWidget($form, $field, $options = ['css' => 'wym.css', 'minHeight' => 250], $plugins = ['fullscreen', 'clips']);
+			    return $this->getImperaviWidget($form, $field, $value, $options = ['css' => 'wym.css', 'minHeight' => 250], $plugins = ['fullscreen', 'clips']);
 			    break;
 		    case 'markdown':
-			    return $this->getMarkdownWidget($form, $field, $options = ['height' => 250, 'encodeLabels' => true]);
+			    return $this->getMarkdownWidget($form, $field, $value, $options = ['height' => 250, 'encodeLabels' => true]);
 			    break;
 		    case 'tinymce':
-			    return $this->getTinyMCEWidget($form, $field, $options = ['rows' => 14]);
+			    return $this->getTinyMCEWidget($form, $field, $value, $options = ['rows' => 14]);
 			    break;
 		    default:
-			    return $this->getNoEditorWidget($form, $field, $maxLength = false);
+			    return $this->getNoEditorWidget($form, $field, $value, $maxLength = false);
 	    }
     }
 
 	/**
 	 * Get a CKEditor Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
+	 * @param string $value
 	 * @param array $options
 	 * @param string $preset
 	 *
-	 * @return \kartik\form\ActiveField | string
-	 * @throws \Exception
+	 * @return ActiveField | string
+	 * @throws Exception
 	 */
-    public function getCKEditorWidget($form, $field, $options, $preset)
+    public function getCKEditorWidget($form, $field, $value, $options, $preset)
     {
         if($form !== null) {
 	        /** @var $this \yii\base\Model */
@@ -84,22 +89,24 @@ trait EditorTrait
 	    return CKEditor::widget([
 	    	'name' => $field,
 		    'options' => $options,
-		    'preset' => $preset
+		    'preset' => $preset,
+		    'value' => $value
 	    ]);
     }
 
 	/**
 	 * Get a Imperavi Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
+	 * @param string $value
 	 * @param array $options
 	 * @param array $plugins
 	 *
-	 * @return \kartik\form\ActiveField | string
-	 * @throws \Exception
+	 * @return ActiveField | string
+	 * @throws Exception
 	 */
-    public function getImperaviWidget($form, $field, $options, $plugins)
+    public function getImperaviWidget($form, $field, $value, $options, $plugins)
     {
 	    $options['lang'] = substr(Yii::$app->language, 0, 2);
 
@@ -114,21 +121,23 @@ trait EditorTrait
 	    return Imperavi::widget([
 	    	'attribute' => $field,
 		    'options' => $options,
-		    'plugins' => $plugins
+		    'plugins' => $plugins,
+		    'value' => $value
 	    ]);
     }
 
 	/**
 	 * Get a Markdown Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
+	 * @param string $value
 	 * @param array $options
 	 *
-	 * @return \kartik\form\ActiveField | string
-	 * @throws \Exception
+	 * @return ActiveField | string
+	 * @throws Exception
 	 */
-    public function getMarkdownWidget($form, $field, $options)
+    public function getMarkdownWidget($form, $field, $value, $options)
     {
 	    if($form !== null) {
 		    /** @var $this \yii\base\Model */
@@ -140,20 +149,22 @@ trait EditorTrait
 
 	    return MarkdownEditor::widget([
 		    'name' => $field,
-		    'options' => $options
+		    'options' => $options,
+		    'value' => $value
 	    ]);
     }
 
 	/**
 	 * Get a No-Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
+	 * @param string $value
 	 * @param boolean $maxLength
 	 *
-	 * @return \kartik\form\ActiveField | string
+	 * @return ActiveField | string
 	 */
-	public function getNoEditorWidget($form, $field, $maxLength = false)
+	public function getNoEditorWidget($form, $field, $value, $maxLength = false)
 	{
 		if($form !== null) {
 			/** @var $this \yii\base\Model */
@@ -163,7 +174,7 @@ trait EditorTrait
 			]);
 		}
 
-		return Html::textarea($field, '', [
+		return Html::textarea($field, $value, [
 			'class' => 'form-control',
 			'maxLength' => $maxLength,
 			'rows' => 6
@@ -173,14 +184,15 @@ trait EditorTrait
 	/**
 	 * Get a TinyMCE Editor Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param string $field
+	 * @param string $value
 	 * @param array $options
 	 *
-	 * @return \kartik\form\ActiveField | string
-	 * @throws \Exception
+	 * @return ActiveField | string
+	 * @throws Exception
 	 */
-	public function getTinyMCEWidget($form, $field, $options)
+	public function getTinyMCEWidget($form, $field, $value, $options)
 	{
 		if($form !== null) {
 			/** @var $this \yii\base\Model */
@@ -199,7 +211,8 @@ trait EditorTrait
 				'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
 			],
 			'language' => Yii::$app->language,
-			'options' => $options
+			'options' => $options,
+			'value' => $value
 		]);
 	}
 

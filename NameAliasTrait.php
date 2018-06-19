@@ -56,6 +56,18 @@ trait NameAliasTrait
 	public function generateAlias($name)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions;
+
+		if(empty($slugifyOptions)) {
+			$slugifyOptions = [
+				'separator' => '-',
+				'lowercase' => true,
+				'trim' => true,
+				'rulesets'  => [
+					'default'
+				]
+			];
+		}
+
 		$slugify = new Slugify($slugifyOptions);
 
 		return $slugify->slugify($name);

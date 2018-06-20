@@ -45,7 +45,7 @@ return [
     'Fax Code' => 'Prefisso Fax',
     'Fax Secondary' => 'Fax 2',
     'Fax Secondary Code' => 'Prefisso Fax 2',
-    'Facebook' => 'Nome File',
+    'Facebook' => 'Facebook',
     'Filename' => 'Nome File',
     'Firstname' => 'Nome',
     'Grid' => 'Griglia',

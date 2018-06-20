@@ -16,13 +16,15 @@ use Yii;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
 
 /**
  * Trait UserTrait
  *
- * @property integer $user_id
+ * @property int $user_id
  * @property User user
  */
 trait UserTrait
@@ -34,7 +36,7 @@ trait UserTrait
     public static function rules()
     {
         return [
-            [['user_id'], 'integer'],
+            [['user_id'], 'int'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -61,7 +63,7 @@ trait UserTrait
     /**
      * Generate User Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      * @param boolean $disabled
      *
      * @return \kartik\form\ActiveField
@@ -99,7 +101,7 @@ trait UserTrait
      * Generate GridView for User
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getUserGridView()
     {
@@ -115,7 +117,7 @@ trait UserTrait
      * Generate DetailView for User
      *
      * @return array
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getUserDetailView()
     {

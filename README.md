@@ -103,10 +103,22 @@ if( $model->isCurrentUserCreator() ) {
 
 ### AccessTrait 
 
-    - integer $access
+    - int $access
     - getAccessWidget($form): Generate Access Form Widget
     - function getAccessGridView(): Generate GridView Access
     - function getAccessDetailView(): Generate DetailView Access
+    
+### AddressTrait 
+    - string $name
+    - string $latitude
+    - string $longitude
+    - string $street
+    - string $number
+    - string $postal_code
+    - string $city
+    - string $state
+    - string $country
+    - function getLatLng($address, $key = null): Get latitude and longitude from Google Maps API
 
 ### AttachmentTrait
 
@@ -138,7 +150,7 @@ if( $model->isCurrentUserCreator() ) {
 ### CreatedTrait
 
     - string $created
-    - integer $created_by
+    - int $created_by
     - User $createdBy
     - function getCreatedBy(): Relation with User Model
     - function getCreatedWidget($form): Generate Created Form Widget
@@ -151,11 +163,12 @@ if( $model->isCurrentUserCreator() ) {
   
 ### EditorTrait
 
-    - function getEditorWidget($form,$field,$requestEditor = ""): Generate Editor Widget
-    - function getCKEditorWidget($form,$field): Get a CKEditor Editor Widget
-    - function getTinyMCEWidget($form,$field): Get a TinyMCE Editor Widget
-    - function getImperaviWidget($form,$field): Get a Imperavi Editor Widget
-    - function getNoEditorWidget($form,$field): Get a No-Editor Widget
+    - function getEditorWidget($form, $field, $requestEditor = '', $value = ''): Generate Editor Widget
+    - function getCKEditorWidget($form, $field, $value, $options, $preset): Get a CKEditor Editor Widget
+    - function getImperaviWidget($form, $field, $value, $options, $plugins): Get a Imperavi Editor Widget
+    - function getMarkdownWidget($form, $field, $value, $options): Get a Markdown Editor Widget
+    - function getNoEditorWidget($form, $field, $value, $maxLength = false): Get a No-Editor Widget
+    - function getTinyMCEWidget($form, $field, $value, $options): Get a TinyMCE Editor Widget
 
 ### ImageTrait
 
@@ -181,7 +194,7 @@ if( $model->isCurrentUserCreator() ) {
 ### ModifiedTrait
 
     - string $modified
-    - integer $modified_by
+    - int $modified_by
     - User $modifiedBy
     - function getModifiedBy(): Relation with User Model
     - function getModifiedWidget($form): Generate Modified Form Widget
@@ -195,17 +208,18 @@ if( $model->isCurrentUserCreator() ) {
 ### NameAliasTrait
 
     - string $alias
-    - string $name  
-    - function getAliasWidget($form): Generate Alias Form Widget
+    - string $name
+    - function generateAlias($name): Generate URL alias by string
+    - function setAlias($post,$field): Set alias from post
+    - function purgeAlias($string): Purge alias by string
     - function getNameWidget($form): Generate Name Form Widget
     - function getAliasWidget($form): Generate Alias Form Widget
-    - function generateAlias($name): Generate URL alias by string
     
 ### ParentTrait      
 
-    - integer $parent_id
-    - getParentWidget($form,$items): Generate Parent Form Widget
-    - getParentGridView($field,$url,$hideItem): Generate Parent Grid View
+    - int $parent_id
+    - getParentWidget($form, $items): Generate Parent Form Widget
+    - getParentGridView($field, $url, $hideItem): Generate Parent Grid View
  
 ### SeoTrait    
 
@@ -223,7 +237,7 @@ if( $model->isCurrentUserCreator() ) {
     
 ### StateTrait
 
-    - integer $state
+    - int $state
     - function active(): Active model state (Set 1)
     - function deactive():  Inactive model state (Set 0)
     - function getStateWidget($form): Generate State Form Widget
@@ -231,30 +245,35 @@ if( $model->isCurrentUserCreator() ) {
     - function getStateDetailView(): Generate DetailView for State
     - function getStateSelect2(): Return an array with states
     
+### TaggableTrait
+
+    - int $tagNames
+    - function getTagsDetailView(): Generate DetailView for Tags
+    
 ### TitleAliasTrait
 
     - string $alias
     - string $title  
+    - function generateAlias($name): Generate URL alias by string
+    - function setAlias($post,$field): Set alias from post
+    - function purgeAlias($string): Purge alias by string
     - function getTitleWidget($form): Generate Title Form Widget
     - function getAliasWidget($form): Generate Alias Form Widget
-    - function generateAlias($name): Generate URL alias by string
 
 ### UserHelperTrait
 
     - function getUserByEmail($email): Get the User by user email
-    - function getCurentUserProfile($field = ''):  Get current User Profile object or fied if on param
+    - function getCurrentUser($field = ''): Get current User or Current User field
+    - function getCurrentUserProfile($field = ''):  Get current User Profile object or fied if on param
     - function getCurrentUserSelect2(): Return an array with current User
     - function getRolesSelect2(): Return an array with the User's Roles adding "Public" on first position
     - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)
     
 ### UserTrait
 
-    - integer $user_id
+    - int $user_id
     - User user
-    - function getUser(): Relation with User Model   
-    - function getCurrentUser($field = ""): Get current User or current user field
-    - function getCurrentUserProfile($field = ""): Get current User Profile or current user field
-    - function getUser(): Relation with User Model   
+    - function getUser(): Relation with User Model    
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User
@@ -285,13 +304,12 @@ if( $model->isCurrentUserCreator() ) {
     - function getDeactiveButton($id = 0): Return action deactive button
     - function getDeactiveButtonJavascript($w): Return javascript for action deactive button
     - function getResetButton(): Return action reset button
-
     - function getSaveButton(): Return action save button
-    - function getCancelButton(): Return action cancel button
-    - function getExitButton(): Return action exit button
+    - function getCancelButton($icon = 'fa fa-times-circle text-red', $title = '', array $url = [ '' ] ): Return action cancel button
+    - function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [ 'index' ]): Return action exit button
     - function getSendButton(): Return action send button
     - function getSendButtonJavascript(): Return javascript for action deactive button
-
+    - function getStandardButton($icon,$title,$url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center' ): Return standard button
     - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
 
 

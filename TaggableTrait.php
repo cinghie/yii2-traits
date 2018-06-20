@@ -12,13 +12,14 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use dosamigos\taggable\Taggable;
-use kartik\detail\DetailView;
+use yii\base\InvalidParamException;
 
 /**
  * Trait TaggableTrait
  *
- * @property integer $tagNames
+ * @property int $tagNames
  */
 trait TaggableTrait
 {
@@ -51,26 +52,15 @@ trait TaggableTrait
 	public static function attributeLabels()
 	{
 		return [
-			'tagNames' => \Yii::t('traits', 'TagNames'),
+			'tagNames' => Yii::t('traits', 'TagNames'),
 		];
 	}
 
 	/**
 	 * Generate DetailView for Tags
 	 *
-	 * @return string
-	 * @throws \yii\base\InvalidParamException
-	 */
-	public function getTagsView()
-	{
-
-	}
-
-	/**
-	 * Generate DetailView for Tags
-	 *
 	 * @return array
-	 * @throws \yii\base\InvalidParamException
+	 * @throws InvalidParamException
 	 */
 	public function getTagsDetailView()
 	{

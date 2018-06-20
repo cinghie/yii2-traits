@@ -13,7 +13,11 @@
 namespace cinghie\traits;
 
 use Yii;
+use Exception;
+use kartik\form\ActiveField;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
+use yii\base\InvalidParamException;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -57,7 +61,7 @@ trait ImageTrait
      * Generate Image Form Widget
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getImageWidget()
     {
@@ -90,8 +94,9 @@ trait ImageTrait
     /**
      * Generate Image Caption Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
+     * @param ActiveForm $form
+     *
+     * @return ActiveField
      */
     public function getImageCaptionWidget($form)
     {
@@ -108,8 +113,9 @@ trait ImageTrait
     /**
      * Generate Image Credits Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
-     * @return \kartik\form\ActiveField
+     * @param ActiveForm $form
+     *
+     * @return ActiveField
      */
     public function getImageCreditsWidget($form)
     {
@@ -127,7 +133,7 @@ trait ImageTrait
 	 * Generate GridView for Image
 	 *
 	 * @return string
-	 * @throws \yii\base\InvalidParamException
+	 * @throws InvalidParamException
 	 */
 	public function getImageGridView()
 	{

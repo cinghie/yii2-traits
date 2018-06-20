@@ -21,7 +21,7 @@ use yii\helpers\Url;
 /**
  * Trait AccessTrait
  *
- * @property integer $access
+ * @property int $access
  */
 trait AccessTrait
 {

@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use kartik\widgets\ActiveForm;
 use Yii;
 use kartik\widgets\Select2;
 
@@ -56,7 +57,7 @@ trait SeoTrait
     /**
      * Generate Robots Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
      * @return string
      */
@@ -76,7 +77,7 @@ trait SeoTrait
     /**
      * Generate Author Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
      * @return string
      */
@@ -95,7 +96,7 @@ trait SeoTrait
     /**
      * Generate Copyright Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
      * @return string
      */
@@ -114,7 +115,7 @@ trait SeoTrait
     /**
      * Generate Meta Description Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
      * @return string
      */
@@ -133,7 +134,7 @@ trait SeoTrait
     /**
      * Generate Meta Key Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
      * @return string
      */

@@ -24,6 +24,7 @@
         "2amigos/yii2-tinymce-widget": "*",
         "asofter/yii2-imperavi-redactor": "*",
         "cocur/slugify": "*",
+        "creocoder/yii2-taggable": "*",
         "dektrium/yii2-rbac": "*",
         "dektrium/yii2-user": "*",
         "kartik-v/yii2-detail-view": "*",

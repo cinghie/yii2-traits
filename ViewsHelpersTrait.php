@@ -13,8 +13,10 @@
 namespace cinghie\traits;
 
 use Yii;
+use Exception;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
 
 /**
@@ -36,7 +38,7 @@ trait ViewsHelpersTrait
     /**
      * Return action update button
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return string
      */
@@ -55,7 +57,7 @@ trait ViewsHelpersTrait
      * @param string $w
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getUpdateButtonJavascript($w)
     {
@@ -76,7 +78,7 @@ trait ViewsHelpersTrait
     /**
      * Return action delete button
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return string
      */
@@ -101,7 +103,7 @@ trait ViewsHelpersTrait
      * @param string $w
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getDeleteButtonJavascript($w)
     {
@@ -144,7 +146,7 @@ trait ViewsHelpersTrait
      * @param string $w
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getPreviewButtonJavascript($w)
     {
@@ -165,7 +167,7 @@ trait ViewsHelpersTrait
     /**
      * Return action active button
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return string
      */
@@ -189,7 +191,7 @@ trait ViewsHelpersTrait
      * @param string $w
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getActiveButtonJavascript($w)
     {
@@ -215,7 +217,7 @@ trait ViewsHelpersTrait
     /**
      * Return action deactive button
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return string
      */
@@ -239,7 +241,7 @@ trait ViewsHelpersTrait
      * @param string $w
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getDeactiveButtonJavascript($w)
     {
@@ -293,9 +295,9 @@ trait ViewsHelpersTrait
 	 *
 	 * @return string
 	 */
-    public function getCancelButton($icon = 'fa fa-times-circle text-red', $title = '',  $url = [''])
+    public function getCancelButton($icon = 'fa fa-times-circle text-red', $title = '', array $url = [ '' ])
     {
-    	$title = $title ? $title : Yii::t('traits','Cancel');
+    	$title = $title ?: Yii::t('traits','Cancel');
 
         return $this->getStandardButton($icon, $title, $url);
     }
@@ -309,9 +311,9 @@ trait ViewsHelpersTrait
 	 *
 	 * @return string
 	 */
-    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', $url = ['index'])
+    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [ 'index' ])
     {
-	    $title = $title ? $title : Yii::t('traits','Exit');
+	    $title = $title ?: Yii::t('traits','Exit');
 
         return $this->getStandardButton($icon, $title, $url);
     }
@@ -330,7 +332,7 @@ trait ViewsHelpersTrait
      * Return javascript for action deactive button
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getSendButtonJavascript()
     {
@@ -373,7 +375,7 @@ trait ViewsHelpersTrait
      * Generate DetailView for Entry Informations
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getEntryInformationsDetailView()
     {

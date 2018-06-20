@@ -12,20 +12,20 @@
 
 namespace cinghie\traits;
 
-use Exception;
 use Yii;
+use Exception;
+use dosamigos\ckeditor\CKEditor;
+use dosamigos\tinymce\TinyMce;
 use kartik\form\ActiveField;
 use kartik\markdown\MarkdownEditor;
 use kartik\widgets\ActiveForm;
-use dosamigos\ckeditor\CKEditor;
-use dosamigos\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\imperavi\Widget as Imperavi;
 
 /**
  * Trait EditorTrait
  *
- * @property integer $access
+ * @property int $access
  */
 trait EditorTrait
 {

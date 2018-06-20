@@ -30,7 +30,8 @@ return [
     'Create {modelClass}: ' => 'Crea {modelClass}: ',
     'Created' => 'Data creazione',
     'Created By' => 'Creato da',
-    'Dashboard'=>'Dashboard',
+    'Dailymotion' => 'Dailymotion',
+    'Dashboard' => 'Dashboard',
     'Deactive' => 'Disattiva',
     'Deactivated' => 'Disattivato',
     'Delete' => 'Cancella',
@@ -80,7 +81,7 @@ return [
     'Name' => 'Nome',
 	'Nicename' => 'Nome Pulito',
     'New' => 'Nuovo',
-    'No'=>'No',
+    'No' => 'No',
     'Nobody' => 'Nessuno',
 	'Not Accepted' => 'Non Acettato',
     'Not Actived' => 'Non Attivo',
@@ -133,7 +134,8 @@ return [
     'Video Caption' => 'Caption Video',
     'Video Credits' => 'Crediti Video',
     'Video Type' => 'Tipo Video',
+	'Vimeo' => 'Vimeo',
     'You are not allowed to access this page' => 'Accesso non permesso!',
-	'Youtube' => 'YouTube',
+	'YouTube' => 'YouTube',
 	'Website' => 'Sito Web'
 ];

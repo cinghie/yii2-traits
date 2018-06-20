@@ -13,14 +13,18 @@
 namespace cinghie\traits;
 
 use Yii;
+use kartik\form\ActiveField;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\InvalidParamException;
+use yii\db\ActiveQuery;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
  * Trait ParentTrait
  *
- * @property integer $parent_id
+ * @property int $parent_id
  */
 trait ParentTrait
 {
@@ -31,7 +35,7 @@ trait ParentTrait
 	public static function rules()
 	{
 		return [
-			[['parent_id'], 'integer'],
+			[['parent_id'], 'int'],
 			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
 		];
 	}
@@ -47,7 +51,7 @@ trait ParentTrait
 	}
 
 	/**
-	 * @return \yii\db\ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getParent()
 	{
@@ -55,7 +59,7 @@ trait ParentTrait
 	}
 
 	/**
-	 * @return \yii\db\ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getParents()
 	{
@@ -63,7 +67,7 @@ trait ParentTrait
 	}
 
 	/**
-	 * @return \yii\db\ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getChild()
 	{
@@ -71,7 +75,7 @@ trait ParentTrait
 	}
 
 	/**
-	 * @return \yii\db\ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getChilds()
 	{
@@ -81,10 +85,10 @@ trait ParentTrait
 	/**
 	 * Generate Parent Form Widget
 	 *
-	 * @param \kartik\widgets\ActiveForm $form
+	 * @param ActiveForm $form
 	 * @param [] $items
 	 *
-	 * @return \kartik\form\ActiveField
+	 * @return ActiveField
 	 */
 	public function getParentWidget($form,$items)
 	{
@@ -107,7 +111,7 @@ trait ParentTrait
 	 * @param bool $hideItem
 	 *
 	 * @return string
-	 * @throws \yii\base\InvalidParamException
+	 * @throws InvalidParamException
 	 */
 	public function getParentGridView($field,$url,$hideItem = false)
 	{

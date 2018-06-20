@@ -13,7 +13,9 @@
 namespace cinghie\traits;
 
 use Yii;
+use dektrium\user\models\Profile;
 use dektrium\user\models\User;
+use yii\web\IdentityInterface;
 
 /**
  * Trait UserHelperTrait
@@ -37,11 +39,11 @@ trait UserHelpersTrait
 	}
 
 	/**
-	 * Get current User
+	 * Get current User or Current User field
 	 *
 	 * @param string $field
 	 *
-	 * @return \yii\web\IdentityInterface | string | int
+	 * @return IdentityInterface | string | int
 	 */
 	public function getCurrentUser($field = '')
 	{
@@ -57,7 +59,7 @@ trait UserHelpersTrait
 	 *
 	 * @param string $field
 	 *
-	 * @return \dektrium\user\models\Profile | string | int
+	 * @return Profile | string | int
 	 */
 	public function getCurrentUserProfile($field = '')
 	{
@@ -106,7 +108,7 @@ trait UserHelpersTrait
     /**
      * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
      *
-     * @param integer $user_id
+     * @param int $user_id
      * @param string $username
      *
      * @return array

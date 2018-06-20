@@ -14,17 +14,20 @@ namespace cinghie\traits;
 
 use Yii;
 use dektrium\user\models\User;
-use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
+use kartik\form\ActiveField;
 use kartik\helpers\Html;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
 
 /**
  * Trait ModifiedTrait
  *
  * @property string $modified
- * @property integer $modified_by
+ * @property int $modified_by
  * @property User $modifiedBy
  */
 trait ModifiedTrait
@@ -37,7 +40,7 @@ trait ModifiedTrait
     {
         return [
             [['modified'], 'safe'],
-            [['modified_by'], 'integer'],
+            [['modified_by'], 'int'],
             [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modified_by' => 'id']],
         ];
     }
@@ -65,9 +68,9 @@ trait ModifiedTrait
     /**
      * Generate Modified Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getModifiedWidget($form)
     {
@@ -100,9 +103,9 @@ trait ModifiedTrait
     /**
      * Generate ModifiedBy Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getModifiedByWidget($form)
     {
@@ -123,7 +126,7 @@ trait ModifiedTrait
      * Generate GridView for ModifiedBy
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getModifiedByGridView()
     {
@@ -141,7 +144,7 @@ trait ModifiedTrait
      * Generate DetailView for ModifiedBy
      *
      * @return array
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getModifiedByDetailView()
     {

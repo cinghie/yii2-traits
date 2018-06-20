@@ -12,6 +12,8 @@
 
 namespace cinghie\traits;
 
+use kartik\form\ActiveField;
+use kartik\widgets\ActiveForm;
 use Yii;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
@@ -20,7 +22,7 @@ use kartik\widgets\Select2;
 /**
  * Trait StateTrait
  *
- * @property integer $state
+ * @property int $state
  */
 trait StateTrait
 {
@@ -31,7 +33,7 @@ trait StateTrait
     public static function rules()
     {
         return [
-            [['state'], 'integer']
+            [['state'], 'int']
         ];
     }
 
@@ -72,9 +74,9 @@ trait StateTrait
     /**
      * Generate State Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getStateWidget($form)
     {

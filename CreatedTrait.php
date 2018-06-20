@@ -14,17 +14,21 @@ namespace cinghie\traits;
 
 use Yii;
 use dektrium\user\models\User;
-use kartik\widgets\DateTimePicker;
 use kartik\detail\DetailView;
+use kartik\form\ActiveField;
 use kartik\helpers\Html;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
+use yii\base\InvalidParamException;
+use yii\db\ActiveQuery;
 use yii\helpers\Url;
 
 /**
  * Trait CreatedTrait
  *
  * @property string $created
- * @property integer $created_by
+ * @property int $created_by
  * @property User $createdBy
  */
 trait CreatedTrait
@@ -37,7 +41,7 @@ trait CreatedTrait
     {
         return [
             [['created'], 'safe'],
-            [['created_by'], 'integer'],
+            [['created_by'], 'int'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
@@ -54,7 +58,7 @@ trait CreatedTrait
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCreatedBy()
     {
@@ -65,9 +69,9 @@ trait CreatedTrait
     /**
      * Generate Created Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getCreatedWidget($form)
     {
@@ -99,9 +103,9 @@ trait CreatedTrait
     /**
      * Generate CreatedBy Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getCreatedByWidget($form)
     {
@@ -122,7 +126,7 @@ trait CreatedTrait
      * Generate GridView for CreatedBy
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getCreatedByGridView()
     {
@@ -140,7 +144,7 @@ trait CreatedTrait
      * Generate DetailView for CreatedBy
      *
      * @return array
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getCreatedByDetailView()
     {

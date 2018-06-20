@@ -13,6 +13,8 @@
 namespace cinghie\traits;
 
 use Yii;
+use kartik\form\ActiveField;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 
 /**
@@ -64,9 +66,9 @@ trait LanguageTrait
     /**
      * Generate Language Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getLanguageWidget($form)
     {

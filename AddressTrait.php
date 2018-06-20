@@ -13,6 +13,8 @@
 namespace cinghie\traits;
 
 use Yii;
+use Exception;
+use RuntimeException;
 
 /**
  * Trait AddressTrait
@@ -63,13 +65,13 @@ trait AddressTrait
 	}
 
 	/**
-	 * Get latitude and longitude from Google Maps
+	 * Get latitude and longitude from Google Maps API
 	 *
 	 * @param string $address
 	 * @param string $key
 	 *
 	 * @return array
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getLatLng($address, $key = null)
 	{
@@ -80,13 +82,12 @@ trait AddressTrait
 		} elseif ($key) {
 			$apiKEY = $key;
 		} else {
-			throw new \Exception(Yii::t('traits','Google Maps API KEY Missing'));
+			throw new RuntimeException(Yii::t('traits','Google Maps API KEY Missing'));
 		}
 
 		$latLng  = array();
-		$address = str_replace(" ","+",$address);
-		$address = str_replace("++","+",$address);
-		$geocode = file_get_contents("https://maps.google.com/maps/api/geocode/json?address=".$address."&sensor=false&key=".$apiKEY);
+		$address = str_replace( array( ' ', '++' ), '+', $address );
+		$geocode = file_get_contents( 'https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=' . $apiKEY);
 		$output  = json_decode($geocode);
 
 		if ($output->results) {

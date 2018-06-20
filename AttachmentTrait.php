@@ -35,7 +35,7 @@ trait AttachmentTrait
     public static function rules()
     {
         return [
-            [['size'], 'int'],
+            [['size'], 'integer'],
             [['extension'], 'string', 'max' => 12],
             [['alias', 'filename', 'mimetype', 'title'], 'string', 'max' => 255]
         ];

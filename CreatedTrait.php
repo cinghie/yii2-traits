@@ -41,7 +41,7 @@ trait CreatedTrait
     {
         return [
             [['created'], 'safe'],
-            [['created_by'], 'int'],
+            [['created_by'], 'integer'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }

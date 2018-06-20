@@ -36,7 +36,7 @@ trait UserTrait
     public static function rules()
     {
         return [
-            [['user_id'], 'int'],
+            [['user_id'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -72,7 +72,7 @@ trait UserTrait
     {
         if($disabled)
         {
-            $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
+            $value = !$this->user_id ? [0 => Yii::t('traits', 'Nobody')] : [$this->user_id => $this->user->username];
 
 	        /** @var \yii\base\Model $this */
 	        return $form->field($this, 'user_id')->widget(Select2::class, [

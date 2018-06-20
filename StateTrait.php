@@ -33,7 +33,7 @@ trait StateTrait
     public static function rules()
     {
         return [
-            [['state'], 'int']
+            [['state'], 'integer']
         ];
     }
 

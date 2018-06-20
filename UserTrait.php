@@ -73,15 +73,15 @@ trait UserTrait
             $value = !$this->user_id ? Yii::t('traits', 'Nobody') : [$this->user_id => $this->user->username];
 
 	        /** @var \yii\base\Model $this */
-            return $form->field($this, 'user_id')->widget(Select2::class, [
-                'disabled' => true,
-                'value' => $value,
-                'addon' => [
-                    'prepend' => [
-                        'content'=>'<i class="glyphicon glyphicon-user"></i>'
-                    ]
-                ],
-            ]);
+	        return $form->field($this, 'user_id')->widget(Select2::class, [
+		        'disabled' => true,
+		        'data' => $value,
+		        'addon' => [
+			        'prepend' => [
+				        'content'=>'<i class="glyphicon glyphicon-user"></i>'
+			        ]
+		        ],
+	        ]);
         }
 
 	    /** @var \yii\base\Model $this */

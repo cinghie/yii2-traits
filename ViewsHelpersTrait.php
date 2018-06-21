@@ -25,14 +25,16 @@ use yii\helpers\Url;
 trait ViewsHelpersTrait
 {
 
-    /**
-     * Return action create button
-     *
-     * @return string
-     */
-    public function getCreateButton()
+	/**
+	 * Return action create button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getCreateButton(array $url = ['create'])
     {
-        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), ['create']);
+        return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), $url);
     }
 
     /**
@@ -130,14 +132,16 @@ trait ViewsHelpersTrait
         });';
     }
 
-    /**
-     * Return action preview button
-     *
-     * @return string
-     */
-    public function getPreviewButton()
+	/**
+	 * Return action preview button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getPreviewButton(array $url = [ '#' ])
     {
-        return $this->getStandardButton('fa fa-eye text-blue', Yii::t('traits','Preview'), '#', ['class' => 'btn btn-mini btn-preview']);
+        return $this->getStandardButton('fa fa-eye text-blue', Yii::t('traits','Preview'), $url, ['class' => 'btn btn-mini btn-preview']);
     }
 
     /**
@@ -264,14 +268,16 @@ trait ViewsHelpersTrait
         });';
     }
 
-    /**
-     * Return action reset button
-     *
-     * @return string
-     */
-    public function getResetButton()
+	/**
+	 * Return action reset button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getResetButton(array $url = ['index'])
     {
-        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), ['index'], ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
+        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), $url, ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
     }
 
     /**
@@ -318,14 +324,16 @@ trait ViewsHelpersTrait
         return $this->getStandardButton($icon, $title, $url);
     }
 
-    /**
-     * Return action send button
-     *
-     * @return string
-     */
-    public function getSendButton()
+	/**
+	 * Return action send button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getSendButton(array $url = ['#'])
     {
-        return $this->getStandardButton('fa fa-paper-plane text-orange', Yii::t('traits','Send'), '#', ['class' => 'btn btn-mini btn-send']);
+        return $this->getStandardButton('fa fa-paper-plane text-orange', Yii::t('traits','Send'), $url, ['class' => 'btn btn-mini btn-send']);
     }
 
     /**

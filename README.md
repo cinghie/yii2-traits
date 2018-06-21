@@ -292,18 +292,18 @@ if( $model->isCurrentUserCreator() ) {
     
 ### ViewsHelperTrait
 
-    - function getCreateButton(): Return action create button
+    - function getCreateButton(array $url = ['create']): Return action create button
     - function getUpdateButton($id = 0): Return action update button
     - function getUpdateButtonJavascript($w): Return javascript for action update button
     - function getDeleteButton($id = 0): Return action delete button
     - function getDeleteButtonJavascript($w): Return javascript for action delete button
-    - function getPreviewButton(): Return action preview button
+    - function getPreviewButton(array $url = [ '#' ]): Return action preview button
     - function getPreviewButtonJavascript($w): Return javascript for action preview button
     - function getActiveButton($id = 0): Return action active button
     - function getActiveButtonJavascript($w): Return javascript for action active button
     - function getDeactiveButton($id = 0): Return action deactive button
     - function getDeactiveButtonJavascript($w): Return javascript for action deactive button
-    - function getResetButton(): Return action reset button
+    - function getResetButton(array $url = ['index']): Return action reset button
     - function getSaveButton(): Return action save button
     - function getCancelButton($icon = 'fa fa-times-circle text-red', $title = '', array $url = [ '' ] ): Return action cancel button
     - function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [ 'index' ]): Return action exit button

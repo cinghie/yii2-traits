@@ -133,6 +133,7 @@ return [
     'Update {modelClass}: ' => 'Modifica {modelClass}: ',
     'Upload' => 'Carica',
     'User Id' => 'Utente',
+    'Video' => 'Video',
     'Video ID' => 'ID Video',
     'Video Caption' => 'Caption Video',
     'Video Credits' => 'Crediti Video',

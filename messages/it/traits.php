@@ -60,6 +60,7 @@ return [
     'Instagram' => 'Instagram',
     'Yes' => 'Si',
     'Language' => 'Lingua',
+    'Language Tag' => 'Tag Lingua',
     'Languages' => 'Lingue',
 	'Linkedin' => 'Linkedin',
     'Lastname' => 'Cognome',

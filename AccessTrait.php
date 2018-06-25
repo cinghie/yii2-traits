@@ -14,7 +14,9 @@ namespace cinghie\traits;
 
 use Yii;
 use kartik\detail\DetailView;
+use kartik\form\ActiveField;
 use kartik\helpers\Html;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
 
@@ -49,9 +51,9 @@ trait AccessTrait
     /**
      * Generate Access Form Widget
      *
-     * @param \kartik\widgets\ActiveForm $form
+     * @param ActiveForm $form
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getAccessWidget($form)
     {

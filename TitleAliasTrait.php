@@ -128,12 +128,12 @@ trait TitleAliasTrait
     public function getTitleWidget($form)
     {
         /** @var $this \yii\base\Model */
-        return $form->field($this, 'title',[
+        return $form->field($this, 'title', [
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
                 ]
-            ],
+            ]
         ])->textInput(['maxlength' => true]);
     }
 
@@ -153,7 +153,7 @@ trait TitleAliasTrait
                     'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
                 ]
             ]
-        ] )->textInput(['maxlength' => 255]);
+        ] )->textInput(['maxlength' => true]);
     }
 
 }

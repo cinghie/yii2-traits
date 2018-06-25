@@ -133,7 +133,7 @@ trait NameAliasTrait
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
                 ]
-            ],
+            ]
         ])->textInput(['maxlength' => true]);
     }
 
@@ -153,7 +153,7 @@ trait NameAliasTrait
                     'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
                 ]
             ]
-        ] )->textInput(['maxlength' => 255]);
+        ] )->textInput(['maxlength' => true]);
     }
 
 }

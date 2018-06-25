@@ -215,6 +215,11 @@ if( $model->isCurrentUserCreator() ) {
     - function getNameWidget($form): Generate Name Form Widget
     - function getAliasWidget($form): Generate Alias Form Widget
     
+### OrderingTrait
+
+    - integer $ordering
+    - function getOrderingWidget($form): Generate Ordering Form Widget    
+    
 ### ParentTrait      
 
     - int $parent_id

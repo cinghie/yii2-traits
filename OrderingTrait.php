@@ -16,6 +16,7 @@ use Yii;
 use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\Model;
 
 /**
  * Trait OrderingTrait
@@ -28,7 +29,7 @@ trait OrderingTrait
 	/**
 	 * @inheritdoc
 	 */
-	public static function rules()
+	public function rules()
 	{
 		return  [
 			[['ordering'], 'integer'],
@@ -38,7 +39,7 @@ trait OrderingTrait
 	/**
 	 * @inheritdoc
 	 */
-	public static function attributeLabels()
+	public function attributeLabels()
 	{
 		return [
 			'ordering' => Yii::t('traits', 'Ordering'),
@@ -46,20 +47,40 @@ trait OrderingTrait
 	}
 
 	/**
+	 * Set Ordering on Class
+	 */
+	public function setOrdering($class)
+	{
+		$ordering = $this->ordering;
+
+		$items = $class::updateAll(['ordering' => new \yii\db\Expression('@a := @a + 1')], ['cat_id' => $this->cat_id]);
+
+		exit();
+	}
+
+	/**
 	 * Generate Ordering Form Widget
 	 *
 	 * @param ActiveForm $form
 	 *
+	 * @param Model $class
+	 * @param string $orderingField
+	 * @param array $selectField
+	 * @param array $condition
+	 *
 	 * @return ActiveField
 	 */
-	public function getOrderingWidget($form)
+	public function getOrderingWidget($form, $class, $orderingField, $selectField, $condition)
 	{
 		if($this->isNewRecord) {
 			$options = ['disabled' => 'disabled'];
-			$orderingSelect = ['0' => Yii::t('traits', 'Save to order')];
+			$orderingSelect = [ -1 => Yii::t('traits', 'Save to order') ];
+		} elseif(!$this->isNewRecord && !$this->cat_id) {
+			$options = ['disabled' => 'disabled'];
+			$orderingSelect = [ -1 => Yii::t('traits', 'Select a category to order') ];
 		} else {
 			$options = [];
-			$orderingSelect = $this->getItemsByCategoriesSelect2($this->cat_id);
+			$orderingSelect = $this->getOrderingSelect2($class, $orderingField, $selectField, $condition);
 		}
 
 		/** @var $this \yii\base\Model */
@@ -72,6 +93,37 @@ trait OrderingTrait
 				]
 			],
 		]);
+	}
+
+	/**
+	 * Return array with all Items by $cat_id
+	 *
+	 * @param Model $class
+	 * @param string $orderingField
+	 * @param array $selectField
+	 * @param array $condition
+	 *
+	 * @return array
+	 */
+	public function getOrderingSelect2($class, $orderingField = '', array $selectField = [], array $condition = [])
+	{
+		$array = [ 1 => Yii::t('traits','First Element') ];
+		$items = $class::find()->select($selectField)->where($condition)->all();
+
+		if(count($items) === 1) {
+			return $array;
+		}
+
+		foreach($items as $item)
+		{
+			if($item['id'] !== $this->id) {
+				$array[$item['id']] = $item['title'];
+			}
+		}
+
+		$array[10000000] = Yii::t('traits','Last Element');
+
+		return $array;
 	}
 
 }

@@ -90,7 +90,7 @@ trait SeoTrait
                     'content'=>'<i class="glyphicon glyphicon-user"></i>'
                 ]
             ]
-        ])->textInput(['maxlength' => 50]);
+        ])->textInput(['maxlength' => true]);
     }
 
     /**
@@ -109,7 +109,7 @@ trait SeoTrait
                     'content'=>'<i class="glyphicon glyphicon-ban-circle"></i>'
                 ]
             ]
-        ])->textInput(['maxlength' => 50]);
+        ])->textInput(['maxlength' => true]);
     }
 
     /**

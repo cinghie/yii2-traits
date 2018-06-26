@@ -124,7 +124,7 @@ trait VideoTrait
                     'content'=>'<i class="glyphicon glyphicon-facetime-video"></i>'
                 ]
             ]
-        ])->textarea(['maxlength' => 255,'rows' => 6]);
+        ])->textarea(['maxlength' => true,'rows' => 6]);
     }
 
     /**
@@ -143,7 +143,7 @@ trait VideoTrait
                     'content'=>'<i class="glyphicon glyphicon-barcode"></i>'
                 ]
             ]
-        ])->textInput(['maxlength' => 255]);
+        ])->textInput(['maxlength' => true]);
     }
 
 }

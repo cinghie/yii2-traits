@@ -346,7 +346,8 @@ trait ViewsHelpersTrait
     {
         return 'var selectedId = '.$this->id.'
 
-        $("a.btn-send").click(function() {
+       $("a.btn-send").click(function(e) {
+        e.preventDefault();
         if (confirm("'.Yii::t('traits','Are you sure you want to send this item?').'")) {
                 $.ajax({
                     type: \'POST\',

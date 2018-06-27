@@ -58,13 +58,6 @@ trait OrderingTrait
 	{
 		$newOrdering = (int)$this->ordering;
 
-		/**
-		 * DEBUG
-		 */
-		echo 'Nuovo Ordine: '.$newOrdering.'<br>';
-		echo 'Vecchio Ordine: '.$oldOrdering.'<br>';
-		echo 'Massimo Ordine: '.$lastOrdering.'<br>';
-
 		// Verifico se è cambiato l'ordine
 		if($newOrdering !== $oldOrdering)
 		{

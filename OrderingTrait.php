@@ -29,7 +29,7 @@ trait OrderingTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
+	public static function rules()
 	{
 		return  [
 			[['ordering'], 'integer'],
@@ -39,7 +39,7 @@ trait OrderingTrait
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels()
+	public static function attributeLabels()
 	{
 		return [
 			'ordering' => Yii::t('traits', 'Ordering'),
@@ -177,7 +177,7 @@ trait OrderingTrait
 		if($this->isNewRecord) {
 			$options = ['disabled' => 'disabled'];
 			$orderingSelect = [ -1 => Yii::t('traits', 'Save to order') ];
-		} elseif(!$this->isNewRecord && !$this->cat_id) {
+		} elseif(!$this->isNewRecord && !$this->$orderingField) {
 			$options = ['disabled' => 'disabled'];
 			$orderingSelect = [ -1 => Yii::t('traits', 'Select a category to order') ];
 		} else {
@@ -217,7 +217,7 @@ trait OrderingTrait
 		}
 
 		foreach($items as $item) {
-			$array[$item['ordering']] = $item['title'];
+			$array[$item[$selectField[0]]] = $item[$selectField[1]];
 		}
 
 		$array[999999999] = Yii::t('traits','Last Element');

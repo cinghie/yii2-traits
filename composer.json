@@ -20,7 +20,6 @@
     "require": {
         "yiisoft/yii2": "~2.0.12",
         "yiisoft/yii2-imagine": "*",
-        "asofter/yii2-imperavi-redactor": "*",
         "2amigos/yii2-ckeditor-widget": "*",
         "2amigos/yii2-taggable-behavior": "*",
         "2amigos/yii2-tinymce-widget": "*",

@@ -30,7 +30,8 @@
         "kartik-v/yii2-grid": "*",
         "kartik-v/yii2-helpers": "*",
         "kartik-v/yii2-markdown": "*",
-        "kartik-v/yii2-widgets": "*"
+        "kartik-v/yii2-widgets": "*",  
+        "google/cloud-translate": "*"
     },
     "autoload": {
         "psr-4": {

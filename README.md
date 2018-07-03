@@ -218,7 +218,12 @@ if( $model->isCurrentUserCreator() ) {
 ### OrderingTrait
 
     - integer $ordering
-    - function getOrderingWidget($form): Generate Ordering Form Widget    
+    - function setOrdering($class,$fieldOrdering,$oldOrdering,$lastOrdering): Set Model Ordering on Class
+    - function setMinOrder(): Set Min Ordering
+    - function setMaxOrdering($class,$condition): Set Max Ordering
+    - function getLastOrdering($class,$condition): Get Max ordering in field
+    - function getOrderingWidget($form, $class, $orderingField, $selectField, $condition): Generate Ordering Form Widget    
+    - function getOrderingSelect2($class, $orderingField = '', array $selectField = [], array $condition = []): Return array with all Items by $cat_id
     
 ### ParentTrait      
 

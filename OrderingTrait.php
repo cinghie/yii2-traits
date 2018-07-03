@@ -129,14 +129,6 @@ trait OrderingTrait
 	}
 
 	/**
-	 * Set Min Ordering
-	 */
-	public function setMinOrder()
-	{
-		$this->ordering = 1;
-	}
-
-	/**
 	 * Set Max Ordering
 	 *
 	 * @param $class
@@ -148,7 +140,15 @@ trait OrderingTrait
 	}
 
 	/**
-	 * Get MAX ordering in field
+	 * Set Min Ordering
+	 */
+	public function setMinOrder()
+	{
+		$this->ordering = 1;
+	}
+
+	/**
+	 * Get Max ordering in field
 	 *
 	 * @param $class
 	 * @param array $condition

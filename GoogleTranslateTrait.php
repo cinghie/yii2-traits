@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use Google\Cloud\Translate\TranslateClient;
 
 /**
@@ -24,23 +25,43 @@ trait GoogleTranslateTrait
 	 * Get Translation from Google Cloud Translate
 	 *
 	 * @param string $apiKey
-	 * @param string $text
 	 * @param string $lang
+	 * @param string $text
 	 *
 	 * @return string
 	 */
-	public function getGoogleCloudTranslation($apiKey,$text,$lang)
+	public function getGoogleCloudTranslation($apiKey = '',$lang,$text)
 	{
-		// Instantiates a client
+		if(!$apiKey) {
+			$apiKey = Yii::$app->controller->module->googleTranslateApiKey;
+		}
+
 		$translate = new TranslateClient([
-			'Key' => $apiKey,
-			'targetLanguage' => $lang
+			'key' => $apiKey
 		]);
 
-		# Translates some text into Russian
-		$translation = $translate->translate($text);
+		if($text)
+		{
+			try {
 
-		return $translation['text'];
+				$translation = $translate->translate($text,[
+					'target' => $lang
+				]);
+
+				return $translation['text'];
+
+			} catch (\Exception $e) {
+
+				$error = json_decode($e->getMessage())->error;
+				$message = $error->status.' - Error '.$error->code.': '.$error->message;
+
+				Yii::$app->session->setFlash('error', $message);
+
+				return $error;
+			}
+		}
+
+		return '';
 	}
 
 }

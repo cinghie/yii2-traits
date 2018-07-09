@@ -131,6 +131,7 @@ return [
     'Text' => 'Testo',
     'The requested page does not exist.' => 'La pagina richiesta non esiste.',
     'Title' => 'Titolo',
+    'Translate' => 'Traduci',
     'Translation' => 'Traduzione',
     'Translations' => 'Traduzioni',
     'Twitter' => 'Twitter',

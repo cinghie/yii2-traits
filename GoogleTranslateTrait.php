@@ -32,10 +32,15 @@ trait GoogleTranslateTrait
 	 */
 	public function getGoogleCloudTranslation($apiKey = '',$lang,$text)
 	{
+		// Get API Key from current Module
 		if(!$apiKey) {
 			$apiKey = Yii::$app->controller->module->googleTranslateApiKey;
 		}
 
+		// Purge Chinese languagecode
+		$lang = str_replace(['ch','pr'],['zh','pt'], $lang);
+
+		// Create Translation Client Request
 		$translate = new TranslateClient([
 			'key' => $apiKey
 		]);
@@ -53,7 +58,7 @@ trait GoogleTranslateTrait
 			} catch (\Exception $e) {
 
 				$error = json_decode($e->getMessage())->error;
-				$message = $error->status.' - Error '.$error->code.': '.$error->message;
+				$message = $error->status . ' - Error ' . $error->code . ': ' . $error->message;
 
 				Yii::$app->session->setFlash('error', $message);
 

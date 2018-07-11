@@ -94,17 +94,28 @@ trait StateTrait
     /**
      * Generate GridView for State
      *
+     * @param bool $removeLink
+     *
      * @return string
      */
-    public function getStateGridView()
+    public function getStateGridView($removeLink = false)
     {
-        if($this->state) {
+        if($this->state)
+        {
+        	if($removeLink) {
+        		return '<span class="glyphicon glyphicon-ok text-success"></span>';
+	        }
+
             return Html::a(
                 '<span class="glyphicon glyphicon-ok text-success"></span>',
                 ['changestate', 'id' => $this->id],
                 ['data-method' => 'post']
             );
         }
+
+	    if($removeLink) {
+		    return '<span class="glyphicon glyphicon-remove text-danger"></span>';
+	    }
 
 	    return Html::a(
 		    '<span class="glyphicon glyphicon-remove text-danger"></span>',

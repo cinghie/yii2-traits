@@ -13,9 +13,8 @@
 namespace cinghie\traits;
 
 use Yii;
-use dektrium\user\models\Profile;
-use dektrium\user\models\User;
-use yii\web\IdentityInterface;
+use cinghie\userextended\models\Profile;
+use cinghie\userextended\models\User;
 
 /**
  * Trait UserHelperTrait
@@ -43,7 +42,7 @@ trait UserHelpersTrait
 	 *
 	 * @param string $field
 	 *
-	 * @return IdentityInterface | string | int
+	 * @return User | string | int
 	 */
 	public function getCurrentUser($field = '')
 	{

@@ -282,6 +282,20 @@ trait AttachmentTrait
         return explode('/',$this->mimetype);
     }
 
+	/**
+	 * Purge Attachment name from dangerous chars
+	 *
+	 * @param string $attachName
+	 *
+	 * @return string
+	 */
+	public function purgeAttachmentName($attachName)
+	{
+		$attachName = str_replace(["/'/",'’','"',':',';',',','.',' ','__'],'_',$attachName);
+
+		return $attachName;
+	}
+
     /**
      * Format size in readable size
      *

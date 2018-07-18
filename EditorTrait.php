@@ -37,6 +37,7 @@ trait EditorTrait
 	 * @param string $field
 	 * @param string $requestEditor
 	 * @param string $value
+	 * @param array $options
 	 *
 	 * @return ActiveField | string
 	 * @throws Exception
@@ -60,7 +61,7 @@ trait EditorTrait
 			    return $this->getTinyMCEWidget($form, $field, $value, $options = ['rows' => 14]);
 			    break;
 		    default:
-			    return $this->getNoEditorWidget($form, $field, $value, $maxLength = false);
+			    return $this->getNoEditorWidget($form, $field, $value, $options = ['maxLength' => false, 'rows' => 6]);
 	    }
     }
 
@@ -160,25 +161,20 @@ trait EditorTrait
 	 * @param ActiveForm $form
 	 * @param string $field
 	 * @param string $value
-	 * @param boolean $maxLength
+	 * @param array $options
 	 *
 	 * @return ActiveField | string
 	 */
-	public function getNoEditorWidget($form, $field, $value, $maxLength = false)
+	public function getNoEditorWidget($form, $field, $value, $options)
 	{
 		if($form !== null) {
 			/** @var $this \yii\base\Model */
-			return $form->field($this, $field)->textarea([
-				'maxLength' => $maxLength,
-				'rows' => 6
-			]);
+			return $form->field($this, $field)->textarea($options);
 		}
 
-		return Html::textarea($field, $value, [
-			'class' => 'form-control',
-			'maxLength' => $maxLength,
-			'rows' => 6
-		]);
+		$options['class'] = 'form-control';
+
+		return Html::textarea($field, $value, $options);
 	}
 
 	/**

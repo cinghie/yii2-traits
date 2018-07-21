@@ -17,6 +17,7 @@ use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
@@ -74,8 +75,8 @@ trait AttachmentTrait
 	            ],
                 'pluginOptions' => [
                     'allowedFileExtensions' => $attachType,
-                    'initialPreview' => $this->getFileUrl(),
-                    'initialPreviewAsData' => true,
+                    'initialPreview' => strpos($this->mimetype, 'image') === 0 ? $this->getFileUrl() : $this->getAttachmentTypeIcon(),
+                    'initialPreviewAsData' => strpos($this->mimetype, 'image') === 0,
                     'initialPreviewConfig' => [
 	                    ['caption' => $this->filename, 'size' => $this->size]
                     ],
@@ -129,7 +130,7 @@ trait AttachmentTrait
 				$initialPreviewConfig[$i]['caption'] = $attach['title'];
 				$initialPreviewConfig[$i]['size'] = $attach['size'];
 				$initialPreviewConfig[$i]['url'] = Url::to(['attachments/deleteonfly', 'id' => $attach['id']]);
-				$initialPreview[] = $attachURL.$attach['filename'];
+				$initialPreview[] = strpos($attach->mimetype, 'image') === 0 ? Html::img($attach->fileUrl,['class' => 'img-responsive']) : $attach->getAttachmentTypeIcon();
 				$i++;
 			}
 
@@ -143,15 +144,15 @@ trait AttachmentTrait
 				],
 				'pluginOptions' => [
 					'allowedFileExtensions' => $attachType,
+					'initialPreview' => $initialPreview,
+					'initialPreviewAsData' => false,
+					'initialPreviewConfig' => $initialPreviewConfig,
+					'overwriteInitial' => true,
 					'previewFileType' => 'any',
 					'showPreview' => true,
 					'showCaption' => true,
 					'showRemove' => false,
-					'showUpload' => false,
-					'initialPreview' => $initialPreview,
-					'initialPreviewAsData' => true,
-					'initialPreviewConfig' => $initialPreviewConfig,
-					'overwriteInitial' => false
+					'showUpload' => false
 				]
 			]);
 

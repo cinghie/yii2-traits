@@ -105,6 +105,7 @@ return [
     'Postal Code' => 'CAP',
     'Public' => 'Public',
     'Read More' => 'Leggi tutto',
+    'Reason' => 'Causa',
     'Reset' => 'Reset',
     'Reset Grid' => 'Reset',
     'Robots' => 'Robots',

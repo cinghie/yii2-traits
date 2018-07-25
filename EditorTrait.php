@@ -37,7 +37,6 @@ trait EditorTrait
 	 * @param string $field
 	 * @param string $requestEditor
 	 * @param string $value
-	 * @param array $options
 	 *
 	 * @return ActiveField | string
 	 * @throws Exception

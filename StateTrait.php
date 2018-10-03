@@ -148,6 +148,25 @@ trait StateTrait
         ];
     }
 
+	/**
+	 * Return DropDownlist with State options
+	 *
+	 * @return string
+	 */
+	public function getStateFilter()
+    {
+    	return Html::activeDropDownList($this, 'accept',
+		    [
+		    	0 => Yii::t('traits','Actived'),
+			    1 => Yii::t('traits','Inactived')
+		    ],
+		    [
+		    	'class'=>'form-control select2-hidden-accessible',
+			    'prompt' => Yii::t('traits','All Male')
+		    ]
+	    );
+    }
+
     /**
      * Return an array with states
      *

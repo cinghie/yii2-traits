@@ -332,6 +332,20 @@ trait AttachmentTrait
         return md5( uniqid($filename, FALSE) ) . '.' . $extension;
     }
 
+	/**
+	 * Return Preview image or file icon
+	 *
+	 * @return string
+	 */
+	public function getAttachmentPreview()
+    {
+	    if (strpos($this->mimetype, 'image') === 0) {
+		    return Html::img($this->fileUrl,['class' => 'img-responsive']);
+	    }
+
+	    return $this->getAttachmentTypeIcon();
+    }
+
     /**
      * Get Attachmente Type Image by Type
      *

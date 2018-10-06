@@ -147,7 +147,7 @@ trait AttachmentTrait
 					'initialPreview' => $initialPreview,
 					'initialPreviewAsData' => false,
 					'initialPreviewConfig' => $initialPreviewConfig,
-					'overwriteInitial' => true,
+					'overwriteInitial' => false,
 					'previewFileType' => 'any',
 					'showPreview' => true,
 					'showCaption' => true,

@@ -57,7 +57,7 @@ trait TitleAliasTrait
 	 */
 	public function generateAlias($title)
 	{
-		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?: [
+		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ?: [
 			'separator' => '-',
 			'lowercase' => true,
 			'trim' => true,

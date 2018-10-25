@@ -13,6 +13,8 @@
 namespace cinghie\traits;
 
 use Yii;
+use getID3;
+use getid3_exception;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
@@ -92,6 +94,36 @@ trait AttachmentTrait
     	$fileUrl = Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
 
     	return $fileUrl;
+    }
+
+	/**
+	 * @param $attachPath
+	 *
+	 * @return array
+	 * @throws getid3_exception
+	 */
+	public static function getID3Info($attachPath)
+    {
+	    $getID3 = new getID3;
+
+	    return $getID3->analyze($attachPath);
+    }
+
+	/**
+	 * @param $attachPath
+	 *
+	 * @return mixed
+	 * @throws getid3_exception
+	 */
+	public function getVideoDuration($attachPath)
+    {
+    	$fileInfo = AttachmentTrait::getID3Info($attachPath);
+
+    	if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
+		    return $fileInfo['playtime_string'];
+	    }
+
+    	return null;
     }
 
     /**

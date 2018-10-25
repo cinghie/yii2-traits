@@ -18,6 +18,7 @@ use Yii;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
+use yii\base\Model;
 
 /**
  * Trait StateTrait
@@ -82,7 +83,7 @@ trait StateTrait
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, 'state')->widget(Select2::class, [
-            'data' => $this->getStateSelect2(),
+            'data' => StateTrait::getStateSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-check"></i>'
@@ -155,7 +156,8 @@ trait StateTrait
 	 */
 	public function getStateFilter()
     {
-    	return Html::activeDropDownList($this, 'accept',
+	    /** @var Model $this */
+	    return Html::activeDropDownList($this, 'accept',
 		    [
 		    	0 => Yii::t('traits','Actived'),
 			    1 => Yii::t('traits','Inactived')
@@ -172,7 +174,7 @@ trait StateTrait
      *
      * @return array
      */
-    public function getStateSelect2()
+    public static function getStateSelect2()
     {
         return [
             '1' => Yii::t('traits', 'Actived'),

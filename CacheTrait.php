@@ -13,10 +13,14 @@
 namespace cinghie\traits;
 
 use Yii;
+use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
+use yii\base\ViewNotFoundException;
 use yii\caching\Cache;
 use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
 use yii\web\HttpException;
+use yii\web\Response;
 
 /**
  * Trait CacheTrait
@@ -26,8 +30,8 @@ trait CacheTrait
 
     /**
      * @return mixed
-     * @throws \yii\base\ViewNotFoundException
-     * @throws \yii\base\InvalidCallException
+     * @throws InvalidCallException
+     * @throws ViewNotFoundException
      */
     public function actionCache()
     {
@@ -36,50 +40,44 @@ trait CacheTrait
         return $this->render('cache', ['dataProvider'=>$dataProvider]);
     }
 
-    /**
-     * @param $id
-     *
-     * @return \yii\web\Response
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\web\HttpException
-     */
+	/**
+	 * @param $id
+	 *
+	 * @return Response
+	 */
     public function actionFlushCache($id)
     {
-        /** @var $this yii\web\Response */
+        /** @var $this Response */
         if ($this->getCache($id)->flush()) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
         }
         return $this->redirect(['cache']);
     }
 
-    /**
-     * @param $id
-     * @param $key
-     *
-     * @return \yii\web\Response
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\web\HttpException
-     */
+	/**
+	 * @param $id
+	 * @param $key
+	 *
+	 * @return Response
+	 */
     public function actionFlushCacheKey($id, $key)
     {
-        /** @var $this yii\web\Response */
+        /** @var $this Response */
         if ($this->getCache($id)->delete($key)) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
         }
         return $this->redirect(['cache']);
     }
 
-    /**
-     * @param $id
-     * @param $tag
-     *
-     * @return \yii\web\Response
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\web\HttpException
-     */
+	/**
+	 * @param $id
+	 * @param $tag
+	 *
+	 * @return Response
+	 */
     public function actionFlushCacheTag($id, $tag)
     {
-        /** @var $this yii\web\Response */
+        /** @var $this Response */
         TagDependency::invalidate($this->getCache($id), $tag);
         Yii::$app->session->setFlash('success', Yii::t('traits', 'TagDependency was invalidated'));
         return $this->redirect(['cache']);
@@ -89,7 +87,7 @@ trait CacheTrait
      * @param $id
      *
      * @return \yii\caching\Cache|null
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      * @throws HttpException
      */
     protected function getCache($id)

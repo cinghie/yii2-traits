@@ -74,7 +74,7 @@ trait LanguageTrait
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, 'language')->widget(Select2::class, [
-            'data' => $this->getLanguagesSelect2(),
+            'data' => LanguageTrait::getLanguagesSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-globe"></i>'
@@ -88,7 +88,7 @@ trait LanguageTrait
      *
      * @return array
      */
-    public function getLanguagesSelect2()
+    public static function getLanguagesSelect2()
     {
         $languages = Yii::$app->urlManager->languages;
         $array = ['all' => Yii::t('traits', 'All Female')];

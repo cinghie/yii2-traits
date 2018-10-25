@@ -49,7 +49,7 @@ trait OrderingTrait
 	/**
 	 * Set Model Ordering on Class
 	 *
-	 * @param $class
+	 * @param Model $class
 	 * @param string $fieldOrdering
 	 * @param int $oldOrdering
 	 * @param int $lastOrdering
@@ -131,7 +131,7 @@ trait OrderingTrait
 	/**
 	 * Set Max Ordering
 	 *
-	 * @param $class
+	 * @param Model $class
 	 * @param array $condition
 	 */
 	public function setMaxOrdering($class,$condition)
@@ -150,7 +150,7 @@ trait OrderingTrait
 	/**
 	 * Get Max ordering in field
 	 *
-	 * @param $class
+	 * @param Model $class
 	 * @param array $condition
 	 *
 	 * @return mixed

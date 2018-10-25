@@ -15,10 +15,13 @@ namespace cinghie\traits;
 use Yii;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
+use kartik\form\ActiveField;
 use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
@@ -52,11 +55,11 @@ trait UserTrait
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
-        /** @var $this \yii\db\ActiveRecord */
+        /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
@@ -66,7 +69,7 @@ trait UserTrait
      * @param ActiveForm $form
      * @param boolean $disabled
      *
-     * @return \kartik\form\ActiveField
+     * @return ActiveField
      */
     public function getUserWidget($form,$disabled = false)
     {

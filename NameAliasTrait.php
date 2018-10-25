@@ -16,6 +16,7 @@ use Yii;
 use Cocur\Slugify\Slugify;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
+use yii\base\InvalidConfigException;
 
 /**
  * Trait NameAliasTrait
@@ -57,7 +58,7 @@ trait NameAliasTrait
 	 */
 	public function generateAlias($name)
 	{
-		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ?: [
+		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ? Yii::$app->controller->module->slugifyOptions : [
 			'separator' => '-',
 			'lowercase' => true,
 			'trim' => true,
@@ -81,7 +82,7 @@ trait NameAliasTrait
 	 */
 	public function setAlias($post,$field)
 	{
-		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?: [
+		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ? Yii::$app->controller->module->slugifyOptions : [
 			'separator' => '-',
 			'lowercase' => true,
 			'trim' => true,
@@ -118,13 +119,14 @@ trait NameAliasTrait
 		return $string;
 	}
 
-    /**
-     * Generate Name Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Name Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getNameWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -137,13 +139,14 @@ trait NameAliasTrait
         ])->textInput(['maxlength' => true]);
     }
 
-    /**
-     * Generate alias Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate alias Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getAliasWidget($form)
     {
         /** @var $this \yii\base\Model */

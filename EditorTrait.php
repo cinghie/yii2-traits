@@ -19,6 +19,7 @@ use dosamigos\tinymce\TinyMce;
 use kartik\form\ActiveField;
 use kartik\markdown\MarkdownEditor;
 use kartik\widgets\ActiveForm;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\imperavi\Widget as Imperavi;
 
@@ -163,6 +164,7 @@ trait EditorTrait
 	 * @param array $options
 	 *
 	 * @return ActiveField | string
+	 * @throws InvalidConfigException
 	 */
 	public function getNoEditorWidget($form, $field, $value, $options)
 	{

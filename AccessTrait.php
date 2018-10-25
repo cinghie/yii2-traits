@@ -18,6 +18,7 @@ use kartik\form\ActiveField;
 use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
 
 /**
@@ -72,7 +73,7 @@ trait AccessTrait
      * Generate GridView Access
      *
      * @return string
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getAccessGridView()
     {
@@ -85,7 +86,7 @@ trait AccessTrait
      * Generate DetailView Access
      *
      * @return array
-     * @throws \yii\base\InvalidParamException
+     * @throws InvalidParamException
      */
     public function getAccessDetailView()
     {

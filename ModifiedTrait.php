@@ -21,6 +21,7 @@ use kartik\widgets\ActiveForm;
 use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\db\ActiveQuery;
 use yii\helpers\Url;
 
 /**
@@ -57,7 +58,7 @@ trait ModifiedTrait
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getModifiedBy()
     {
@@ -74,7 +75,7 @@ trait ModifiedTrait
      */
     public function getModifiedWidget($form)
     {
-        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : ($this->modified ? $this->modified : '0000-00-00 00:00:00');
+        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : $this->modified;
 
 	    /** @var \yii\base\Model $this */
 	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [

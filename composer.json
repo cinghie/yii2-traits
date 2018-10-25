@@ -22,10 +22,11 @@
         "yiisoft/yii2-imagine": "*",
         "2amigos/yii2-ckeditor-widget": "*",
         "2amigos/yii2-taggable-behavior": "*",
-        "2amigos/yii2-tinymce-widget": "*",  
-	"asofter/yii2-imperavi-redactor": "*",
+        "2amigos/yii2-tinymce-widget": "*",
+        "asofter/yii2-imperavi-redactor": "*",
         "cinghie/yii2-user-extended": "*",
         "cocur/slugify": "*",
+        "ext-json": "*",
         "dektrium/yii2-rbac": "*",
         "dektrium/yii2-user": "*",
         "kartik-v/yii2-detail-view": "*",
@@ -33,7 +34,8 @@
         "kartik-v/yii2-helpers": "*",
         "kartik-v/yii2-markdown": "*",
         "kartik-v/yii2-widgets": "*",  
-        "google/cloud-translate": "*"
+        "google/cloud-translate": "*",
+        "james-heinrich/getid3": "*"
     },
     "autoload": {
         "psr-4": {

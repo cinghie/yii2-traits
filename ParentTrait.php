@@ -121,7 +121,7 @@ trait ParentTrait
 			return Html::a($this->parent->$field,$url);
 		}
 
-		if (isset($hideItem) && $hideItem)
+		if ($hideItem !== null && $hideItem)
 		{
 			if($this->parent_id === $hideItem) {
 				return '<span class="fa fa-ban text-danger"></span>';

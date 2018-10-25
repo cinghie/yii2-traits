@@ -16,6 +16,7 @@ use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\InvalidConfigException;
 
 /**
  * Trait VideoTrait
@@ -69,13 +70,14 @@ trait VideoTrait
         return $videotype;
     }
 
-    /**
-     * Generate Video ID Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Video ID Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getVideoIDWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -108,13 +110,14 @@ trait VideoTrait
         ]);
     }
 
-    /**
-     * Generate Video Caption Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Video Caption Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getVideoCaptionWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -127,13 +130,14 @@ trait VideoTrait
         ])->textarea(['maxlength' => true,'rows' => 6]);
     }
 
-    /**
-     * Generate Video Credits Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Video Credits Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getVideoCreditsWidget($form)
     {
         /** @var $this \yii\base\Model */

@@ -16,6 +16,7 @@ use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
+use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -58,184 +59,27 @@ trait AttachmentTrait
     }
 
 	/**
-	 * Generate File Ipunt Form Widget
+	 * Delete file attached
 	 *
-	 * @param ActiveForm $form
-	 * @param array $attachType
-	 *
-	 * @return ActiveField
+	 * @return boolean
+	 * @throws InvalidParamException
 	 */
-    public function getFileWidget($form,$attachType)
-    {
-        if($this->filename) {
-	        /** @var \yii\base\Model $this */
-	        return $form->field($this, 'filename')->widget(FileInput::class, [
-	            'options'=>[
-		            'multiple'=> true
-	            ],
-                'pluginOptions' => [
-                    'allowedFileExtensions' => $attachType,
-                    'initialPreview' => strpos($this->mimetype, 'image') === 0 ? $this->getFileUrl() : $this->getAttachmentTypeIcon(),
-                    'initialPreviewAsData' => strpos($this->mimetype, 'image') === 0,
-                    'initialPreviewConfig' => [
-	                    ['caption' => $this->filename, 'size' => $this->size]
-                    ],
-                    'overwriteInitial' => true,
-                    'previewFileType' => 'any',
-                    'showPreview' => true,
-                    'showCaption' => true,
-                    'showRemove' => false,
-                    'showUpload' => false
-                ],
-            ]);
-        }
-
-	    /** @var \yii\base\Model $this */
-	    return $form->field($this, 'filename')->widget(FileInput::class, [
-		    'options'=>[
-			    'multiple' => true
-		    ],
-		    'pluginOptions' => [
-			    'allowedFileExtensions' => $attachType,
-			    'browseLabel' => Yii::t('traits', 'Upload'),
-			    'previewFileType' => 'any',
-			    'showRemove' => false,
-			    'showUpload' => false,
-		    ],
-	    ]);
-
-    }
-
-	/**
-	 * Generate Files Ipunt Form Widget
-	 *
-	 * @param array $attachType
-	 * @param string $attachURL
-	 *
-	 * @return string
-	 * @throws \Exception
-	 */
-	public function getFilesWidget($attachType,$attachURL)
+	public function deleteFile()
 	{
-		$attachments = $this->getAttachs();
-		$html = '';
+		$file = Yii::getAlias(Yii::$app->controller->module->attachPath).$this->filename;
 
-		$i = 0;
-		$initialPreview = array();
-		$initialPreviewConfig = array();
-
-		if(count($attachments))
-		{
-			foreach($attachments as $attach) {
-				$initialPreviewConfig[$i]['caption'] = $attach['title'];
-				$initialPreviewConfig[$i]['size'] = $attach['size'];
-				$initialPreviewConfig[$i]['url'] = Url::to(['attachments/deleteonfly', 'id' => $attach['id']]);
-				$initialPreview[] = strpos($attach->mimetype, 'image') === 0 ? Html::img($attach->fileUrl,['class' => 'img-responsive']) : $attach->getAttachmentTypeIcon();
-				$i++;
-			}
-
-			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
-			$html .= FileInput::widget([
-				'model' => $this,
-				'attribute' => 'attachments[]',
-				'name' => 'attachments[]',
-				'options'=>[
-					'multiple'=>true,
-				],
-				'pluginOptions' => [
-					'allowedFileExtensions' => $attachType,
-					'initialPreview' => $initialPreview,
-					'initialPreviewAsData' => false,
-					'initialPreviewConfig' => $initialPreviewConfig,
-					'overwriteInitial' => false,
-					'previewFileType' => 'any',
-					'showPreview' => true,
-					'showCaption' => true,
-					'showRemove' => false,
-					'showUpload' => false
-				]
-			]);
-
-		} else {
-
-			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
-			$html .= FileInput::widget([
-				'model' => $this,
-				'attribute' => 'attachments[]',
-				'name' => 'attachments[]',
-				'options'=>[
-					'multiple'=>true,
-				],
-				'pluginOptions' => [
-					'allowedFileExtensions' => $attachType,
-					'previewFileType' => 'any',
-					'showPreview' => true,
-					'showCaption' => true,
-					'showRemove' => false,
-					'showUpload' => false
-				]
-			]);
+		// check if image exists on server
+		if ( empty($this->filename) || !file_exists($file) ) {
+			return false;
 		}
 
-		return $html;
+		// check if uploaded file can be deleted on server
+		if (unlink($file)) {
+			return true;
+		}
+
+		return false;
 	}
-
-    /**
-     * Generate Extension Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
-    public function getExtensionWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'extension',[
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="fa fa-file-o"></i>'
-                ]
-            ],
-        ])->textInput(['disabled' => true]);
-    }
-
-    /**
-     * Generate MimeType Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
-    public function getMimeTypeWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'mimetype',[
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="fa fa-file"></i>'
-                ]
-            ],
-        ])->textInput(['disabled' => true]);
-    }
-
-    /**
-     * Generate Size Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
-    public function getSizeWidget($form)
-    {
-        /** @var $this \yii\base\Model */
-        return $form->field($this, 'size',[
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="fa fa-balance-scale"></i>'
-                ]
-            ],
-        ])->textInput(['disabled' => true, 'value' => $this->formatSize()]);
-    }
 
     /**
      * Return URL to file attached
@@ -248,29 +92,6 @@ trait AttachmentTrait
     	$fileUrl = Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
 
     	return $fileUrl;
-    }
-
-    /**
-     * Delete file attached
-     *
-     * @return boolean
-     * @throws InvalidParamException
-     */
-    public function deleteFile()
-    {
-        $file = Yii::getAlias(Yii::$app->controller->module->attachPath).$this->filename;
-
-        // check if image exists on server
-        if ( empty($this->filename) || !file_exists($file) ) {
-            return false;
-        }
-
-        // check if uploaded file can be deleted on server
-        if (unlink($file)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -419,5 +240,188 @@ trait AttachmentTrait
 
         return '<i class="fa fa-file-o" aria-hidden="true"></i>';
     }
+
+	/**
+	 * Generate File Ipunt Form Widget
+	 *
+	 * @param ActiveForm $form
+	 * @param array $attachType
+	 *
+	 * @return ActiveField
+	 */
+	public function getFileWidget($form,$attachType)
+	{
+		if($this->filename) {
+			/** @var \yii\base\Model $this */
+			return $form->field($this, 'filename')->widget(FileInput::class, [
+				'options'=>[
+					'multiple'=> true
+				],
+				'pluginOptions' => [
+					'allowedFileExtensions' => $attachType,
+					'initialPreview' => strpos($this->mimetype, 'image') === 0 ? $this->getFileUrl() : $this->getAttachmentTypeIcon(),
+					'initialPreviewAsData' => strpos($this->mimetype, 'image') === 0,
+					'initialPreviewConfig' => [
+						['caption' => $this->filename, 'size' => $this->size]
+					],
+					'overwriteInitial' => true,
+					'previewFileType' => 'any',
+					'showPreview' => true,
+					'showCaption' => true,
+					'showRemove' => false,
+					'showUpload' => false
+				],
+			]);
+		}
+
+		/** @var \yii\base\Model $this */
+		return $form->field($this, 'filename')->widget(FileInput::class, [
+			'options'=>[
+				'multiple' => true
+			],
+			'pluginOptions' => [
+				'allowedFileExtensions' => $attachType,
+				'browseLabel' => Yii::t('traits', 'Upload'),
+				'previewFileType' => 'any',
+				'showRemove' => false,
+				'showUpload' => false,
+			],
+		]);
+
+	}
+
+	/**
+	 * Generate Files Ipunt Form Widget
+	 *
+	 * @param array $attachType
+	 * @param string $attachURL
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function getFilesWidget($attachType,$attachURL)
+	{
+		$attachments = $this->getAttachs();
+		$html = '';
+
+		$i = 0;
+		$initialPreview = array();
+		$initialPreviewConfig = array();
+
+		if(count($attachments))
+		{
+			foreach($attachments as $attach) {
+				$initialPreviewConfig[$i]['caption'] = $attach['title'];
+				$initialPreviewConfig[$i]['size'] = $attach['size'];
+				$initialPreviewConfig[$i]['url'] = Url::to(['attachments/deleteonfly', 'id' => $attach['id']]);
+				$initialPreview[] = strpos($attach->mimetype, 'image') === 0 ? Html::img($attach->fileUrl,['class' => 'img-responsive']) : $attach->getAttachmentTypeIcon();
+				$i++;
+			}
+
+			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
+			$html .= FileInput::widget([
+				'model' => $this,
+				'attribute' => 'attachments[]',
+				'name' => 'attachments[]',
+				'options'=>[
+					'multiple'=>true,
+				],
+				'pluginOptions' => [
+					'allowedFileExtensions' => $attachType,
+					'initialPreview' => $initialPreview,
+					'initialPreviewAsData' => false,
+					'initialPreviewConfig' => $initialPreviewConfig,
+					'overwriteInitial' => false,
+					'previewFileType' => 'any',
+					'showPreview' => true,
+					'showCaption' => true,
+					'showRemove' => false,
+					'showUpload' => false
+				]
+			]);
+
+		} else {
+
+			$html .= '<label class=\"control-label\" for=\"items-photo_name\">'.Yii::t('traits','Upload').'</label>';
+			$html .= FileInput::widget([
+				'model' => $this,
+				'attribute' => 'attachments[]',
+				'name' => 'attachments[]',
+				'options'=>[
+					'multiple'=>true,
+				],
+				'pluginOptions' => [
+					'allowedFileExtensions' => $attachType,
+					'previewFileType' => 'any',
+					'showPreview' => true,
+					'showCaption' => true,
+					'showRemove' => false,
+					'showUpload' => false
+				]
+			]);
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Generate Extension Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
+	public function getExtensionWidget($form)
+	{
+		/** @var $this \yii\base\Model */
+		return $form->field($this, 'extension',[
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fa fa-file-o"></i>'
+				]
+			],
+		])->textInput(['disabled' => true]);
+	}
+
+	/**
+	 * Generate MimeType Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
+	public function getMimeTypeWidget($form)
+	{
+		/** @var $this \yii\base\Model */
+		return $form->field($this, 'mimetype',[
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fa fa-file"></i>'
+				]
+			],
+		])->textInput(['disabled' => true]);
+	}
+
+	/**
+	 * Generate Size Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
+	public function getSizeWidget($form)
+	{
+		/** @var $this \yii\base\Model */
+		return $form->field($this, 'size',[
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fa fa-balance-scale"></i>'
+				]
+			],
+		])->textInput(['disabled' => true, 'value' => $this->formatSize()]);
+	}
 
 }

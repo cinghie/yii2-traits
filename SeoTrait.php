@@ -12,9 +12,11 @@
 
 namespace cinghie\traits;
 
+use cinghie\seo\Seo;
 use kartik\widgets\ActiveForm;
 use Yii;
 use kartik\widgets\Select2;
+use yii\base\InvalidConfigException;
 
 /**
  * Trait SeoTrait
@@ -65,7 +67,7 @@ trait SeoTrait
     {
         /** @var $this \yii\base\Model */
         return $form->field($this, 'robots')->widget(Select2::class, [
-            'data' => $this->getRobotsOptions(),
+            'data' => SeoTrait::getRobotsOptions(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-globe"></i>'
@@ -74,13 +76,14 @@ trait SeoTrait
         ]);
     }
 
-    /**
-     * Generate Author Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return string
-     */
+	/**
+	 * Generate Author Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return string
+	 * @throws InvalidConfigException
+	 */
     public function getAuthorWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -93,13 +96,14 @@ trait SeoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-    /**
-     * Generate Copyright Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return string
-     */
+	/**
+	 * Generate Copyright Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return string
+	 * @throws InvalidConfigException
+	 */
     public function getCopyrightWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -112,13 +116,14 @@ trait SeoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-    /**
-     * Generate Meta Description Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return string
-     */
+	/**
+	 * Generate Meta Description Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return string
+	 * @throws InvalidConfigException
+	 */
     public function getMetaDescriptionWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -131,13 +136,14 @@ trait SeoTrait
         ])->textarea(['rows' => 5]);
     }
 
-    /**
-     * Generate Meta Key Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return string
-     */
+	/**
+	 * Generate Meta Key Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return string
+	 * @throws InvalidConfigException
+	 */
     public function getMetaKeyWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -155,7 +161,7 @@ trait SeoTrait
      *
      * @return array
      */
-    public function getRobotsOptions()
+    public static function getRobotsOptions()
     {
         return [
             'index, follow' => 'index, follow',

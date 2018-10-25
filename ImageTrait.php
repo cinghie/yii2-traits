@@ -17,6 +17,7 @@ use Exception;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
+use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -75,7 +76,7 @@ trait ImageTrait
                 'accept' => $this->getImagesAccept()
             ],
             'pluginOptions' => [
-                'allowedFileExtensions' => $this->getImagesAllowed(),
+                'allowedFileExtensions' => ImageTrait::getImagesAllowed(),
                 'previewFileType' => 'image',
                 'showPreview' => true,
                 'showCaption' => true,
@@ -91,13 +92,14 @@ trait ImageTrait
         return $image;
     }
 
-    /**
-     * Generate Image Caption Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Image Caption Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getImageCaptionWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -110,13 +112,14 @@ trait ImageTrait
         ])->textInput(['maxlength' => true])->textarea(['rows' => 6]);
     }
 
-    /**
-     * Generate Image Credits Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Image Credits Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getImageCreditsWidget($form)
     {
         /** @var $this \yii\base\Model */
@@ -159,7 +162,7 @@ trait ImageTrait
      *
      * @return array
      */
-    public function getImagesAllowed()
+    public static function getImagesAllowed()
     {
         return Yii::$app->controller->module->imageType;
     }
@@ -172,7 +175,7 @@ trait ImageTrait
     public function getImagesAccept()
     {
         $imageAccept = [];
-        $imagesAllowed = $this->getImagesAllowed();
+        $imagesAllowed = ImageTrait::getImagesAllowed();
 
         foreach ($imagesAllowed as $imageAllowed) {
             $imageAccept[] = 'image/'.$imageAllowed;

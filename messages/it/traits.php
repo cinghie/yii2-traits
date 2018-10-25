@@ -101,6 +101,7 @@ return [
 	'Oops! Page not found' => 'Oops! Pagina non trovata',
     'Options' => 'Opzioni',
     'Ordering' => 'Ordine',
+	'Original Name' => 'Nome Originale',
     'Page not found' => 'Pagina non trovata',
     'Params' => 'Parametri',
     'Parent' => 'Genitore',

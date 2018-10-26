@@ -35,7 +35,8 @@
         "kartik-v/yii2-markdown": "*",
         "kartik-v/yii2-widgets": "*",  
         "google/cloud-translate": "*",
-        "james-heinrich/getid3": "*"
+        "james-heinrich/getid3": "*",
+        "php-ffmpeg/php-ffmpeg": "*"
     },
     "autoload": {
         "psr-4": {

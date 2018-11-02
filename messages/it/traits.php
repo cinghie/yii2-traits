@@ -40,6 +40,7 @@ return [
     'Delete {modelClass}: ' => 'Cancella {modelClass}: ',
 	'Description' => 'Descrizione',
     'Do you want delete selected items?' => 'Vuoi cancellare gli elementi selezionati?',
+	'Duration' => 'Durata',
     'Email' => 'Email Principale',
     'Email Secondary' => 'Email Secondaria',
     'Entry Informations' => 'Informazioni d\'inserimento',

@@ -139,13 +139,20 @@ trait AttachmentTrait
 	public function getVideoThumb($attachPath,$sec = 3)
 	{
 		$frame = null;
-		$fileInfo = AttachmentTrait::getID3Info($attachPath);
+		$fileInfo  = AttachmentTrait::getID3Info($attachPath);
+		$userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
-			$ffmpeg = FFMpeg::create([
+		$ffmpegOptions = [];
+
+		if(strpos($userAgent, 'Windows') !== false) {
+			$ffmpegOptions = [
 				'ffmpeg.binaries'  => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffmpeg.exe'),
 				'ffprobe.binaries' => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffprobe.exe')
-			]);
+			];
+		}
+
+		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
+			$ffmpeg = FFMpeg::create($ffmpegOptions);
 			$video  = $ffmpeg->open($attachPath);
 			$frame  = $video->frame(Coordinate\TimeCode::fromSeconds($sec));
 		}

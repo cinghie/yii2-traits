@@ -16,6 +16,7 @@ use Yii;
 use Cocur\Slugify\Slugify;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
+use yii\base\InvalidConfigException;
 
 /**
  * Trait TitleAliasTrait
@@ -118,13 +119,14 @@ trait TitleAliasTrait
 		return $string;
 	}
 
-    /**
-     * Generate Title Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Title Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getTitleWidget($form)
     {
         /** @var $this \yii\base\Model */

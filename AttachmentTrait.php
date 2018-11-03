@@ -12,9 +12,12 @@
 
 namespace cinghie\traits;
 
+use FFMpeg\Media\Frame;
 use Yii;
 use getID3;
 use getid3_exception;
+use FFMpeg\Coordinate;
+use FFMpeg\FFMpeg;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
@@ -125,6 +128,30 @@ trait AttachmentTrait
 
     	return null;
     }
+
+	/**
+	 * @param string $attachPath
+	 * @param int $sec
+	 *
+	 * @return Frame
+	 * @throws getid3_exception
+	 */
+	public function getVideoThumb($attachPath,$sec = 3)
+	{
+		$frame = null;
+		$fileInfo = AttachmentTrait::getID3Info($attachPath);
+
+		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
+			$ffmpeg = FFMpeg::create([
+				'ffmpeg.binaries'  => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffmpeg.exe'),
+				'ffprobe.binaries' => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffprobe.exe')
+			]);
+			$video  = $ffmpeg->open($attachPath);
+			$frame  = $video->frame(Coordinate\TimeCode::fromSeconds($sec));
+		}
+
+		return $frame;
+	}
 
     /**
      * Generate Attachment type from mimetype

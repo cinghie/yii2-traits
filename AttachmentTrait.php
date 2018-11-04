@@ -140,15 +140,18 @@ trait AttachmentTrait
 	{
 		$frame = null;
 		$fileInfo  = AttachmentTrait::getID3Info($attachPath);
-		$userAgent = $_SERVER['HTTP_USER_AGENT'];
-
 		$ffmpegOptions = [];
+		$operationSystem = PHP_OS;
 
-		if(strpos($userAgent, 'Windows') !== false) {
+		if(strpos($operationSystem, 'Windows') !== false || strpos($operationSystem, 'WIN') !== false) {
 			$ffmpegOptions = [
 				'ffmpeg.binaries'  => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffmpeg.exe'),
 				'ffprobe.binaries' => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffprobe.exe')
 			];
+		}
+
+		if(strpos($operationSystem, 'Linux') !== false) {
+			$ffmpegOptions = [];
 		}
 
 		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {

@@ -225,12 +225,19 @@ trait AttachmentTrait
 	/**
 	 * Return Preview image or file icon
 	 *
+	 * @param string $class
+	 * @param string $style
+	 *
 	 * @return string
 	 */
-	public function getAttachmentPreview()
+	public function getAttachmentPreview($class = 'img-responsive',$style = '')
     {
-	    if (strpos($this->mimetype, 'image') === 0) {
-		    return Html::img($this->fileUrl,['class' => 'img-responsive']);
+	    if (strpos($this->mimetype, 'image') !== false) {
+		    return Html::img($this->fileUrl,['class' => $class,'style' => $style]);
+	    }
+
+	    if (strpos($this->mimetype, 'video') !== false) {
+		    return Html::img($this->fileUrl,['class' => $class,'style' => $style]);
 	    }
 
 	    return $this->getAttachmentTypeIcon();

@@ -151,7 +151,10 @@ trait AttachmentTrait
 		}
 
 		if(strpos($operationSystem, 'Linux') !== false) {
-			$ffmpegOptions = [];
+			$ffmpegOptions = [
+				'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+				'ffprobe.binaries' => '/usr/bin/ffprobe'
+			];
 		}
 
 		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {

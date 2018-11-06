@@ -34,6 +34,7 @@ return [
     'Created By' => 'Creato da',
     'Dailymotion' => 'Dailymotion',
     'Dashboard' => 'Dashboard',
+    'Date' => 'Data',
     'Deactive' => 'Disattiva',
     'Deactivated' => 'Disattivato',
     'Delete' => 'Cancella',

@@ -38,7 +38,7 @@
         "php-ffmpeg/php-ffmpeg": "^0.13.0@dev"
     },
     "require-dev": {
-        "google/cloud": "dev-master",
+        "google/cloud-translate": "dev-master",
     },
     "autoload": {
         "psr-4": {

@@ -45,6 +45,7 @@ return [
     'Email' => 'Email Principale',
     'Email Secondary' => 'Email Secondaria',
     'Entry Informations' => 'Informazioni d\'inserimento',
+	'Example' => 'Esempio',
     'Extension' => 'Estensione',
     'Exit' => 'Esci',
     'Fax' => 'Fax',

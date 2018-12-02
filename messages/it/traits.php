@@ -60,6 +60,7 @@ return [
     'Google Maps API KEY Missing' => 'Google Maps API Key Mancante',
 	'Google Plus' => 'Google Plus',
 	'Hits' => 'Visto',
+	'Icon' => 'Icona',
 	'ID' => 'ID',
     'Image' => 'Immagine',
     'Image Caption' => 'Caption Immagine',

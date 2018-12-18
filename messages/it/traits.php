@@ -173,6 +173,7 @@ return [
     'Update' => 'Modifica',
     'Update {modelClass}: ' => 'Modifica {modelClass}: ',
     'Upload' => 'Carica',
+    'User' => 'Utente',
     'User Id' => 'Utente',
     'Value' => 'Valore',
     'Video' => 'Video',
@@ -181,6 +182,8 @@ return [
     'Video Credits' => 'Crediti Video',
     'Video Type' => 'Tipo Video',
 	'Vimeo' => 'Vimeo',
+	'With Image' => 'Con Immagine',
+	'Without Image' => 'Senza Immagine',
     'You are not allowed to access this page' => 'Accesso non permesso!',
 	'YouTube' => 'YouTube',
 	'Website' => 'Sito Web'

@@ -129,6 +129,7 @@ return [
     'Price' => 'Prezzo',
     'Postal Code' => 'CAP',
     'Product' => 'Prodotto',
+    'Products' => 'Prodotti',
     'Public' => 'Public',
 	'Quantity' => 'Quantità',
     'Read More' => 'Leggi tutto',

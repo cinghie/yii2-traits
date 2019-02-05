@@ -139,13 +139,14 @@ trait TitleAliasTrait
         ])->textInput(['maxlength' => true]);
     }
 
-    /**
-     * Generate Alias Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Alias Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getAliasWidget($form)
     {
         /** @var $this \yii\base\Model */

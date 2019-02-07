@@ -317,9 +317,13 @@ trait ViewsHelpersTrait
 	 *
 	 * @return string
 	 */
-    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [ 'index' ])
+    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [])
     {
 	    $title = $title ?: Yii::t('traits','Exit');
+
+	    if(empty($url) && Yii::$app->request->referrer !== NULL) {
+		    $url = Yii::$app->request->referrer;
+	    }
 
         return $this->getStandardButton($icon, $title, $url);
     }

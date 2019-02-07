@@ -323,6 +323,8 @@ trait ViewsHelpersTrait
 
 	    if(empty($url) && !empty(Yii::$app->request->referrer)) {
 		    $url = Yii::$app->request->referrer;
+	    } elseif (empty($url) && empty(Yii::$app->request->referrer)) {
+	    	$url = ['index'];
 	    }
 
         return $this->getStandardButton($icon, $title, $url);

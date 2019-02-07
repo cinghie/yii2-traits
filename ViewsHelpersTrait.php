@@ -313,7 +313,7 @@ trait ViewsHelpersTrait
 	 *
 	 * @param string $icon
 	 * @param string $title
-	 * @param array $url
+	 * @param array|string|null $url
 	 *
 	 * @return string
 	 */
@@ -321,7 +321,7 @@ trait ViewsHelpersTrait
     {
 	    $title = $title ?: Yii::t('traits','Exit');
 
-	    if(empty($url) && Yii::$app->request->referrer !== NULL) {
+	    if(empty($url) && !empty(Yii::$app->request->referrer)) {
 		    $url = Yii::$app->request->referrer;
 	    }
 

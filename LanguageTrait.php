@@ -104,15 +104,19 @@ trait LanguageTrait
 	/**
 	 * Return an array with languages allowed
 	 *
+	 * @param bool $showOnlyDefault
+	 *
 	 * @return array
 	 */
-	public static function getLanguagesFilterSelect2()
+	public static function getLanguagesFilterSelect2($showOnlyDefault = false)
 	{
 		$languages   = Yii::$app->urlManager->languages;
 		$languageAll = Yii::$app->controller->module->languageAll;
 		$languageDefault = substr($languageAll,0,2);
 
-		$array = ['all' => Yii::t('traits', 'All Female')];
+		if($showOnlyDefault) {
+			return ['all' => Yii::t('traits', 'All Female')];
+		}
 
 		/** @var array $languages */
 		foreach($languages as $language)

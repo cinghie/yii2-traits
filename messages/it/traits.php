@@ -56,6 +56,8 @@ return [
     'Fax Secondary' => 'Fax 2',
     'Fax Secondary Code' => 'Prefisso Fax 2',
     'Facebook' => 'Facebook',
+	'File' => 'File',
+	'File uploaded!' => 'File caricato!',
     'Filename' => 'Nome File',
     'First Element' => 'Primo Elemento',
     'Firstname' => 'Nome',

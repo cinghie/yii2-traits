@@ -69,6 +69,7 @@ return [
     'Image' => 'Immagine',
     'Image Caption' => 'Caption Immagine',
     'Image Credits' => 'Crediti Immagine',
+    'Import' => 'Importa',
     'Inactived' => 'Inattivo',
     'Instagram' => 'Instagram',
     'Invoice' => 'Fattura',

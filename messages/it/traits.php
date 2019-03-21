@@ -43,6 +43,7 @@ return [
     'Delete {modelClass}: ' => 'Cancella {modelClass}: ',
 	'Description' => 'Descrizione',
     'Do you want delete selected items?' => 'Vuoi cancellare gli elementi selezionati?',
+	'Download' => 'Scarica',
 	'Duration' => 'Durata',
     'Email' => 'Email',
     'Email Primary' => 'Email Principale',

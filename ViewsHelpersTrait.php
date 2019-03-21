@@ -323,7 +323,9 @@ trait ViewsHelpersTrait
 
 	    if(empty($url) && !empty(Yii::$app->request->referrer)) {
 		    $url = Yii::$app->request->referrer;
-	    } elseif (empty($url) && empty(Yii::$app->request->referrer)) {
+	    }
+
+	    if (empty($url) && empty(Yii::$app->request->referrer)) {
 	    	$url = ['index'];
 	    }
 
@@ -365,6 +367,18 @@ trait ViewsHelpersTrait
             }
         });';
     }
+
+	/**
+	 * Return action send button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+	public function getDownloadButton(array $url = ['download'])
+	{
+		return $this->getStandardButton('fa fa-download text-blue', Yii::t('traits','Download'), $url, ['class' => 'btn btn-mini btn-send']);
+	}
 
 	/**
 	 * Return standard button

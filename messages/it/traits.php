@@ -58,7 +58,7 @@ return [
     'Facebook' => 'Facebook',
 	'File' => 'File',
 	'File uploaded!' => 'File caricato!',
-    'Filename' => 'Nome File',
+	'Filename' => 'Nome File',
     'First Element' => 'Primo Elemento',
     'Firstname' => 'Nome',
     'From' => 'Da',

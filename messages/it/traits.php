@@ -32,7 +32,7 @@ return [
     'Country' => 'Nazione',
     'Create' => 'Crea',
     'Create {modelClass}: ' => 'Crea {modelClass}: ',
-    'Created' => 'Data creazione',
+    'Created' => 'Creato il',
     'Created By' => 'Creato da',
     'Dailymotion' => 'Dailymotion',
     'Dashboard' => 'Dashboard',

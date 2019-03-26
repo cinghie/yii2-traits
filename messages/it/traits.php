@@ -130,6 +130,7 @@ return [
     'Parent' => 'Genitore',
     'Parentid' => 'Genitore',
     'Payment' => 'Pagamento',
+    'Payment ID' => 'Pagamento ID',
     'Payment Due' => 'Pagamento dovuto al',
     'Payments' => 'Pagamenti',
 	'PayPal' => 'PayPal',

@@ -52,6 +52,7 @@ return [
     'Email Primary' => 'Email Principale',
     'Email Secondary' => 'Email Secondaria',
     'Entry Informations' => 'Informazioni d\'inserimento',
+	'Error' => 'Errore',
 	'Event' => 'Evento',
 	'Events' => 'Eventi',
 	'Example' => 'Esempio',

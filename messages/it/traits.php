@@ -211,6 +211,7 @@ return [
 	'With Image' => 'Con Immagine',
 	'Without Image' => 'Senza Immagine',
     'You are not allowed to access this page' => 'Accesso non permesso!',
+	'Your database is not supported!' => 'Il tuo database non è supportato!',
 	'YouTube' => 'YouTube',
 	'Website' => 'Sito Web'
 ];

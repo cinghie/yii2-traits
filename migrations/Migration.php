@@ -28,18 +28,27 @@ class Migration extends \yii\db\Migration
     public function init()
     {
         parent::init();
-        
-		switch (Yii::$app->db->driverName) 
-		{
-            case 'mysql':
-                $this->tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-                break;
-            case 'pgsql':
-                $this->tableOptions = null;
-                break;
-            default:
-                throw new \RuntimeException('Your database is not supported!');
-        }
+
+	    switch ($this->db->driverName)
+	    {
+		    case 'mysql':
+			    $this->tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+			    $this->dbType = 'mysql';
+			    break;
+		    case 'pgsql':
+			    $this->tableOptions = null;
+			    $this->dbType = 'pgsql';
+			    break;
+		    case 'dblib':
+		    case 'mssql':
+		    case 'sqlsrv':
+			    $this->restrict = 'NO ACTION';
+			    $this->tableOptions = null;
+			    $this->dbType = 'sqlsrv';
+			    break;
+		    default:
+			    throw new \RuntimeException(Yii::t('traits','Your database is not supported!'));
+	    }
     }
 
 }

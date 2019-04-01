@@ -388,12 +388,13 @@ trait ViewsHelpersTrait
 	 * @param string | array $url
 	 * @param array $aClass
 	 * @param string $divClass
+	 * @param string $divStyle
 	 *
 	 * @return string
 	 */
-    public function getStandardButton($icon,$title,$url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center' )
+    public function getStandardButton($icon, $title, $url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center', $divStyle = 'margin-right: 25px;')
     {
-        return '<div class="'.$divClass.'" style="margin-right: 25px;">'.
+        return '<div class="'.$divClass.'" style="'.$divStyle.'">'.
                     Html::a('<i class="'.$icon.'"></i>', $url , $aClass).'
                     <div>'.$title.'</div>
                 </div>';

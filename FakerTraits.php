@@ -12,20 +12,55 @@
 
 namespace cinghie\traits;
 
+use Yii;
 use Faker\Factory;
+use Faker\Generator;
 
 /**
  * Trait FakerTraits
+ *
+ * @see https://github.com/fzaninotto/Faker
  */
 trait FakerTraits
 {
-	/** @var Factory */
-	protected $faker;
+	/**
+	 * Get Faker Class
+	 *
+	 * @param string $locale
+	 *
+	 * @return Generator
+	 * @see https://github.com/fzaninotto/Faker#basic-usage
+	 */
+	public static function getInstance($locale = '')
+	{
+		$locale = $locale ?: Yii::$app->sourceLanguage;
+
+		return Factory::create($locale);
+	}
 
 	/**
-	 * FakerTraits constructor.
+	 * Get Credit Card array
+	 *
+	 * @return array
+	 * @see https://github.com/fzaninotto/Faker#fakerproviderpayment
 	 */
-	private function __construct() {
-		$this->faker = Factory::create();
+	public static function getCreditCard()
+	{
+		$faker = self::getInstance();
+		$creditCard = $faker->creditCardDetails;
+
+		$creditCardName = explode(' ',$creditCard['name']);
+		$creditCard['firstname'] = $creditCardName[0];
+		$creditCard['lastname'] = $creditCardName[1];
+
+		$creditCard['cvv2'] = (string)$faker->randomNumber(3,true);
+
+		$creditCardDate = explode('/',$creditCard['expirationDate']);
+		$creditCard['month'] = $creditCardDate[0];
+		$creditCard['year'] = $creditCardDate[1];
+
+		$creditCard['type'] = mb_strtolower($creditCard['type']);
+
+		return $creditCard;
 	}
 }

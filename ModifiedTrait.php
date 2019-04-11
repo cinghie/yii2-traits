@@ -21,7 +21,9 @@ use kartik\widgets\ActiveForm;
 use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
@@ -62,7 +64,7 @@ trait ModifiedTrait
      */
     public function getModifiedBy()
     {
-        /** @var $this \yii\db\ActiveRecord */
+        /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
@@ -77,7 +79,7 @@ trait ModifiedTrait
     {
         $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : $this->modified;
 
-	    /** @var \yii\base\Model $this */
+	    /** @var Model $this */
 	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [
             'disabled' => true,
             'options' => [
@@ -112,7 +114,7 @@ trait ModifiedTrait
     {
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
 
-	    /** @var \yii\base\Model $this */
+	    /** @var Model $this */
         return $form->field($this, 'modified_by')->widget(Select2::class, [
             'data' => $modified_by,
             'addon' => [

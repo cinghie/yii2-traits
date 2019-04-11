@@ -24,7 +24,6 @@ use yii\helpers\Url;
  */
 trait ViewsHelpersTrait
 {
-
 	/**
 	 * Return action create button
 	 *
@@ -434,7 +433,7 @@ trait ViewsHelpersTrait
             'hover' => true,
             'mode' => DetailView::MODE_VIEW,
             'panel' => [
-                'heading' => \Yii::t('traits', 'Entry Informations'),
+                'heading' => Yii::t('traits', 'Entry Informations'),
                 'type' => DetailView::TYPE_INFO,
             ],
             'attributes' => [
@@ -447,5 +446,4 @@ trait ViewsHelpersTrait
             ]
         ]);
     }
-
 }

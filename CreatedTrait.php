@@ -21,6 +21,7 @@ use kartik\widgets\ActiveForm;
 use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\helpers\Url;
 
@@ -77,7 +78,7 @@ trait CreatedTrait
     {
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
-	    /** @var $this \yii\base\Model */
+	    /** @var $this Model */
 	    return $form->field($this, 'created')->widget(DateTimePicker::class, [
             'options' => [
                 'value' => $created,
@@ -111,14 +112,14 @@ trait CreatedTrait
     {
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
 
-	    /** @var $this \yii\base\Model */
+	    /** @var $this Model */
         return $form->field($this, 'created_by')->widget(Select2::class, [
             'data' => $created_by,
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-user"></i>'
                 ]
-            ],
+            ]
         ]);
     }
 

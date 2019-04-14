@@ -324,7 +324,7 @@ trait ViewsHelpersTrait
 		    $url = Yii::$app->request->referrer;
 	    }
 
-	    if (empty($url) && empty(Yii::$app->request->referrer)) {
+	    if ((empty($url) && empty(Yii::$app->request->referrer)) || (Yii::$app->request->referrer === Yii::$app->request->absoluteUrl)) {
 	    	$url = ['index'];
 	    }
 

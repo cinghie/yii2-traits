@@ -71,6 +71,7 @@ return [
     'First Element' => 'Primo Elemento',
     'Firstname' => 'Nome',
     'From' => 'Da',
+    'Fullname' => 'Nome Completo',
     'Grid' => 'Griglia',
     'Google Maps API KEY Missing' => 'Google Maps API Key Mancante',
 	'Google Plus' => 'Google Plus',

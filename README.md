@@ -1,8 +1,8 @@
 Yii2 Traits
 ------------
 
-![Latest Stable Version](https://img.shields.io/packagist/v/cinghie/yii2-traits.svg)
 ![License](https://img.shields.io/packagist/l/cinghie/yii2-traits.svg)
+![Latest Stable Version](https://img.shields.io/github/release/cinghie/yii2-traits.svg)
 ![Latest Release Date](https://img.shields.io/github/release-date/cinghie/yii2-traits.svg)
 ![Latest Commit](https://img.shields.io/github/last-commit/cinghie/yii2-traits.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/cinghie/yii2-traits.svg)](https://packagist.org/packages/cinghie/yii2-traits)

@@ -12,16 +12,17 @@
 
 namespace cinghie\traits;
 
-use Yii;
 use Exception;
+use Yii;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\tinymce\TinyMce;
 use kartik\form\ActiveField;
 use kartik\markdown\MarkdownEditor;
 use kartik\widgets\ActiveForm;
+use vova07\imperavi\Widget as Imperavi;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\helpers\Html;
-use yii\imperavi\Widget as Imperavi;
 
 /**
  * Trait EditorTrait
@@ -30,7 +31,6 @@ use yii\imperavi\Widget as Imperavi;
  */
 trait EditorTrait
 {
-
 	/**
 	 * Generate Editor Widget
 	 *
@@ -80,7 +80,7 @@ trait EditorTrait
     public function getCKEditorWidget($form, $field, $value, $options, $preset)
     {
         if($form !== null) {
-	        /** @var $this \yii\base\Model */
+	        /** @var $this Model */
 	        return $form->field($this, $field)->widget(CKEditor::class, [
 		        'options' => $options,
 		        'preset' => $preset
@@ -103,26 +103,30 @@ trait EditorTrait
 	 * @param string $value
 	 * @param array $options
 	 * @param array $plugins
+	 * @param string $clips
 	 *
 	 * @return ActiveField | string
 	 * @throws Exception
 	 */
-    public function getImperaviWidget($form, $field, $value, $options, $plugins)
+    public function getImperaviWidget($form, $field, $value, $options, $plugins = ['clips','fullscreen'], $clips = '')
     {
-	    $options['lang'] = substr(Yii::$app->language, 0, 2);
+    	$settings = [
+		    'lang' => substr(Yii::$app->language, 0, 2),
+		    'minHeight' => 260,
+		    'plugins' => $plugins,
+		    'clips' => $clips ?: ''
+	    ];
 
 	    if($form !== null) {
-		    /** @var $this \yii\base\Model */
+		    /** @var $this Model */
 		    return $form->field($this, $field)->widget(Imperavi::class, [
-			    'options' => $options,
-			    'plugins' => $plugins
+			    'settings' => $settings
 		    ]);
 	    }
 
 	    return Imperavi::widget([
-	    	'attribute' => $field,
-		    'options' => $options,
-		    'plugins' => $plugins,
+		    'name' => $field,
+		    'settings' => $settings,
 		    'value' => $value
 	    ]);
     }
@@ -141,7 +145,7 @@ trait EditorTrait
     public function getMarkdownWidget($form, $field, $value, $options)
     {
 	    if($form !== null) {
-		    /** @var $this \yii\base\Model */
+		    /** @var $this Model */
 		    return $form->field($this, $field)->widget(
 			    MarkdownEditor::class,
 			    $options
@@ -169,7 +173,7 @@ trait EditorTrait
 	public function getNoEditorWidget($form, $field, $value, $options)
 	{
 		if($form !== null) {
-			/** @var $this \yii\base\Model */
+			/** @var $this Model */
 			return $form->field($this, $field)->textarea($options);
 		}
 
@@ -192,7 +196,7 @@ trait EditorTrait
 	public function getTinyMCEWidget($form, $field, $value, $options)
 	{
 		if($form !== null) {
-			/** @var $this \yii\base\Model */
+			/** @var $this Model */
 			return $form->field($this, $field)->widget(TinyMce::class, [
 				'clientOptions' => [
 					'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
@@ -212,5 +216,4 @@ trait EditorTrait
 			'value' => $value
 		]);
 	}
-
 }

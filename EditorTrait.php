@@ -106,6 +106,7 @@ trait EditorTrait
 	 * @param string $clips
 	 *
 	 * @return ActiveField | string
+	 * @see https://github.com/vova07/yii2-imperavi-widget
 	 * @throws Exception
 	 */
     public function getImperaviWidget($form, $field, $value, $options, $plugins = ['clips','fullscreen'], $clips = '')

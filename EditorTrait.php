@@ -38,30 +38,37 @@ trait EditorTrait
 	 * @param string $field
 	 * @param string $requestEditor
 	 * @param string $value
+	 * @param array $options
 	 *
 	 * @return ActiveField | string
+	 * @throws InvalidConfigException
 	 * @throws Exception
 	 */
-    public function getEditorWidget($form, $field, $requestEditor = '', $value = '')
+    public function getEditorWidget($form, $field, $requestEditor = '', $value = '', $options = [])
     {
         $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
 
 	    switch ($editor)
 	    {
 		    case 'ckeditor':
-			    return $this->getCKEditorWidget($form, $field, $value, $options = ['rows' => 6], $preset = 'basic');
+			    $options = empty($options) ? ['rows' => 6] : $options;
+			    return $this->getCKEditorWidget($form, $field, $value, $options, $preset = 'basic');
 			    break;
 		    case 'imperavi':
-			    return $this->getImperaviWidget($form, $field, $value, $options = ['css' => 'wym.css', 'minHeight' => 250], $plugins = ['fullscreen', 'clips']);
+		    	$options = empty($options) ? [] : $options;
+			    return $this->getImperaviWidget($form, $field, $value, $options);
 			    break;
 		    case 'markdown':
-			    return $this->getMarkdownWidget($form, $field, $value, $options = ['height' => 250, 'encodeLabels' => true]);
+			    $options = empty($options) ? ['height' => 250, 'encodeLabels' => true] : $options;
+			    return $this->getMarkdownWidget($form, $field, $value, $options);
 			    break;
 		    case 'tinymce':
-			    return $this->getTinyMCEWidget($form, $field, $value, $options = ['rows' => 14]);
+			    $options = empty($options) ? ['rows' => 14] : $options;
+			    return $this->getTinyMCEWidget($form, $field, $value, $options);
 			    break;
 		    default:
-			    return $this->getNoEditorWidget($form, $field, $value, $options = ['maxLength' => false, 'rows' => 6]);
+			    $options = empty($options) ? ['maxLength' => false, 'rows' => 6] : $options;
+			    return $this->getNoEditorWidget($form, $field, $value, $options);
 	    }
     }
 
@@ -102,26 +109,34 @@ trait EditorTrait
 	 * @param string $field
 	 * @param string $value
 	 * @param array $options
-	 * @param array $plugins
-	 * @param string $clips
 	 *
 	 * @return ActiveField | string
-	 * @see https://github.com/vova07/yii2-imperavi-widget
 	 * @throws Exception
+	 *
+	 * @see https://github.com/vova07/yii2-imperavi-widget
 	 */
-    public function getImperaviWidget($form, $field, $value, $options, $plugins = ['clips','fullscreen'], $clips = '')
+    public function getImperaviWidget($form, $field, $value, $options)
     {
+    	$clips     = isset($options['clips']) ? $options['clips'] : '';
+    	$minHeight = isset($options['minHeight']) ? $options['minHeight'] : 260;
+    	$plugins   = isset($options['plugins']) ? $options['plugins'] : ['clips','fullscreen'];
+
+	    $imageManagerJson = isset($options['imageManagerJson']) ? $options['imageManagerJson'] : '';
+	    $imageUpload = isset($options['imageUpload']) ? $options['imageUpload'] : '';
+
     	$settings = [
 		    'lang' => substr(Yii::$app->language, 0, 2),
-		    'minHeight' => 260,
+		    'minHeight' => $minHeight,
+		    'imageManagerJson' => $imageManagerJson,
+		    'imageUpload' => $imageUpload,
 		    'plugins' => $plugins,
-		    'clips' => $clips ?: ''
+		    'clips' => $clips
 	    ];
 
 	    if($form !== null) {
 		    /** @var $this Model */
 		    return $form->field($this, $field)->widget(Imperavi::class, [
-			    'settings' => $settings
+			    'settings' => $settings,
 		    ]);
 	    }
 

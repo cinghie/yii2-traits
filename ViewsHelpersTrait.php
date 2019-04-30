@@ -46,10 +46,10 @@ trait ViewsHelpersTrait
     public function getUpdateButton($id = 0)
     {
         if($id) {
-            return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), ['update', 'id' => $id], ['class' => 'btn btn-mini btn-update']);
+            return $this->getStandardButton('fa fa-pencil-alt text-yellow', Yii::t('traits','Update'), ['update', 'id' => $id], ['class' => 'btn btn-mini btn-update']);
         }
 
-	    return $this->getStandardButton('fa fa-pencil text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
+	    return $this->getStandardButton('fa fa-pencil-alt text-yellow', Yii::t('traits','Update'), '#', ['class' => 'btn btn-mini btn-update']);
     }
 
     /**
@@ -276,7 +276,7 @@ trait ViewsHelpersTrait
 	 */
     public function getResetButton(array $url = ['index'])
     {
-        return $this->getStandardButton('fa fa-repeat text-aqua', Yii::t('traits','Reset'), $url, ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
+        return $this->getStandardButton('fa fa-redo text-aqua', Yii::t('traits','Reset'), $url, ['class' => 'btn btn-mini btn-reset', 'data-pjax' => 0]);
     }
 
     /**

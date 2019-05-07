@@ -27,6 +27,7 @@
         "cinghie/yii2-iconpicker": "@dev",
         "cinghie/yii2-user-extended": "@dev",
         "cocur/slugify": "^3.1",
+        "codemix/yii2-localeurls": "^1.7.1",
         "dektrium/yii2-rbac": "@dev",
         "dektrium/yii2-user": "@dev",
         "google/cloud-translate": "^1.2",

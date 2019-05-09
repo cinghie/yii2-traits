@@ -287,7 +287,7 @@ trait ViewsHelpersTrait
     public function getSaveButton()
     {
         return '<div class="pull-right text-center" style="margin-right: 25px;">'.
-            Html::submitButton('<i class="fa fa-floppy-o text-green"></i>', ['class' => 'btn btn-mini btn-save']).
+            Html::submitButton('<i class="fa fa-save text-green"></i>', ['class' => 'btn btn-mini btn-save']).
             '<div>'.Yii::t('traits','Save').'</div></div>';
     }
 
@@ -316,7 +316,7 @@ trait ViewsHelpersTrait
 	 *
 	 * @return string
 	 */
-    public function getExitButton($icon = 'fa fa-sign-out text-blue', $title = '', array $url = [])
+    public function getExitButton($icon = 'fa fa-sign-out-alt text-blue', $title = '', array $url = [])
     {
 	    $title = $title ?: Yii::t('traits','Exit');
 

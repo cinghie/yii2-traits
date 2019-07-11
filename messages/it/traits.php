@@ -2,7 +2,7 @@
 
 return [
 	'Accept' => 'Accetta',
-	'Accepted' => 'Accettato',
+	'Accepted' => 'Accetta',
     'Access' => 'Accesso',
     'Active' => 'Attiva',
     'Actived' => 'Attivo',
@@ -52,7 +52,7 @@ return [
 	'Duration' => 'Durata',
     'Email' => 'Email',
     'Email Primary' => 'Email Principale',
-    'Email Secondary' => 'Email Secondaria',
+    'Email Secondary' => 'Email 2',
     'Entry Informations' => 'Informazioni d\'inserimento',
 	'Error' => 'Errore',
 	'Event' => 'Evento',
@@ -118,7 +118,7 @@ return [
     'New' => 'Nuovo',
     'No' => 'No',
     'Nobody' => 'Nessuno',
-	'Not Accepted' => 'Non Acettato',
+	'Not Accepted' => 'Non Accetta',
     'Not Actived' => 'Non Attivo',
     'Note' => 'Nota',
     'Number' => 'Numero',

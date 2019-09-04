@@ -12,11 +12,13 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -28,7 +30,6 @@ use yii\helpers\Url;
  */
 trait ParentTrait
 {
-
 	/**
 	 * @inheritdoc
 	 */
@@ -86,13 +87,14 @@ trait ParentTrait
 	 * Generate Parent Form Widget
 	 *
 	 * @param ActiveForm $form
-	 * @param [] $items
+	 * @param array $items
 	 *
 	 * @return ActiveField
+	 * @throws Exception
 	 */
 	public function getParentWidget($form,$items)
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		return $form->field($this, 'parent_id')->widget(Select2::class, [
 			'data' => $items,
 			'addon' => [
@@ -115,7 +117,7 @@ trait ParentTrait
 	 */
 	public function getParentGridView($field,$url,$hideItem = false)
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		if (isset($this->parent->id) && !$hideItem) {
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
 			return Html::a($this->parent->$field,$url);
@@ -133,5 +135,4 @@ trait ParentTrait
 
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
-
 }

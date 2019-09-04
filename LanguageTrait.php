@@ -12,10 +12,12 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\Model;
 
 /**
  * Trait LanguageTrait
@@ -24,7 +26,6 @@ use kartik\widgets\Select2;
  */
 trait LanguageTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -63,16 +64,17 @@ trait LanguageTrait
         return $this->language;
     }
 
-    /**
-     * Generate Language Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Language Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getLanguageWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'language')->widget(Select2::class, [
             'data' => LanguageTrait::getLanguagesSelect2(),
             'addon' => [
@@ -118,6 +120,8 @@ trait LanguageTrait
 			return ['all' => Yii::t('traits', 'All Female')];
 		}
 
+		$array = [];
+
 		/** @var array $languages */
 		foreach($languages as $language)
 		{
@@ -130,5 +134,4 @@ trait LanguageTrait
 
 		return $array;
 	}
-
 }

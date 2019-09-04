@@ -12,15 +12,15 @@
 
 namespace cinghie\traits;
 
-use Yii;
+use Exception;
 use Google\Cloud\Translate\TranslateClient;
+use Yii;
 
 /**
  * Trait GoogleTranslateTrait
  */
 trait GoogleTranslateTrait
 {
-
 	/**
 	 * Get Translation from Google Cloud Translate
 	 *
@@ -55,9 +55,9 @@ trait GoogleTranslateTrait
 
 				return $translation['text'];
 
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 
-				$error = json_decode($e->getMessage())->error;
+				$error = json_decode($e->getMessage(),false)->error;
 				$message = $error->status . ' - Error ' . $error->code . ': ' . $error->message;
 
 				Yii::$app->session->setFlash('error', $message);
@@ -68,5 +68,4 @@ trait GoogleTranslateTrait
 
 		return '';
 	}
-
 }

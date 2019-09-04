@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
@@ -23,6 +24,7 @@ use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
@@ -34,7 +36,6 @@ use yii\helpers\Url;
  */
 trait CreatedTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -63,17 +64,18 @@ trait CreatedTrait
      */
     public function getCreatedBy()
     {
-        /** @var $this \yii\db\ActiveRecord */
+        /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
     }
 
-    /**
-     * Generate Created Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Created Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getCreatedWidget($form)
     {
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
@@ -101,13 +103,14 @@ trait CreatedTrait
         return ['attribute' => 'created'];
     }
 
-    /**
-     * Generate CreatedBy Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate CreatedBy Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getCreatedByWidget($form)
     {
         $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
@@ -184,5 +187,4 @@ trait CreatedTrait
     {
 	    return $user_id === $this->created_by;
     }
-
 }

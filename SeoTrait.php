@@ -12,11 +12,12 @@
 
 namespace cinghie\traits;
 
-use cinghie\seo\Seo;
-use kartik\widgets\ActiveForm;
+use Exception;
 use Yii;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 
 /**
  * Trait SeoTrait
@@ -29,7 +30,6 @@ use yii\base\InvalidConfigException;
  */
 trait SeoTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -56,16 +56,17 @@ trait SeoTrait
         ];
     }
 
-    /**
-     * Generate Robots Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return string
-     */
+	/**
+	 * Generate Robots Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
     public function getRobotsWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'robots')->widget(Select2::class, [
             'data' => SeoTrait::getRobotsOptions(),
             'addon' => [
@@ -86,7 +87,7 @@ trait SeoTrait
 	 */
     public function getAuthorWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'author', [
             'addon' => [
                 'prepend' => [
@@ -106,7 +107,7 @@ trait SeoTrait
 	 */
     public function getCopyrightWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'copyright', [
             'addon' => [
                 'prepend' => [
@@ -126,7 +127,7 @@ trait SeoTrait
 	 */
     public function getMetaDescriptionWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'metadesc', [
             'addon' => [
                 'prepend' => [
@@ -146,7 +147,7 @@ trait SeoTrait
 	 */
     public function getMetaKeyWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'metakey', [
             'addon' => [
                 'prepend' => [
@@ -170,5 +171,4 @@ trait SeoTrait
             'index, no follow' => 'index, no follow'
         ];
     }
-
 }

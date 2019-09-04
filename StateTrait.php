@@ -12,9 +12,10 @@
 
 namespace cinghie\traits;
 
+use Exception;
+use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
-use Yii;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 use kartik\widgets\Select2;
@@ -27,7 +28,6 @@ use yii\base\Model;
  */
 trait StateTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -72,16 +72,17 @@ trait StateTrait
         ]);
     }
 
-    /**
-     * Generate State Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate State Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getStateWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'state')->widget(Select2::class, [
             'data' => StateTrait::getStateSelect2(),
             'addon' => [
@@ -161,5 +162,4 @@ trait StateTrait
             '0' => Yii::t('traits', 'Inactived')
         ];
     }
-
 }

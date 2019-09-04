@@ -17,6 +17,7 @@ use Cocur\Slugify\Slugify;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 
 /**
  * Trait TitleAliasTrait
@@ -26,7 +27,6 @@ use yii\base\InvalidConfigException;
  */
 trait TitleAliasTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -129,7 +129,7 @@ trait TitleAliasTrait
 	 */
     public function getTitleWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'title', [
             'addon' => [
                 'prepend' => [
@@ -149,7 +149,7 @@ trait TitleAliasTrait
 	 */
     public function getAliasWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'alias', [
             'addon' => [
                 'prepend' => [
@@ -158,5 +158,4 @@ trait TitleAliasTrait
             ]
         ] )->textInput(['maxlength' => true]);
     }
-
 }

@@ -12,11 +12,13 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 
 /**
  * Trait VideoTrait
@@ -28,7 +30,6 @@ use yii\base\InvalidConfigException;
  */
 trait VideoTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -80,7 +81,7 @@ trait VideoTrait
 	 */
     public function getVideoIDWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'video', [
             'addon' => [
                 'prepend' => [
@@ -90,16 +91,17 @@ trait VideoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-    /**
-     * Generate Video Type Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Video Type Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getVideoTypeWidget($form)
     {
-        /** @var $this \yii\base\Model | \cinghie\traits\VideoTrait */
+        /** @var $this Model | VideoTrait */
         return $form->field($this, 'video_type')->widget(Select2::class, [
             'data' => $this->getVideoTypeSelect2(),
             'addon' => [
@@ -120,7 +122,7 @@ trait VideoTrait
 	 */
     public function getVideoCaptionWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'video_caption', [
             'addon' => [
                 'prepend' => [
@@ -140,7 +142,7 @@ trait VideoTrait
 	 */
     public function getVideoCreditsWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'video_credits', [
             'addon' => [
                 'prepend' => [
@@ -149,5 +151,4 @@ trait VideoTrait
             ]
         ])->textInput(['maxlength' => true]);
     }
-
 }

@@ -23,7 +23,6 @@ use yii\base\InvalidParamException;
  */
 trait TaggableTrait
 {
-
 	/**
 	 * @inheritdoc
 	 */
@@ -70,5 +69,4 @@ trait TaggableTrait
 			'value' => $this->tagNames
 		];
 	}
-
 }

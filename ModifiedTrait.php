@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
@@ -35,7 +36,6 @@ use yii\helpers\Url;
  */
 trait ModifiedTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -68,13 +68,14 @@ trait ModifiedTrait
         return $this->hasOne(User::class, ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
-    /**
-     * Generate Modified Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Modified Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getModifiedWidget($form)
     {
         $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : $this->modified;
@@ -103,13 +104,14 @@ trait ModifiedTrait
         return ['attribute' => 'modified'];
     }
 
-    /**
-     * Generate ModifiedBy Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate ModifiedBy Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getModifiedByWidget($form)
     {
         $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
@@ -186,5 +188,4 @@ trait ModifiedTrait
     {
 	    return $user_id === $this->modified_by;
     }
-
 }

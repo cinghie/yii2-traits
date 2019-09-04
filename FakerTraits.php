@@ -12,9 +12,9 @@
 
 namespace cinghie\traits;
 
-use Yii;
 use Faker\Factory;
 use Faker\Generator;
+use Yii;
 
 /**
  * Trait FakerTraits

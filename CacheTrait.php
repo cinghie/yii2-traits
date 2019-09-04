@@ -27,7 +27,6 @@ use yii\web\Response;
  */
 trait CacheTrait
 {
-
     /**
      * @return mixed
      * @throws InvalidCallException
@@ -136,5 +135,4 @@ trait CacheTrait
     {
         return is_subclass_of($className, Cache::class);
     }
-
 }

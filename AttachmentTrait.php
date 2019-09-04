@@ -12,17 +12,19 @@
 
 namespace cinghie\traits;
 
+use Exception;
+use FFMpeg\Coordinate;
+use FFMpeg\FFMpeg;
 use FFMpeg\Media\Frame;
 use Yii;
 use getID3;
 use getid3_exception;
-use FFMpeg\Coordinate;
-use FFMpeg\FFMpeg;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -35,7 +37,6 @@ use yii\helpers\Url;
  */
 trait AttachmentTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -327,11 +328,12 @@ trait AttachmentTrait
 	 * @param array $attachType
 	 *
 	 * @return ActiveField
+	 * @throws Exception
 	 */
 	public function getFileWidget($form,$attachType)
 	{
 		if($this->filename) {
-			/** @var \yii\base\Model $this */
+			/** @var Model $this */
 			return $form->field($this, 'filename')->widget(FileInput::class, [
 				'options'=>[
 					'multiple'=> true
@@ -353,7 +355,7 @@ trait AttachmentTrait
 			]);
 		}
 
-		/** @var \yii\base\Model $this */
+		/** @var Model $this */
 		return $form->field($this, 'filename')->widget(FileInput::class, [
 			'options'=>[
 				'multiple' => true
@@ -376,7 +378,7 @@ trait AttachmentTrait
 	 * @param string $attachURL
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getFilesWidget($attachType,$attachURL)
 	{
@@ -453,7 +455,7 @@ trait AttachmentTrait
 	 */
 	public function getExtensionWidget($form)
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		return $form->field($this, 'extension',[
 			'addon' => [
 				'prepend' => [
@@ -473,7 +475,7 @@ trait AttachmentTrait
 	 */
 	public function getMimeTypeWidget($form)
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		return $form->field($this, 'mimetype',[
 			'addon' => [
 				'prepend' => [
@@ -493,7 +495,7 @@ trait AttachmentTrait
 	 */
 	public function getSizeWidget($form)
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		return $form->field($this, 'size',[
 			'addon' => [
 				'prepend' => [
@@ -502,5 +504,4 @@ trait AttachmentTrait
 			],
 		])->textInput(['disabled' => true, 'value' => $this->formatSize()]);
 	}
-
 }

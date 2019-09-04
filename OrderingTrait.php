@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
@@ -25,7 +26,6 @@ use yii\base\Model;
  */
 trait OrderingTrait
 {
-
 	/**
 	 * @inheritdoc
 	 */
@@ -171,6 +171,7 @@ trait OrderingTrait
 	 * @param array $condition
 	 *
 	 * @return ActiveField
+	 * @throws Exception
 	 */
 	public function getOrderingWidget($form, $class, $orderingField, $selectField, $condition)
 	{
@@ -185,7 +186,7 @@ trait OrderingTrait
 			$orderingSelect = $this->getOrderingSelect2($class, $orderingField, $selectField, $condition);
 		}
 
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		return $form->field($this, 'ordering')->widget(Select2::class, [
 			'data' => $orderingSelect,
 			'options' => $options,
@@ -224,5 +225,4 @@ trait OrderingTrait
 
 		return $array;
 	}
-
 }

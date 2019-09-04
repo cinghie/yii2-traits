@@ -21,7 +21,6 @@ use cinghie\userextended\models\User;
  */
 trait UserHelpersTrait
 {
-
 	/**
 	 * Get the User by user email
 	 *
@@ -133,5 +132,4 @@ trait UserHelpersTrait
 
         return $array;
     }
-
 }

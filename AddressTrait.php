@@ -12,9 +12,9 @@
 
 namespace cinghie\traits;
 
-use Yii;
 use Exception;
 use RuntimeException;
+use Yii;
 
 /**
  * Trait AddressTrait
@@ -31,7 +31,6 @@ use RuntimeException;
  */
 trait AddressTrait
 {
-
 	/**
 	 * @inheritdoc
 	 */
@@ -88,7 +87,7 @@ trait AddressTrait
 		$latLng  = array();
 		$address = str_replace( array( ' ', '++' ), '+', $address );
 		$geocode = file_get_contents( 'https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=' . $apiKEY);
-		$output  = json_decode($geocode);
+		$output  = json_decode( $geocode, false );
 
 		if ($output->results) {
 			$lat = $output->results[0]->geometry->location->lat;
@@ -99,5 +98,4 @@ trait AddressTrait
 
 		return $latLng;
 	}
-
 }

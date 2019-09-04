@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use kartik\detail\DetailView;
 use kartik\form\ActiveField;
@@ -19,6 +20,7 @@ use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\helpers\Url;
 
 /**
@@ -28,7 +30,6 @@ use yii\helpers\Url;
  */
 trait AccessTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -49,16 +50,17 @@ trait AccessTrait
         ];
     }
 
-    /**
-     * Generate Access Form Widget
-     *
-     * @param ActiveForm $form
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate Access Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getAccessWidget($form)
     {
-        /** @var \yii\base\Model $this */
+        /** @var Model $this */
         return $form->field($this, 'access')->widget(Select2::class, [
             'data' => $this->getRolesSelect2(),
             'addon' => [
@@ -100,5 +102,4 @@ trait AccessTrait
             ]
         ];
     }
-
 }

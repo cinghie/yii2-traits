@@ -12,13 +12,14 @@
 
 namespace cinghie\traits;
 
-use Yii;
 use Exception;
+use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -31,7 +32,6 @@ use yii\helpers\Url;
  */
 trait ImageTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -66,7 +66,7 @@ trait ImageTrait
      */
     public function getImageWidget()
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         $image = '<label class="control-label" for="items-photo_name">' .Yii::t('traits','Image'). '</label>';
         $image .= FileInput::widget([
             'model' => $this,
@@ -102,7 +102,7 @@ trait ImageTrait
 	 */
     public function getImageCaptionWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'image_caption', [
             'addon' => [
                 'prepend' => [
@@ -122,7 +122,7 @@ trait ImageTrait
 	 */
     public function getImageCreditsWidget($form)
     {
-        /** @var $this \yii\base\Model */
+        /** @var $this Model */
         return $form->field($this, 'image_credits', [
             'addon' => [
                 'prepend' => [
@@ -183,5 +183,4 @@ trait ImageTrait
 
         return $imageAccept;
     }
-
 }

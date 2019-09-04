@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use Exception;
 use Yii;
 use dektrium\user\models\User;
 use kartik\detail\DetailView;
@@ -20,6 +21,7 @@ use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
@@ -32,7 +34,6 @@ use yii\helpers\Url;
  */
 trait UserTrait
 {
-
     /**
      * @inheritdoc
      */
@@ -63,21 +64,22 @@ trait UserTrait
         return $this->hasOne(User::class, ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
-    /**
-     * Generate User Form Widget
-     *
-     * @param ActiveForm $form
-     * @param boolean $disabled
-     *
-     * @return ActiveField
-     */
+	/**
+	 * Generate User Form Widget
+	 *
+	 * @param ActiveForm $form
+	 * @param boolean $disabled
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getUserWidget($form,$disabled = false)
     {
         if($disabled)
         {
             $value = !$this->user_id ? [0 => Yii::t('traits', 'Nobody')] : [$this->user_id => $this->user->username];
 
-	        /** @var \yii\base\Model $this */
+	        /** @var Model $this */
 	        return $form->field($this, 'user_id')->widget(Select2::class, [
 		        'disabled' => true,
 		        'data' => $value,
@@ -89,7 +91,7 @@ trait UserTrait
 	        ]);
         }
 
-	    /** @var \yii\base\Model $this */
+	    /** @var $this Model | UserHelpersTrait */
 	    return $form->field($this, 'user_id')->widget(Select2::class, [
 		    'data' => $this->getUsersSelect2(),
 		    'addon' => [

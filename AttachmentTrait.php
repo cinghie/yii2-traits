@@ -65,6 +65,29 @@ trait AttachmentTrait
     }
 
 	/**
+	 * Return URL to file attached
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getFileUrl()
+	{
+		$fileUrl = Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
+
+		return $fileUrl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVideoThumb()
+	{
+		$videoThumb = str_replace('media/','media/thumbs/video/',$this->fileUrl);
+
+		return $videoThumb.'.jpg';
+	}
+
+	/**
 	 * Delete file attached
 	 *
 	 * @return boolean
@@ -86,19 +109,6 @@ trait AttachmentTrait
 
 		return false;
 	}
-
-    /**
-     * Return URL to file attached
-     *
-     * @return string
-     * @throws InvalidParamException
-     */
-    public function getFileUrl()
-    {
-    	$fileUrl = Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
-
-    	return $fileUrl;
-    }
 
 	/**
 	 * @param $attachPath
@@ -137,7 +147,7 @@ trait AttachmentTrait
 	 * @return Frame
 	 * @throws getid3_exception
 	 */
-	public function getVideoThumb($attachPath,$sec = 3)
+	public function createVideoThumb($attachPath,$sec = 3)
 	{
 		$frame = null;
 		$fileInfo  = AttachmentTrait::getID3Info($attachPath);
@@ -241,7 +251,7 @@ trait AttachmentTrait
 	    }
 
 	    if (strpos($this->mimetype, 'video') !== false) {
-		    return Html::img($this->fileUrl,['class' => $class,'style' => $style]);
+		    return Html::img($this->getVideoThumb(),['class' => $class,'style' => $style]);
 	    }
 
 	    return $this->getAttachmentTypeIcon();
@@ -254,45 +264,59 @@ trait AttachmentTrait
      */
     public function getAttachmentTypeIcon()
     {
+	    $extensions = [
+		    'csv' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+		    'pdf' => '<i class="fa fa-file-pdf" aria-hidden="true"></i>',
+		    'plain' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+		    'rar' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
+		    'text' => '<i class="fa fa-file-text" aria-hidden="true"></i>',
+		    'zip' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
+	    ];
+
+	    if($extensions[$this->extension]) {
+		    return $extensions[$this->extension];
+	    }
+
         $applications = [
-            'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
-            'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
-	        'msword' => '<i class="fa fa-file-word-o" aria-hidden="true"></i>',
-	        'vnd.openxmlformats-officedocument.wordprocessingml.document' => '<i class="fa fa-file-word-o" aria-hidden="true"></i>',
-	        'vnd.openxmlformats-officedocument.wordprocessingml.template' => '<i class="fa fa-file-word-o" aria-hidden="true"></i>',
-	        'vnd.ms-word.document.macroEnabled.12' => '<i class="fa fa-file-word-o" aria-hidden="true"></i>',
-	        'vnd.ms-word.template.macroEnabled.12' => '<i class="fa fa-file-word-o" aria-hidden="true"></i>',
-            'vnd.ms-excel' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.openxmlformats-officedocument.spreadsheetml.sheet' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.openxmlformats-officedocument.spreadsheetml.template' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.ms-excel.sheet.macroEnabled.12' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.ms-excel.template.macroEnabled.12' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.ms-excel.addin.macroEnabled.12' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.ms-excel.sheet.binary.macroEnabled.12' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'vnd.ms-powerpoint' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.openxmlformats-officedocument.presentationml.presentation' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.openxmlformats-officedocument.presentationml.template' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.openxmlformats-officedocument.presentationml.slideshow' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.ms-powerpoint.addin.macroEnabled.12' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.ms-powerpoint.presentation.macroEnabled.12' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.ms-powerpoint.template.macroEnabled.12' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
-            'vnd.ms-powerpoint.slideshow.macroEnabled.12' => '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>',
+            'csv' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'pdf' => '<i class="fa fa-file-pdf" aria-hidden="true"></i>',
+            'plain' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'text' => '<i class="fa fa-file-text" aria-hidden="true"></i>',
+	        'msword' => '<i class="fa fa-file-word" aria-hidden="true"></i>',
+	        'application/x-zip-compressed' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
+	        'vnd.openxmlformats-officedocument.wordprocessingml.document' => '<i class="fa fa-file-word" aria-hidden="true"></i>',
+	        'vnd.openxmlformats-officedocument.wordprocessingml.template' => '<i class="fa fa-file-word" aria-hidden="true"></i>',
+	        'vnd.ms-word.document.macroEnabled.12' => '<i class="fa fa-file-word" aria-hidden="true"></i>',
+	        'vnd.ms-word.template.macroEnabled.12' => '<i class="fa fa-file-word" aria-hidden="true"></i>',
+            'vnd.ms-excel' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.openxmlformats-officedocument.spreadsheetml.sheet' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.openxmlformats-officedocument.spreadsheetml.template' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.ms-excel.sheet.macroEnabled.12' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.ms-excel.template.macroEnabled.12' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.ms-excel.addin.macroEnabled.12' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.ms-excel.sheet.binary.macroEnabled.12' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'vnd.ms-powerpoint' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.openxmlformats-officedocument.presentationml.presentation' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.openxmlformats-officedocument.presentationml.template' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.openxmlformats-officedocument.presentationml.slideshow' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.ms-powerpoint.addin.macroEnabled.12' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.ms-powerpoint.presentation.macroEnabled.12' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.ms-powerpoint.template.macroEnabled.12' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
+            'vnd.ms-powerpoint.slideshow.macroEnabled.12' => '<i class="fa fa-file-powerpoint" aria-hidden="true"></i>',
         ];
 
         $texts = [
-            'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
-            'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-            'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+            'csv' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'pdf' => '<i class="fa fa-file-pdf" aria-hidden="true"></i>',
+            'plain' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+            'text' => '<i class="fa fa-file-text" aria-hidden="true"></i>',
         ];
 
         $types = [
-            'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
-            'archive' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
-            'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
-            'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
+            'audio' => '<i class="fa fa-file-audio" aria-hidden="true"></i>',
+            'archive' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
+            'image' => '<i class="fa fa-file-image" aria-hidden="true"></i>',
+            'video' => '<i class="fa fa-file-video" aria-hidden="true"></i>',
         ];
 
         $mimetype = $this->getAttachmentType();
@@ -318,7 +342,7 @@ trait AttachmentTrait
             }
         }
 
-        return '<i class="fa fa-file-o" aria-hidden="true"></i>';
+        return '<i class="fa fa-file" aria-hidden="true"></i>';
     }
 
 	/**
@@ -333,7 +357,7 @@ trait AttachmentTrait
 	public function getFileWidget($form,$attachType)
 	{
 		if($this->filename) {
-			/** @var Model $this */
+			/** @var $this Model|AttachmentTrait */
 			return $form->field($this, 'filename')->widget(FileInput::class, [
 				'options'=>[
 					'multiple'=> true
@@ -391,7 +415,9 @@ trait AttachmentTrait
 
 		if(count($attachments))
 		{
-			foreach($attachments as $attach) {
+			foreach($attachments as $attach)
+			{
+				/** @var $attach Model | AttachmentTrait */
 				$initialPreviewConfig[$i]['caption'] = $attach['title'];
 				$initialPreviewConfig[$i]['size'] = $attach['size'];
 				$initialPreviewConfig[$i]['url'] = Url::to(['attachments/deleteonfly', 'id' => $attach['id']]);
@@ -459,7 +485,7 @@ trait AttachmentTrait
 		return $form->field($this, 'extension',[
 			'addon' => [
 				'prepend' => [
-					'content'=>'<i class="fa fa-file-o"></i>'
+					'content'=>'<i class="fa fa-file"></i>'
 				]
 			],
 		])->textInput(['disabled' => true]);
@@ -495,7 +521,7 @@ trait AttachmentTrait
 	 */
 	public function getSizeWidget($form)
 	{
-		/** @var $this Model */
+		/** @var $this Model | AttachmentTrait */
 		return $form->field($this, 'size',[
 			'addon' => [
 				'prepend' => [

@@ -266,6 +266,7 @@ trait AttachmentTrait
     {
 	    $extensions = [
 		    'csv' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
+		    'mp4' => '<i class="fa fa-file-video" aria-hidden="true"></i>',
 		    'pdf' => '<i class="fa fa-file-pdf" aria-hidden="true"></i>',
 		    'plain' => '<i class="fa fa-file-excel" aria-hidden="true"></i>',
 		    'rar' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
@@ -273,7 +274,7 @@ trait AttachmentTrait
 		    'zip' => '<i class="fa fa-file-archive" aria-hidden="true"></i>',
 	    ];
 
-	    if($extensions[$this->extension]) {
+	    if(isset($extensions[$this->extension]) && $extensions[$this->extension]) {
 		    return $extensions[$this->extension];
 	    }
 

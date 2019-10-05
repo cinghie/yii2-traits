@@ -223,6 +223,30 @@ trait AttachmentTrait
         return $bytes;
     }
 
+	/**
+	 * Format size in readable size
+	 *
+	 * @param int $size
+	 *
+	 * @return string
+	 */
+	public function formatFileSize($size)
+	{
+		$bytes = sprintf('%u', $size);
+
+		if ($bytes > 0)
+		{
+			$unit = (int)log($bytes, 1024);
+			$units = array('B', 'KB', 'MB', 'GB');
+
+			if (array_key_exists($unit, $units) === true) {
+				return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
+			}
+		}
+
+		return $bytes;
+	}
+
     /**
      * Generate a MD5 filename by original filename
      *

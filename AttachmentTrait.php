@@ -422,12 +422,11 @@ trait AttachmentTrait
 	 * Generate Files Ipunt Form Widget
 	 *
 	 * @param array $attachType
-	 * @param string $attachURL
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
-	public function getFilesWidget($attachType,$attachURL)
+	public function getFilesWidget($attachType)
 	{
 		$attachments = $this->getAttachs();
 		$html = '';

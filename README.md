@@ -132,7 +132,7 @@ if( $model->isCurrentUserCreator() ) {
     - string $filename
     - string $mimetype
     - function getFileWidget($form,$attachType): Generate File Ipunt Form Widget
-    - function getFilesWidget($attachType,$attachURL): Generate Files Ipunt Form Widget
+    - function getFilesWidget($attachType): Generate Files Ipunt Form Widget
     - function getExtensionWidget($form): Generate Extension Form Widget
     - function getMimeTypeWidget($form): Generate MimeType Form Widget
     - function getSizeWidget($form): Generate Size Form Widget

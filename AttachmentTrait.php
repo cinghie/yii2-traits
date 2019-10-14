@@ -201,50 +201,48 @@ trait AttachmentTrait
 		return $attachName;
 	}
 
-    /**
-     * Format size in readable size
-     *
-     * @return string
-     */
-    public function formatSize()
+	/**
+	 * Format size in readable size
+	 *
+	 * @param int $precision
+	 *
+	 * @return string
+	 */
+    public function formatSize($precision = 2)
     {
-        $bytes = sprintf('%u', $this->size);
+	    $i = 0;
+	    $size  = $this->size;
+	    $step  = 1024;
+	    $units = array('B','KB','MB','GB','TB','PB','EB','ZB','YB');
 
-        if ($bytes > 0)
-        {
-            $unit = (int)log($bytes, 1024);
-            $units = array('B', 'KB', 'MB', 'GB');
+	    while (($size / $step) > 0.9) {
+		    $size = $size / $step;
+		    $i++;
+	    }
 
-            if (array_key_exists($unit, $units) === true) {
-                return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
-            }
-        }
-
-        return $bytes;
+	    return round($size, $precision).' '.$units[$i];
     }
 
 	/**
 	 * Format size in readable size
 	 *
 	 * @param int $size
+	 * @param int $precision
 	 *
 	 * @return string
 	 */
-	public function formatFileSize($size)
+	public function formatFileSize($size,$precision = 2)
 	{
-		$bytes = sprintf('%u', $size);
+		$i = 0;
+		$step  = 1024;
+		$units = array('B','KB','MB','GB','TB','PB','EB','ZB','YB');
 
-		if ($bytes > 0)
-		{
-			$unit = (int)log($bytes, 1024);
-			$units = array('B', 'KB', 'MB', 'GB');
-
-			if (array_key_exists($unit, $units) === true) {
-				return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
-			}
+		while (($size / $step) > 0.9) {
+			$size = $size / $step;
+			$i++;
 		}
 
-		return $bytes;
+		return round($size, $precision).' '.$units[$i];
 	}
 
     /**

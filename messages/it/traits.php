@@ -178,6 +178,7 @@ return [
     'Reference' => 'Riferimento',
     'Refresh Token' => 'Aggiorna Token',
     'Reset' => 'Reset',
+    'Reports' => 'Rapporti',
     'Reset Grid' => 'Reset',
     'Robots' => 'Robots',
     'Rule' => 'Ruolo',

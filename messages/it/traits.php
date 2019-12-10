@@ -58,6 +58,7 @@ return [
 	'Description' => 'Descrizione',
     'Digit Separator' => 'Separatore Migliaia',
     'Do you want delete selected items?' => 'Vuoi cancellare gli elementi selezionati?',
+	'Documentation' => 'Documentazione',
 	'Download' => 'Scarica',
 	'Duration' => 'Durata',
     'Email' => 'Email',

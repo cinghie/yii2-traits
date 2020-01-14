@@ -218,6 +218,7 @@ return [
 	'Subnote' => 'Sotto Titolo',
 	'Subtotal' => 'Totale Parziale',
 	'Supplier' => 'Fornitore',
+	'Supplier Code' => 'Codice Fornitore',
 	'Supplier Price' => 'Prezzo Fornitore',
     'TagDependency was invalidated' => 'TagDependency invalidata',
     'TagNames' => 'Tags',

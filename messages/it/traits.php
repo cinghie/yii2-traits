@@ -152,6 +152,7 @@ return [
 	'Order Name' => 'Ordine',
     'Ordering' => 'Ordine',
 	'Orders' => 'Ordini',
+	'Orders Items' => 'Articoli Ordine',
 	'Organizations' => 'Aziende',
 	'Original Name' => 'Nome Originale',
     'Page not found' => 'Pagina non trovata',

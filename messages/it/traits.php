@@ -175,6 +175,8 @@ return [
     'Postal Code' => 'CAP',
     'Product' => 'Prodotto',
     'Products' => 'Prodotti',
+	'Project' => 'Progetto',
+	'Projects' => 'Progetti',
     'Public' => 'Public',
 	'Quantity' => 'Quantità',
 	'Quotes' => 'Preventivi',

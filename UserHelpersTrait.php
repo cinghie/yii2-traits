@@ -15,12 +15,37 @@ namespace cinghie\traits;
 use Yii;
 use cinghie\userextended\models\Profile;
 use cinghie\userextended\models\User;
+use yii\helpers\Url;
 
 /**
  * Trait UserHelperTrait
  */
 trait UserHelpersTrait
 {
+	/**
+	 * Get User Admin
+	 *
+	 * @param $user_id
+	 *
+	 * @return string
+	 */
+	public function getUserAdminUrl($user_id)
+	{
+		return Url::to(['/user/admin/update', 'id' => $user_id]);
+	}
+
+	/**
+	 * Get User Profile
+	 *
+	 * @param $user_id
+	 *
+	 * @return string
+	 */
+	public function getUserProfileUrl($user_id)
+	{
+		return Url::to(['/user/profile/show', 'id' => $user_id]);
+	}
+
 	/**
 	 * Get the User by user email
 	 *

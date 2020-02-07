@@ -136,5 +136,4 @@ trait UserTrait
             ]
         ];
     }
-
 }

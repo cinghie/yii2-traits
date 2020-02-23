@@ -24,6 +24,7 @@
         "2amigos/yii2-ckeditor-widget": "^2.2.0",
         "2amigos/yii2-taggable-behavior": "@dev",
         "2amigos/yii2-tinymce-widget": "@dev",
+        "borales/yii2-phone-input": "@dev",
         "cinghie/yii2-iconpicker": "@dev",
         "cinghie/yii2-user-extended": "@dev",
         "cocur/slugify": "^3.2",

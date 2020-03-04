@@ -32,6 +32,8 @@ return [
     'Cancel' => 'Cancella',
 	'Captcha' => 'Captcha',
 	'Category' => 'Categoria',
+	'Carrier' => 'Vettore',
+	'Carriers' => 'Vettori',
 	'Categories' => 'Categorie',
     'City' => 'Città',
     'Class' => 'Classe',

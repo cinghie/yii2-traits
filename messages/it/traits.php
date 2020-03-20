@@ -105,7 +105,7 @@ return [
     'Import' => 'Importa',
     'Inactived' => 'Inattivo',
     'Instagram' => 'Instagram',
-	'Invetory' => 'Inventario',
+	'Inventory' => 'Inventario',
     'Invoice' => 'Fattura',
     'Invoices' => 'Fatture',
     'IP' => 'IP',

@@ -178,7 +178,7 @@ return [
 	'Payment State' => 'Stato Pagamento',
     'Payments' => 'Pagamenti',
 	'PayPal' => 'PayPal',
-	'Pending' => 'In Attesa',
+	'Pending' => 'In attesa',
 	'Phone' => 'Telefono',
 	'Phone Code' => 'Prefisso Telefono',
 	'Phone Secondary' => 'Telefono 2',

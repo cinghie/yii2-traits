@@ -103,6 +103,7 @@ return [
     'Image Caption' => 'Caption Immagine',
     'Image Credits' => 'Crediti Immagine',
     'Import' => 'Importa',
+	'In progress' => 'In corso',
     'Inactived' => 'Inattivo',
     'Instagram' => 'Instagram',
 	'Inventory' => 'Inventario',

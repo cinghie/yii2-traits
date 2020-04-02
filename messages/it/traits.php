@@ -2,7 +2,7 @@
 
 return [
 	'Accept' => 'Accetta',
-	'Accepted' => 'Accetta',
+	'Accepted' => 'Accettata',
     'Access' => 'Accesso',
     'Access Token' => 'Token di Accesso',
     'Active' => 'Attiva',
@@ -173,6 +173,7 @@ return [
     'Params' => 'Parametri',
     'Parent' => 'Genitore',
     'Parentid' => 'Genitore',
+    'Payed' => 'Pagato',
     'Payment' => 'Pagamento',
     'Payment ID' => 'Pagamento ID',
     'Payment Due' => 'Pagamento dovuto al',
@@ -200,6 +201,7 @@ return [
     'Reason' => 'Causa',
     'Reference' => 'Riferimento',
     'Refresh Token' => 'Aggiorna Token',
+    'Refused' => 'Rifiutato',
     'Reset' => 'Reset',
     'Reports' => 'Rapporti',
     'Reset Grid' => 'Reset',

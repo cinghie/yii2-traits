@@ -196,6 +196,7 @@ return [
     'Public' => 'Public',
 	'Quantity' => 'Quantità',
 	'Queue' => 'Coda',
+	'Quote' => 'Preventivo',
 	'Quotes' => 'Preventivi',
     'Read More' => 'Leggi tutto',
     'Reason' => 'Causa',

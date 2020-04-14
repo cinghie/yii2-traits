@@ -21,6 +21,7 @@ return [
     'Attachment' => 'Allegato',
     'Attachments' => 'Allegati',
     'Author' => 'Autore',
+	'Billing' => 'Fatturazione',
     'Browse &hellip;' => 'Sfoglia',
     'By' => 'Da',
     'by' => 'da',

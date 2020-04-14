@@ -23,6 +23,7 @@ use yii\base\Model;
  * @property string $facebook
  * @property string $instagram
  * @property string $linkedin
+ * @property string $pinterest
  * @property string $twitter
  * @property string $youtube
  */
@@ -94,26 +95,6 @@ trait SocialTrait
 	}
 
 	/**
-	 * Get Twitter Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return mixed
-	 * @throws InvalidConfigException
-	 */
-	public function getTwitterWidget($form)
-	{
-		/** @var Model $this */
-		return $form->field($this, 'twitter', [
-			'addon' => [
-				'prepend' => [
-					'content'=>'<i class="fab fa-twitter"></i>'
-				]
-			]
-		])->textInput(['maxlength' => true]);
-	}
-
-	/**
 	 * Get Linkedin Widget
 	 *
 	 * @param ActiveForm $form
@@ -148,6 +129,26 @@ trait SocialTrait
 			'addon' => [
 				'prepend' => [
 					'content'=>'<i class="fab fa-pinterest"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
+	}
+
+	/**
+	 * Get Twitter Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return mixed
+	 * @throws InvalidConfigException
+	 */
+	public function getTwitterWidget($form)
+	{
+		/** @var Model $this */
+		return $form->field($this, 'twitter', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-twitter"></i>'
 				]
 			]
 		])->textInput(['maxlength' => true]);

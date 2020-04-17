@@ -121,8 +121,8 @@ trait UserHelpersTrait
             $array[$role_name] = $role_name;
         }
 
-        if($this->isNewRecord) {
-	        $array = array_merge(array('public'=>$array['public']), $array);
+        if(isset($array['public']) && $this->isNewRecord) {
+	        $array = array_merge(array('public' => $array['public']), $array);
         }
 
         return $array;

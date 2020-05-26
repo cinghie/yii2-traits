@@ -245,6 +245,7 @@ return [
 	'Shipping Note' => 'Note Spedizione',
 	'Shipping Number' => 'Numero Spedizione',
 	'Shipping Package' => 'Colli',
+	'Shipping Place' => 'Luogo Spedizione',
 	'Shipping Postcode' => 'CAP di Spedizione',
 	'Shipping State' => 'Provincia di Spedizione',
 	'Shipping Status' => 'Stato Spedizione',

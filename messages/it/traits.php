@@ -44,6 +44,7 @@ return [
 	'Client Token' => 'Client Token',
 	'Closed' => 'Chiuso',
 	'Comma Separated' => 'Separati da virgola',
+	'Code' => 'Codice',
 	'Configurations' => 'Configurazioni',
 	'Contact' => 'Contatto',
 	'Contacts' => 'Contatti',

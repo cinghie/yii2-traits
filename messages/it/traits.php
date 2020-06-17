@@ -171,6 +171,7 @@ return [
 	'Order Items ID' => 'Ordine Prodotto ID',
 	'Order Items Name' => 'Nome Prodotto',
 	'Order Name' => 'Ordine',
+	'Order Tax' => 'Tasse Ordine',
 	'Order Total' => 'Totale Ordine',
     'Ordering' => 'Ordine',
 	'Orders' => 'Ordini',

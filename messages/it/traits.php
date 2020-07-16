@@ -200,6 +200,8 @@ return [
 	'Phone Code' => 'Prefisso Telefono',
 	'Phone Secondary' => 'Telefono 2',
 	'Phone Secondary Code' => 'Prefisso Telefono 2',
+    'Point' => 'Punto',
+    'Points' => 'Punti',
     'Preview' => 'Anteprima',
     'Price' => 'Prezzo',
     'Postal Code' => 'CAP',

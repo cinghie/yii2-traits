@@ -335,5 +335,6 @@ return [
 	'Your database is not supported!' => 'Il tuo database non è supportato!',
 	'YouTube' => 'YouTube',
 	'Website' => 'Sito Web',
+	'Warehouse' => 'Magazzino',
 	'Weight' => 'Peso',
 ];

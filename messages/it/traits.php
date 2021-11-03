@@ -76,6 +76,7 @@ return [
 	'Download' => 'Scarica',
 	'Duration' => 'Durata',
 	'Ean' => 'EAN',
+    'Electronic Invoices' => 'Fatturazione Elettronica',
     'Email' => 'Email',
     'Email 2' => 'Email 2',
     'Email Primary' => 'Email Principale',

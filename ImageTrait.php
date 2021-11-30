@@ -83,9 +83,9 @@ trait ImageTrait
                 'showRemove' => true,
                 'showUpload' => false,
                 'initialPreview' => $this->image ? $this->getImageUrl() : false,
-                'initialPreviewAsData' => $this->image ? true : false,
+                'initialPreviewAsData' => (bool) $this->image,
                 'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deleteimage', 'id' => $this->id])] ],
-                'overwriteInitial' => $this->image ? true : false
+                'overwriteInitial' => (bool) $this->image
             ]
         ]);
 
@@ -102,7 +102,9 @@ trait ImageTrait
 	 */
     public function getImageCaptionWidget($form)
     {
-        /** @var $this Model */
+	    /**
+	     * @var $this Model
+	     */
         return $form->field($this, 'image_caption', [
             'addon' => [
                 'prepend' => [
@@ -122,7 +124,9 @@ trait ImageTrait
 	 */
     public function getImageCreditsWidget($form)
     {
-        /** @var $this Model */
+	    /**
+	     * @var $this Model
+	     */
         return $form->field($this, 'image_credits', [
             'addon' => [
                 'prepend' => [

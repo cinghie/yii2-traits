@@ -52,20 +52,16 @@ trait EditorTrait
 	    {
 		    case 'ckeditor':
 			    $options = empty($options) ? ['rows' => 6] : $options;
-			    return $this->getCKEditorWidget($form, $field, $value, $options, $preset = 'basic');
-			    break;
+			    return $this->getCKEditorWidget($form, $field, $value, $options, 'basic');
 		    case 'imperavi':
 		    	$options = empty($options) ? [] : $options;
 			    return $this->getImperaviWidget($form, $field, $value, $options);
-			    break;
 		    case 'markdown':
 			    $options = empty($options) ? ['height' => 250, 'encodeLabels' => true] : $options;
 			    return $this->getMarkdownWidget($form, $field, $value, $options);
-			    break;
 		    case 'tinymce':
 			    $options = empty($options) ? ['rows' => 14] : $options;
 			    return $this->getTinyMCEWidget($form, $field, $value, $options);
-			    break;
 		    default:
 			    $options = empty($options) ? ['maxLength' => false, 'rows' => 6] : $options;
 			    return $this->getNoEditorWidget($form, $field, $value, $options);
@@ -86,8 +82,9 @@ trait EditorTrait
 	 */
     public function getCKEditorWidget($form, $field, $value, $options, $preset)
     {
-        if($form !== null) {
-	        /** @var $this Model */
+        if($form !== null)
+		{
+			/** @var $this Model */
 	        return $form->field($this, $field)->widget(CKEditor::class, [
 		        'options' => $options,
 		        'preset' => $preset
@@ -117,12 +114,12 @@ trait EditorTrait
 	 */
     public function getImperaviWidget($form, $field, $value, $options)
     {
-    	$clips     = isset($options['clips']) ? $options['clips'] : '';
-    	$minHeight = isset($options['minHeight']) ? $options['minHeight'] : 260;
-    	$plugins   = isset($options['plugins']) ? $options['plugins'] : ['clips','fullscreen'];
+    	$clips = $options['clips'] ?? '';
+    	$minHeight = $options['minHeight'] ?? 260;
+    	$plugins = $options['plugins'] ?? ['clips', 'fullscreen'];
 
-	    $imageManagerJson = isset($options['imageManagerJson']) ? $options['imageManagerJson'] : '';
-	    $imageUpload = isset($options['imageUpload']) ? $options['imageUpload'] : '';
+	    $imageManagerJson = $options['imageManagerJson'] ?? '';
+	    $imageUpload = $options['imageUpload'] ?? '';
 
     	$settings = [
 		    'lang' => substr(Yii::$app->language, 0, 2),
@@ -133,8 +130,9 @@ trait EditorTrait
 		    'clips' => $clips
 	    ];
 
-	    if($form !== null) {
-		    /** @var $this Model */
+	    if($form !== null)
+		{
+			/** @var $this Model */
 		    return $form->field($this, $field)->widget(Imperavi::class, [
 			    'settings' => $settings,
 		    ]);
@@ -160,8 +158,9 @@ trait EditorTrait
 	 */
     public function getMarkdownWidget($form, $field, $value, $options)
     {
-	    if($form !== null) {
-		    /** @var $this Model */
+	    if($form !== null)
+		{
+			/** @var $this Model */
 		    return $form->field($this, $field)->widget(
 			    MarkdownEditor::class,
 			    $options
@@ -188,8 +187,11 @@ trait EditorTrait
 	 */
 	public function getNoEditorWidget($form, $field, $value, $options)
 	{
-		if($form !== null) {
-			/** @var $this Model */
+		if($form !== null)
+		{
+			/**
+			 * @var $this Model
+			 */
 			return $form->field($this, $field)->textarea($options);
 		}
 
@@ -211,7 +213,8 @@ trait EditorTrait
 	 */
 	public function getTinyMCEWidget($form, $field, $value, $options)
 	{
-		if($form !== null) {
+		if($form !== null)
+		{
 			/** @var $this Model */
 			return $form->field($this, $field)->widget(TinyMce::class, [
 				'clientOptions' => [

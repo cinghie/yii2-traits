@@ -14,36 +14,52 @@ namespace cinghie\traits\components;
 
 use Yii;
 use yii\base\Component;
+use yii\base\InvalidConfigException;
+use yii\mail\BaseMailer;
 
 class Mailer extends Component
 {
-
-    /** @var \yii\mail\BaseMailer Default: `Yii::$app->mailer` */
+	/**
+	 * @var BaseMailer Default: `Yii::$app->mailer`
+	 */
     public $mailerComponent;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $fromName;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $fromEmail;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $toName;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $toEmail;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $subject;
 
-    /** @var string */
+	/**
+	 * @var string
+	 */
     protected $body;
 
-    /**
-     * Send Email
-     *
-     * @return bool
-     */
+	/**
+	 * Send Email
+	 *
+	 * @return bool
+	 * @throws InvalidConfigException
+	 */
     protected function sendEmail()
     {
         $mailer = $this->mailerComponent === null ? Yii::$app->mailer : Yii::$app->get($this->mailerComponent);
@@ -65,5 +81,4 @@ class Mailer extends Component
     {
         return '';
     }
-    
 }

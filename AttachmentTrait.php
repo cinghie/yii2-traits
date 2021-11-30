@@ -18,7 +18,6 @@ use FFMpeg\FFMpeg;
 use FFMpeg\Media\Frame;
 use Yii;
 use getID3;
-use getid3_exception;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
@@ -72,9 +71,7 @@ trait AttachmentTrait
 	 */
 	public function getFileUrl()
 	{
-		$fileUrl = Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
-
-		return $fileUrl;
+		return Yii::$app->controller->module->attachURL ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename : '';
 	}
 
 	/**
@@ -114,7 +111,6 @@ trait AttachmentTrait
 	 * @param $attachPath
 	 *
 	 * @return array
-	 * @throws getid3_exception
 	 */
 	public static function getID3Info($attachPath)
     {
@@ -127,13 +123,12 @@ trait AttachmentTrait
 	 * @param $attachPath
 	 *
 	 * @return mixed
-	 * @throws getid3_exception
 	 */
 	public function getVideoDuration($attachPath)
     {
     	$fileInfo = AttachmentTrait::getID3Info($attachPath);
 
-    	if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
+    	if(isset($fileInfo['video']) && strpos($fileInfo['mime_type'], 'video') !== false) {
 		    return $fileInfo['playtime_string'];
 	    }
 
@@ -145,9 +140,8 @@ trait AttachmentTrait
 	 * @param int $sec
 	 *
 	 * @return Frame
-	 * @throws getid3_exception
 	 */
-	public function createVideoThumb($attachPath,$sec = 3)
+	public function createVideoThumb($attachPath, $sec = 3)
 	{
 		$frame = null;
 		$fileInfo  = AttachmentTrait::getID3Info($attachPath);
@@ -168,7 +162,7 @@ trait AttachmentTrait
 			];
 		}
 
-		if(strpos($fileInfo['mime_type'], 'video') !== false && isset($fileInfo['video'])) {
+		if(isset($fileInfo['video']) && strpos($fileInfo['mime_type'], 'video') !== false) {
 			$ffmpeg = FFMpeg::create($ffmpegOptions);
 			$video  = $ffmpeg->open($attachPath);
 			$frame  = $video->frame(Coordinate\TimeCode::fromSeconds($sec));
@@ -196,9 +190,7 @@ trait AttachmentTrait
 	 */
 	public function purgeAttachmentName($attachName)
 	{
-		$attachName = str_replace(["/'/",'’','"',':',';',',','.',' ','__'],'_',$attachName);
-
-		return $attachName;
+		return str_replace(["/'/",'’','"',':',';',',','.',' ','__'],'_',$attachName);
 	}
 
 	/**
@@ -211,12 +203,12 @@ trait AttachmentTrait
     public function formatSize($precision = 2)
     {
 	    $i = 0;
-	    $size  = $this->size;
-	    $step  = 1024;
+	    $size = $this->size;
+	    $step = 1024;
 	    $units = array('B','KB','MB','GB','TB','PB','EB','ZB','YB');
 
 	    while (($size / $step) > 0.9) {
-		    $size = $size / $step;
+		    $size /= $step;
 		    $i++;
 	    }
 
@@ -234,11 +226,11 @@ trait AttachmentTrait
 	public function formatFileSize($size,$precision = 2)
 	{
 		$i = 0;
-		$step  = 1024;
+		$step = 1024;
 		$units = array('B','KB','MB','GB','TB','PB','EB','ZB','YB');
 
 		while (($size / $step) > 0.9) {
-			$size = $size / $step;
+			$size /= $step;
 			$i++;
 		}
 

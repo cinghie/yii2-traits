@@ -18,6 +18,7 @@ use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\Model;
+use yii\db\Expression;
 
 /**
  * Trait OrderingTrait
@@ -75,7 +76,7 @@ trait OrderingTrait
 				];
 
 				$class::updateAll([
-					'ordering' => new \yii\db\Expression('ordering + 1')
+					'ordering' => new Expression('ordering + 1')
 				], $condition);
 
 				$this->setMinOrder();
@@ -88,7 +89,7 @@ trait OrderingTrait
 				];
 
 				$class::updateAll([
-					'ordering' => new \yii\db\Expression('ordering - 1')
+					'ordering' => new Expression('ordering - 1')
 				], $condition);
 
 				$this->ordering = $lastOrdering;
@@ -103,7 +104,7 @@ trait OrderingTrait
 				];
 
 				$class::updateAll([
-					'ordering' => new \yii\db\Expression('ordering - 1')
+					'ordering' => new Expression('ordering - 1')
 				], $condition);
 
 				$this->ordering = $newOrdering;
@@ -117,7 +118,7 @@ trait OrderingTrait
 				];
 
 				$class::updateAll([
-					'ordering' => new \yii\db\Expression('ordering + 1')
+					'ordering' => new Expression('ordering + 1')
 				], $condition);
 
 				$this->ordering = $newOrdering;

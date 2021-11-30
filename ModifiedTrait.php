@@ -136,7 +136,7 @@ trait ModifiedTrait
     public function getModifiedByGridView()
     {
         $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
-        $modifiedBy = isset($this->modifiedBy->username) ? $this->modifiedBy->username : '';
+        $modifiedBy = $this->modifiedBy->username ?? '';
 
         if($this->modified_by) {
             return Html::a($modifiedBy,$url);

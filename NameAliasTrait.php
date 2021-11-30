@@ -58,14 +58,14 @@ trait NameAliasTrait
 	 */
 	public function generateAlias($name)
 	{
-		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ? Yii::$app->controller->module->slugifyOptions : [
-			'separator' => '-',
-			'lowercase' => true,
-			'trim' => true,
-			'rulesets'  => [
-				'default'
-			]
-		];
+		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
+				'separator' => '-',
+				'lowercase' => true,
+				'trim'      => true,
+				'rulesets'  => [
+					'default'
+				]
+			];
 
 		$slugify = new Slugify($slugifyOptions);
 
@@ -82,14 +82,14 @@ trait NameAliasTrait
 	 */
 	public function setAlias($post,$field)
 	{
-		$slugifyOptions = isset(Yii::$app->controller->module->slugifyOptions) ? Yii::$app->controller->module->slugifyOptions : [
-			'separator' => '-',
-			'lowercase' => true,
-			'trim' => true,
-			'rulesets'  => [
-				'default'
-			]
-		];
+		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
+				'separator' => '-',
+				'lowercase' => true,
+				'trim'      => true,
+				'rulesets'  => [
+					'default'
+				]
+			];
 
 		$slugify = new Slugify($slugifyOptions);
 
@@ -114,9 +114,7 @@ trait NameAliasTrait
 		$string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
 
 		// lowercase and trim
-		$string = strtolower( trim( $string ) );
-
-		return $string;
+		return strtolower( trim( $string ) );
 	}
 
 	/**

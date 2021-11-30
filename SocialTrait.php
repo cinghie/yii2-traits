@@ -13,6 +13,7 @@
 namespace cinghie\traits;
 
 use Yii;
+use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
@@ -59,7 +60,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getFacebookWidget($form)
@@ -79,7 +80,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getInstagramWidget($form)
@@ -99,7 +100,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getLinkedinWidget($form)
@@ -119,7 +120,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getPinterestWidget($form)
@@ -139,7 +140,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getTwitterWidget($form)
@@ -159,7 +160,7 @@ trait SocialTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return mixed
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
 	public function getYouTubeWidget($form)

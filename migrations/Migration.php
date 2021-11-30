@@ -12,6 +12,7 @@
 
 namespace cinghie\traits\migrations;
 
+use RuntimeException;
 use Yii;
 use yii\db\Exception;
 use yii\db\Migration as baseMigration;
@@ -51,7 +52,7 @@ class Migration extends baseMigration
 			    $this->dbType = 'sqlsrv';
 			    break;
 		    default:
-			    throw new \RuntimeException(Yii::t('traits','Your database is not supported!'));
+			    throw new RuntimeException(Yii::t('traits','Your database is not supported!'));
 	    }
     }
 

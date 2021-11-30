@@ -16,6 +16,7 @@ use Yii;
 use cinghie\userextended\models\Profile;
 use cinghie\userextended\models\User;
 use yii\helpers\Url;
+use yii\web\IdentityInterface;
 
 /**
  * Trait UserHelperTrait
@@ -53,12 +54,10 @@ trait UserHelpersTrait
 	 */
 	public function getUserByEmail()
 	{
-		$user = User::find()
+		return User::find()
 			->select(['*'])
 		    ->where(['email' => $this->email])
 		    ->one();
-
-		return $user;
 	}
 
 	/**
@@ -66,7 +65,7 @@ trait UserHelpersTrait
 	 *
 	 * @param string $field
 	 *
-	 * @return User | string | int
+	 * @return IdentityInterface | User | string | int
 	 */
 	public function getCurrentUser($field = '')
 	{

@@ -135,7 +135,7 @@ trait CreatedTrait
     public function getCreatedByGridView()
     {
         $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
-        $createdBy = isset($this->createdBy->username) ? $this->createdBy->username : '';
+        $createdBy = $this->createdBy->username ?? '';
 
         if($this->created_by) {
             return Html::a($createdBy,$url);

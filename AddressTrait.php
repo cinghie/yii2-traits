@@ -84,10 +84,10 @@ trait AddressTrait
 			throw new RuntimeException(Yii::t('traits','Google Maps API KEY Missing'));
 		}
 
-		$latLng  = array();
+		$latLng = array();
 		$address = str_replace( array( ' ', '++' ), '+', $address );
 		$geocode = file_get_contents( 'https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=' . $apiKEY);
-		$output  = json_decode( $geocode, false );
+		$output = json_decode( $geocode, false );
 
 		if ($output->results) {
 			$lat = $output->results[0]->geometry->location->lat;

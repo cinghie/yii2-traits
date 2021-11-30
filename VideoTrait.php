@@ -62,13 +62,11 @@ trait VideoTrait
      */
     public function getVideoTypeSelect2()
     {
-        $videotype = [
-	        'youtube' => Yii::t('traits','YouTube'),
-            'vimeo' => Yii::t('traits','Vimeo'),
-            'dailymotion' => Yii::t('traits','Dailymotion')
-        ];
-
-        return $videotype;
+	    return [
+		    'youtube' => Yii::t('traits','YouTube'),
+	        'vimeo' => Yii::t('traits','Vimeo'),
+	        'dailymotion' => Yii::t('traits','Dailymotion')
+	    ];
     }
 
 	/**

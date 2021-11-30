@@ -74,7 +74,7 @@ trait LanguageTrait
 	 */
     public function getLanguageWidget($form)
     {
-        /** @var $this Model */
+	    /** @var $this Model */
         return $form->field($this, 'language')->widget(Select2::class, [
             'data' => LanguageTrait::getLanguagesSelect2(),
             'addon' => [
@@ -112,7 +112,7 @@ trait LanguageTrait
 	 */
 	public static function getLanguagesFilterSelect2($showOnlyDefault = false)
 	{
-		$languages   = Yii::$app->urlManager->languages;
+		$languages = Yii::$app->urlManager->languages;
 		$languageAll = Yii::$app->controller->module->languageAll;
 		$languageDefault = substr($languageAll,0,2);
 
@@ -122,7 +122,9 @@ trait LanguageTrait
 
 		$array = [];
 
-		/** @var array $languages */
+		/**
+		 * @var array $languages
+		 */
 		foreach($languages as $language)
 		{
 			if($language === $languageDefault) {

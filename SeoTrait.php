@@ -14,6 +14,7 @@ namespace cinghie\traits;
 
 use Exception;
 use Yii;
+use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\InvalidConfigException;
@@ -61,7 +62,7 @@ trait SeoTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return string
+	 * @return ActiveField
 	 * @throws Exception
 	 */
     public function getRobotsWidget($form)
@@ -82,7 +83,7 @@ trait SeoTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return string
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
     public function getAuthorWidget($form)
@@ -102,7 +103,7 @@ trait SeoTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return string
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
     public function getCopyrightWidget($form)
@@ -122,7 +123,7 @@ trait SeoTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return string
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
     public function getMetaDescriptionWidget($form)
@@ -142,7 +143,7 @@ trait SeoTrait
 	 *
 	 * @param ActiveForm $form
 	 *
-	 * @return string
+	 * @return ActiveField
 	 * @throws InvalidConfigException
 	 */
     public function getMetaKeyWidget($form)

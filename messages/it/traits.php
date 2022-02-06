@@ -156,6 +156,7 @@ return [
     'Modified By' => 'Modificato da',
     'More info' => 'Maggiori informazioni',
     'Name' => 'Nome',
+    'No Response' => 'Senza Risposta',
     'None' => 'Nessuno',
 	'Nicename' => 'Nome Pulito',
     'New' => 'Nuovo',
@@ -198,6 +199,7 @@ return [
 	'PayPal' => 'PayPal',
 	'PEC' => 'PEC',
 	'Pending' => 'In attesa',
+	'Pending Down Payment' => 'In attesa Anticipo',
 	'Phone' => 'Telefono',
 	'Phone Code' => 'Prefisso Telefono',
 	'Phone Secondary' => 'Telefono 2',
@@ -346,4 +348,5 @@ return [
 	'Website' => 'Sito Web',
 	'Warehouse' => 'Magazzino',
 	'Weight' => 'Peso',
+	'Working' => 'In lavorazione',
 ];

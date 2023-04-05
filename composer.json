@@ -23,7 +23,6 @@
         "2amigos/yii2-ckeditor-widget": "^2.2.0",
         "2amigos/yii2-taggable-behavior": "^1.0.2",
         "2amigos/yii2-tinymce-widget": "^1.1.3",
-        "cinghie/yii2-iconpicker": "^3.0.1",
         "cocur/slugify": "^4.3",
         "codemix/yii2-localeurls": "^1.8.0",
         "fzaninotto/faker": "^1.9.2",
@@ -41,6 +40,7 @@
     },
     "require-dev": {
         "borales/yii2-phone-input": "@dev",
+        "cinghie/yii2-iconpicker": "^3.0.1",
         "cinghie/yii2-user-extended": "@dev",
         "dektrium/yii2-rbac": "@dev",
         "dektrium/yii2-user": "@dev"

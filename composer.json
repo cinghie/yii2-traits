@@ -40,7 +40,7 @@
     },
     "require-dev": {
         "borales/yii2-phone-input": "@dev",
-        "cinghie/yii2-iconpicker": "^3.0.1",
+        "cinghie/yii2-iconpicker": "@dev",
         "cinghie/yii2-user-extended": "@dev",
         "dektrium/yii2-rbac": "@dev",
         "dektrium/yii2-user": "@dev"

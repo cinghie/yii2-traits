@@ -29,7 +29,7 @@
         "cocur/slugify": "^4.3",
         "codemix/yii2-localeurls": "^1.8.0",
         "dektrium/yii2-rbac": "@dev",
-        "dektrium/yii2-user": "@dev"
+        "dektrium/yii2-user": "@dev",
         "fzaninotto/faker": "^1.9.2",
         "google/cloud-translate": "^1.13.1",
         "james-heinrich/getid3": "^1.9.22",

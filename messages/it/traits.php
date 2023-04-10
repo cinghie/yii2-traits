@@ -251,6 +251,8 @@ return [
     'Sender' => 'Mittente',
     'Sent' => 'Inviato',
     'Sent at' => 'Inviato il',
+    'Shop' => 'Negozio',
+    'Shops' => 'Negozi',
     'SEO' => 'SEO',
     'Serial' => 'Codice',
     'Setting' => 'Impostazione',

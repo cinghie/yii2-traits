@@ -211,6 +211,8 @@ return [
     'Points' => 'Punti',
     'Preview' => 'Anteprima',
     'Price' => 'Prezzo',
+    'Private' => 'Privato',
+    'Privates' => 'Privati',
     'Postal Code' => 'CAP',
     'Product' => 'Prodotto',
 	'Product ID' => 'Prodotto',

@@ -62,7 +62,7 @@ trait FatturazioneElettronicaTrait
 		return $form->field($this, 'pec', [
 			'addon' => [
 				'prepend' => [
-					'content'=>'<i class="fa fa-at"></i>'
+					'content'=>'<i class="fa fa-envelope-open-text"></i>'
 				]
 			]
 		])->textInput(['maxlength' => true]);
@@ -79,6 +79,12 @@ trait FatturazioneElettronicaTrait
 	public function getSdiWidget($form)
 	{
 		/** @var $this Model */
-		return $form->field($this, 'sdi')->textInput(['maxlength' => true]);
+		return $form->field($this, 'sdi', [
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="fa fa-file-invoice-dollar"></i>'
+                ]
+            ]
+        ])->textInput(['maxlength' => true]);
 	}
 }

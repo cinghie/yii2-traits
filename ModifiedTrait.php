@@ -82,7 +82,6 @@ trait ModifiedTrait
 
 	    /** @var Model $this */
 	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [
-            'disabled' => true,
             'options' => [
                 'value' => $modified,
             ],

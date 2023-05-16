@@ -82,7 +82,6 @@ trait CreatedTrait
 
 	    /** @var $this Model */
 	    return $form->field($this, 'created')->widget(DateTimePicker::class, [
-            'disabled' => true,
             'options' => [
                 'value' => $created,
             ],

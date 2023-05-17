@@ -301,6 +301,7 @@ return [
 	'Shippings' => 'Spedizioni',
 	'Shop' => 'Negozio',
     'Shops' => 'Negozi',
+    'Shops Informations' => 'Informazioni Negozi',
     'Size' => 'Dimensione',
     'Skype' => 'Skype',
     'State' => 'Stato',

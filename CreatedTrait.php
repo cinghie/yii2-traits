@@ -117,7 +117,6 @@ trait CreatedTrait
 
 	    /** @var $this Model */
         return $form->field($this, 'created_by')->widget(Select2::class, [
-            'disabled' => true,
             'data' => $created_by,
             'addon' => [
                 'prepend' => [

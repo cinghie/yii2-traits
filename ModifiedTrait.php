@@ -117,7 +117,6 @@ trait ModifiedTrait
 
 	    /** @var Model $this */
         return $form->field($this, 'modified_by')->widget(Select2::class, [
-            'disabled' => true,
             'data' => $modified_by,
             'addon' => [
                 'prepend' => [

@@ -279,7 +279,7 @@ return [
 	'Shipping Address' => 'Indirizzo di Spedizione',
 	'Shipping Address Index' => 'Indirizzo di Spedizione Completo',
 	'Shipping City' => 'Città di Spedizione',
-	'Shipping Code' => 'Codice Spedizione',
+	'Shipping Code' => 'CAP Spedizione',
 	'Shipping Company' => 'Società di Spedizione',
 	'Shipping Cost' => 'Costi di Spedizione',
 	'Shipping Country' => 'Nazione di Spedizione',

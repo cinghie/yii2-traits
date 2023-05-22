@@ -202,6 +202,8 @@ return [
 	'Orders Items' => 'Articoli Ordine',
 	'Organizations' => 'Aziende',
 	'Original Name' => 'Nome Originale',
+	'Outgoing' => 'Spesa',
+	'Outgoings' => 'Spese',
     'Page not found' => 'Pagina non trovata',
     'Params' => 'Parametri',
     'Parent' => 'Genitore',

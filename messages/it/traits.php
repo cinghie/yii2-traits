@@ -32,7 +32,7 @@ return [
     'Billing Informations' => 'Informazioni di Fatturazione',
     'Billing Latitude' => 'Latitudine di Fatturazione',
     'Billing Longitude' => 'Longitudine di Fatturazione',
-    'Billing State' => 'Regione di Fatturazione',
+    'Billing State' => 'Provincia di Fatturazione',
     'Billing Street' => 'Indirizzo di Fatturazione',
     'Body' => 'Corpo',
     'Browse &hellip;' => 'Sfoglia',

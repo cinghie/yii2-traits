@@ -146,6 +146,7 @@ trait UserHelpersTrait
             ->select(['id','username'])
             ->where(['blocked_at' => null, 'unconfirmed_email' => null])
             ->andWhere(['!=', 'id', $user_id])
+            ->orderBy('username ASC')
             ->all();
 
         $array[$user_id] = ucwords($username);

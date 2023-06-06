@@ -59,13 +59,13 @@ trait TitleAliasTrait
 	public function generateAlias($title)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
-				'separator' => '-',
-				'lowercase' => true,
-				'trim'      => true,
-				'rulesets'  => [
-					'default'
-				]
-			];
+            'separator' => '-',
+            'lowercase' => true,
+            'trim'      => true,
+            'rulesets'  => [
+                'default'
+            ]
+        ];
 
 		$slugify = new Slugify($slugifyOptions);
 
@@ -83,13 +83,13 @@ trait TitleAliasTrait
 	public function setAlias($post,$field)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
-				'separator' => '-',
-				'lowercase' => true,
-				'trim'      => true,
-				'rulesets'  => [
-					'default'
-				]
-			];
+            'separator' => '-',
+            'lowercase' => true,
+            'trim'      => true,
+            'rulesets'  => [
+                'default'
+            ]
+        ];
 
 		$slugify = new Slugify($slugifyOptions);
 

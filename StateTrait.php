@@ -139,7 +139,7 @@ trait StateTrait
             'type' => DetailView::INPUT_SWITCH,
             'value' => $this->state ? '<span class="label label-success">'. Yii::t('traits', 'Actived').'</span>' : '<span class="label label-danger">'. Yii::t('traits', 'Deactivated').'</span>',
             'valueColOptions'=> [
-	            'style'=>'width:30%'
+	            'style' => 'width:30%'
             ],
             'widgetOptions' => [
                 'pluginOptions' => [

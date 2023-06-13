@@ -112,7 +112,7 @@ trait UserHelpersTrait
      */
     public function getRolesSelect2()
     {
-    	$array = [];
+    	$array = ['public' => 'public'];
         $roles = Yii::$app->authManager->getRoles();
 
         foreach($roles as $role) {

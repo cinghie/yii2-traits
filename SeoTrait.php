@@ -13,7 +13,9 @@
 namespace cinghie\traits;
 
 use Exception;
+use Throwable;
 use Yii;
+use kartik\detail\DetailView;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
@@ -171,5 +173,60 @@ trait SeoTrait
             'no index, follow' => 'no index, follow',
             'index, no follow' => 'index, no follow'
         ];
+    }
+
+    /**
+     * @return string
+     * @throws Throwable
+     */
+    public function getDetailSeoView()
+    {
+        return DetailView::widget([
+            'model' => $this,
+            'condensed' => true,
+            'enableEditMode' => false,
+            'deleteOptions' => false,
+            'hover' => true,
+            'mode' => DetailView::MODE_VIEW,
+            'panel' => [
+                'after' => false,
+                'before' => false,
+                'footer' => false,
+                'heading' => Yii::t('traits', 'SEO Informations'),
+                'type' => DetailView::TYPE_INFO,
+            ],
+            'attributes' => [
+                [
+                    'attribute' => 'metadesc:ntext',
+                    'valueColOptions'=> [
+                        'style' => 'width:30%'
+                    ],
+                ],
+                [
+                    'attribute' => 'metakey:ntext',
+                    'valueColOptions'=> [
+                        'style' => 'width:30%'
+                    ],
+                ],
+                [
+                    'attribute' => 'robots',
+                    'valueColOptions'=> [
+                        'style' => 'width:30%'
+                    ],
+                ],
+                [
+                    'attribute' => 'author',
+                    'valueColOptions'=> [
+                        'style' => 'width:30%'
+                    ],
+                ],
+                [
+                    'attribute' => 'copyright',
+                    'valueColOptions'=> [
+                        'style' => 'width:30%'
+                    ],
+                ],
+            ],
+        ]);
     }
 }

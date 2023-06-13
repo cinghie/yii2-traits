@@ -13,6 +13,7 @@
 namespace cinghie\traits;
 
 use Exception;
+use kartik\detail\DetailView;
 use Yii;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
@@ -135,4 +136,16 @@ trait ParentTrait
 
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
+
+    /**
+     * Generate DetailView for State
+     *
+     * @return array
+     */
+    public function getParentDetailView()
+    {
+        return [
+
+        ];
+    }
 }

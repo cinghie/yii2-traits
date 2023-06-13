@@ -85,8 +85,8 @@ trait NameAliasTrait
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
             'separator' => '-',
             'lowercase' => true,
-            'trim'      => true,
-            'rulesets'  => [
+            'trim' => true,
+            'rulesets' => [
                 'default'
             ]
         ];

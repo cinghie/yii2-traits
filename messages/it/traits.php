@@ -239,6 +239,7 @@ return [
 	'Pinterest' => 'Pinterest',
     'Point' => 'Punto',
     'Points' => 'Punti',
+    'Position' => 'Posizione',
     'Preview' => 'Anteprima',
     'Price' => 'Prezzo',
     'Private' => 'Privato',

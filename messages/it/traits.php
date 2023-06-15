@@ -24,6 +24,7 @@ return [
     'Attachment' => 'Allegato',
     'Attachments' => 'Allegati',
     'Attribute' => 'Attributo',
+    'Attribute Informations' => 'Informazioni Attributo',
     'Attributes' => 'Attributi',
     'Author' => 'Autore',
     'Billing' => 'Fatturazione',

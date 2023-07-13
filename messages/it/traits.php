@@ -291,6 +291,7 @@ return [
     'Select only 1 item' => 'Seleziona solo 1 elemento!',
 	'Select a category to order' => 'Seleziona una categoria per ordinare',
     'Select at least one item' => 'Seleziona almeno 1 elemento!',
+    'Select addons ...' => 'Seleziona i prodotti aggiuntivi ...',
     'Select attributes ...' => 'Seleziona gli attributi ...',
     'Sell' => 'Vendita',
     'Send' => 'Invia',

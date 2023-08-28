@@ -361,7 +361,7 @@ return [
 	'Shipping Time' => 'Ora Spedizione',
 	'Shippings' => 'Spedizioni',
 	'Shop' => 'Negozio',
-    'Shop' => 'Negozi',
+    'Shops' => 'Negozi',
     'Shop Informations' => 'Informazioni Negozi',
     'Symbol' => 'Simbolo',
     'Site' => 'Sito',

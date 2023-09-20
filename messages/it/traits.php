@@ -426,6 +426,7 @@ return [
     'Update' => 'Modifica',
     'Update {modelClass}: ' => 'Modifica {modelClass}: ',
     'Upload' => 'Carica',
+    'Url' => 'Url',
     'User' => 'Utente',
     'User Id' => 'Utente',
     'Username' => 'Nome Utente',

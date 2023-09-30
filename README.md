@@ -250,6 +250,10 @@ if( $model->isCurrentUserCreator() ) {
     - function getMetaDescriptionWidget($form): Generate Meta Description Form Widget
     - function getMetaKeyWidget($form): Generate Meta Key Form Widget
     - function getRobotsOptions(): Get Robots Options
+
+### SequentialTrait
+
+    - string generateSequentialCode($number, $prefix, $sequence): Generate Sequential Code
     
 ### StateTrait
 

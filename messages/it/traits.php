@@ -38,6 +38,7 @@ return [
     'Attributes' => 'Attributi',
     'Author' => 'Autore',
 	'Available after saving' => 'Disponibile dopo il salvataggio',
+    'Awaiting' => 'In attesa',
     'Awaiting Payment' => 'In attesa di pagamento',
     'Billing' => 'Fatturazione',
     'Billing Code' => 'CAP di Fatturazione',

@@ -13,8 +13,8 @@
 namespace cinghie\traits;
 
 use Exception;
-use kartik\detail\DetailView;
 use Yii;
+use kartik\detail\DetailView;
 use kartik\form\ActiveField;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;

@@ -129,6 +129,7 @@ return [
     'Electronic Invoices' => 'Fatturazione Elettronica',
     'Email' => 'Email',
     'Email 2' => 'Email 2',
+	'Email correctly sent to {email}!' => 'Email correttamente inviata a {email}!',
     'Email Primary' => 'Email Principale',
     'Email Secondary' => 'Email 2',
     'Emails' => 'Emails',

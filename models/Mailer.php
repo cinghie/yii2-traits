@@ -15,7 +15,6 @@ namespace cinghie\traits\models;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
-use yii\mail\MessageInterface;
 use yii\validators\EmailValidator;
 
 /**
@@ -48,6 +47,12 @@ class Mailer
 	 */
 	public $emailAttach;
 
+
+	/**
+	 * @var string
+	 */
+	public $isHtml;
+
 	/**
 	 * @var string
 	 */
@@ -60,15 +65,17 @@ class Mailer
 	 * @param string $to
 	 * @param string $subject
 	 * @param string $body
-	 * @param string $attach
+	 * @param string $attachPath
+	 * @param bool $isHtml
 	 */
-	public function __construct($from, $to, $subject, $body, $attach = '')
+	public function __construct($from, $to, $subject, $body, $attachPath = '', $isHtml = true)
 	{
 		$this->emailFrom = $from;
 		$this->emailTo = $to;
 		$this->emailSubject = $subject;
 		$this->emailBody = $body;
-		$this->emailAttach = $attach;
+		$this->emailAttach = $attachPath;
+		$this->isHtml = $isHtml;
 		$this->debug = '';
 	}
 
@@ -105,10 +112,14 @@ class Mailer
 			$message->setTo($this->emailTo);
 
 			// Set Email Subject
-			$message->setSubject($this->emailSubject);
+			$message->setSubject(HtmlPurifier::process($this->emailSubject));
 
 			// Set Email Body
-			$message->setTextBody($this->emailBody);
+			if($this->isHtml) {
+				$message->setTextBody(Html::encode($this->emailBody));
+			} else {
+				$message->setTextBody(HtmlPurifier::process($this->emailBody));
+			}
 
 			if($this->emailAttach) {
 				$message->attach($this->emailAttach);
@@ -118,7 +129,7 @@ class Mailer
 			{
 				$results = [
 					'status' => 'success',
-				    'message' => $this->debug
+				    'message' => Yii::t( 'traits','Email correctly sent to {email}!', ['email' => $this->emailTo] )
 				];
 
 			} else {

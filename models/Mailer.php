@@ -116,7 +116,7 @@ class Mailer
 
 			// Set Email Body
 			if($this->isHtml) {
-				$message->setTextBody(Html::encode($this->emailBody));
+				$message->setHtmlBody($this->emailBody);
 			} else {
 				$message->setTextBody(HtmlPurifier::process($this->emailBody));
 			}

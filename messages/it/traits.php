@@ -452,6 +452,7 @@ return [
 	'The requested page does not exist.' => 'La pagina richiesta non esiste.',
 	'Timeline' => 'Timeline',
 	'Title' => 'Titolo',
+    'to' => 'a',
     'To' => 'A',
     'To Pay' => 'Da Pagare',
     'To send at' => 'Da inviare il',

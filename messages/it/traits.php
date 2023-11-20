@@ -88,6 +88,7 @@ return [
 	'Contact' => 'Contatto',
 	'Contacts' => 'Contatti',
     'Conversion Rate' => 'Tasso di conversione',
+    'Copy' => 'Copia',
     'Copyright' => 'Copyright',
     'Country' => 'Nazione',
     'create' => 'ha creato un elemento in',

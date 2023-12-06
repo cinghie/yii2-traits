@@ -134,6 +134,8 @@ return [
     'Email Primary' => 'Email Principale',
     'Email Secondary' => 'Email 2',
     'Emails' => 'Emails',
+    'Entries' => 'Elementi',
+    'Entry' => 'Elemento',
     'Entry Informations' => 'Informazioni d\'inserimento',
 	'Error' => 'Errore',
 	'Event' => 'Evento',

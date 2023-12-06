@@ -26,7 +26,7 @@
         "borales/yii2-phone-input": "@dev",
         "cinghie/yii2-iconpicker": "@dev",
         "cinghie/yii2-user-extended": "@dev",
-        "cocur/slugify": "^4.3",
+        "cocur/slugify": "4.4.*",
         "codemix/yii2-localeurls": "^1.8.0",
         "dektrium/yii2-rbac": "@dev",
         "dektrium/yii2-user": "@dev",

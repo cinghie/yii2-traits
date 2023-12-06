@@ -31,6 +31,8 @@ return [
     'Amount Due' => 'Importo Dovuto',
     'Are you sure you want to delete this item?' => 'Vuoi cancellare questo elemento?',
     'Are you sure you want to send this item?' => 'Vuoi inviare questo elemento?',
+    'Assigned' => 'Assegnato',
+    'Assigned to' => 'Assegnato a',
     'Attachment' => 'Allegato',
     'Attachments' => 'Allegati',
     'Attribute' => 'Attributo',

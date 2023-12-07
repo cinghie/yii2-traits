@@ -336,6 +336,7 @@ return [
     'Quote Informations' => 'Informazioni Preventivo',
     'Quote Items' => 'Articoli Preventivo',
     'Quote Note' => 'Nota Preventivo',
+    'Quote Status' => 'Stato Preventivo',
     'Rate' => 'Percentuale',
     'Read More' => 'Leggi tutto',
     'Reason' => 'Causa',

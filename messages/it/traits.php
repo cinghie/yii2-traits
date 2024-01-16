@@ -54,6 +54,7 @@ return [
     'Billing Street' => 'Indirizzo di Fatturazione',
     'Body' => 'Corpo',
     'Browse &hellip;' => 'Sfoglia',
+    'Business Name' => 'Ragione Sociale',
     'By' => 'Da',
     'by' => 'da',
     'Cache' => 'Cache',

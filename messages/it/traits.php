@@ -158,6 +158,7 @@ return [
 	'File' => 'File',
 	'File uploaded!' => 'File caricato!',
 	'Filename' => 'Nome File',
+	'Financing' => 'Finanziamento',
     'First Element' => 'Primo Elemento',
     'Firstname' => 'Nome',
     'From' => 'Da',

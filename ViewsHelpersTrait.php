@@ -36,6 +36,18 @@ trait ViewsHelpersTrait
         return $this->getStandardButton('fa fa-plus-circle text-green', Yii::t('traits','Create'), $url);
     }
 
+	/**
+	 * Return action import button
+	 *
+	 * @param array $url
+	 *
+	 * @return string
+	 */
+    public function getImportButton(array $url = ['import'])
+    {
+        return $this->getStandardButton('fa fa-file-import text-blue', Yii::t('traits','Import'), $url);
+    }
+
     /**
      * Return action update button
      *

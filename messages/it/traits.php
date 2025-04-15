@@ -476,7 +476,7 @@ return [
     'TagNames' => 'Tags',
     'Tag' => 'Tag',
     'Tags' => 'Tags',
-    'Taken Over' => 'Preso in Carico',
+    'Taken Over' => 'Preso in carico',
     'Task' => 'Task',
     'Task Informations' => 'Informazioni Task',
     'Tasks' => 'Task',

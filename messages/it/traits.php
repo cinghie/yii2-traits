@@ -321,6 +321,8 @@ return [
     'Payment' => 'Pagamento',
     'Payment ID' => 'Pagamento ID',
     'Payment Due' => 'Pagamento dovuto al',
+    'Payment Details' => 'Dettagli di Pagamento',
+    'Payment Informations' => 'Informazioni di Pagamento',
     'Payment Method' => 'Metodo di Pagamento',
     'Payment Methods' => 'Metodi di Pagamento',
     'Payment State' => 'Stato Pagamento',

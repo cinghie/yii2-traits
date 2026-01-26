@@ -36,6 +36,9 @@ trait UserTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., UserTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getUserRules() instance method instead.
      */
     public static function rules()
     {
@@ -43,6 +46,16 @@ trait UserTrait
             [['user_id'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getUserRules()
+    {
+        return static::rules();
     }
 
     /**

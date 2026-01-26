@@ -32,6 +32,9 @@ trait VideoTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., VideoTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getVideoRules() instance method instead.
      */
     public static function rules()
     {
@@ -40,6 +43,16 @@ trait VideoTrait
             [['video'], 'string', 'max' => 50],
             [['video_type'], 'string', 'max' => 20],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getVideoRules()
+    {
+        return static::rules();
     }
 
     /**

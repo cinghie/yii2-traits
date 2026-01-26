@@ -29,6 +29,9 @@ trait NameAliasTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., NameAliasTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getNameAliasRules() instance method instead.
      */
     public static function rules()
     {
@@ -36,6 +39,16 @@ trait NameAliasTrait
             [['alias'], 'unique'],
             [['alias','name'], 'string', 'max' => 255],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getNameAliasRules()
+    {
+        return static::rules();
     }
 
     /**

@@ -28,12 +28,25 @@ trait LanguageTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., LanguageTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getLanguageRules() instance method instead.
      */
     public static function rules()
     {
         return [
             [['language'], 'string', 'max' => 7],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getLanguageRules()
+    {
+        return static::rules();
     }
 
     /**

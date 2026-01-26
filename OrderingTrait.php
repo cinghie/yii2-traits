@@ -29,12 +29,25 @@ trait OrderingTrait
 {
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically (e.g., OrderingTrait::rules())
+	 * may generate a deprecation warning. It's recommended to use getOrderingRules() instance method instead.
 	 */
 	public static function rules()
 	{
 		return  [
 			[['ordering'], 'integer'],
 		];
+	}
+
+	/**
+	 * Instance method to get rules without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getOrderingRules()
+	{
+		return static::rules();
 	}
 
 	/**

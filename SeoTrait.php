@@ -35,6 +35,9 @@ trait SeoTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., SeoTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getSeoRules() instance method instead.
      */
     public static function rules()
     {
@@ -43,6 +46,16 @@ trait SeoTrait
             [['author', 'copyright'], 'string', 'max' => 50],
             [['robots'], 'string', 'max' => 20],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getSeoRules()
+    {
+        return static::rules();
     }
 
     /**

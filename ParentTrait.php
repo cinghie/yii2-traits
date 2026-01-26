@@ -33,6 +33,9 @@ trait ParentTrait
 {
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically (e.g., ParentTrait::rules())
+	 * may generate a deprecation warning. It's recommended to use getParentRules() instance method instead.
 	 */
 	public static function rules()
 	{
@@ -40,6 +43,16 @@ trait ParentTrait
 			[['parent_id'], 'integer'],
 			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
 		];
+	}
+
+	/**
+	 * Instance method to get rules without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getParentRules()
+	{
+		return static::rules();
 	}
 
 	/**

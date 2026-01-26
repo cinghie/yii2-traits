@@ -28,6 +28,9 @@ trait FatturazioneElettronicaTrait
 {
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically (e.g., FatturazioneElettronicaTrait::rules())
+	 * may generate a deprecation warning. It's recommended to use getFatturazioneElettronicaRules() instance method instead.
 	 */
 	public static function rules()
 	{
@@ -35,6 +38,16 @@ trait FatturazioneElettronicaTrait
 			[['sdi'], 'string', 'max' => 7],
 			[['pec'], 'string', 'max' => 100],
 		];
+	}
+
+	/**
+	 * Instance method to get rules without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getFatturazioneElettronicaRules()
+	{
+		return static::rules();
 	}
 
 	/**

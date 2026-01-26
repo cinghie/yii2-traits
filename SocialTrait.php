@@ -32,12 +32,25 @@ trait SocialTrait
 {
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically (e.g., SocialTrait::rules())
+	 * may generate a deprecation warning. It's recommended to use getSocialRules() instance method instead.
 	 */
 	public static function rules()
 	{
 		return  [
 			[['facebook', 'instagram', 'linkedin', 'pinterest', 'twitter', 'youtube'], 'string', 'max' => 255],
 		];
+	}
+
+	/**
+	 * Instance method to get rules without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getSocialRules()
+	{
+		return static::rules();
 	}
 
 	/**

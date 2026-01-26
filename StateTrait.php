@@ -118,7 +118,7 @@ trait StateTrait
     {
         /** @var $this Model */
         return $form->field($this, 'state')->widget(Select2::class, [
-            'data' => StateTrait::getStateSelect2(),
+            'data' => static::getStateSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-check"></i>'

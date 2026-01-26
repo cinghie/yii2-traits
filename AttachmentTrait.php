@@ -164,7 +164,7 @@ trait AttachmentTrait
 	 */
 	public function getVideoDuration($attachPath)
     {
-    	$fileInfo = AttachmentTrait::getID3Info($attachPath);
+    	$fileInfo = static::getID3Info($attachPath);
 
     	if(isset($fileInfo['video']) && strpos($fileInfo['mime_type'], 'video') !== false) {
 		    return $fileInfo['playtime_string'];
@@ -182,7 +182,7 @@ trait AttachmentTrait
 	public function createVideoThumb($attachPath, $sec = 3)
 	{
 		$frame = null;
-		$fileInfo  = AttachmentTrait::getID3Info($attachPath);
+		$fileInfo  = static::getID3Info($attachPath);
 		$ffmpegOptions = [];
 		$operationSystem = PHP_OS;
 

@@ -108,7 +108,7 @@ trait LanguageTrait
     {
 	    /** @var $this Model */
         return $form->field($this, 'language')->widget(Select2::class, [
-            'data' => LanguageTrait::getLanguagesSelect2(),
+            'data' => static::getLanguagesSelect2(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-globe"></i>'

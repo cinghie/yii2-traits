@@ -30,12 +30,25 @@ trait StateTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., StateTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getStateRules() instance method instead.
      */
     public static function rules()
     {
         return [
             [['state'], 'integer']
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getStateRules()
+    {
+        return static::rules();
     }
 
     /**

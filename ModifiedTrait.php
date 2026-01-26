@@ -38,6 +38,9 @@ trait ModifiedTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., ModifiedTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getModifiedRules() instance method instead.
      */
     public static function rules()
     {
@@ -46,6 +49,16 @@ trait ModifiedTrait
             [['modified_by'], 'integer'],
             [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modified_by' => 'id']],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getModifiedRules()
+    {
+        return static::rules();
     }
 
     /**

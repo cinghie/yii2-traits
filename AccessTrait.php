@@ -32,12 +32,25 @@ trait AccessTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., AccessTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getAccessRules() instance method instead.
      */
     public static function rules()
     {
         return  [
             [['access'], 'string', 'max' => 64],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getAccessRules()
+    {
+        return static::rules();
     }
 
     /**

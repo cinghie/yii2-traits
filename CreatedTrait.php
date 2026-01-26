@@ -38,6 +38,9 @@ trait CreatedTrait
 {
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., CreatedTrait::rules())
+     * may generate a deprecation warning. It's recommended to use getCreatedRules() instance method instead.
      */
     public static function rules()
     {
@@ -46,6 +49,16 @@ trait CreatedTrait
             [['created_by'], 'integer'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
+    }
+
+    /**
+     * Instance method to get rules without deprecation warning
+     * 
+     * @return array
+     */
+    public function getCreatedRules()
+    {
+        return static::rules();
     }
 
     /**

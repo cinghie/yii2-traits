@@ -48,7 +48,9 @@ trait StateTrait
      */
     public function getStateRules()
     {
-        return static::rules();
+        return [
+            [['state'], 'integer']
+        ];
     }
 
     /**
@@ -75,7 +77,9 @@ trait StateTrait
      */
     public function getStateAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'state' => Yii::t('traits', 'State'),
+        ];
     }
 
     /**

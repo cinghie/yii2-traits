@@ -55,7 +55,11 @@ trait SeoTrait
      */
     public function getSeoRules()
     {
-        return static::rules();
+        return [
+            [['metadesc', 'metakey'], 'string'],
+            [['author', 'copyright'], 'string', 'max' => 50],
+            [['robots'], 'string', 'max' => 20],
+        ];
     }
 
     /**
@@ -84,7 +88,13 @@ trait SeoTrait
      */
     public function getSeoAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'author' => Yii::t('traits', 'Author'),
+            'copyright' => Yii::t('traits', 'Copyright'),
+            'metadesc' => Yii::t('traits', 'Meta Description'),
+            'metakey' => Yii::t('traits', 'Meta Keywords'),
+            'robots' => Yii::t('traits', 'Robots'),
+        ];
     }
 
 	/**
@@ -99,7 +109,7 @@ trait SeoTrait
     {
         /** @var $this Model */
         return $form->field($this, 'robots')->widget(Select2::class, [
-            'data' => SeoTrait::getRobotsOptions(),
+            'data' => self::getRobotsOptions(),
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="glyphicon glyphicon-globe"></i>'

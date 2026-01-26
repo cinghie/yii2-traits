@@ -58,7 +58,11 @@ trait CreatedTrait
      */
     public function getCreatedRules()
     {
-        return static::rules();
+        return [
+            [['created'], 'safe'],
+            [['created_by'], 'integer'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+        ];
     }
 
     /**
@@ -86,7 +90,10 @@ trait CreatedTrait
      */
     public function getCreatedAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'created' => Yii::t('traits', 'Created'),
+            'created_by' => Yii::t('traits', 'Created By'),
+        ];
     }
 
     /**

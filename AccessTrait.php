@@ -50,7 +50,9 @@ trait AccessTrait
      */
     public function getAccessRules()
     {
-        return static::rules();
+        return [
+            [['access'], 'string', 'max' => 64],
+        ];
     }
 
     /**
@@ -75,7 +77,9 @@ trait AccessTrait
      */
     public function getAccessAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'access' => Yii::t('traits', 'Access'),
+        ];
     }
 
 	/**

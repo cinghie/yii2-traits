@@ -50,7 +50,9 @@ trait SocialTrait
 	 */
 	public function getSocialRules()
 	{
-		return static::rules();
+		return [
+			[['facebook', 'instagram', 'linkedin', 'pinterest', 'twitter', 'youtube'], 'string', 'max' => 255],
+		];
 	}
 
 	/**
@@ -80,7 +82,14 @@ trait SocialTrait
 	 */
 	public function getSocialAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'facebook' => Yii::t('traits', 'Facebook'),
+			'instagram' => Yii::t('traits', 'Instagram'),
+			'linkedin' => Yii::t('traits', 'LinkedIn'),
+			'pinterest' => Yii::t('traits', 'Pinterest'),
+			'twitter' => Yii::t('traits', 'Twitter'),
+			'youtube' => Yii::t('traits', 'YouTube'),
+		];
 	}
 
 	/**

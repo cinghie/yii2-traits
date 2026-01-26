@@ -46,7 +46,9 @@ trait LanguageTrait
      */
     public function getLanguageRules()
     {
-        return static::rules();
+        return [
+            [['language'], 'string', 'max' => 7],
+        ];
     }
 
     /**
@@ -71,7 +73,9 @@ trait LanguageTrait
      */
     public function getLanguageAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'language' => Yii::t('traits', 'Language'),
+        ];
     }
 
     /**

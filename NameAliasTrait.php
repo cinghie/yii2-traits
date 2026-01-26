@@ -48,7 +48,10 @@ trait NameAliasTrait
      */
     public function getNameAliasRules()
     {
-        return static::rules();
+        return [
+            [['alias'], 'unique'],
+            [['alias','name'], 'string', 'max' => 255],
+        ];
     }
 
     /**
@@ -76,7 +79,10 @@ trait NameAliasTrait
      */
     public function getNameAliasAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'alias' => Yii::t('traits', 'Alias'),
+            'name' => Yii::t('traits', 'Name'),
+        ];
     }
 
 	/**

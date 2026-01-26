@@ -52,7 +52,11 @@ trait VideoTrait
      */
     public function getVideoRules()
     {
-        return static::rules();
+        return [
+            [['video_caption', 'video_credits'], 'string', 'max' => 255],
+            [['video'], 'string', 'max' => 50],
+            [['video_type'], 'string', 'max' => 20],
+        ];
     }
 
     /**
@@ -80,7 +84,12 @@ trait VideoTrait
      */
     public function getVideoAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'video' => Yii::t('traits', 'Video'),
+            'video_caption' => Yii::t('traits', 'Video Caption'),
+            'video_credits' => Yii::t('traits', 'Video Credits'),
+            'video_type' => Yii::t('traits', 'Video Type'),
+        ];
     }
 
     /**

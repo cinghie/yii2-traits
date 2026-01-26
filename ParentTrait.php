@@ -52,7 +52,10 @@ trait ParentTrait
 	 */
 	public function getParentRules()
 	{
-		return static::rules();
+		return [
+			[['parent_id'], 'integer'],
+			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
+		];
 	}
 
 	/**
@@ -77,7 +80,9 @@ trait ParentTrait
 	 */
 	public function getParentAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'parent_id' => Yii::t('traits', 'Parent ID'),
+		];
 	}
 
 	/**

@@ -47,7 +47,9 @@ trait OrderingTrait
 	 */
 	public function getOrderingRules()
 	{
-		return static::rules();
+		return [
+			[['ordering'], 'integer'],
+		];
 	}
 
 	/**
@@ -72,7 +74,9 @@ trait OrderingTrait
 	 */
 	public function getOrderingAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'ordering' => Yii::t('traits', 'Ordering'),
+		];
 	}
 
 	/**

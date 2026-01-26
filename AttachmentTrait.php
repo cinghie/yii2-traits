@@ -58,7 +58,11 @@ trait AttachmentTrait
      */
     public function getAttachmentRules()
     {
-        return static::rules();
+        return [
+            [['size'], 'integer'],
+            [['extension'], 'string', 'max' => 12],
+            [['alias', 'filename', 'mimetype', 'title'], 'string', 'max' => 255]
+        ];
     }
 
     /**
@@ -88,7 +92,13 @@ trait AttachmentTrait
      */
     public function getAttachmentAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'alias' => Yii::t('traits', 'Alias'),
+            'filename' => Yii::t('traits', 'Filename'),
+            'mimetype' => Yii::t('traits', 'Mime Type'),
+            'size' => Yii::t('traits', 'Size'),
+            'title' => Yii::t('traits', 'Title'),
+        ];
     }
 
 	/**

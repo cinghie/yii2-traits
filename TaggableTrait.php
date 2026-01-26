@@ -57,7 +57,9 @@ trait TaggableTrait
 	 */
 	public function getTaggableRules()
 	{
-		return static::rules();
+		return [
+			[['tagNames'], 'safe'],
+		];
 	}
 
 	/**
@@ -82,7 +84,9 @@ trait TaggableTrait
 	 */
 	public function getTaggableAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'tagNames' => Yii::t('traits', 'TagNames'),
+		];
 	}
 
 	/**

@@ -40,7 +40,7 @@ trait ImageTrait
      */
     public static function rules()
     {
-        $getimageallowed = ImageTrait::getImagesAllowed();
+        $getimageallowed = self::getImagesAllowed();
 
         return [
             [['image_caption', 'image_credits'], 'string', 'max' => 255],
@@ -56,7 +56,13 @@ trait ImageTrait
      */
     public function getImageRules()
     {
-        return static::rules();
+        $getimageallowed = self::getImagesAllowed();
+
+        return [
+            [['image_caption', 'image_credits'], 'string', 'max' => 255],
+            [['image'], 'file', 'extensions' => $getimageallowed],
+            [['image'], 'safe'],
+        ];
     }
 
     /**
@@ -83,7 +89,11 @@ trait ImageTrait
      */
     public function getImageAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'image' => Yii::t('traits', 'Image'),
+            'image_caption' => Yii::t('traits', 'Image Caption'),
+            'image_credits' => Yii::t('traits', 'Image Credits'),
+        ];
     }
 
     /**
@@ -104,7 +114,7 @@ trait ImageTrait
                 'accept' => $this->getImagesAccept()
             ],
             'pluginOptions' => [
-                'allowedFileExtensions' => ImageTrait::getImagesAllowed(),
+                'allowedFileExtensions' => self::getImagesAllowed(),
                 'previewFileType' => 'image',
                 'showPreview' => true,
                 'showCaption' => true,
@@ -207,7 +217,7 @@ trait ImageTrait
     public function getImagesAccept()
     {
         $imageAccept = [];
-        $imagesAllowed = ImageTrait::getImagesAllowed();
+        $imagesAllowed = self::getImagesAllowed();
 
         foreach ($imagesAllowed as $imageAllowed) {
             $imageAccept[] = 'image/'.$imageAllowed;

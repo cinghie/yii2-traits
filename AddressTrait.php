@@ -75,7 +75,11 @@ trait AddressTrait
 	 */
 	public function getAddressAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'latitude' => Yii::t('traits', 'Latitude'),
+			'longitude' => Yii::t('traits', 'Longitude'),
+			'name' => Yii::t('traits', 'Name'),
+		];
 	}
 
 	/**

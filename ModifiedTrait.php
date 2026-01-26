@@ -58,7 +58,11 @@ trait ModifiedTrait
      */
     public function getModifiedRules()
     {
-        return static::rules();
+        return [
+            [['modified'], 'safe'],
+            [['modified_by'], 'integer'],
+            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modified_by' => 'id']],
+        ];
     }
 
     /**
@@ -86,7 +90,10 @@ trait ModifiedTrait
      */
     public function getModifiedAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'modified' => Yii::t('traits', 'Modified'),
+            'modified_by' => Yii::t('traits', 'Modified By'),
+        ];
     }
 
     /**

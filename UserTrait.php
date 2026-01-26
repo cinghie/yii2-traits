@@ -55,7 +55,10 @@ trait UserTrait
      */
     public function getUserRules()
     {
-        return static::rules();
+        return [
+            [['user_id'], 'integer'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+        ];
     }
 
     /**
@@ -80,7 +83,9 @@ trait UserTrait
      */
     public function getUserAttributeLabels()
     {
-        return static::attributeLabels();
+        return [
+            'user_id' => Yii::t('traits', 'User ID'),
+        ];
     }
 
     /**

@@ -47,7 +47,10 @@ trait FatturazioneElettronicaTrait
 	 */
 	public function getFatturazioneElettronicaRules()
 	{
-		return static::rules();
+		return [
+			[['sdi'], 'string', 'max' => 7],
+			[['pec'], 'string', 'max' => 100],
+		];
 	}
 
 	/**
@@ -73,7 +76,10 @@ trait FatturazioneElettronicaTrait
 	 */
 	public function getFatturazioneElettronicaAttributeLabels()
 	{
-		return static::attributeLabels();
+		return [
+			'pec' => Yii::t('traits', 'PEC'),
+			'sdi' => Yii::t('traits', 'SDI'),
+		];
 	}
 
 	/**

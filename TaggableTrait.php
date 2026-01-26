@@ -37,12 +37,27 @@ trait TaggableTrait
 
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+	 * It's recommended to use getTaggableRules() instance method instead.
+	 * 
+	 * @return array
 	 */
 	public static function rules()
 	{
 		return [
 			[['tagNames'], 'safe'],
 		];
+	}
+
+	/**
+	 * Instance method to get rules without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getTaggableRules()
+	{
+		return static::rules();
 	}
 
 	/**

@@ -47,6 +47,11 @@ trait SeoTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getSeoAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -57,6 +62,16 @@ trait SeoTrait
             'metakey' => Yii::t('traits', 'Metakey'),
             'robots' => Yii::t('traits', 'Robots'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getSeoAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
 	/**

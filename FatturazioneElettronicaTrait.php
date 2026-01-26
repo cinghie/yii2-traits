@@ -39,6 +39,11 @@ trait FatturazioneElettronicaTrait
 
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+	 * It's recommended to use getFatturazioneElettronicaAttributeLabels() instance method instead.
+	 * 
+	 * @return array
 	 */
 	public static function attributeLabels()
 	{
@@ -46,6 +51,16 @@ trait FatturazioneElettronicaTrait
 			'pec' => Yii::t('traits', 'PEC'),
 			'sdi' => Yii::t('traits', 'SDI'),
 		];
+	}
+
+	/**
+	 * Instance method to get attribute labels without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getFatturazioneElettronicaAttributeLabels()
+	{
+		return static::attributeLabels();
 	}
 
 	/**

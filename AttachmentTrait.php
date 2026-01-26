@@ -50,6 +50,11 @@ trait AttachmentTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getAttachmentAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -61,6 +66,16 @@ trait AttachmentTrait
             'size' => Yii::t('traits', 'Size'),
             'title' => Yii::t('traits', 'Title'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getAttachmentAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
 	/**

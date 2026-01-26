@@ -47,12 +47,27 @@ trait UserTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getUserAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
         return [
             'user_id' => Yii::t('traits', 'User Id'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getUserAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
     /**

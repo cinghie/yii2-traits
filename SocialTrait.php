@@ -42,6 +42,11 @@ trait SocialTrait
 
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+	 * It's recommended to use getSocialAttributeLabels() instance method instead.
+	 * 
+	 * @return array
 	 */
 	public static function attributeLabels()
 	{
@@ -53,6 +58,16 @@ trait SocialTrait
 			'twitter' => Yii::t('traits', 'Twitter'),
 			'youtube' => Yii::t('traits', 'YouTube'),
 		];
+	}
+
+	/**
+	 * Instance method to get attribute labels without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getSocialAttributeLabels()
+	{
+		return static::attributeLabels();
 	}
 
 	/**

@@ -47,6 +47,11 @@ trait AddressTrait
 
 	/**
 	 * @inheritdoc
+	 * 
+	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+	 * It's recommended to use getAddressAttributeLabels() instance method instead.
+	 * 
+	 * @return array
 	 */
 	public static function attributeLabels()
 	{
@@ -61,6 +66,16 @@ trait AddressTrait
 			'state' => Yii::t('traits', 'State'),
 			'country' => Yii::t('traits', 'Country'),
 		];
+	}
+
+	/**
+	 * Instance method to get attribute labels without deprecation warning
+	 * 
+	 * @return array
+	 */
+	public function getAddressAttributeLabels()
+	{
+		return static::attributeLabels();
 	}
 
 	/**

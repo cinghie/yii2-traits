@@ -44,6 +44,11 @@ trait VideoTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getVideoAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -53,6 +58,16 @@ trait VideoTrait
             'video_credits' => Yii::t('traits', 'Video Credits'),
             'video_type' => Yii::t('traits', 'Video Type'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getVideoAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
     /**

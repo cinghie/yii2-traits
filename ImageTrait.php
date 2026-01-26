@@ -48,6 +48,11 @@ trait ImageTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getImageAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -56,6 +61,16 @@ trait ImageTrait
             'image_caption' => Yii::t('traits', 'Image Caption'),
             'image_credits' => Yii::t('traits', 'Image Credits'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getImageAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
     /**

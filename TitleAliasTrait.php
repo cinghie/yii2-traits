@@ -40,6 +40,11 @@ trait TitleAliasTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getTitleAliasAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -47,6 +52,16 @@ trait TitleAliasTrait
             'alias' => Yii::t('traits', 'Alias'),
             'title' => Yii::t('traits', 'Title'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getTitleAliasAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
 	/**

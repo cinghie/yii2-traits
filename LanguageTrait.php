@@ -38,12 +38,27 @@ trait LanguageTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
+     * It's recommended to use getLanguageAttributeLabels() instance method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
         return [
             'language' => Yii::t('traits', 'Language'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * 
+     * @return array
+     */
+    public function getLanguageAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
     /**

@@ -50,6 +50,12 @@ trait CreatedTrait
 
     /**
      * @inheritdoc
+     * 
+     * Note: In PHP 8.1+, calling this method statically (e.g., ModifiedTrait::attributeLabels())
+     * will generate a deprecation warning. It's recommended to call this as an instance method
+     * in your model's attributeLabels() method instead.
+     * 
+     * @return array
      */
     public static function attributeLabels()
     {
@@ -57,6 +63,17 @@ trait CreatedTrait
             'created' => Yii::t('traits', 'Created'),
             'created_by' => Yii::t('traits', 'Created By'),
         ];
+    }
+
+    /**
+     * Instance method to get attribute labels without deprecation warning
+     * Use this method in your model's attributeLabels() instead of calling the static method
+     * 
+     * @return array
+     */
+    public function getCreatedAttributeLabels()
+    {
+        return static::attributeLabels();
     }
 
     /**

@@ -83,7 +83,7 @@ Merge rules() and attributeLabels():
 public function rules()
 {
     return array_merge(
-        CreatedTrait::rules(), 
+        $this->getCreatedRules(),
         [your_rules]
     );
 }    
@@ -91,10 +91,10 @@ public function rules()
 public function attributeLabels()
 {
     return array_merge(
-        CreatedTrait::attributeLabels(), 
+        $this->getCreatedAttributeLabels(),
         [your_attributeLabels]
     );
-}   
+}
 ```
 
 All functions implemented in the Traits can be called like as any function of the model

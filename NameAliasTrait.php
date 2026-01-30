@@ -129,8 +129,8 @@ trait NameAliasTrait
 
 		$slugify = new Slugify($slugifyOptions);
 
-		if($post['alias'] === '') {
-			$this->alias = $slugify->slugify($post[$field]);
+		if (!array_key_exists('alias', $post) || (string) $post['alias'] === '') {
+			$this->alias = $slugify->slugify($post[$field] ?? '');
 		}
 	}
 

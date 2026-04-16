@@ -78,7 +78,9 @@ trait ViewsHelpersTrait
         $controllerRoute = substr($route, 0, strrpos($route, '/'));
 
         return '$("a.btn-update").click(function() {
-            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+            var selectedId = $("'.$w.'").find("input[name=\"selection[]\"]:checked").map(function() {
+                return $(this).val();
+            }).get();
         
             if(selectedId.length == 0) {
                 alert("'.Yii::t('traits', 'Select at least one item').'");
@@ -127,7 +129,9 @@ trait ViewsHelpersTrait
         $controllerRoute = substr($route, 0, strrpos($route, '/'));
 
         return '$("a.btn-delete").click(function() {
-            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+            var selectedId = $("'.$w.'").find("input[name=\"selection[]\"]:checked").map(function() {
+                return $(this).val();
+            }).get();
 
             if(selectedId.length == 0) {
                 alert("'.Yii::t('traits', 'Select at least one item').'");
@@ -137,7 +141,7 @@ trait ViewsHelpersTrait
                 if (choose == true) {
                     $.ajax({
                         type: \'POST\',
-                        url : "'.Url::to([$controllerRoute . '/deletemultiple']).'?id="+selectedId,
+                        url : "'.Url::to([$controllerRoute . '/deletemultiple']).'?id="+selectedId[0],
                         data : {ids: selectedId},
                         success : function() {
                             var url = "'.Url::to([$route]).'";
@@ -220,14 +224,16 @@ trait ViewsHelpersTrait
         $controllerRoute = substr($route, 0, strrpos($route, '/'));
 
         return '$("a.btn-active").click(function() {
-            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+            var selectedId = $("'.$w.'").find("input[name=\"selection[]\"]:checked").map(function() {
+                return $(this).val();
+            }).get();
         
             if(selectedId.length == 0) {
                 alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
-                    url : "'.Url::to([$controllerRoute . '/activemultiple']).'?id="+selectedId,
+                    url : "'.Url::to([$controllerRoute . '/activemultiple']).'?id="+selectedId[0],
                     data : {ids: selectedId},
                     success : function() {
                         var url = "'.Url::to([$route]).'";
@@ -273,14 +279,16 @@ trait ViewsHelpersTrait
         $controllerRoute = substr($route, 0, strrpos($route, '/'));
 
         return '$("a.btn-deactive").click(function() {
-            var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
+            var selectedId = $("'.$w.'").find("input[name=\"selection[]\"]:checked").map(function() {
+                return $(this).val();
+            }).get();
         
             if(selectedId.length == 0) {
                 alert("'.Yii::t('traits', 'Select at least one item').'");
             } else {
                 $.ajax({
                     type: \'POST\',
-                    url : "'.Url::to([$controllerRoute . '/deactivemultiple']).'?id="+selectedId,
+                    url : "'.Url::to([$controllerRoute . '/deactivemultiple']).'?id="+selectedId[0],
                     data : {ids: selectedId},
                     success : function() {
                         var url = "'.Url::to([$route]).'";

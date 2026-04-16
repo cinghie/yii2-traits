@@ -74,6 +74,9 @@ trait ViewsHelpersTrait
      */
     public function getUpdateButtonJavascript($w)
     {
+        $route = '/' . Yii::$app->controller->getRoute();
+        $controllerRoute = substr($route, 0, strrpos($route, '/'));
+
         return '$("a.btn-update").click(function() {
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
@@ -82,7 +85,7 @@ trait ViewsHelpersTrait
             } else if(selectedId.length>1){
                 alert("'.Yii::t('traits', 'Select only 1 item').'");
             } else {
-                var url = "'.Url::to(['update']).'?id="+selectedId[0];
+                var url = "'.Url::to([$controllerRoute . '/update']).'?id="+selectedId[0];
                 window.location.href= url;
             }
         });';
@@ -120,6 +123,9 @@ trait ViewsHelpersTrait
      */
     public function getDeleteButtonJavascript($w)
     {
+        $route = '/' . Yii::$app->controller->getRoute();
+        $controllerRoute = substr($route, 0, strrpos($route, '/'));
+
         return '$("a.btn-delete").click(function() {
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
 
@@ -131,10 +137,10 @@ trait ViewsHelpersTrait
                 if (choose == true) {
                     $.ajax({
                         type: \'POST\',
-                        url : "'.Url::to(['deletemultiple']).'?id="+selectedId,
+                        url : "'.Url::to([$controllerRoute . '/deletemultiple']).'?id="+selectedId,
                         data : {ids: selectedId},
                         success : function() {
-                            var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                            var url = "'.Url::to([$route]).'";
                             $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                         }
                     });
@@ -210,6 +216,9 @@ trait ViewsHelpersTrait
      */
     public function getActiveButtonJavascript($w)
     {
+        $route = '/' . Yii::$app->controller->getRoute();
+        $controllerRoute = substr($route, 0, strrpos($route, '/'));
+
         return '$("a.btn-active").click(function() {
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
@@ -218,10 +227,10 @@ trait ViewsHelpersTrait
             } else {
                 $.ajax({
                     type: \'POST\',
-                    url : "'.Url::to(['activemultiple']).'?id="+selectedId,
+                    url : "'.Url::to([$controllerRoute . '/activemultiple']).'?id="+selectedId,
                     data : {ids: selectedId},
                     success : function() {
-                        var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                        var url = "'.Url::to([$route]).'";
                         $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                     }
                 });
@@ -260,6 +269,9 @@ trait ViewsHelpersTrait
      */
     public function getDeactiveButtonJavascript($w)
     {
+        $route = '/' . Yii::$app->controller->getRoute();
+        $controllerRoute = substr($route, 0, strrpos($route, '/'));
+
         return '$("a.btn-deactive").click(function() {
             var selectedId = $("'.$w.'").yiiGridView("getSelectedRows");
         
@@ -268,10 +280,10 @@ trait ViewsHelpersTrait
             } else {
                 $.ajax({
                     type: \'POST\',
-                    url : "'.Url::to(['deactivemultiple']).'?id="+selectedId,
+                    url : "'.Url::to([$controllerRoute . '/deactivemultiple']).'?id="+selectedId,
                     data : {ids: selectedId},
                     success : function() {
-                        var url = "'.Url::to([Yii::$app->controller->id.'/'.Yii::$app->controller->action->id]).'";
+                        var url = "'.Url::to([$route]).'";
                         $.pjax.reload({url: url, container: "'.$w.'-container", push: false, replace: false, timeout: 8000});
                     }
                 });

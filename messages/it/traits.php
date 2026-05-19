@@ -49,6 +49,8 @@ return [
     'All Invoices' => 'Tutte le Fatture',
     'All Leads' => 'Tutti i Leads',
     'All Male' => 'Tutti',
+    'All Offices' => 'Tutte le Sedi',
+    'All Products' => 'Tutti i Prodotti',
     'All Quotes' => 'Tutti i Preventivi',
     'Allowed Extensions' => 'Estensioni Permesse',
     'Amount' => 'Importo',

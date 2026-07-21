@@ -299,6 +299,7 @@ return [
     'Financing' => 'Finanziamento',
     'First Element' => 'Primo Elemento',
     'First quarter' => 'Primo trimestre',
+    'Fiscal quarters' => 'Trimestri fiscali',
     'First row of each tab should contain column headers' => 'La prima riga di ogni scheda deve contenere le intestazioni delle colonne',
     'Firstname' => 'Nome',
     'Fourth quarter' => 'Quarto trimestre',

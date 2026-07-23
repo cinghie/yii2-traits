@@ -121,7 +121,6 @@ return [
     'Invoice updated' => 'Fattura aggiornata',
     'Invoice number missing.' => 'Numero fattura mancante.',
     'Invoice imported' => 'Fattura importata',
-    'Invoice already present, skipped: {code}' => 'Fattura già presente, ignorata: {code}',
     'Import service unavailable.' => 'Servizio di import non disponibile.',
     'First and last name missing' => 'Nome e cognome mancanti',
     'File upload failed' => 'Caricamento file non riuscito',
@@ -981,4 +980,5 @@ return [
     'value too long' => 'valore troppo lungo',
     '{entity} already exists: skipped (Create only new items).' => '{entity} già presente: saltato (Crea solo elementi nuovi).',
     '{entity} not found: skipped (Update only old items).' => '{entity} non trovato: saltato (Aggiorna solo elementi esistenti).',
+    'Account not found for office link. Create the account first or check the link code.' => 'Azienda non trovata per collegare la sede. Creare prima l\'azienda o verificare il codice di collegamento.',
 ];

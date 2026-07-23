@@ -1,3 +1,5 @@
+<?php
+
 return [
     ': validation failed' => ': controllo non superato',
     'Accept' => 'Accetta',

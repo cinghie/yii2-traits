@@ -29,6 +29,17 @@ use yii\base\Model;
 trait StateTrait
 {
     /**
+     * Event name raised after a successful {@see active()} / {@see deactive()}.
+     * Prefixed to avoid collisions. No handlers attached ⇒ Yii silent no-op.
+     *
+     * @return string
+     */
+    protected function stateChangeEventName(): string
+    {
+        return 'cinghie.traits.afterStateChange';
+    }
+
+    /**
      * @inheritdoc
      * 
      * Note: In PHP 8.1+, calling this method statically (e.g., StateTrait::rules())
@@ -83,27 +94,56 @@ trait StateTrait
     }
 
     /**
-     * Active model state (Set 1)
+     * Active model state (Set 1).
+     *
+     * Uses {@see \yii\db\BaseActiveRecord::updateAttributes()} (does not fire
+     * ActiveRecord AFTER_UPDATE). On success raises {@see stateChangeEventName()}
+     * when the host object is a Yii Component. No attached handlers ⇒ silent no-op.
      *
      * @return bool
      */
     public function active()
     {
-        return (bool)$this->updateAttributes([
+        $ok = (bool)$this->updateAttributes([
             'state' => 1
         ]);
+        if ($ok) {
+            $this->triggerStateChangeEvent();
+        }
+
+        return $ok;
     }
 
     /**
-     * Inactive model state (Set 0)
+     * Inactive model state (Set 0).
+     *
+     * Uses {@see \yii\db\BaseActiveRecord::updateAttributes()} (does not fire
+     * ActiveRecord AFTER_UPDATE). On success raises {@see stateChangeEventName()}
+     * when the host object is a Yii Component. No attached handlers ⇒ silent no-op.
      *
      * @return bool
      */
     public function deactive()
     {
-        return (bool)$this->updateAttributes([
+        $ok = (bool)$this->updateAttributes([
             'state' => 0
         ]);
+        if ($ok) {
+            $this->triggerStateChangeEvent();
+        }
+
+        return $ok;
+    }
+
+    /**
+     * Raise {@see stateChangeEventName()} if possible; never throws when unused.
+     */
+    protected function triggerStateChangeEvent(): void
+    {
+        if (!$this instanceof \yii\base\Component) {
+            return;
+        }
+        $this->trigger($this->stateChangeEventName());
     }
 
 	/**

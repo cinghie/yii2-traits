@@ -49,6 +49,18 @@ trait ViewsHelpersTrait
     }
 
     /**
+     * Return action import-history button
+     *
+     * @param array $url
+     *
+     * @return string
+     */
+    public function getImportHistoryButton(array $url = ['import-history'])
+    {
+        return $this->getStandardButton('fa fa-history text-blue', Yii::t('traits','History'), $url);
+    }
+
+    /**
      * Return action update button
      *
      * @param int $id

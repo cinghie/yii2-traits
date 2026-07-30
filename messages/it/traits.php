@@ -391,6 +391,7 @@ return [
     'Headquarters' => 'Sedi',
     'Height' => 'Altezza',
     'Hits' => 'Visto',
+    'History' => 'Cronologia',
     'Horizontal' => 'Orizzontale',
     'Iban' => 'IBAN',
     'Icon' => 'Icona',

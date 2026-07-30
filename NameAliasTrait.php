@@ -167,7 +167,7 @@ trait NameAliasTrait
         return $form->field($this, 'name',[
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-pencil"></i>'
+                    'content'=>'<i class="fa fa-pencil fas fa-pencil-alt"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);
@@ -187,7 +187,7 @@ trait NameAliasTrait
         return $form->field($this, 'alias', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-bookmark"></i>'
+                    'content'=>'<i class="fa fa-bookmark"></i>'
                 ]
             ]
         ] )->textInput(['maxlength' => true]);

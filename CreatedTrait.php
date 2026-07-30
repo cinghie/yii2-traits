@@ -157,7 +157,7 @@ trait CreatedTrait
             'data' => $created_by,
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                    'content'=>'<i class="fa fa-user"></i>'
                 ]
             ]
         ]);

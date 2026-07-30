@@ -112,7 +112,7 @@ trait SeoTrait
             'data' => self::getRobotsOptions(),
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-globe"></i>'
+                    'content'=>'<i class="fa fa-globe"></i>'
                 ]
             ],
         ]);
@@ -132,7 +132,7 @@ trait SeoTrait
         return $form->field($this, 'author', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+                    'content'=>'<i class="fa fa-user"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);
@@ -152,7 +152,7 @@ trait SeoTrait
         return $form->field($this, 'copyright', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-ban-circle"></i>'
+                    'content'=>'<i class="fa fa-ban"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);
@@ -172,7 +172,7 @@ trait SeoTrait
         return $form->field($this, 'metadesc', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-info-sign"></i>'
+                    'content'=>'<i class="fa fa-info-circle"></i>'
                 ]
             ]
         ])->textarea(['rows' => 5]);
@@ -192,7 +192,7 @@ trait SeoTrait
         return $form->field($this, 'metakey', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-tags"></i>'
+                    'content'=>'<i class="fa fa-tags"></i>'
                 ]
             ]
         ])->textarea(['rows' => 5]);

@@ -146,7 +146,7 @@ trait ImageTrait
         return $form->field($this, 'image_caption', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-picture"></i>'
+                    'content'=>'<i class="fa fa-picture-o fas fa-image"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true])->textarea(['rows' => 6]);

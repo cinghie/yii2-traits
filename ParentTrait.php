@@ -133,7 +133,7 @@ trait ParentTrait
 			'data' => $items,
 			'addon' => [
 				'prepend' => [
-					'content'=>'<i class="glyphicon glyphicon-folder-open"></i>'
+					'content'=>'<i class="fa fa-folder-open"></i>'
 				]
 			],
 		]);

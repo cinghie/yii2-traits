@@ -111,7 +111,7 @@ trait LanguageTrait
             'data' => static::getLanguagesSelect2(),
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-globe"></i>'
+                    'content'=>'<i class="fa fa-globe"></i>'
                 ]
             ],
         ]);

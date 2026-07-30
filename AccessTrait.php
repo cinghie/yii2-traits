@@ -97,7 +97,7 @@ trait AccessTrait
             'data' => $this->getRolesSelect2(),
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-log-in"></i>'
+                    'content'=>'<i class="fa fa-sign-in fas fa-sign-in-alt"></i>'
                 ]
             ],
         ]);

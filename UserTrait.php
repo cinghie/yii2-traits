@@ -118,7 +118,7 @@ trait UserTrait
 		        'data' => $value,
 		        'addon' => [
 			        'prepend' => [
-				        'content'=>'<i class="glyphicon glyphicon-user"></i>'
+				        'content'=>'<i class="fa fa-user"></i>'
 			        ]
 		        ],
 	        ]);
@@ -129,7 +129,7 @@ trait UserTrait
 		    'data' => $this->getUsersSelect2(),
 		    'addon' => [
 			    'prepend' => [
-				    'content'=>'<i class="glyphicon glyphicon-user"></i>'
+				    'content'=>'<i class="fa fa-user"></i>'
 			    ]
 		    ],
 	    ]);

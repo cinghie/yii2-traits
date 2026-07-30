@@ -120,7 +120,7 @@ trait VideoTrait
         return $form->field($this, 'video', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-film"></i>'
+                    'content'=>'<i class="fa fa-film"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);
@@ -141,7 +141,7 @@ trait VideoTrait
             'data' => $this->getVideoTypeSelect2(),
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-film"></i>'
+                    'content'=>'<i class="fa fa-film"></i>'
                 ]
             ],
         ]);
@@ -161,7 +161,7 @@ trait VideoTrait
         return $form->field($this, 'video_caption', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-facetime-video"></i>'
+                    'content'=>'<i class="fa fa-video-camera fas fa-video"></i>'
                 ]
             ]
         ])->textarea(['maxlength' => true,'rows' => 6]);
@@ -181,7 +181,7 @@ trait VideoTrait
         return $form->field($this, 'video_credits', [
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-barcode"></i>'
+                    'content'=>'<i class="fa fa-barcode"></i>'
                 ]
             ]
         ])->textInput(['maxlength' => true]);

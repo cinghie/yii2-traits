@@ -225,7 +225,7 @@ trait OrderingTrait
 			'options' => $options,
 			'addon' => [
 				'prepend' => [
-					'content'=>'<i class="glyphicon glyphicon-sort"></i>'
+					'content'=>'<i class="fa fa-sort"></i>'
 				]
 			],
 		]);

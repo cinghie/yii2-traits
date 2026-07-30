@@ -161,7 +161,7 @@ trait StateTrait
             'data' => static::getStateSelect2(),
             'addon' => [
                 'prepend' => [
-                    'content'=>'<i class="glyphicon glyphicon-check"></i>'
+                    'content'=>'<i class="fa fa-check"></i>'
                 ]
             ],
         ]);
@@ -179,22 +179,22 @@ trait StateTrait
         if($this->state)
         {
         	if($removeLink) {
-        		return '<span class="glyphicon glyphicon-ok text-success"></span>';
+        		return '<span class="fa fa-check text-success"></span>';
 	        }
 
             return Html::a(
-                '<span class="glyphicon glyphicon-ok text-success"></span>',
+                '<span class="fa fa-check text-success"></span>',
                 ['changestate', 'id' => $this->id],
                 ['data-method' => 'post']
             );
         }
 
 	    if($removeLink) {
-		    return '<span class="glyphicon glyphicon-remove text-danger"></span>';
+		    return '<span class="fa fa-times text-danger"></span>';
 	    }
 
 	    return Html::a(
-		    '<span class="glyphicon glyphicon-remove text-danger"></span>',
+		    '<span class="fa fa-times text-danger"></span>',
 		    ['changestate', 'id' => $this->id],
 		    ['data-method' => 'post']
 	    );

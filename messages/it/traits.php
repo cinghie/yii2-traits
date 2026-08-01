@@ -901,6 +901,7 @@ return [
     'Tax has been deleted!' => 'Aliquota fiscale cancellata!',
     'Tax Rate' => 'Aliquota Fiscale',
     'Tax Rates' => 'Aliquote Fiscali',
+    'Taxes' => 'Tasse',
     'Tessuto' => 'Tessuto',
     'Text' => 'Testo',
     'The email {email} is invalid!' => 'L\'email {email} non è vaida!',

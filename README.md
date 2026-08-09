@@ -17,6 +17,13 @@ It contains a large number of features already implemented:
     - common functions
     - widgets
 
+## Requirements
+
+- PHP 7.4 or later
+- Yii 2.0
+
+`GoogleTranslateTrait` is optional. Install a `google/cloud-translate` release compatible with the PHP runtime only when that trait is used.
+
 ## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
@@ -331,5 +338,4 @@ if( $model->isCurrentUserCreator() ) {
     - function getSendButtonJavascript(): Return javascript for action deactive button
     - function getStandardButton($icon,$title,$url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center' ): Return standard button
     - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
-
 

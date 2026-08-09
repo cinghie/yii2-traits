@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Google Cloud Translate is not installed. Install a version compatible with your PHP runtime.' => 'Google Cloud Translate non è installato. Installa una versione compatibile con il runtime PHP in uso.',
     ': validation failed' => ': controllo non superato',
     'Accept' => 'Accetta',
     'Accepted' => 'Accettata',

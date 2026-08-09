@@ -14,6 +14,7 @@ namespace cinghie\traits;
 
 use Exception;
 use Google\Cloud\Translate\TranslateClient;
+use RuntimeException;
 use Yii;
 
 /**
@@ -30,8 +31,15 @@ trait GoogleTranslateTrait
 	 *
 	 * @return string
 	 */
-	public function getGoogleCloudTranslation($apiKey = '',$lang,$text)
+	public function getGoogleCloudTranslation($apiKey = '', $lang = '', $text = '')
 	{
+		if (!class_exists(TranslateClient::class)) {
+			throw new RuntimeException(Yii::t(
+				'traits',
+				'Google Cloud Translate is not installed. Install a version compatible with your PHP runtime.'
+			));
+		}
+
 		// Get API Key from current Module
 		if(!$apiKey) {
 			$apiKey = Yii::$app->controller->module->googleTranslateApiKey;

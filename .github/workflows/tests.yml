@@ -32,7 +32,7 @@ jobs:
         run: composer validate --no-check-publish
 
       - name: Install dependencies
-        run: composer update --prefer-dist --no-interaction --no-progress
+        run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Audit dependencies
         run: composer audit --abandoned=report
@@ -40,7 +40,10 @@ jobs:
       - name: Check PHP syntax
         run: find . -path ./vendor -prune -o -name '*.php' -type f -print0 | xargs -0 -n1 php -l
 
-      - name: Run smoke tests
+      - name: Run PHPUnit
+        run: composer test
+
+      - name: Run standalone smoke tests
         run: |
           php tests/state_trait_bc_smoke.php
           php tests/google_translate_optional_smoke.php

@@ -10,6 +10,7 @@
 - Made Google Cloud Translate optional so PHP 7.4 installations are not forced onto an obsolete dependency chain; `GoogleTranslateTrait` now reports a clear configuration error when the client is absent.
 - Removed the PHP 8 deprecation caused by required parameters following the optional API-key parameter in `GoogleTranslateTrait`.
 - Added CI coverage for PHP 7.4 through PHP 8.5 and made the smoke tests portable between a package checkout and an application installation.
+- Added a PHP 7.4-based Composer lock for reproducible standalone CI installs, plus a PHPUnit suite configured to fail on warnings and risky tests.
 
 ### Known technical debt
 

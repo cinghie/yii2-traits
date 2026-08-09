@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+         colors="true"
+         cacheResult="false"
+         failOnRisky="true"
+         failOnWarning="true">
+    <testsuites>
+        <testsuite name="yii2-traits">
+            <directory suffix="Test.php">unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

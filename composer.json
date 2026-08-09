@@ -49,6 +49,7 @@
         "vova07/yii2-imperavi-widget": "^2.0.11"
     },
     "require-dev": {
+        "phpunit/phpunit": "^9.6",
         "roave/security-advisories": "dev-latest"
     },
     "suggest": {
@@ -58,6 +59,20 @@
         "psr-4": {
             "cinghie\\traits\\": ""
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "cinghie\\traits\\tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit -c tests/phpunit.xml --fail-on-warning"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.33"
+        },
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true

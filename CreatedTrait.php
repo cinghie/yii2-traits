@@ -36,12 +36,6 @@ use yii\helpers\Url;
  */
 trait CreatedTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., CreatedTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getCreatedRules() instance method instead.
-     */
     public static function rules()
     {
         return [
@@ -51,11 +45,6 @@ trait CreatedTrait
         ];
     }
 
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getCreatedRules()
     {
         return [
@@ -65,15 +54,6 @@ trait CreatedTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., ModifiedTrait::attributeLabels())
-     * will generate a deprecation warning. It's recommended to call this as an instance method
-     * in your model's attributeLabels() method instead.
-     * 
-     * @return array
-     */
     public static function attributeLabels()
     {
         return [
@@ -82,12 +62,6 @@ trait CreatedTrait
         ];
     }
 
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * Use this method in your model's attributeLabels() instead of calling the static method
-     * 
-     * @return array
-     */
     public function getCreatedAttributeLabels()
     {
         return [
@@ -96,29 +70,18 @@ trait CreatedTrait
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCreatedBy()
     {
         /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'created_by'])->from(User::tableName() . ' AS createdBy');
     }
 
-	/**
-	 * Generate Created Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getCreatedWidget($form)
     {
         $created = $this->isNewRecord ? date('Y-m-d H:i:s') : $this->created;
 
-	    /** @var $this Model */
-	    return $form->field($this, 'created')->widget(DateTimePicker::class, [
+        /** @var $this Model */
+        return $form->field($this, 'created')->widget(DateTimePicker::class, [
             'options' => [
                 'value' => $created,
             ],
@@ -130,31 +93,24 @@ trait CreatedTrait
         ]);
     }
 
-    /**
-     * Generate DetailView for Created
-     *
-     * @return array
-     */
     public function getCreatedDetailView()
     {
         return ['attribute' => 'created'];
     }
 
-	/**
-	 * Generate CreatedBy Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getCreatedByWidget($form)
     {
-        $created_by = $this->isNewRecord ? $this->getCurrentUserSelect2() : [$this->created_by => $this->createdBy->username];
+        if ($this->isNewRecord) {
+            $createdBy = $this->getCurrentUserSelect2();
+        } elseif ($this->created_by && $this->createdBy) {
+            $createdBy = [$this->created_by => $this->createdBy->username];
+        } else {
+            $createdBy = [];
+        }
 
-	    /** @var $this Model */
+        /** @var $this Model */
         return $form->field($this, 'created_by')->widget(Select2::class, [
-            'data' => $created_by,
+            'data' => $createdBy,
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="fa fa-user"></i>'
@@ -163,65 +119,44 @@ trait CreatedTrait
         ]);
     }
 
-    /**
-     * Generate GridView for CreatedBy
-     *
-     * @return string
-     * @throws InvalidParamException
-     */
     public function getCreatedByGridView()
     {
-        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
-        $createdBy = $this->createdBy->username ?? '';
-
-        if($this->created_by) {
-            return Html::a($createdBy,$url);
+        $createdBy = $this->createdBy;
+        if ($this->created_by && $createdBy) {
+            $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->created_by]));
+            return Html::a($createdBy->username, $url);
         }
 
-	    return Yii::t('traits', 'Nobody');
+        return Yii::t('traits', 'Nobody');
     }
 
-    /**
-     * Generate DetailView for CreatedBy
-     *
-     * @return array
-     * @throws InvalidParamException
-     */
     public function getCreatedByDetailView()
     {
+        $createdBy = $this->createdBy;
+
         return [
             'attribute' => 'created_by',
             'format' => 'html',
             'type' => DetailView::INPUT_SWITCH,
-            'value' => $this->created_by ? Html::a($this->createdBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->createdBy]))) : Yii::t('traits', 'Nobody'),
+            'value' => $this->created_by && $createdBy
+                ? Html::a($createdBy->username, urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->created_by])))
+                : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]
         ];
     }
 
-    /**
-     * Check if current user is the created_by
-     *
-     * @return bool
-     */
     public function isCurrentUserCreator()
     {
-        /** @var User $currentUser */
+        /** @var User|null $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-	    return $currentUser->id === $this->created_by;
+        return $currentUser !== null && $currentUser->id === $this->created_by;
     }
 
-    /**
-     * Check if user_id params is the created_by
-     *
-     * @param User $user_id
-     *
-     * @return bool
-     */
     public function isUserCreator($user_id)
     {
-	    return $user_id === $this->created_by;
+        return $user_id === $this->created_by;
     }
 }

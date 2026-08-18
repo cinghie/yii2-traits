@@ -30,11 +30,7 @@ use yii\base\Model;
  */
 trait SocialTrait
 {
-	/**
-	 * Trait-specific validation rules to be merged by the consuming Yii model.
-	 *
-	 * @return array
-	 */
+	/** Validation rules contributed by this trait. */
 	public function getSocialRules()
 	{
 		return [
@@ -42,11 +38,7 @@ trait SocialTrait
 		];
 	}
 
-	/**
-	 * Trait-specific attribute labels to be merged by the consuming Yii model.
-	 *
-	 * @return array
-	 */
+	/** Attribute labels contributed by this trait. */
 	public function getSocialAttributeLabels()
 	{
 		return [

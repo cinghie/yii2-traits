@@ -1,34 +1,17 @@
 <?php
 
-/**
- * @copyright Copyright &copy; Gogodigital Srls
- * @company Gogodigital Srls - Wide ICT Solutions
- * @website http://www.gogodigital.it
- * @github https://github.com/cinghie/yii2-traits
- * @license GNU GENERAL PUBLIC LICENSE VERSION 3
- * @package yii2-traits
- * @version 1.2.3
- */
-
 namespace cinghie\traits;
 
-use Exception;
 use Yii;
+use cinghie\traits\ui\AuditUi;
 use dektrium\user\models\User;
-use kartik\detail\DetailView;
-use kartik\form\ActiveField;
-use kartik\helpers\Html;
-use kartik\widgets\ActiveForm;
-use kartik\widgets\DateTimePicker;
-use kartik\widgets\Select2;
-use yii\base\InvalidParamException;
-use yii\base\Model;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\helpers\Url;
 
 /**
  * Trait ModifiedTrait
+ *
+ * Model rules, relations and authorization checks remain here; presentation
+ * is delegated to ui/AuditUi.
  *
  * @property string $modified
  * @property int $modified_by
@@ -47,11 +30,7 @@ trait ModifiedTrait
 
     public function getModifiedRules()
     {
-        return [
-            [['modified'], 'safe'],
-            [['modified_by'], 'integer'],
-            [['modified_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modified_by' => 'id']],
-        ];
+        return static::rules();
     }
 
     public static function attributeLabels()
@@ -64,10 +43,7 @@ trait ModifiedTrait
 
     public function getModifiedAttributeLabels()
     {
-        return [
-            'modified' => Yii::t('traits', 'Modified'),
-            'modified_by' => Yii::t('traits', 'Modified By'),
-        ];
+        return static::attributeLabels();
     }
 
     public function getModifiedBy()
@@ -79,18 +55,7 @@ trait ModifiedTrait
     public function getModifiedWidget($form)
     {
         $modified = $this->isNewRecord ? null : $this->modified;
-
-        /** @var $this Model */
-        return $form->field($this, 'modified')->widget(DateTimePicker::class, [
-            'options' => [
-                'value' => $modified,
-            ],
-            'pluginOptions' => [
-                'autoclose'      => true,
-                'format'         => 'yyyy-mm-dd hh:ii:ss',
-                'todayHighlight' => true,
-            ]
-        ]);
+        return AuditUi::dateTimeWidget($this, $form, 'modified', $modified);
     }
 
     public function getModifiedDetailView()
@@ -102,51 +67,23 @@ trait ModifiedTrait
     {
         $modifiedBy = $this->modifiedBy;
         $data = $this->modified_by && $modifiedBy ? [$this->modified_by => $modifiedBy->username] : [];
-
-        /** @var $this Model */
-        return $form->field($this, 'modified_by')->widget(Select2::class, [
-            'data' => $data,
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="fa fa-user"></i>'
-                ]
-            ],
-        ]);
+        return AuditUi::userWidget($this, $form, 'modified_by', $data);
     }
 
     public function getModifiedByGridView()
     {
-        $modifiedBy = $this->modifiedBy;
-        if ($this->modified_by && $modifiedBy) {
-            $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
-            return Html::a($modifiedBy->username, $url);
-        }
-
-        return Yii::t('traits', 'Nobody');
+        return AuditUi::userGridValue($this->modified_by, $this->modifiedBy);
     }
 
     public function getModifiedByDetailView()
     {
-        $modifiedBy = $this->modifiedBy;
-
-        return [
-            'attribute' => 'modified_by',
-            'format' => 'html',
-            'type' => DetailView::INPUT_SWITCH,
-            'value' => $this->modified_by && $modifiedBy
-                ? Html::a($modifiedBy->username, urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modified_by])))
-                : Yii::t('traits', 'Nobody'),
-            'valueColOptions'=> [
-                'style'=>'width:30%'
-            ]
-        ];
+        return AuditUi::userDetailView('modified_by', $this->modified_by, $this->modifiedBy);
     }
 
     public function isCurrentUserModifier()
     {
         /** @var User|null $currentUser */
         $currentUser = Yii::$app->user->identity;
-
         return $currentUser !== null && $currentUser->id === $this->modified_by;
     }
 

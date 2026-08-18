@@ -23,35 +23,16 @@ use yii\web\IdentityInterface;
  */
 trait UserHelpersTrait
 {
-	/**
-	 * Get User Admin
-	 *
-	 * @param $user_id
-	 *
-	 * @return string
-	 */
 	public function getUserAdminUrl($user_id)
 	{
 		return Url::to(['/user/admin/update', 'id' => $user_id]);
 	}
 
-	/**
-	 * Get User Profile
-	 *
-	 * @param $user_id
-	 *
-	 * @return string
-	 */
 	public function getUserProfileUrl($user_id)
 	{
 		return Url::to(['/user/profile/show', 'id' => $user_id]);
 	}
 
-	/**
-	 * Get the User by user email
-	 *
-	 * @return User[] array
-	 */
 	public function getUserByEmail()
 	{
 		return User::find()
@@ -60,13 +41,6 @@ trait UserHelpersTrait
 		    ->one();
 	}
 
-	/**
-	 * Get current User or Current User field
-	 *
-	 * @param string $field
-	 *
-	 * @return IdentityInterface | User | string | int
-	 */
 	public function getCurrentUser($field = '')
 	{
 		if($field) {
@@ -76,13 +50,6 @@ trait UserHelpersTrait
 		return Yii::$app->user->identity;
 	}
 
-	/**
-	 * Get current User Profile object or fied if on param
-	 *
-	 * @param string $field
-	 *
-	 * @return Profile | string | int
-	 */
 	public function getCurrentUserProfile($field = '')
 	{
 		if($field) {
@@ -92,11 +59,6 @@ trait UserHelpersTrait
 		return Yii::$app->user->identity->profile;
 	}
 
-    /**
-     * Return an array with current User
-     *
-     * @return array
-     */
     public function getCurrentUserSelect2()
     {
         /** @var User $currentUser */
@@ -105,11 +67,6 @@ trait UserHelpersTrait
         return [$currentUser->id => $currentUser->username];
     }
 
-    /**
-     * Return an array with the User's Roles adding "Public" on first position
-     *
-     * @return array
-     */
     public function getRolesSelect2()
     {
     	$array = ['public' => 'public'];
@@ -127,17 +84,9 @@ trait UserHelpersTrait
         return $array;
     }
 
-    /**
-     * Return array with all Users (not blocked or not unconfirmed), adding current User on first position [ 'user_id' => 'username' ]
-     *
-     * @param int $user_id
-     * @param string $username
-     *
-     * @return array
-     */
     public function getUsersSelect2($user_id = 0, $username = '')
     {
-        if(!$user_id | !$username) {
+        if(!$user_id || !$username) {
             $user_id = Yii::$app->user->identity->id;
             $username = Yii::$app->user->identity->username;
         }
@@ -149,7 +98,7 @@ trait UserHelpersTrait
             ->orderBy('username ASC')
             ->all();
 
-        $array[$user_id] = ucwords($username);
+        $array = [$user_id => ucwords($username)];
 
         foreach($users as $user) {
             $array[$user['id']] = ucwords($user['username']);

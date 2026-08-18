@@ -19,61 +19,89 @@ use yii\mail\BaseMailer;
 
 class Mailer extends Component
 {
-	/**
-	 * @var BaseMailer Default: `Yii::$app->mailer`
-	 */
+    /**
+     * @var string|null Yii mailer component id. Null uses Yii::$app->mailer.
+     */
     public $mailerComponent;
 
-	/**
-	 * @var string
-	 */
-    protected $fromName;
+    /** @var string */
+    protected $fromName = '';
 
-	/**
-	 * @var string
-	 */
-    protected $fromEmail;
+    /** @var string */
+    protected $fromEmail = '';
 
-	/**
-	 * @var string
-	 */
-    protected $toName;
+    /** @var string */
+    protected $toName = '';
 
-	/**
-	 * @var string
-	 */
-    protected $toEmail;
+    /** @var string */
+    protected $toEmail = '';
 
-	/**
-	 * @var string
-	 */
-    protected $subject;
+    /** @var string */
+    protected $subject = '';
 
-	/**
-	 * @var string
-	 */
-    protected $body;
+    /** @var string */
+    protected $body = '';
 
-	/**
-	 * Send Email
-	 *
-	 * @return bool
-	 * @throws InvalidConfigException
-	 */
+    public function setFromName($value)
+    {
+        $this->fromName = (string)$value;
+    }
+
+    public function setFromEmail($value)
+    {
+        $this->fromEmail = (string)$value;
+    }
+
+    public function setToName($value)
+    {
+        $this->toName = (string)$value;
+    }
+
+    public function setToEmail($value)
+    {
+        $this->toEmail = (string)$value;
+    }
+
+    public function setSubject($value)
+    {
+        $this->subject = (string)$value;
+    }
+
+    public function setBody($value)
+    {
+        $this->body = (string)$value;
+    }
+
+    /**
+     * Send the configured email.
+     *
+     * @return bool
+     * @throws InvalidConfigException
+     */
     protected function sendEmail()
     {
-        $mailer = $this->mailerComponent === null ? Yii::$app->mailer : Yii::$app->get($this->mailerComponent);
+        if ($this->fromEmail === '' || $this->toEmail === '') {
+            throw new InvalidConfigException('Both fromEmail and toEmail must be configured before sending mail.');
+        }
+
+        /** @var BaseMailer $mailer */
+        $mailer = $this->mailerComponent === null
+            ? Yii::$app->mailer
+            : Yii::$app->get($this->mailerComponent);
+
+        $from = $this->fromName !== '' ? [$this->fromEmail => $this->fromName] : $this->fromEmail;
+        $to = $this->toName !== '' ? [$this->toEmail => $this->toName] : $this->toEmail;
 
         return $mailer->compose()
-            ->setTo('giando.olini@gogodigital.it')
-            ->setFrom('info@gogodigital.it')
-            ->setSubject('Test email')
-            ->setTextBody('Lorem ipsum')
+            ->setTo($to)
+            ->setFrom($from)
+            ->setSubject($this->subject)
+            ->setTextBody($this->body)
             ->send();
     }
 
     /**
-     * Set body variables
+     * Hook for subclasses that need to derive body variables.
      *
      * @return string
      */

@@ -25,7 +25,7 @@ use yii\helpers\Url;
  */
 trait ParentTrait
 {
-    public static function rules()
+    public function getParentRules()
     {
         return [
             [['parent_id'], 'integer'],
@@ -34,21 +34,11 @@ trait ParentTrait
         ];
     }
 
-    public function getParentRules()
-    {
-        return static::rules();
-    }
-
-    public static function attributeLabels()
+    public function getParentAttributeLabels()
     {
         return [
             'parent_id' => Yii::t('traits', 'Parent'),
         ];
-    }
-
-    public function getParentAttributeLabels()
-    {
-        return static::attributeLabels();
     }
 
     /**
@@ -94,9 +84,7 @@ trait ParentTrait
         }
     }
 
-    /**
-     * Direct parent relation.
-     */
+    /** Direct parent relation. */
     public function getParent()
     {
         return $this->hasOne(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
@@ -104,10 +92,6 @@ trait ParentTrait
 
     /**
      * Return the ancestor chain, nearest parent first.
-     *
-     * `getParents()` historically exposed a duplicate one-level relation. It is
-     * kept as a compatibility alias for the semantically explicit
-     * `getAncestors()` method.
      *
      * @param int $limit Safety bound for malformed legacy hierarchies.
      * @return array
@@ -138,11 +122,7 @@ trait ParentTrait
         return $ancestors;
     }
 
-    /**
-     * Backwards-compatible plural accessor for ancestors.
-     *
-     * @return array
-     */
+    /** @return array */
     public function getParents()
     {
         return $this->getAncestors();

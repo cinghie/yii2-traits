@@ -4,13 +4,16 @@ namespace cinghie\traits;
 
 use Yii;
 use cinghie\traits\services\AttachmentService;
+use cinghie\traits\services\RuntimeConfig;
 use cinghie\traits\ui\AttachmentUi;
+use yii\base\InvalidConfigException;
 
 /**
  * Trait AttachmentTrait
  *
  * Model-facing attachment behavior. Filesystem/media operations are delegated
- * to AttachmentService and presentation helpers to AttachmentUi.
+ * to AttachmentService, runtime configuration to RuntimeConfig, and
+ * presentation helpers to AttachmentUi.
  *
  * @property string $extension
  * @property string $filename
@@ -54,11 +57,49 @@ trait AttachmentTrait
         return new AttachmentService();
     }
 
+    protected function getAttachmentPathConfig()
+    {
+        $path = RuntimeConfig::get($this, 'attachPath', null, 'attachPath');
+        if (!$path) {
+            throw new InvalidConfigException('Attachment path is not configured.');
+        }
+
+        return Yii::getAlias($path);
+    }
+
+    protected function getAttachmentUrlConfig()
+    {
+        $url = RuntimeConfig::get($this, 'attachURL', '', 'attachURL');
+        return $url ? Yii::getAlias($url) : '';
+    }
+
+    protected function getFfmpegOptions()
+    {
+        $configured = RuntimeConfig::get($this, 'ffmpegOptions', null);
+        if (is_array($configured)) {
+            return $configured;
+        }
+
+        $ffmpeg = RuntimeConfig::get($this, 'ffmpegBinary', null);
+        $ffprobe = RuntimeConfig::get($this, 'ffprobeBinary', null);
+        if ($ffmpeg || $ffprobe) {
+            $options = [];
+            if ($ffmpeg) {
+                $options['ffmpeg.binaries'] = $ffmpeg;
+            }
+            if ($ffprobe) {
+                $options['ffprobe.binaries'] = $ffprobe;
+            }
+            return $options;
+        }
+
+        return [];
+    }
+
     public function getFileUrl()
     {
-        return Yii::$app->controller->module->attachURL
-            ? Yii::getAlias(Yii::$app->controller->module->attachURL).$this->filename
-            : '';
+        $baseUrl = $this->getAttachmentUrlConfig();
+        return $baseUrl ? $baseUrl . $this->filename : '';
     }
 
     public function getVideoThumb()
@@ -68,8 +109,7 @@ trait AttachmentTrait
 
     public function deleteFile()
     {
-        $basePath = Yii::getAlias(Yii::$app->controller->module->attachPath);
-        return $this->getAttachmentService()->deleteFile($basePath, $this->filename);
+        return $this->getAttachmentService()->deleteFile($this->getAttachmentPathConfig(), $this->filename);
     }
 
     public static function getID3Info($attachPath)
@@ -84,23 +124,7 @@ trait AttachmentTrait
 
     public function createVideoThumb($attachPath, $sec = 3)
     {
-        $ffmpegOptions = [];
-        $operationSystem = PHP_OS;
-
-        if (strpos($operationSystem, 'Windows') !== false || strpos($operationSystem, 'WIN') !== false) {
-            $ffmpegOptions = [
-                'ffmpeg.binaries' => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffmpeg.exe'),
-                'ffprobe.binaries' => Yii::getAlias('@vendor/cinghie/yii2-traits/vendor/ffmpeg/windows/ffprobe.exe'),
-            ];
-        }
-        if (strpos($operationSystem, 'Linux') !== false) {
-            $ffmpegOptions = [
-                'ffmpeg.binaries' => '/usr/bin/ffmpeg',
-                'ffprobe.binaries' => '/usr/bin/ffprobe',
-            ];
-        }
-
-        return $this->getAttachmentService()->createVideoThumb($attachPath, $sec, $ffmpegOptions);
+        return $this->getAttachmentService()->createVideoThumb($attachPath, $sec, $this->getFfmpegOptions());
     }
 
     public function getAttachmentType()

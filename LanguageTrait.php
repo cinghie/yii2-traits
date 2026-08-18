@@ -26,24 +26,6 @@ use yii\base\Model;
  */
 trait LanguageTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., LanguageTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getLanguageRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return [
-            [['language'], 'string', 'max' => 7],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getLanguageRules()
     {
         return [
@@ -51,26 +33,6 @@ trait LanguageTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getLanguageAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'language' => Yii::t('traits', 'Language'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
     public function getLanguageAttributeLabels()
     {
         return [
@@ -78,32 +40,14 @@ trait LanguageTrait
         ];
     }
 
-    /**
-	 * Get language code (only 2 chars)
-	 *
-	 * @return string
-	 */
     public function getLang() {
         return substr($this->language,0,2);
     }
 
-    /**
-     * Get language tag (5 chars)
-     *
-     * @return string
-     */
     public function getLangTag() {
         return $this->language;
     }
 
-	/**
-	 * Generate Language Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getLanguageWidget($form)
     {
 	    /** @var $this Model */
@@ -117,11 +61,6 @@ trait LanguageTrait
         ]);
     }
 
-    /**
-     * Return an array with languages allowed
-     *
-     * @return array
-     */
     public static function getLanguagesSelect2()
     {
         $languages = Yii::$app->urlManager->languages;
@@ -135,13 +74,6 @@ trait LanguageTrait
         return $array;
     }
 
-	/**
-	 * Return an array with languages allowed
-	 *
-	 * @param bool $showOnlyDefault
-	 *
-	 * @return array
-	 */
 	public static function getLanguagesFilterSelect2($showOnlyDefault = false)
 	{
 		$languages = Yii::$app->urlManager->languages;
@@ -154,9 +86,7 @@ trait LanguageTrait
 
 		$array = [];
 
-		/**
-		 * @var array $languages
-		 */
+		/** @var array $languages */
 		foreach($languages as $language)
 		{
 			if($language === $languageDefault) {

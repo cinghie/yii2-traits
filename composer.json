@@ -78,6 +78,9 @@
         "test": "phpunit -c tests/phpunit.xml --fail-on-warning"
     },
     "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        },
         "platform": {
             "php": "7.4.33"
         },

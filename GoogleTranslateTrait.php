@@ -12,6 +12,7 @@
 
 namespace cinghie\traits;
 
+use cinghie\traits\services\RuntimeConfig;
 use Google\Cloud\Translate\TranslateClient;
 use RuntimeException;
 use Throwable;
@@ -40,8 +41,8 @@ trait GoogleTranslateTrait
             ));
         }
 
-        if (!$apiKey && Yii::$app !== null && Yii::$app->controller !== null && Yii::$app->controller->module !== null) {
-            $apiKey = Yii::$app->controller->module->googleTranslateApiKey;
+        if (!$apiKey) {
+            $apiKey = (string)RuntimeConfig::get($this, 'googleTranslateApiKey', '', 'googleTranslateApiKey');
         }
 
         $lang = str_replace(['ch', 'pr'], ['zh', 'pt'], $lang);
@@ -63,7 +64,7 @@ trait GoogleTranslateTrait
         } catch (Throwable $e) {
             $message = $this->formatGoogleTranslateError($e);
 
-            if (Yii::$app !== null && Yii::$app->has('session')) {
+            if (Yii::$app !== null && method_exists(Yii::$app, 'has') && Yii::$app->has('session')) {
                 Yii::$app->session->setFlash('error', $message);
             }
 

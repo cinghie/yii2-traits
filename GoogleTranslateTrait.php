@@ -12,9 +12,9 @@
 
 namespace cinghie\traits;
 
-use Exception;
 use Google\Cloud\Translate\TranslateClient;
 use RuntimeException;
+use Throwable;
 use Yii;
 
 /**
@@ -22,58 +22,75 @@ use Yii;
  */
 trait GoogleTranslateTrait
 {
-	/**
-	 * Get Translation from Google Cloud Translate
-	 *
-	 * @param string $apiKey
-	 * @param string $lang
-	 * @param string $text
-	 *
-	 * @return string
-	 */
-	public function getGoogleCloudTranslation($apiKey = '', $lang = '', $text = '')
-	{
-		if (!class_exists(TranslateClient::class)) {
-			throw new RuntimeException(Yii::t(
-				'traits',
-				'Google Cloud Translate is not installed. Install a version compatible with your PHP runtime.'
-			));
-		}
+    /**
+     * Get Translation from Google Cloud Translate.
+     *
+     * @param string $apiKey
+     * @param string $lang
+     * @param string $text
+     *
+     * @return string
+     */
+    public function getGoogleCloudTranslation($apiKey = '', $lang = '', $text = '')
+    {
+        if (!class_exists(TranslateClient::class)) {
+            throw new RuntimeException(Yii::t(
+                'traits',
+                'Google Cloud Translate is not installed. Install a version compatible with your PHP runtime.'
+            ));
+        }
 
-		// Get API Key from current Module
-		if(!$apiKey) {
-			$apiKey = Yii::$app->controller->module->googleTranslateApiKey;
-		}
+        if (!$apiKey && Yii::$app !== null && Yii::$app->controller !== null && Yii::$app->controller->module !== null) {
+            $apiKey = Yii::$app->controller->module->googleTranslateApiKey;
+        }
 
-		// Purge Chinese languagecode
-		$lang = str_replace(['ch','pr'],['zh','pt'], $lang);
+        $lang = str_replace(['ch', 'pr'], ['zh', 'pt'], $lang);
 
-		// Create Translation Client Request
-		$translate = new TranslateClient([
-			'key' => $apiKey
-		]);
+        $translate = new TranslateClient([
+            'key' => $apiKey,
+        ]);
 
-		if($text)
-		{
-			try {
+        if (!$text) {
+            return '';
+        }
 
-				$translation = $translate->translate($text,[
-					'target' => $lang
-				]);
+        try {
+            $translation = $translate->translate($text, [
+                'target' => $lang,
+            ]);
 
-				return $translation['text'];
+            return isset($translation['text']) ? (string)$translation['text'] : '';
+        } catch (Throwable $e) {
+            $message = $this->formatGoogleTranslateError($e);
 
-			} catch (Exception $e) {
+            if (Yii::$app !== null && Yii::$app->has('session')) {
+                Yii::$app->session->setFlash('error', $message);
+            }
 
-				$error = json_decode($e->getMessage(),false)->error;
-				$message = $error->status . ' - Error ' . $error->code . ': ' . $error->message;
+            return '';
+        }
+    }
 
-				Yii::$app->session->setFlash('error', $message);
+    /**
+     * Convert Google JSON errors and ordinary transport/runtime exceptions into
+     * a safe human-readable message without throwing a second exception.
+     *
+     * @param Throwable $e
+     * @return string
+     */
+    protected function formatGoogleTranslateError(Throwable $e)
+    {
+        $decoded = json_decode($e->getMessage());
+        if (is_object($decoded) && isset($decoded->error) && is_object($decoded->error)) {
+            $status = isset($decoded->error->status) ? $decoded->error->status : 'UNKNOWN';
+            $code = isset($decoded->error->code) ? $decoded->error->code : $e->getCode();
+            $message = isset($decoded->error->message) ? $decoded->error->message : $e->getMessage();
 
-				return $error;
-			}
-		}
+            return $status . ' - Error ' . $code . ': ' . $message;
+        }
 
-		return '';
-	}
+        return $e->getMessage() !== ''
+            ? $e->getMessage()
+            : Yii::t('traits', 'Google Cloud Translate request failed.');
+    }
 }

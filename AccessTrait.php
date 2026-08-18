@@ -31,21 +31,8 @@ use yii\helpers\Url;
 trait AccessTrait
 {
     /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., AccessTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getAccessRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return  [
-            [['access'], 'string', 'max' => 64],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
+     * Trait-specific validation rules to be merged by the consuming Yii model.
+     *
      * @return array
      */
     public function getAccessRules()
@@ -56,23 +43,8 @@ trait AccessTrait
     }
 
     /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getAccessAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'access' => Yii::t('traits', 'Access'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
+     * Trait-specific attribute labels to be merged by the consuming Yii model.
+     *
      * @return array
      */
     public function getAccessAttributeLabels()

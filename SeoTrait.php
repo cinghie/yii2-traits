@@ -33,6 +33,7 @@ use yii\base\Model;
  */
 trait SeoTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getSeoRules()
     {
         return [
@@ -42,6 +43,7 @@ trait SeoTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getSeoAttributeLabels()
     {
         return [

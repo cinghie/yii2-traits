@@ -34,25 +34,6 @@ use yii\helpers\Url;
  */
 trait UserTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., UserTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getUserRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return [
-            [['user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getUserRules()
     {
         return [
@@ -61,26 +42,6 @@ trait UserTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getUserAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'user_id' => Yii::t('traits', 'User Id'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
     public function getUserAttributeLabels()
     {
         return [
@@ -88,25 +49,14 @@ trait UserTrait
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
+    /** @return ActiveQuery */
     public function getUser()
     {
         /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
-	/**
-	 * Generate User Form Widget
-	 *
-	 * @param ActiveForm $form
-	 * @param boolean $disabled
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
-    public function getUserWidget($form,$disabled = false)
+	public function getUserWidget($form,$disabled = false)
     {
         if($disabled)
         {
@@ -135,12 +85,6 @@ trait UserTrait
 	    ]);
     }
 
-    /**
-     * Generate GridView for User
-     *
-     * @return string
-     * @throws InvalidParamException
-     */
     public function getUserGridView()
     {
         if (isset($this->user->id)) {
@@ -151,12 +95,6 @@ trait UserTrait
 	    return '<span class="fa fa-ban text-danger"></span>';
     }
 
-    /**
-     * Generate DetailView for User
-     *
-     * @return array
-     * @throws InvalidParamException
-     */
     public function getUserDetailView()
     {
         return [

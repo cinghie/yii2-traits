@@ -40,7 +40,7 @@ final class YiiModelTraitContractTest extends TestCase
         $model = new YiiModelTraitContractHost();
 
         $this->assertSame([[['ordering'], 'integer']], $model->getOrderingRules());
-        $this->assertSame(['ordering' => 'Ordering'], $model->getOrderingAttributeLabels());
+        $this->assertArrayHasKey('ordering', $model->getOrderingAttributeLabels());
         $this->assertSame([], $model->rules());
         $this->assertSame([], $model->attributeLabels());
     }

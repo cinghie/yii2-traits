@@ -26,6 +26,7 @@ use yii\base\Model;
  */
 trait LanguageTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getLanguageRules()
     {
         return [
@@ -33,6 +34,7 @@ trait LanguageTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getLanguageAttributeLabels()
     {
         return [

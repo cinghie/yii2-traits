@@ -23,6 +23,7 @@ use yii\base\InvalidParamException;
  */
 trait TaggableTrait
 {
+	/** Attach the taggable behavior. */
 	public function behaviors()
 	{
 		return [
@@ -32,6 +33,7 @@ trait TaggableTrait
 		];
 	}
 
+	/** Validation rules contributed by this trait. */
 	public function getTaggableRules()
 	{
 		return [
@@ -39,6 +41,7 @@ trait TaggableTrait
 		];
 	}
 
+	/** Attribute labels contributed by this trait. */
 	public function getTaggableAttributeLabels()
 	{
 		return [
@@ -46,6 +49,7 @@ trait TaggableTrait
 		];
 	}
 
+	/** Return the tags configuration for DetailView. */
 	public function getTagsDetailView()
 	{
 		return [

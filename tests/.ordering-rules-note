@@ -1,0 +1,2 @@
+OrderingTrait intentionally exposes getOrderingRules() rather than rules().
+Models using the trait should merge getOrderingRules() into their own instance rules() method when needed.

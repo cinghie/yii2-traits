@@ -22,7 +22,30 @@ It contains a large number of features already implemented:
 - PHP 7.4 or later
 - Yii 2.0
 
-`GoogleTranslateTrait` is optional. Install a `google/cloud-translate` release compatible with the PHP runtime only when that trait is used.
+The base package intentionally keeps runtime requirements minimal. Composer installs only PHP and Yii2 requirements by default. Feature-specific integrations are optional and must be installed explicitly when the corresponding trait functionality is used.
+
+### Optional dependencies
+
+| Package | Required for |
+| --- | --- |
+| `2amigos/yii2-ckeditor-widget` | CKEditor support in `EditorTrait` |
+| `2amigos/yii2-taggable-behavior` | `TaggableTrait` |
+| `2amigos/yii2-tinymce-widget` | TinyMCE support in `EditorTrait` |
+| `cinghie/yii2-user-extended` | `UserHelpersTrait` integrations based on yii2-user-extended |
+| `cocur/slugify` | Slug generation in `NameAliasTrait` and `TitleAliasTrait` |
+| `dektrium/yii2-user` | `CreatedTrait`, `ModifiedTrait` and `UserTrait` user relations |
+| `google/cloud-translate` | `GoogleTranslateTrait` |
+| `james-heinrich/getid3` | Attachment/media metadata in `AttachmentTrait` |
+| `kartik-v/yii2-detail-view` | DetailView helpers exposed by UI-oriented traits |
+| `kartik-v/yii2-helpers` | Helpers that render Kartik HTML helpers |
+| `kartik-v/yii2-markdown` | Markdown editor support in `EditorTrait` |
+| `kartik-v/yii2-mpdf` | `PDFTrait` |
+| `kartik-v/yii2-social` | `SocialTrait` |
+| `kartik-v/yii2-widgets` | Kartik form widgets such as Select2, DateTimePicker and FileInput |
+| `php-ffmpeg/php-ffmpeg` | Video thumbnail generation in `AttachmentTrait` |
+| `vova07/yii2-imperavi-widget` | Imperavi support in `EditorTrait` |
+
+Composer also exposes these integrations through the package `suggest` metadata.
 
 ## Installation
 
@@ -40,9 +63,15 @@ or add
 "cinghie/yii2-traits": "*"
 ```
 
+This installs the minimal runtime package. Install only the optional packages required by the traits and integrations used by your application. For example:
+
+```
+$ php composer.phar require cocur/slugify kartik-v/yii2-widgets
+```
+
 ## Configuration
 
-Add in your configuration file the translations
+Add in your configuration file the translations:
 
 ```	
 'components' => [ 
@@ -58,20 +87,19 @@ Add in your configuration file the translations
     ],
                    	
 ],
-'modules' => [ 
-    
-    // Module Kartik-v Grid
-    'gridview' =>  [
-        'class' => '\kartik\grid\Module',
-    ],
+```
 
-    // Module Kartik-v Markdown Editor
+If Markdown support from `EditorTrait` is used, install `kartik-v/yii2-markdown` and add the Kartik Markdown module as required by that package:
+
+```
+'modules' => [
     'markdown' => [
         'class' => 'kartik\markdown\Module',
     ],
-    
 ],
 ```
+
+No Kartik Grid module is required by `yii2-traits` itself.
 
 ## Usage Example
 
@@ -135,6 +163,8 @@ if( $model->isCurrentUserCreator() ) {
 
 ### AttachmentTrait
 
+Optional integrations: `kartik-v/yii2-widgets`, `james-heinrich/getid3`, and `php-ffmpeg/php-ffmpeg` depending on the methods used.
+
     - string $extension
     - string $filename
     - string $mimetype
@@ -162,6 +192,8 @@ if( $model->isCurrentUserCreator() ) {
 
 ### CreatedTrait
 
+Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
+
     - string $created
     - int $created_by
     - User $createdBy
@@ -176,6 +208,8 @@ if( $model->isCurrentUserCreator() ) {
   
 ### EditorTrait
 
+Install only the editor integrations you use: `2amigos/yii2-ckeditor-widget`, `2amigos/yii2-tinymce-widget`, `vova07/yii2-imperavi-widget`, or `kartik-v/yii2-markdown`.
+
     - function getEditorWidget($form, $field, $requestEditor = '', $value = ''): Generate Editor Widget
     - function getCKEditorWidget($form, $field, $value, $options, $preset): Get a CKEditor Editor Widget
     - function getImperaviWidget($form, $field, $value, $options, $plugins): Get a Imperavi Editor Widget
@@ -184,6 +218,8 @@ if( $model->isCurrentUserCreator() ) {
     - function getTinyMCEWidget($form, $field, $value, $options): Get a TinyMCE Editor Widget
 
 ### ImageTrait
+
+UI helpers require `kartik-v/yii2-widgets`.
 
     - string $image
     - string $image_caption
@@ -198,6 +234,8 @@ if( $model->isCurrentUserCreator() ) {
     
 ### LanguageTrait
 
+UI helpers require `kartik-v/yii2-widgets`.
+
     - string $language
     - function getLang(): Get language code (2 chars)
     - function getLangTag(): Get language tag (5 chars)
@@ -205,6 +243,8 @@ if( $model->isCurrentUserCreator() ) {
     - function getLanguagesSelect2(): Return an array with languages allowed
 
 ### ModifiedTrait
+
+Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
 
     - string $modified
     - int $modified_by
@@ -220,6 +260,8 @@ if( $model->isCurrentUserCreator() ) {
 
 ### NameAliasTrait
 
+Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widgets`.
+
     - string $alias
     - string $name
     - function generateAlias($name): Generate URL alias by string
@@ -229,6 +271,8 @@ if( $model->isCurrentUserCreator() ) {
     - function getAliasWidget($form): Generate Alias Form Widget
     
 ### OrderingTrait
+
+UI helpers require `kartik-v/yii2-widgets`.
 
     - integer $ordering
     - function setOrdering($class,$fieldOrdering,$oldOrdering,$lastOrdering): Set Model Ordering on Class
@@ -240,11 +284,15 @@ if( $model->isCurrentUserCreator() ) {
     
 ### ParentTrait      
 
+UI helpers require `kartik-v/yii2-widgets`.
+
     - int $parent_id
     - getParentWidget($form, $items): Generate Parent Form Widget
     - getParentGridView($field, $url, $hideItem): Generate Parent Grid View
  
 ### SeoTrait    
+
+UI helpers require `kartik-v/yii2-widgets`.
 
     - string $robots
     - string $author
@@ -264,6 +312,8 @@ if( $model->isCurrentUserCreator() ) {
     
 ### StateTrait
 
+UI helpers require `kartik-v/yii2-widgets` and DetailView helpers require `kartik-v/yii2-detail-view`.
+
     - int $state
     - function active(): Active model state (Set 1)
     - function deactive():  Inactive model state (Set 0)
@@ -274,10 +324,14 @@ if( $model->isCurrentUserCreator() ) {
     
 ### TaggableTrait
 
+Requires `2amigos/yii2-taggable-behavior`.
+
     - int $tagNames
     - function getTagsDetailView(): Generate DetailView for Tags
     
 ### TitleAliasTrait
+
+Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widgets`.
 
     - string $alias
     - string $title  
@@ -289,6 +343,8 @@ if( $model->isCurrentUserCreator() ) {
 
 ### UserHelperTrait
 
+Requires `cinghie/yii2-user-extended`.
+
     - function getUserByEmail($email): Get the User by user email
     - function getCurrentUser($field = ''): Get current User or Current User field
     - function getCurrentUserProfile($field = ''):  Get current User Profile object or fied if on param
@@ -298,6 +354,8 @@ if( $model->isCurrentUserCreator() ) {
     
 ### UserTrait
 
+Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
+
     - int $user_id
     - User user
     - function getUser(): Relation with User Model    
@@ -306,6 +364,8 @@ if( $model->isCurrentUserCreator() ) {
     - function getUserDetailView(): Generate DetailView for User
     
 ### VideoTrait
+
+UI helpers require `kartik-v/yii2-widgets`.
 
     - string $video
     - string $video_caption
@@ -318,6 +378,8 @@ if( $model->isCurrentUserCreator() ) {
     - function getVideoCreditsWidget($form): Generate Video Credits Form Widget
     
 ### ViewsHelperTrait
+
+Some helpers use `kartik-v/yii2-helpers` and `kartik-v/yii2-detail-view`.
 
     - function getCreateButton(array $url = ['create']): Return action create button
     - function getUpdateButton($id = 0): Return action update button

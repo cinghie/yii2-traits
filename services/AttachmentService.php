@@ -86,8 +86,16 @@ final class AttachmentService
         return str_replace(["/'/", '’', '"', ':', ';', ',', '.', ' ', '__'], '_', $attachName);
     }
 
+    /**
+     * Generate a non-predictable filename while preserving the public legacy
+     * method name.
+     */
     public function generateMd5FileName($filename, $extension)
     {
-        return md5(uniqid($filename, false)).'.'.$extension;
+        unset($filename); // Kept in the signature for backwards compatibility.
+        $extension = ltrim((string)$extension, '.');
+        $randomName = bin2hex(random_bytes(16));
+
+        return $extension === '' ? $randomName : $randomName . '.' . $extension;
     }
 }

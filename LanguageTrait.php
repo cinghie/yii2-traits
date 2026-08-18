@@ -28,12 +28,16 @@ trait LanguageTrait
 {
     public function getLanguageRules()
     {
-        return [[['language'], 'string', 'max' => 7]];
+        return [
+            [['language'], 'string', 'max' => 7],
+        ];
     }
 
     public function getLanguageAttributeLabels()
     {
-        return ['language' => Yii::t('traits', 'Language')];
+        return [
+            'language' => Yii::t('traits', 'Language'),
+        ];
     }
 
     /**
@@ -67,7 +71,11 @@ trait LanguageTrait
 	    /** @var $this Model */
         return $form->field($this, 'language')->widget(Select2::class, [
             'data' => static::getLanguagesSelect2(),
-            'addon' => ['prepend' => ['content'=>'<i class="fa fa-globe"></i>']],
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<i class="fa fa-globe"></i>'
+                ]
+            ],
         ]);
     }
 

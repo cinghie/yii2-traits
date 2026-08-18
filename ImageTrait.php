@@ -32,28 +32,6 @@ use yii\helpers\Url;
  */
 trait ImageTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., ImageTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getImageRules() instance method instead.
-     */
-    public static function rules()
-    {
-        $getimageallowed = self::getImagesAllowed();
-
-        return [
-            [['image_caption', 'image_credits'], 'string', 'max' => 255],
-            [['image'], 'file', 'extensions' => $getimageallowed],
-            [['image'], 'safe'],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getImageRules()
     {
         $getimageallowed = self::getImagesAllowed();
@@ -65,28 +43,6 @@ trait ImageTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getImageAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'image' => Yii::t('traits', 'Image'),
-            'image_caption' => Yii::t('traits', 'Image Caption'),
-            'image_credits' => Yii::t('traits', 'Image Credits'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
     public function getImageAttributeLabels()
     {
         return [
@@ -96,12 +52,6 @@ trait ImageTrait
         ];
     }
 
-    /**
-     * Generate Image Form Widget
-     *
-     * @return string
-     * @throws Exception
-     */
     public function getImageWidget()
     {
         /** @var $this Model */
@@ -130,19 +80,9 @@ trait ImageTrait
         return $image;
     }
 
-	/**
-	 * Generate Image Caption Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getImageCaptionWidget($form)
     {
-	    /**
-	     * @var $this Model
-	     */
+        /** @var $this Model */
         return $form->field($this, 'image_caption', [
             'addon' => [
                 'prepend' => [
@@ -152,19 +92,9 @@ trait ImageTrait
         ])->textInput(['maxlength' => true])->textarea(['rows' => 6]);
     }
 
-	/**
-	 * Generate Image Credits Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getImageCreditsWidget($form)
     {
-	    /**
-	     * @var $this Model
-	     */
+        /** @var $this Model */
         return $form->field($this, 'image_credits', [
             'addon' => [
                 'prepend' => [
@@ -174,46 +104,25 @@ trait ImageTrait
         ])->textInput(['maxlength' => true]);
     }
 
-	/**
-	 * Generate GridView for Image
-	 *
-	 * @return string
-	 * @throws InvalidParamException
-	 */
 	public function getImageGridView()
 	{
 		if ($this->image) {
-			return Html::img($this->getImageThumbUrl( 'small' ),[ 'width' => '36px']);
+			return Html::img($this->getImageThumbUrl('small'), ['width' => '36px']);
 		}
 
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
-    /**
-     * Get Upload Max Size
-     *
-     * @return string
-     */
     public function getUploadMaxSize()
     {
         return ini_get('upload_max_filesize');
     }
 
-    /**
-     * Get Allowed images
-     *
-     * @return array
-     */
     public static function getImagesAllowed()
     {
         return Yii::$app->controller->module->imageType;
     }
 
-    /**
-     * Get Allowed images in Accept Format
-     *
-     * @return array
-     */
     public function getImagesAccept()
     {
         $imageAccept = [];

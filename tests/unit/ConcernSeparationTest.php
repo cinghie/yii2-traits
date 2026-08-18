@@ -88,11 +88,11 @@ final class ConcernAttachmentHost
 
     protected function getAttachmentService()
     {
-        return $this->service ?: parent::getAttachmentService();
+        return $this->service ?: new AttachmentService();
     }
 }
 
-final class ConcernAttachmentService extends AttachmentService
+final class ConcernAttachmentService
 {
     public $calls = 0;
 

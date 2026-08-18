@@ -30,26 +30,6 @@ use yii\base\Model;
  */
 trait VideoTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., VideoTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getVideoRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return [
-            [['video_caption', 'video_credits'], 'string', 'max' => 255],
-            [['video'], 'string', 'max' => 50],
-            [['video_type'], 'string', 'max' => 20],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getVideoRules()
     {
         return [
@@ -59,29 +39,6 @@ trait VideoTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getVideoAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'video' => Yii::t('traits', 'Video ID'),
-            'video_caption' => Yii::t('traits', 'Video Caption'),
-            'video_credits' => Yii::t('traits', 'Video Credits'),
-            'video_type' => Yii::t('traits', 'Video Type'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
     public function getVideoAttributeLabels()
     {
         return [
@@ -92,11 +49,6 @@ trait VideoTrait
         ];
     }
 
-    /**
-     * Return array for Video Type
-     *
-     * @return array
-     */
     public function getVideoTypeSelect2()
     {
 	    return [
@@ -106,14 +58,6 @@ trait VideoTrait
 	    ];
     }
 
-	/**
-	 * Generate Video ID Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getVideoIDWidget($form)
     {
         /** @var $this Model */
@@ -126,14 +70,6 @@ trait VideoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-	/**
-	 * Generate Video Type Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getVideoTypeWidget($form)
     {
         /** @var $this Model | VideoTrait */
@@ -147,14 +83,6 @@ trait VideoTrait
         ]);
     }
 
-	/**
-	 * Generate Video Caption Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getVideoCaptionWidget($form)
     {
         /** @var $this Model */
@@ -167,14 +95,6 @@ trait VideoTrait
         ])->textarea(['maxlength' => true,'rows' => 6]);
     }
 
-	/**
-	 * Generate Video Credits Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getVideoCreditsWidget($form)
     {
         /** @var $this Model */

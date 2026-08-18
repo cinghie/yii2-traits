@@ -6,6 +6,7 @@ use cinghie\traits\OrderingTrait;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionClass;
 use RegexIterator;
 use yii\base\Model;
 
@@ -58,36 +59,47 @@ final class YiiModelTraitContractTest extends TestCase
 
     public function testEveryRemovedYiiModelMethodHasTraitHelpers(): void
     {
-        $root = dirname(__DIR__, 2);
-        $missing = [];
+        $invalid = [];
 
-        foreach (self::HELPER_PAIRS as $file => [$rulesMethod, $labelsMethod]) {
-            $source = file_get_contents($root . DIRECTORY_SEPARATOR . $file);
-            foreach ([$rulesMethod, $labelsMethod] as $method) {
-                if (!preg_match('/public\s+function\s+' . preg_quote($method, '/') . '\s*\(/', $source)) {
-                    $missing[] = $file . '::' . $method . '()';
+        foreach (self::HELPER_PAIRS as $file => $methods) {
+            $reflection = $this->traitReflection($file);
+            foreach ($methods as $method) {
+                if (!$reflection->hasMethod($method)) {
+                    $invalid[] = $file . '::' . $method . '() missing';
+                    continue;
+                }
+
+                $methodReflection = $reflection->getMethod($method);
+                if (!$methodReflection->isPublic()) {
+                    $invalid[] = $file . '::' . $method . '() must be public';
+                }
+                if ($methodReflection->isStatic()) {
+                    $invalid[] = $file . '::' . $method . '() must be an instance method';
                 }
             }
         }
 
-        $this->assertSame([], $missing, 'Missing trait composition helpers: ' . implode(', ', $missing));
+        $this->assertSame([], $invalid, 'Invalid trait composition helpers: ' . implode(', ', $invalid));
     }
 
     public function testTraitHelpersHaveConciseDocblocks(): void
     {
-        $root = dirname(__DIR__, 2);
         $invalid = [];
 
         foreach (self::HELPER_PAIRS as $file => $methods) {
-            $source = file_get_contents($root . DIRECTORY_SEPARATOR . $file);
+            $reflection = $this->traitReflection($file);
             foreach ($methods as $method) {
-                $pattern = '/(\/\*\*.*?\*\/)\s*public\s+function\s+' . preg_quote($method, '/') . '\s*\(/s';
-                if (!preg_match($pattern, $source, $matches)) {
+                if (!$reflection->hasMethod($method)) {
+                    continue;
+                }
+
+                $docblock = $reflection->getMethod($method)->getDocComment();
+                if ($docblock === false) {
                     $invalid[] = $file . '::' . $method . '() missing docblock';
                     continue;
                 }
 
-                if (substr_count($matches[1], "\n") > 6) {
+                if (substr_count($docblock, "\n") > 6) {
                     $invalid[] = $file . '::' . $method . '() docblock is too long';
                 }
             }
@@ -104,6 +116,15 @@ final class YiiModelTraitContractTest extends TestCase
         $this->assertArrayHasKey('ordering', $model->getOrderingAttributeLabels());
         $this->assertSame([], $model->rules());
         $this->assertSame([], $model->attributeLabels());
+    }
+
+    private function traitReflection(string $file): ReflectionClass
+    {
+        $class = 'cinghie\\traits\\' . substr($file, 0, -4);
+        $reflection = new ReflectionClass($class);
+        $this->assertTrue($reflection->isTrait(), $class . ' must remain a trait.');
+
+        return $reflection;
     }
 }
 

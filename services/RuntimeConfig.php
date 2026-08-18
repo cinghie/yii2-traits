@@ -33,13 +33,11 @@ final class RuntimeConfig
         }
 
         $legacyModuleKey = $legacyModuleKey ?: $key;
-        if (
-            Yii::$app !== null
-            && Yii::$app->controller !== null
-            && Yii::$app->controller->module !== null
-            && isset(Yii::$app->controller->module->$legacyModuleKey)
-        ) {
-            return Yii::$app->controller->module->$legacyModuleKey;
+        if (Yii::$app !== null && isset(Yii::$app->controller) && Yii::$app->controller !== null) {
+            $controller = Yii::$app->controller;
+            if (isset($controller->module) && $controller->module !== null && isset($controller->module->$legacyModuleKey)) {
+                return $controller->module->$legacyModuleKey;
+            }
         }
 
         return $default;

@@ -12,15 +12,9 @@
 
 namespace cinghie\traits;
 
-use Exception;
 use Yii;
-use kartik\detail\DetailView;
-use kartik\form\ActiveField;
-use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
-use yii\base\InvalidParamException;
 use yii\base\Model;
-use yii\db\ActiveQuery;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -31,135 +25,172 @@ use yii\helpers\Url;
  */
 trait ParentTrait
 {
-	public static function rules()
-	{
-		return [
-			[['parent_id'], 'integer'],
-			[['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
-			[['parent_id'], 'validateParentHierarchy'],
-		];
-	}
+    public static function rules()
+    {
+        return [
+            [['parent_id'], 'integer'],
+            [['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
+            [['parent_id'], 'validateParentHierarchy'],
+        ];
+    }
 
-	public function getParentRules()
-	{
-		return [
-			[['parent_id'], 'integer'],
-			[['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
-			[['parent_id'], 'validateParentHierarchy'],
-		];
-	}
+    public function getParentRules()
+    {
+        return static::rules();
+    }
 
-	public static function attributeLabels()
-	{
-		return [
-			'parent_id' => Yii::t('traits', 'Parent'),
-		];
-	}
+    public static function attributeLabels()
+    {
+        return [
+            'parent_id' => Yii::t('traits', 'Parent'),
+        ];
+    }
 
-	public function getParentAttributeLabels()
-	{
-		return [
-			'parent_id' => Yii::t('traits', 'Parent'),
-		];
-	}
+    public function getParentAttributeLabels()
+    {
+        return static::attributeLabels();
+    }
 
-	/**
-	 * Prevent self-parenting and cycles in the ancestor chain.
-	 *
-	 * @param string $attribute
-	 */
-	public function validateParentHierarchy($attribute)
-	{
-		$parentId = $this->$attribute;
-		if ($parentId === null || $parentId === '' || (int)$parentId === 0) {
-			return;
-		}
+    /**
+     * Prevent self-parenting and cycles in the ancestor chain.
+     *
+     * @param string $attribute
+     */
+    public function validateParentHierarchy($attribute)
+    {
+        $parentId = $this->$attribute;
+        if ($parentId === null || $parentId === '' || (int)$parentId === 0) {
+            return;
+        }
 
-		$currentId = isset($this->id) ? (int)$this->id : 0;
-		if ($currentId && (int)$parentId === $currentId) {
-			$this->addError($attribute, Yii::t('traits', 'An item cannot be its own parent.'));
-			return;
-		}
+        $currentId = isset($this->id) ? (int)$this->id : 0;
+        if ($currentId && (int)$parentId === $currentId) {
+            $this->addError($attribute, Yii::t('traits', 'An item cannot be its own parent.'));
+            return;
+        }
 
-		$modelClass = static::class;
-		$visited = [];
-		$ancestorId = (int)$parentId;
+        $modelClass = static::class;
+        $visited = [];
+        $ancestorId = (int)$parentId;
 
-		while ($ancestorId > 0) {
-			if (isset($visited[$ancestorId])) {
-				$this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
-				return;
-			}
-			$visited[$ancestorId] = true;
+        while ($ancestorId > 0) {
+            if (isset($visited[$ancestorId])) {
+                $this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
+                return;
+            }
+            $visited[$ancestorId] = true;
 
-			if ($currentId && $ancestorId === $currentId) {
-				$this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
-				return;
-			}
+            if ($currentId && $ancestorId === $currentId) {
+                $this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
+                return;
+            }
 
-			$ancestor = $modelClass::find()->select(['id', 'parent_id'])->where(['id' => $ancestorId])->one();
-			if ($ancestor === null) {
-				return;
-			}
+            $ancestor = $modelClass::find()->select(['id', 'parent_id'])->where(['id' => $ancestorId])->one();
+            if ($ancestor === null) {
+                return;
+            }
 
-			$ancestorId = (int)$ancestor->parent_id;
-		}
-	}
+            $ancestorId = (int)$ancestor->parent_id;
+        }
+    }
 
-	public function getParent()
-	{
-		return $this->hasOne(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
-	}
+    /**
+     * Direct parent relation.
+     */
+    public function getParent()
+    {
+        return $this->hasOne(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
+    }
 
-	public function getParents()
-	{
-		return $this->hasMany(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
-	}
+    /**
+     * Return the ancestor chain, nearest parent first.
+     *
+     * `getParents()` historically exposed a duplicate one-level relation. It is
+     * kept as a compatibility alias for the semantically explicit
+     * `getAncestors()` method.
+     *
+     * @param int $limit Safety bound for malformed legacy hierarchies.
+     * @return array
+     */
+    public function getAncestors($limit = 100)
+    {
+        $limit = max(1, (int)$limit);
+        $modelClass = static::class;
+        $ancestors = [];
+        $visited = [];
+        $ancestorId = (int)$this->parent_id;
 
-	public function getChild()
-	{
-		return $this->hasOne(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
-	}
+        while ($ancestorId > 0 && count($ancestors) < $limit) {
+            if (isset($visited[$ancestorId])) {
+                break;
+            }
+            $visited[$ancestorId] = true;
 
-	public function getChilds()
-	{
-		return $this->hasMany(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
-	}
+            $ancestor = $modelClass::find()->where(['id' => $ancestorId])->one();
+            if ($ancestor === null) {
+                break;
+            }
 
-	public function getParentWidget($form,$items)
-	{
-		/** @var $this Model */
-		return $form->field($this, 'parent_id')->widget(Select2::class, [
-			'data' => $items,
-			'addon' => [
-				'prepend' => [
-					'content'=>'<i class="fa fa-folder-open"></i>'
-				]
-			],
-		]);
-	}
+            $ancestors[] = $ancestor;
+            $ancestorId = (int)$ancestor->parent_id;
+        }
 
-	public function getParentGridView($field,$url,$hideItem = false)
-	{
-		/** @var $this Model */
-		$parent = $this->parent;
-		if ($parent && !$hideItem) {
-			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-			return Html::a($parent->$field,$url);
-		}
+        return $ancestors;
+    }
 
-		if ($hideItem !== null && $hideItem)
-		{
-			if($this->parent_id === $hideItem || !$parent) {
-				return '<span class="fa fa-ban text-danger"></span>';
-			}
+    /**
+     * Backwards-compatible plural accessor for ancestors.
+     *
+     * @return array
+     */
+    public function getParents()
+    {
+        return $this->getAncestors();
+    }
 
-			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-			return Html::a($parent->$field,$url);
-		}
+    public function getChild()
+    {
+        return $this->hasOne(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
+    }
 
-		return '<span class="fa fa-ban text-danger"></span>';
-	}
+    public function getChilds()
+    {
+        return $this->hasMany(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
+    }
+
+    public function getParentWidget($form, $items)
+    {
+        /** @var $this Model */
+        return $form->field($this, 'parent_id')->widget(Select2::class, [
+            'data' => $items,
+            'addon' => [
+                'prepend' => [
+                    'content' => '<i class="fa fa-folder-open"></i>',
+                ],
+            ],
+        ]);
+    }
+
+    public function getParentGridView($field, $url, $hideItem = false)
+    {
+        /** @var $this Model */
+        $parent = $this->parent;
+        if ($parent && !$hideItem) {
+            $url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
+            return Html::a($parent->$field, $url);
+        }
+
+        if ($hideItem !== null && $hideItem) {
+            if ($this->parent_id === $hideItem || !$parent) {
+                return '<span class="fa fa-ban text-danger"></span>';
+            }
+
+            $url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
+            return Html::a($parent->$field, $url);
+        }
+
+        return '<span class="fa fa-ban text-danger"></span>';
+    }
 
     public function getParentDetailView()
     {

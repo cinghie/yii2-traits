@@ -33,15 +33,6 @@ use yii\base\Model;
  */
 trait SeoTrait
 {
-    public static function rules()
-    {
-        return [
-            [['metadesc', 'metakey'], 'string'],
-            [['author', 'copyright'], 'string', 'max' => 50],
-            [['robots'], 'string', 'max' => 20],
-        ];
-    }
-
     public function getSeoRules()
     {
         return [
@@ -51,7 +42,7 @@ trait SeoTrait
         ];
     }
 
-    public static function attributeLabels()
+    public function getSeoAttributeLabels()
     {
         return [
             'author' => Yii::t('traits', 'Author'),
@@ -60,11 +51,6 @@ trait SeoTrait
             'metakey' => Yii::t('traits', 'Meta Keywords'),
             'robots' => Yii::t('traits', 'Robots'),
         ];
-    }
-
-    public function getSeoAttributeLabels()
-    {
-        return static::attributeLabels();
     }
 
     public function getRobotsWidget($form)

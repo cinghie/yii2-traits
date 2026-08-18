@@ -32,6 +32,11 @@ use yii\helpers\Url;
  */
 trait ImageTrait
 {
+    /**
+     * Trait-specific validation rules to be merged by the consuming Yii model.
+     *
+     * @return array
+     */
     public function getImageRules()
     {
         $getimageallowed = self::getImagesAllowed();
@@ -43,6 +48,11 @@ trait ImageTrait
         ];
     }
 
+    /**
+     * Trait-specific attribute labels to be merged by the consuming Yii model.
+     *
+     * @return array
+     */
     public function getImageAttributeLabels()
     {
         return [
@@ -52,6 +62,12 @@ trait ImageTrait
         ];
     }
 
+    /**
+     * Generate Image Form Widget
+     *
+     * @return string
+     * @throws Exception
+     */
     public function getImageWidget()
     {
         /** @var $this Model */
@@ -80,9 +96,19 @@ trait ImageTrait
         return $image;
     }
 
+	/**
+	 * Generate Image Caption Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getImageCaptionWidget($form)
     {
-        /** @var $this Model */
+	    /**
+	     * @var $this Model
+	     */
         return $form->field($this, 'image_caption', [
             'addon' => [
                 'prepend' => [
@@ -92,9 +118,19 @@ trait ImageTrait
         ])->textInput(['maxlength' => true])->textarea(['rows' => 6]);
     }
 
+	/**
+	 * Generate Image Credits Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
     public function getImageCreditsWidget($form)
     {
-        /** @var $this Model */
+	    /**
+	     * @var $this Model
+	     */
         return $form->field($this, 'image_credits', [
             'addon' => [
                 'prepend' => [
@@ -104,25 +140,46 @@ trait ImageTrait
         ])->textInput(['maxlength' => true]);
     }
 
+	/**
+	 * Generate GridView for Image
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
 	public function getImageGridView()
 	{
 		if ($this->image) {
-			return Html::img($this->getImageThumbUrl('small'), ['width' => '36px']);
+			return Html::img($this->getImageThumbUrl( 'small' ),[ 'width' => '36px']);
 		}
 
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
+    /**
+     * Get Upload Max Size
+     *
+     * @return string
+     */
     public function getUploadMaxSize()
     {
         return ini_get('upload_max_filesize');
     }
 
+    /**
+     * Get Allowed images
+     *
+     * @return array
+     */
     public static function getImagesAllowed()
     {
         return Yii::$app->controller->module->imageType;
     }
 
+    /**
+     * Get Allowed images in Accept Format
+     *
+     * @return array
+     */
     public function getImagesAccept()
     {
         $imageAccept = [];

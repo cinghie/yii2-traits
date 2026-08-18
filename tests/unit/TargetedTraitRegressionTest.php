@@ -48,6 +48,22 @@ final class TargetedTraitRegressionTest extends TestCase
         ], $this->fetchOrdering($db));
     }
 
+    public function testOrderingMoveToFirstShiftsOnlyEarlierSiblings(): void
+    {
+        $db = $this->createOrderingDatabase();
+        $model = OrderingTraitRecord::findOne(3);
+        $model->ordering = 0;
+
+        $model->setOrdering(OrderingTraitRecord::class, 'group_id', 3, 4);
+
+        $this->assertSame([
+            1 => 2,
+            2 => 3,
+            3 => 1,
+            4 => 4,
+        ], $this->fetchOrdering($db));
+    }
+
     public function testOrderingRollsBackSiblingShiftWhenMovedRowUpdateFails(): void
     {
         $db = $this->createOrderingDatabase();
@@ -103,7 +119,7 @@ final class TargetedTraitRegressionTest extends TestCase
         $model->created_by = 42;
         $model->fakeCreatedBy = null;
 
-        $this->assertSame('', $model->getCreatedByGridView());
+        $this->assertSame(Yii::t('traits', 'Nobody'), $model->getCreatedByGridView());
         $detail = $model->getCreatedByDetailView();
         $this->assertSame(Yii::t('traits', 'Nobody'), $detail['value']);
     }
@@ -114,7 +130,7 @@ final class TargetedTraitRegressionTest extends TestCase
         $model->modified_by = 42;
         $model->fakeModifiedBy = null;
 
-        $this->assertSame('', $model->getModifiedByGridView());
+        $this->assertSame(Yii::t('traits', 'Nobody'), $model->getModifiedByGridView());
         $detail = $model->getModifiedByDetailView();
         $this->assertSame(Yii::t('traits', 'Nobody'), $detail['value']);
     }
@@ -129,6 +145,18 @@ final class TargetedTraitRegressionTest extends TestCase
 
         $this->assertFalse($created->isCurrentUserCreator());
         $this->assertFalse($modified->isCurrentUserModifier());
+    }
+
+    public function testCreatedAndModifiedCurrentUserChecksMatchAuthenticatedIdentity(): void
+    {
+        Yii::$app = (object)['user' => (object)['identity' => (object)['id' => 7]]];
+        $created = new CreatedTraitTestHost();
+        $created->created_by = 7;
+        $modified = new ModifiedTraitTestHost();
+        $modified->modified_by = 7;
+
+        $this->assertTrue($created->isCurrentUserCreator());
+        $this->assertTrue($modified->isCurrentUserModifier());
     }
 
     public function testModifiedWidgetDoesNotUseMysqlZeroDateForNewRecords(): void

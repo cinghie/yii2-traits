@@ -18,7 +18,9 @@ use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
 use yii\base\Model;
+use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\db\Transaction;
 
 /**
  * Trait OrderingTrait
@@ -27,62 +29,34 @@ use yii\db\Expression;
  */
 trait OrderingTrait
 {
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically (e.g., OrderingTrait::rules())
-	 * may generate a deprecation warning. It's recommended to use getOrderingRules() instance method instead.
-	 */
 	public static function rules()
 	{
-		return  [
-			[['ordering'], 'integer'],
-		];
+		return [[['ordering'], 'integer']];
 	}
 
-	/**
-	 * Instance method to get rules without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getOrderingRules()
 	{
-		return [
-			[['ordering'], 'integer'],
-		];
+		return [[['ordering'], 'integer']];
 	}
 
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-	 * It's recommended to use getOrderingAttributeLabels() instance method instead.
-	 * 
-	 * @return array
-	 */
 	public static function attributeLabels()
 	{
-		return [
-			'ordering' => Yii::t('traits', 'Ordering'),
-		];
+		return ['ordering' => Yii::t('traits', 'Ordering')];
 	}
 
-	/**
-	 * Instance method to get attribute labels without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getOrderingAttributeLabels()
 	{
-		return [
-			'ordering' => Yii::t('traits', 'Ordering'),
-		];
+		return ['ordering' => Yii::t('traits', 'Ordering')];
 	}
 
 	/**
-	 * Set Model Ordering on Class
+	 * Set Model Ordering on Class.
 	 *
-	 * @param Model $class
+	 * Sibling shifts and the persisted ordering of the current ActiveRecord are
+	 * committed in one serializable transaction. The caller may still save the
+	 * complete model afterwards, as before.
+	 *
+	 * @param Model|string $class
 	 * @param string $fieldOrdering
 	 * @param int $oldOrdering
 	 * @param int $lastOrdering
@@ -90,122 +64,89 @@ trait OrderingTrait
 	public function setOrdering($class,$fieldOrdering,$oldOrdering,$lastOrdering)
 	{
 		$newOrdering = (int)$this->ordering;
+		$oldOrdering = (int)$oldOrdering;
 
-		// Verifico se è cambiato l'ordine
-		if($newOrdering !== $oldOrdering)
-		{
-			// If new Orderis 0 (First Element) and the oldOrdering is 1, ordering is 1
-			if ( $newOrdering === 0 && $oldOrdering === 1 )
-			{
+		if ($newOrdering === $oldOrdering) {
+			return;
+		}
+
+		$db = $class::getDb();
+		$transaction = $db->beginTransaction(Transaction::SERIALIZABLE);
+
+		try {
+			if ($newOrdering === 0 && $oldOrdering === 1) {
 				$this->ordering = 1;
-
-			} elseif ( 0 === $newOrdering ) {
-
-				// If new ordering is 0 (First Element), actual Item ordering = 1 and all other Items ordering + 1
+			} elseif ($newOrdering === 0) {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
 					['<','ordering', $oldOrdering],
 				];
 
-				$class::updateAll([
-					'ordering' => new Expression('ordering + 1')
-				], $condition);
-
+				$class::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
 				$this->setMinOrder();
-
-			} elseif( $newOrdering === 999999999 ) {
-
+			} elseif ($newOrdering === 999999999) {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
 					['>','ordering', $oldOrdering],
 				];
 
-				$class::updateAll([
-					'ordering' => new Expression('ordering - 1')
-				], $condition);
-
-				$this->ordering = $lastOrdering;
-
-			} elseif ( $newOrdering > $oldOrdering ) {
-
-				// IF newOrdering is > oldOrdering, all items > oldOrdering <= newOrdering are ordering -1 and this->ordering = newOrdering
+				$class::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
+				$this->ordering = max(1, (int)$lastOrdering);
+			} elseif ($newOrdering > $oldOrdering) {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
 					['>','ordering', $oldOrdering],
 					['<=','ordering', $newOrdering],
 				];
 
-				$class::updateAll([
-					'ordering' => new Expression('ordering - 1')
-				], $condition);
-
+				$class::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
 				$this->ordering = $newOrdering;
-
 			} else {
-
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
 					['<','ordering', $oldOrdering],
 					['>=','ordering', $newOrdering],
 				];
 
-				$class::updateAll([
-					'ordering' => new Expression('ordering + 1')
-				], $condition);
-
-				$this->ordering = $newOrdering;
+				$class::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
+				$this->ordering = max(1, $newOrdering);
 			}
 
+			// Persist the moved row inside the same transaction when the trait is
+			// hosted by an existing ActiveRecord. This prevents a concurrent request
+			// from observing shifted siblings while the moved row still has its old
+			// ordering value.
+			if ($this instanceof ActiveRecord && !$this->isNewRecord) {
+				$primaryKey = $this->getPrimaryKey(true);
+				if ($primaryKey) {
+					$class::updateAll(['ordering' => $this->ordering], $primaryKey);
+				}
+			}
+
+			$transaction->commit();
+		} catch (\Throwable $e) {
+			if ($transaction->isActive) {
+				$transaction->rollBack();
+			}
+			throw $e;
 		}
-
-
 	}
 
-	/**
-	 * Set Max Ordering
-	 *
-	 * @param Model $class
-	 * @param array $condition
-	 */
 	public function setMaxOrdering($class,$condition)
 	{
 		$this->ordering = $this->getLastOrdering($class,$condition);
 	}
 
-	/**
-	 * Set Min Ordering
-	 */
 	public function setMinOrder()
 	{
 		$this->ordering = 1;
 	}
 
-	/**
-	 * Get Max ordering in field
-	 *
-	 * @param Model $class
-	 * @param array $condition
-	 *
-	 * @return mixed
-	 */
 	public function getLastOrdering($class,$condition)
 	{
 		return $class::find()->where($condition)->max('ordering');
 	}
 
-	/**
-	 * Generate Ordering Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @param Model $class
-	 * @param string $orderingField
-	 * @param array $selectField
-	 * @param array $condition
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
 	public function getOrderingWidget($form, $class, $orderingField, $selectField, $condition)
 	{
 		if($this->isNewRecord) {
@@ -219,28 +160,15 @@ trait OrderingTrait
 			$orderingSelect = $this->getOrderingSelect2($class, $orderingField, $selectField, $condition);
 		}
 
-		/** @var $this Model */
 		return $form->field($this, 'ordering')->widget(Select2::class, [
 			'data' => $orderingSelect,
 			'options' => $options,
 			'addon' => [
-				'prepend' => [
-					'content'=>'<i class="fa fa-sort"></i>'
-				]
+				'prepend' => ['content'=>'<i class="fa fa-sort"></i>']
 			],
 		]);
 	}
 
-	/**
-	 * Return array with all Items by $cat_id
-	 *
-	 * @param Model $class
-	 * @param string $orderingField
-	 * @param array $selectField
-	 * @param array $condition
-	 *
-	 * @return array
-	 */
 	public function getOrderingSelect2($class, $orderingField = '', array $selectField = [], array $condition = [])
 	{
 		$array = [ 0 => Yii::t('traits','First Element') ];
@@ -255,7 +183,6 @@ trait OrderingTrait
 		}
 
 		$array[999999999] = Yii::t('traits','Last Element');
-
 		return $array;
 	}
 }

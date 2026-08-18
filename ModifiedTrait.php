@@ -36,12 +36,6 @@ use yii\helpers\Url;
  */
 trait ModifiedTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., ModifiedTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getModifiedRules() instance method instead.
-     */
     public static function rules()
     {
         return [
@@ -51,11 +45,6 @@ trait ModifiedTrait
         ];
     }
 
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getModifiedRules()
     {
         return [
@@ -65,15 +54,6 @@ trait ModifiedTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., ModifiedTrait::attributeLabels())
-     * will generate a deprecation warning. It's recommended to call this as an instance method
-     * in your model's attributeLabels() method instead.
-     * 
-     * @return array
-     */
     public static function attributeLabels()
     {
         return [
@@ -82,12 +62,6 @@ trait ModifiedTrait
         ];
     }
 
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * Use this method in your model's attributeLabels() instead of calling the static method
-     * 
-     * @return array
-     */
     public function getModifiedAttributeLabels()
     {
         return [
@@ -96,29 +70,18 @@ trait ModifiedTrait
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getModifiedBy()
     {
         /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'modified_by'])->from(User::tableName() . ' AS modifiedBy');
     }
 
-	/**
-	 * Generate Modified Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getModifiedWidget($form)
     {
-        $modified = $this->isNewRecord ? '0000-00-00 00:00:00' : $this->modified;
+        $modified = $this->isNewRecord ? null : $this->modified;
 
-	    /** @var Model $this */
-	    return $form->field($this, 'modified')->widget(DateTimePicker::class, [
+        /** @var $this Model */
+        return $form->field($this, 'modified')->widget(DateTimePicker::class, [
             'options' => [
                 'value' => $modified,
             ],
@@ -130,31 +93,19 @@ trait ModifiedTrait
         ]);
     }
 
-    /**
-     * Generate DetailView for Modified
-     *
-     * @return array
-     */
     public function getModifiedDetailView()
     {
         return ['attribute' => 'modified'];
     }
 
-	/**
-	 * Generate ModifiedBy Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getModifiedByWidget($form)
     {
-        $modified_by = !$this->modified_by ? NULL : [$this->modified_by => $this->modifiedBy->username];
+        $modifiedBy = $this->modifiedBy;
+        $data = $this->modified_by && $modifiedBy ? [$this->modified_by => $modifiedBy->username] : [];
 
-	    /** @var Model $this */
+        /** @var $this Model */
         return $form->field($this, 'modified_by')->widget(Select2::class, [
-            'data' => $modified_by,
+            'data' => $data,
             'addon' => [
                 'prepend' => [
                     'content'=>'<i class="fa fa-user"></i>'
@@ -163,65 +114,44 @@ trait ModifiedTrait
         ]);
     }
 
-    /**
-     * Generate GridView for ModifiedBy
-     *
-     * @return string
-     * @throws InvalidParamException
-     */
     public function getModifiedByGridView()
     {
-        $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
-        $modifiedBy = $this->modifiedBy->username ?? '';
-
-        if($this->modified_by) {
-            return Html::a($modifiedBy,$url);
+        $modifiedBy = $this->modifiedBy;
+        if ($this->modified_by && $modifiedBy) {
+            $url = urldecode(Url::toRoute(['/user/profile/show', 'id' => $this->modified_by]));
+            return Html::a($modifiedBy->username, $url);
         }
 
-	    return Yii::t('traits', 'Nobody');
+        return Yii::t('traits', 'Nobody');
     }
 
-    /**
-     * Generate DetailView for ModifiedBy
-     *
-     * @return array
-     * @throws InvalidParamException
-     */
     public function getModifiedByDetailView()
     {
+        $modifiedBy = $this->modifiedBy;
+
         return [
             'attribute' => 'modified_by',
             'format' => 'html',
             'type' => DetailView::INPUT_SWITCH,
-            'value' => $this->modified_by ? Html::a($this->modifiedBy->username,urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modifiedBy]))) : Yii::t('traits', 'Nobody'),
+            'value' => $this->modified_by && $modifiedBy
+                ? Html::a($modifiedBy->username, urldecode(Url::toRoute(['/user/admin/update', 'id' => $this->modified_by])))
+                : Yii::t('traits', 'Nobody'),
             'valueColOptions'=> [
                 'style'=>'width:30%'
             ]
         ];
     }
 
-    /**
-     * Check if current user is the modified_by
-     *
-     * @return bool
-     */
     public function isCurrentUserModifier()
     {
-        /** @var User $currentUser */
+        /** @var User|null $currentUser */
         $currentUser = Yii::$app->user->identity;
 
-	    return $currentUser->id === $this->modified_by;
+        return $currentUser !== null && $currentUser->id === $this->modified_by;
     }
 
-    /**
-     * Check if user_id params is the modified_by
-     *
-     * @param User $user_id
-     *
-     * @return bool
-     */
     public function isUserModifier($user_id)
     {
-	    return $user_id === $this->modified_by;
+        return $user_id === $this->modified_by;
     }
 }

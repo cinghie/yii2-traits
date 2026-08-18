@@ -73,6 +73,29 @@ final class YiiModelTraitContractTest extends TestCase
         $this->assertSame([], $missing, 'Missing trait composition helpers: ' . implode(', ', $missing));
     }
 
+    public function testTraitHelpersHaveConciseDocblocks(): void
+    {
+        $root = dirname(__DIR__, 2);
+        $invalid = [];
+
+        foreach (self::HELPER_PAIRS as $file => $methods) {
+            $source = file_get_contents($root . DIRECTORY_SEPARATOR . $file);
+            foreach ($methods as $method) {
+                $pattern = '/(\/\*\*.*?\*\/)\s*public\s+function\s+' . preg_quote($method, '/') . '\s*\(/s';
+                if (!preg_match($pattern, $source, $matches)) {
+                    $invalid[] = $file . '::' . $method . '() missing docblock';
+                    continue;
+                }
+
+                if (substr_count($matches[1], "\n") > 6) {
+                    $invalid[] = $file . '::' . $method . '() docblock is too long';
+                }
+            }
+        }
+
+        $this->assertSame([], $invalid, 'Trait helper documentation issues: ' . implode(', ', $invalid));
+    }
+
     public function testOrderingTraitComposesWithYiiModel(): void
     {
         $model = new YiiModelTraitContractHost();

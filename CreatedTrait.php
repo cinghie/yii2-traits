@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  */
 trait CreatedTrait
 {
-    public static function rules()
+    public function getCreatedRules()
     {
         return [
             [['created'], 'safe'],
@@ -28,22 +28,12 @@ trait CreatedTrait
         ];
     }
 
-    public function getCreatedRules()
-    {
-        return static::rules();
-    }
-
-    public static function attributeLabels()
+    public function getCreatedAttributeLabels()
     {
         return [
             'created' => Yii::t('traits', 'Created'),
             'created_by' => Yii::t('traits', 'Created By'),
         ];
-    }
-
-    public function getCreatedAttributeLabels()
-    {
-        return static::attributeLabels();
     }
 
     public function getCreatedBy()

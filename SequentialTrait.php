@@ -26,7 +26,11 @@ trait SequentialTrait
 	 *
 	 * @return string
 	 */
-	public function generateSequentialCode($number, $prefix ='A', $sequence = '00000000') {
-		return $prefix.substr($sequence,0, strlen($sequence) - strlen($number)).$number;
+	public function generateSequentialCode($number, $prefix ='A', $sequence = '00000000')
+	{
+		$number = (string)$number;
+		$width = strlen($sequence);
+
+		return $prefix . str_pad($number, $width, '0', STR_PAD_LEFT);
 	}
 }

@@ -34,11 +34,6 @@ trait OrderingTrait
 		return [[['ordering'], 'integer']];
 	}
 
-	public static function attributeLabels()
-	{
-		return ['ordering' => Yii::t('traits', 'Ordering')];
-	}
-
 	public function getOrderingAttributeLabels()
 	{
 		return ['ordering' => Yii::t('traits', 'Ordering')];

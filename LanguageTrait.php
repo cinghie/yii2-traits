@@ -28,39 +28,54 @@ trait LanguageTrait
 {
     public function getLanguageRules()
     {
-        return [
-            [['language'], 'string', 'max' => 7],
-        ];
+        return [[['language'], 'string', 'max' => 7]];
     }
 
     public function getLanguageAttributeLabels()
     {
-        return [
-            'language' => Yii::t('traits', 'Language'),
-        ];
+        return ['language' => Yii::t('traits', 'Language')];
     }
 
+    /**
+	 * Get language code (only 2 chars)
+	 *
+	 * @return string
+	 */
     public function getLang() {
         return substr($this->language,0,2);
     }
 
+    /**
+     * Get language tag (5 chars)
+     *
+     * @return string
+     */
     public function getLangTag() {
         return $this->language;
     }
 
+	/**
+	 * Generate Language Form Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws Exception
+	 */
     public function getLanguageWidget($form)
     {
 	    /** @var $this Model */
         return $form->field($this, 'language')->widget(Select2::class, [
             'data' => static::getLanguagesSelect2(),
-            'addon' => [
-                'prepend' => [
-                    'content'=>'<i class="fa fa-globe"></i>'
-                ]
-            ],
+            'addon' => ['prepend' => ['content'=>'<i class="fa fa-globe"></i>']],
         ]);
     }
 
+    /**
+     * Return an array with languages allowed
+     *
+     * @return array
+     */
     public static function getLanguagesSelect2()
     {
         $languages = Yii::$app->urlManager->languages;
@@ -74,6 +89,13 @@ trait LanguageTrait
         return $array;
     }
 
+	/**
+	 * Return an array with languages allowed
+	 *
+	 * @param bool $showOnlyDefault
+	 *
+	 * @return array
+	 */
 	public static function getLanguagesFilterSelect2($showOnlyDefault = false)
 	{
 		$languages = Yii::$app->urlManager->languages;
@@ -86,7 +108,9 @@ trait LanguageTrait
 
 		$array = [];
 
-		/** @var array $languages */
+		/**
+		 * @var array $languages
+		 */
 		foreach($languages as $language)
 		{
 			if($language === $languageDefault) {

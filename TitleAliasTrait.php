@@ -27,25 +27,6 @@ use yii\base\Model;
  */
 trait TitleAliasTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., TitleAliasTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getTitleAliasRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return [
-            [['alias'], 'unique'],
-            [['alias','title'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getTitleAliasRules()
     {
         return [
@@ -54,27 +35,6 @@ trait TitleAliasTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getTitleAliasAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'alias' => Yii::t('traits', 'Alias'),
-            'title' => Yii::t('traits', 'Title'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
     public function getTitleAliasAttributeLabels()
     {
         return [
@@ -83,13 +43,6 @@ trait TitleAliasTrait
         ];
     }
 
-	/**
-	 * Generate alias from title
-	 *
-	 * @param string $title
-	 *
-	 * @return string
-	 */
 	public function generateAlias($title)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
@@ -102,18 +55,9 @@ trait TitleAliasTrait
         ];
 
 		$slugify = new Slugify($slugifyOptions);
-
 		return $slugify->slugify($title);
 	}
 
-	/**
-	 * Set alias from post
-	 *
-	 * @param [] $post
-	 * @param string $field
-	 *
-	 * @return void
-	 */
 	public function setAlias($post,$field)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
@@ -132,33 +76,13 @@ trait TitleAliasTrait
 		}
 	}
 
-	/**
-	 * Generate URL alias by string
-	 *
-	 * @param string $string
-	 *
-	 * @return string
-	 */
 	public function purgeAlias($string)
 	{
-		// remove any '-' from the string they will be used as concatonater
 		$string = str_replace(array('-','_'), ' ', $string);
-
-		// remove any duplicate whitespace, and ensure all characters are alphanumeric
 		$string = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $string);
-
-		// lowercase and trim
 		return strtolower(trim($string));
 	}
 
-	/**
-	 * Generate Title Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getTitleWidget($form)
     {
         /** @var $this Model */
@@ -171,14 +95,6 @@ trait TitleAliasTrait
         ])->textInput(['maxlength' => true]);
     }
 
-	/**
-	 * Generate Alias Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getAliasWidget($form)
     {
         /** @var $this Model */

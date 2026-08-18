@@ -13,7 +13,6 @@
 namespace cinghie\traits\models;
 
 use Yii;
-use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\validators\EmailValidator;
 
@@ -22,47 +21,30 @@ use yii\validators\EmailValidator;
  */
 class Mailer
 {
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $emailFrom;
 
-	/**
-	 * @var string || array
-	 */
+	/** @var string|array */
 	public $emailTo;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $emailSubject;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $emailBody;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $emailAttach;
 
-
-	/**
-	 * @var string
-	 */
+	/** @var bool */
 	public $isHtml;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $debug;
 
 	/**
-	 * Constructor
-	 *
 	 * @param string $from
-	 * @param string $to
+	 * @param string|array $to
 	 * @param string $subject
 	 * @param string $body
 	 * @param string $attachPath
@@ -86,57 +68,45 @@ class Mailer
 	 */
 	public function sendMail()
 	{
-		if(!$this->emailFromIsValid()) {
-
+		if (!$this->emailFromIsValid()) {
 			$results = [
 				'status' => 'error',
 				'message' => $this->debug,
 			];
-
 		} elseif (!$this->emailToIsValid()) {
-
 			$results = [
 				'status' => 'error',
 				'message' => $this->debug,
 			];
-
 		} else {
-
 			$mailer = Yii::$app->mailer;
 			$message = $mailer->compose();
 
-			// Set Email From
 			$message->setFrom($this->emailFrom);
-
-			// Set Email To
 			$message->setTo($this->emailTo);
-
-			// Set Email Subject
 			$message->setSubject(HtmlPurifier::process($this->emailSubject));
 
-			// Set Email Body
-			if($this->isHtml) {
+			if ($this->isHtml) {
 				$message->setHtmlBody($this->emailBody);
 			} else {
 				$message->setTextBody(HtmlPurifier::process($this->emailBody));
 			}
 
-			if($this->emailAttach) {
+			if ($this->emailAttach) {
 				$message->attach($this->emailAttach);
 			}
 
-			if ($send = $message->send())
-			{
+			if ($send = $message->send()) {
 				$results = [
 					'status' => 'success',
-				    'message' => Yii::t( 'traits','Email correctly sent to {email}!', ['email' => $this->emailTo] )
+					'message' => Yii::t('traits', 'Email correctly sent to {email}!', [
+						'email' => $this->formatRecipientsForMessage(),
+					]),
 				];
-
 			} else {
-
 				$results = [
 					'status' => 'error',
-					'message' => $send
+					'message' => $send,
 				];
 			}
 		}
@@ -145,38 +115,75 @@ class Mailer
 	}
 
 	/**
-	 * Check Email is valid
-	 *
-	 * @param $email
-	 *
+	 * @param mixed $email
 	 * @return bool
 	 */
 	public function checkEmailIsValid($email)
 	{
-		$validator = new EmailValidator();
-
-		if($validator->validate($email, $error)) {
-			$this->debug = Yii::t('traits','The email {email} is valid!', ['email' => $email]);
-			return true;
-		} else {
-			$this->debug = Yii::t('traits','The email {email} is invalid!', ['email' => $email]);
+		if (!is_string($email) || $email === '') {
+			$this->debug = Yii::t('traits', 'The email {email} is invalid!', ['email' => (string)$email]);
 			return false;
 		}
+
+		$validator = new EmailValidator();
+
+		if ($validator->validate($email, $error)) {
+			$this->debug = Yii::t('traits', 'The email {email} is valid!', ['email' => $email]);
+			return true;
+		}
+
+		$this->debug = Yii::t('traits', 'The email {email} is invalid!', ['email' => $email]);
+		return false;
 	}
 
-	/**
-	 * @return bool
-	 */
+	/** @return bool */
 	public function emailFromIsValid()
 	{
 		return $this->checkEmailIsValid($this->emailFrom);
 	}
 
 	/**
+	 * Validate either a single Yii mail address or every address in a Yii
+	 * recipient map (`email@example.com => Display Name`).
+	 *
 	 * @return bool
 	 */
 	public function emailToIsValid()
 	{
-		return $this->checkEmailIsValid($this->emailTo);
+		if (!is_array($this->emailTo)) {
+			return $this->checkEmailIsValid($this->emailTo);
+		}
+
+		if ($this->emailTo === []) {
+			$this->debug = Yii::t('traits', 'The email recipient list is empty.');
+			return false;
+		}
+
+		foreach ($this->emailTo as $key => $value) {
+			$email = is_int($key) ? $value : $key;
+			if (!$this->checkEmailIsValid($email)) {
+				return false;
+			}
+		}
+
+		$this->debug = Yii::t('traits', 'The email {email} is valid!', [
+			'email' => $this->formatRecipientsForMessage(),
+		]);
+		return true;
+	}
+
+	/** @return string */
+	private function formatRecipientsForMessage()
+	{
+		if (!is_array($this->emailTo)) {
+			return (string)$this->emailTo;
+		}
+
+		$addresses = [];
+		foreach ($this->emailTo as $key => $value) {
+			$addresses[] = is_int($key) ? (string)$value : (string)$key;
+		}
+
+		return implode(', ', $addresses);
 	}
 }

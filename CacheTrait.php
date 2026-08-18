@@ -19,7 +19,9 @@ use yii\base\ViewNotFoundException;
 use yii\caching\Cache;
 use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
 
 /**
@@ -39,6 +41,37 @@ trait CacheTrait
         return $this->render('cache', ['dataProvider'=>$dataProvider]);
     }
 
+    /**
+     * RBAC permission required by destructive cache actions.
+     * Override this method in the host controller when a project uses a
+     * different permission name.
+     *
+     * @return string
+     */
+    protected function getCacheManagementPermission()
+    {
+        return 'cache-manage';
+    }
+
+    /**
+     * Require POST and explicit RBAC authorization before mutating cache.
+     *
+     * @throws ForbiddenHttpException
+     * @throws MethodNotAllowedHttpException
+     */
+    protected function ensureCacheMutationAllowed()
+    {
+        if (!Yii::$app->request->isPost) {
+            throw new MethodNotAllowedHttpException('Cache mutations require a POST request.');
+        }
+
+        $user = Yii::$app->user;
+        $permission = $this->getCacheManagementPermission();
+        if ($user->isGuest || !$permission || !$user->can($permission)) {
+            throw new ForbiddenHttpException('You are not allowed to modify application cache.');
+        }
+    }
+
 	/**
 	 * @param $id
 	 *
@@ -46,6 +79,8 @@ trait CacheTrait
 	 */
     public function actionFlushCache($id)
     {
+        $this->ensureCacheMutationAllowed();
+
         /** @var $this Response */
         if ($this->getCache($id)->flush()) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
@@ -61,6 +96,8 @@ trait CacheTrait
 	 */
     public function actionFlushCacheKey($id, $key)
     {
+        $this->ensureCacheMutationAllowed();
+
         /** @var $this Response */
         if ($this->getCache($id)->delete($key)) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
@@ -76,6 +113,8 @@ trait CacheTrait
 	 */
     public function actionFlushCacheTag($id, $tag)
     {
+        $this->ensureCacheMutationAllowed();
+
         /** @var $this Response */
         TagDependency::invalidate($this->getCache($id), $tag);
         Yii::$app->session->setFlash('success', Yii::t('traits', 'TagDependency was invalidated'));

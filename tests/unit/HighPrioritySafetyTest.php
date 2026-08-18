@@ -51,15 +51,16 @@ final class HighPrioritySafetyTest extends TestCase
 
     public function testMailerSendMailStopsBeforeMailerComponentForInvalidRecipient(): void
     {
+        $packageRoot = dirname(__DIR__, 2);
         new Application([
             'id' => 'traits-mail-test',
-            'basePath' => dirname(__DIR__, 2),
+            'basePath' => $packageRoot,
             'components' => [
                 'i18n' => [
                     'translations' => [
                         'traits*' => [
                             'class' => 'yii\\i18n\\PhpMessageSource',
-                            'basePath' => '@cinghie/traits/messages',
+                            'basePath' => $packageRoot . '/messages',
                             'sourceLanguage' => 'en-US',
                         ],
                     ],

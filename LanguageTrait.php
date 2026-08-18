@@ -26,6 +26,7 @@ use yii\base\Model;
  */
 trait LanguageTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getLanguageRules()
     {
         return [
@@ -33,6 +34,7 @@ trait LanguageTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getLanguageAttributeLabels()
     {
         return [
@@ -40,14 +42,19 @@ trait LanguageTrait
         ];
     }
 
-    public function getLang() {
-        return substr($this->language,0,2);
+    /** Return the two-character language code. */
+    public function getLang()
+    {
+        return substr($this->language, 0, 2);
     }
 
-    public function getLangTag() {
+    /** Return the full language tag. */
+    public function getLangTag()
+    {
         return $this->language;
     }
 
+    /** Render the language selector. */
     public function getLanguageWidget($form)
     {
 	    /** @var $this Model */
@@ -61,6 +68,7 @@ trait LanguageTrait
         ]);
     }
 
+    /** Return configured languages for Select2. */
     public static function getLanguagesSelect2()
     {
         $languages = Yii::$app->urlManager->languages;
@@ -74,6 +82,7 @@ trait LanguageTrait
         return $array;
     }
 
+    /** Return configured languages for filters. */
 	public static function getLanguagesFilterSelect2($showOnlyDefault = false)
 	{
 		$languages = Yii::$app->urlManager->languages;

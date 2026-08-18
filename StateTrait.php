@@ -28,11 +28,13 @@ use yii\base\Model;
  */
 trait StateTrait
 {
+    /** Return the event name emitted after a state change. */
     protected function stateChangeEventName(): string
     {
         return 'cinghie.traits.afterStateChange';
     }
 
+    /** Validation rules contributed by this trait. */
     public function getStateRules()
     {
         return [
@@ -40,6 +42,7 @@ trait StateTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getStateAttributeLabels()
     {
         return [
@@ -47,6 +50,7 @@ trait StateTrait
         ];
     }
 
+    /** Activate the current record. */
     public function active()
     {
         $ok = (bool)$this->updateAttributes([
@@ -59,6 +63,7 @@ trait StateTrait
         return $ok;
     }
 
+    /** Deactivate the current record. */
     public function deactive()
     {
         $ok = (bool)$this->updateAttributes([
@@ -71,6 +76,7 @@ trait StateTrait
         return $ok;
     }
 
+    /** Trigger the state-change event when the host supports events. */
     protected function triggerStateChangeEvent(): void
     {
         if (!$this instanceof \yii\base\Component) {
@@ -79,6 +85,7 @@ trait StateTrait
         $this->trigger($this->stateChangeEventName());
     }
 
+    /** Render the state selector. */
     public function getStateWidget($form)
     {
         /** @var $this Model */
@@ -92,6 +99,7 @@ trait StateTrait
         ]);
     }
 
+    /** Render the state value for grid views. */
     public function getStateGridView($removeLink = false)
     {
         if($this->state)
@@ -118,6 +126,7 @@ trait StateTrait
 	    );
     }
 
+    /** Return the state configuration for DetailView. */
     public function getStateDetailView()
     {
         return [
@@ -137,6 +146,7 @@ trait StateTrait
         ];
     }
 
+    /** Return state options for selectors. */
     public static function getStateSelect2()
     {
         return [

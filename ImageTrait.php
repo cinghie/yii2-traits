@@ -32,6 +32,7 @@ use yii\helpers\Url;
  */
 trait ImageTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getImageRules()
     {
         $getimageallowed = self::getImagesAllowed();
@@ -43,6 +44,7 @@ trait ImageTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getImageAttributeLabels()
     {
         return [
@@ -52,6 +54,7 @@ trait ImageTrait
         ];
     }
 
+    /** Render the image upload widget. */
     public function getImageWidget()
     {
         /** @var $this Model */
@@ -80,6 +83,7 @@ trait ImageTrait
         return $image;
     }
 
+    /** Render the image caption field. */
     public function getImageCaptionWidget($form)
     {
         /** @var $this Model */
@@ -92,6 +96,7 @@ trait ImageTrait
         ])->textInput(['maxlength' => true])->textarea(['rows' => 6]);
     }
 
+    /** Render the image credits field. */
     public function getImageCreditsWidget($form)
     {
         /** @var $this Model */
@@ -104,6 +109,7 @@ trait ImageTrait
         ])->textInput(['maxlength' => true]);
     }
 
+    /** Render the image value for grid views. */
 	public function getImageGridView()
 	{
 		if ($this->image) {
@@ -113,16 +119,19 @@ trait ImageTrait
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
+    /** Return the configured PHP upload size limit. */
     public function getUploadMaxSize()
     {
         return ini_get('upload_max_filesize');
     }
 
+    /** Return allowed image extensions. */
     public static function getImagesAllowed()
     {
         return Yii::$app->controller->module->imageType;
     }
 
+    /** Return allowed image MIME accept values. */
     public function getImagesAccept()
     {
         $imageAccept = [];

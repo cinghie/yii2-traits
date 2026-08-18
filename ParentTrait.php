@@ -31,41 +31,24 @@ use yii\helpers\Url;
  */
 trait ParentTrait
 {
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically (e.g., ParentTrait::rules())
-	 * may generate a deprecation warning. It's recommended to use getParentRules() instance method instead.
-	 */
 	public static function rules()
 	{
 		return [
 			[['parent_id'], 'integer'],
-			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
+			[['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
+			[['parent_id'], 'validateParentHierarchy'],
 		];
 	}
 
-	/**
-	 * Instance method to get rules without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getParentRules()
 	{
 		return [
 			[['parent_id'], 'integer'],
-			//[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => get_called_class(), 'targetAttribute' => [ 'parent_id' => 'id']],
+			[['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
+			[['parent_id'], 'validateParentHierarchy'],
 		];
 	}
 
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-	 * It's recommended to use getParentAttributeLabels() instance method instead.
-	 * 
-	 * @return array
-	 */
 	public static function attributeLabels()
 	{
 		return [
@@ -73,59 +56,76 @@ trait ParentTrait
 		];
 	}
 
-	/**
-	 * Instance method to get attribute labels without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getParentAttributeLabels()
 	{
 		return [
-			'parent_id' => Yii::t('traits', 'Parent ID'),
+			'parent_id' => Yii::t('traits', 'Parent'),
 		];
 	}
 
 	/**
-	 * @return ActiveQuery
+	 * Prevent self-parenting and cycles in the ancestor chain.
+	 *
+	 * @param string $attribute
 	 */
+	public function validateParentHierarchy($attribute)
+	{
+		$parentId = $this->$attribute;
+		if ($parentId === null || $parentId === '' || (int)$parentId === 0) {
+			return;
+		}
+
+		$currentId = isset($this->id) ? (int)$this->id : 0;
+		if ($currentId && (int)$parentId === $currentId) {
+			$this->addError($attribute, Yii::t('traits', 'An item cannot be its own parent.'));
+			return;
+		}
+
+		$modelClass = static::class;
+		$visited = [];
+		$ancestorId = (int)$parentId;
+
+		while ($ancestorId > 0) {
+			if (isset($visited[$ancestorId])) {
+				$this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
+				return;
+			}
+			$visited[$ancestorId] = true;
+
+			if ($currentId && $ancestorId === $currentId) {
+				$this->addError($attribute, Yii::t('traits', 'The selected parent creates a hierarchy cycle.'));
+				return;
+			}
+
+			$ancestor = $modelClass::find()->select(['id', 'parent_id'])->where(['id' => $ancestorId])->one();
+			if ($ancestor === null) {
+				return;
+			}
+
+			$ancestorId = (int)$ancestor->parent_id;
+		}
+	}
+
 	public function getParent()
 	{
-		return $this->hasOne(self::class, ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
+		return $this->hasOne(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
 	}
 
-	/**
-	 * @return ActiveQuery
-	 */
 	public function getParents()
 	{
-		return $this->hasMany(self::class, ['id' => 'parent_id'])->from(self::tableName() . ' AS parent');
+		return $this->hasMany(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
 	}
 
-	/**
-	 * @return ActiveQuery
-	 */
 	public function getChild()
 	{
-		return $this->hasOne(self::class, ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
+		return $this->hasOne(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
 	}
 
-	/**
-	 * @return ActiveQuery
-	 */
 	public function getChilds()
 	{
-		return $this->hasMany(self::class, ['parent_id' => 'id'])->from(self::tableName() . ' AS child');
+		return $this->hasMany(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
 	}
 
-	/**
-	 * Generate Parent Form Widget
-	 *
-	 * @param ActiveForm $form
-	 * @param array $items
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
 	public function getParentWidget($form,$items)
 	{
 		/** @var $this Model */
@@ -139,46 +139,30 @@ trait ParentTrait
 		]);
 	}
 
-	/**
-	 * Generate GridView for Parent
-	 *
-	 * @param string $field
-	 * @param string $url
-	 * @param bool $hideItem
-	 *
-	 * @return string
-	 * @throws InvalidParamException
-	 */
 	public function getParentGridView($field,$url,$hideItem = false)
 	{
 		/** @var $this Model */
-		if (isset($this->parent->id) && !$hideItem) {
+		$parent = $this->parent;
+		if ($parent && !$hideItem) {
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-			return Html::a($this->parent->$field,$url);
+			return Html::a($parent->$field,$url);
 		}
 
 		if ($hideItem !== null && $hideItem)
 		{
-			if($this->parent_id === $hideItem) {
+			if($this->parent_id === $hideItem || !$parent) {
 				return '<span class="fa fa-ban text-danger"></span>';
 			}
 
 			$url = urldecode(Url::toRoute([$url, 'id' => $this->parent_id]));
-			return Html::a($this->parent->$field,$url);
+			return Html::a($parent->$field,$url);
 		}
 
 		return '<span class="fa fa-ban text-danger"></span>';
 	}
 
-    /**
-     * Generate DetailView for State
-     *
-     * @return array
-     */
     public function getParentDetailView()
     {
-        return [
-
-        ];
+        return [];
     }
 }

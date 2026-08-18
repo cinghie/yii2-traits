@@ -25,6 +25,7 @@ use yii\helpers\Url;
  */
 trait ParentTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getParentRules()
     {
         return [
@@ -34,6 +35,7 @@ trait ParentTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getParentAttributeLabels()
     {
         return [
@@ -41,11 +43,7 @@ trait ParentTrait
         ];
     }
 
-    /**
-     * Prevent self-parenting and cycles in the ancestor chain.
-     *
-     * @param string $attribute
-     */
+    /** Prevent self-parenting and hierarchy cycles. */
     public function validateParentHierarchy($attribute)
     {
         $parentId = $this->$attribute;
@@ -90,12 +88,7 @@ trait ParentTrait
         return $this->hasOne(static::class, ['id' => 'parent_id'])->from(static::tableName() . ' AS parent');
     }
 
-    /**
-     * Return the ancestor chain, nearest parent first.
-     *
-     * @param int $limit Safety bound for malformed legacy hierarchies.
-     * @return array
-     */
+    /** Return ancestors nearest-first, bounded for malformed hierarchies. */
     public function getAncestors($limit = 100)
     {
         $limit = max(1, (int)$limit);
@@ -122,7 +115,7 @@ trait ParentTrait
         return $ancestors;
     }
 
-    /** @return array */
+    /** Backward-compatible alias for getAncestors(). */
     public function getParents()
     {
         return $this->getAncestors();

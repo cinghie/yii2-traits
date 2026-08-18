@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  */
 trait CreatedTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getCreatedRules()
     {
         return [
@@ -28,6 +29,7 @@ trait CreatedTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getCreatedAttributeLabels()
     {
         return [

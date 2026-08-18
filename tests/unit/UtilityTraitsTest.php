@@ -36,12 +36,15 @@ final class UtilityTraitsTest extends TestCase
 
     public function testParentRulesIncludeExistenceAndHierarchyValidation(): void
     {
-        $rules = ParentTraitTestHost::rules();
+        $rules = (new ParentTraitTestHost())->getParentRules();
 
-        $this->assertSame('exist', $rules[1][1]);
-        $this->assertSame(ParentTraitTestHost::class, $rules[1]['targetClass']);
-        $this->assertSame(['parent_id' => 'id'], $rules[1]['targetAttribute']);
-        $this->assertSame('validateParentHierarchy', $rules[2][1]);
+        $existRule = $this->findRuleByValidator($rules, 'exist');
+        $hierarchyRule = $this->findRuleByValidator($rules, 'validateParentHierarchy');
+
+        $this->assertNotNull($existRule);
+        $this->assertSame(ParentTraitTestHost::class, $existRule['targetClass']);
+        $this->assertSame(['parent_id' => 'id'], $existRule['targetAttribute']);
+        $this->assertNotNull($hierarchyRule);
     }
 
     public function testParentHierarchyAllowsEmptyParent(): void
@@ -110,12 +113,15 @@ final class UtilityTraitsTest extends TestCase
         $model->id = 1;
         $model->parent_id = 2;
 
-        $parents = $model->getParents();
-
-        $this->assertSame([2, 3, 4], array_map(static function ($parent) {
+        $parentIds = array_map(static function ($parent) {
             return (int)$parent->id;
-        }, $parents));
-        $this->assertSame($parents, $model->getAncestors());
+        }, $model->getParents());
+        $ancestorIds = array_map(static function ($parent) {
+            return (int)$parent->id;
+        }, $model->getAncestors());
+
+        $this->assertSame([2, 3, 4], $parentIds);
+        $this->assertSame($parentIds, $ancestorIds);
     }
 
     public function testAncestorsStopsAtSafetyLimit(): void
@@ -130,6 +136,17 @@ final class UtilityTraitsTest extends TestCase
         $model->parent_id = 2;
 
         $this->assertCount(2, $model->getAncestors(2));
+    }
+
+    private function findRuleByValidator(array $rules, string $validator): ?array
+    {
+        foreach ($rules as $rule) {
+            if (isset($rule[1]) && $rule[1] === $validator) {
+                return $rule;
+            }
+        }
+
+        return null;
     }
 }
 
@@ -192,7 +209,6 @@ final class ParentTraitFakeQuery
             return null;
         }
 
-        $row = $this->rows[$this->id];
-        return (object)$row;
+        return (object)$this->rows[$this->id];
     }
 }

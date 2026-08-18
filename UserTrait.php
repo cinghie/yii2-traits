@@ -34,6 +34,7 @@ use yii\helpers\Url;
  */
 trait UserTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getUserRules()
     {
         return [
@@ -42,6 +43,7 @@ trait UserTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getUserAttributeLabels()
     {
         return [
@@ -49,13 +51,14 @@ trait UserTrait
         ];
     }
 
-    /** @return ActiveQuery */
+    /** Return the related user query. */
     public function getUser()
     {
         /** @var $this ActiveRecord */
         return $this->hasOne(User::class, ['id' => 'user_id'])->from(User::tableName() . ' AS user');
     }
 
+    /** Render the user selector. */
 	public function getUserWidget($form,$disabled = false)
     {
         if($disabled)
@@ -85,6 +88,7 @@ trait UserTrait
 	    ]);
     }
 
+    /** Render the user value for grid views. */
     public function getUserGridView()
     {
         if (isset($this->user->id)) {
@@ -95,6 +99,7 @@ trait UserTrait
 	    return '<span class="fa fa-ban text-danger"></span>';
     }
 
+    /** Return the user configuration for DetailView. */
     public function getUserDetailView()
     {
         return [

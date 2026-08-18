@@ -67,7 +67,7 @@ final class TargetedTraitRegressionTest extends TestCase
     public function testOrderingRollsBackSiblingShiftWhenMovedRowUpdateFails(): void
     {
         $db = $this->createOrderingDatabase();
-        $db->createCommand("CREATE TRIGGER fail_moved_row BEFORE UPDATE OF ordering ON ordering_test WHEN OLD.id = 2 BEGIN SELECT RAISE(ABORT, 'boom'); END")->execute();
+        $db->createCommand("CREATE TRIGGER fail_moved_row BEFORE UPDATE OF ordering ON ordering_test WHEN OLD.id = 2 BEGIN SELECT RAISE(ABORT, 'boom'); END;")->execute();
         $model = OrderingTraitRecord::findOne(2);
         $model->ordering = 4;
 

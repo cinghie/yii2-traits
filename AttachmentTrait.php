@@ -21,6 +21,7 @@ use yii\base\InvalidConfigException;
  */
 trait AttachmentTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getAttachmentRules()
     {
         return [
@@ -30,6 +31,7 @@ trait AttachmentTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getAttachmentAttributeLabels()
     {
         return [

@@ -29,28 +29,25 @@ use yii\db\Transaction;
  */
 trait OrderingTrait
 {
+	/** Validation rules contributed by this trait. */
 	public function getOrderingRules()
 	{
 		return [[['ordering'], 'integer']];
 	}
 
+	/** Attribute labels contributed by this trait. */
 	public function getOrderingAttributeLabels()
 	{
 		return ['ordering' => Yii::t('traits', 'Ordering')];
 	}
 
 	/**
-	 * Set Model Ordering on Class.
-	 *
-	 * Sibling shifts and the persisted ordering of the current ActiveRecord are
-	 * committed in one serializable transaction. `$lastOrdering` is retained for
-	 * backwards compatibility but move-to-last now calculates the scoped maximum
-	 * inside the transaction.
+	 * Reorder the current record within its scoped list.
 	 *
 	 * @param Model|string $class
 	 * @param string $fieldOrdering
 	 * @param int $oldOrdering
-	 * @param int $lastOrdering Deprecated input retained for API compatibility.
+	 * @param int $lastOrdering Deprecated; kept for API compatibility.
 	 */
 	public function setOrdering($class, $fieldOrdering, $oldOrdering, $lastOrdering)
 	{

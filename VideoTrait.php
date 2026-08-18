@@ -30,6 +30,7 @@ use yii\base\Model;
  */
 trait VideoTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getVideoRules()
     {
         return [
@@ -39,6 +40,7 @@ trait VideoTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getVideoAttributeLabels()
     {
         return [
@@ -49,6 +51,7 @@ trait VideoTrait
         ];
     }
 
+    /** Return available video providers. */
     public function getVideoTypeSelect2()
     {
 	    return [
@@ -58,6 +61,7 @@ trait VideoTrait
 	    ];
     }
 
+    /** Render the video identifier field. */
     public function getVideoIDWidget($form)
     {
         /** @var $this Model */
@@ -70,6 +74,7 @@ trait VideoTrait
         ])->textInput(['maxlength' => true]);
     }
 
+    /** Render the video provider selector. */
     public function getVideoTypeWidget($form)
     {
         /** @var $this Model | VideoTrait */
@@ -83,6 +88,7 @@ trait VideoTrait
         ]);
     }
 
+    /** Render the video caption field. */
     public function getVideoCaptionWidget($form)
     {
         /** @var $this Model */
@@ -95,6 +101,7 @@ trait VideoTrait
         ])->textarea(['maxlength' => true,'rows' => 6]);
     }
 
+    /** Render the video credits field. */
     public function getVideoCreditsWidget($form)
     {
         /** @var $this Model */

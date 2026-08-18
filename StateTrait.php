@@ -28,35 +28,11 @@ use yii\base\Model;
  */
 trait StateTrait
 {
-    /**
-     * Event name raised after a successful {@see active()} / {@see deactive()}.
-     * Prefixed to avoid collisions. No handlers attached ⇒ Yii silent no-op.
-     *
-     * @return string
-     */
     protected function stateChangeEventName(): string
     {
         return 'cinghie.traits.afterStateChange';
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., StateTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getStateRules() instance method instead.
-     */
-    public static function rules()
-    {
-        return [
-            [['state'], 'integer']
-        ];
-    }
-
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getStateRules()
     {
         return [
@@ -64,28 +40,6 @@ trait StateTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., StateTrait::attributeLabels())
-     * will generate a deprecation warning. It's recommended to call this as an instance method
-     * in your model's attributeLabels() method instead.
-     * 
-     * @return array
-     */
-    public static function attributeLabels()
-    {
-        return [
-            'state' => Yii::t('traits', 'State'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * Use this method in your model's attributeLabels() instead of calling the static method
-     * 
-     * @return array
-     */
     public function getStateAttributeLabels()
     {
         return [
@@ -93,15 +47,6 @@ trait StateTrait
         ];
     }
 
-    /**
-     * Active model state (Set 1).
-     *
-     * Uses {@see \yii\db\BaseActiveRecord::updateAttributes()} (does not fire
-     * ActiveRecord AFTER_UPDATE). On success raises {@see stateChangeEventName()}
-     * when the host object is a Yii Component. No attached handlers ⇒ silent no-op.
-     *
-     * @return bool
-     */
     public function active()
     {
         $ok = (bool)$this->updateAttributes([
@@ -114,15 +59,6 @@ trait StateTrait
         return $ok;
     }
 
-    /**
-     * Inactive model state (Set 0).
-     *
-     * Uses {@see \yii\db\BaseActiveRecord::updateAttributes()} (does not fire
-     * ActiveRecord AFTER_UPDATE). On success raises {@see stateChangeEventName()}
-     * when the host object is a Yii Component. No attached handlers ⇒ silent no-op.
-     *
-     * @return bool
-     */
     public function deactive()
     {
         $ok = (bool)$this->updateAttributes([
@@ -135,9 +71,6 @@ trait StateTrait
         return $ok;
     }
 
-    /**
-     * Raise {@see stateChangeEventName()} if possible; never throws when unused.
-     */
     protected function triggerStateChangeEvent(): void
     {
         if (!$this instanceof \yii\base\Component) {
@@ -146,14 +79,6 @@ trait StateTrait
         $this->trigger($this->stateChangeEventName());
     }
 
-	/**
-	 * Generate State Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
     public function getStateWidget($form)
     {
         /** @var $this Model */
@@ -167,13 +92,6 @@ trait StateTrait
         ]);
     }
 
-    /**
-     * Generate GridView for State
-     *
-     * @param bool $removeLink
-     *
-     * @return string
-     */
     public function getStateGridView($removeLink = false)
     {
         if($this->state)
@@ -200,11 +118,6 @@ trait StateTrait
 	    );
     }
 
-    /**
-     * Generate DetailView for State
-     *
-     * @return array
-     */
     public function getStateDetailView()
     {
         return [
@@ -224,11 +137,6 @@ trait StateTrait
         ];
     }
 
-    /**
-     * Return an array with states
-     *
-     * @return array
-     */
     public static function getStateSelect2()
     {
         return [

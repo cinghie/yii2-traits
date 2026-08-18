@@ -29,11 +29,6 @@ use yii\db\Transaction;
  */
 trait OrderingTrait
 {
-	public static function rules()
-	{
-		return [[['ordering'], 'integer']];
-	}
-
 	public function getOrderingRules()
 	{
 		return [[['ordering'], 'integer']];

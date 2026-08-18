@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  */
 trait ModifiedTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getModifiedRules()
     {
         return [
@@ -28,6 +29,7 @@ trait ModifiedTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getModifiedAttributeLabels()
     {
         return [

@@ -93,7 +93,7 @@ class Mailer
 				'message' => $this->debug,
 			];
 
-		} elseif (!$this->emailFromIsValid()) {
+		} elseif (!$this->emailToIsValid()) {
 
 			$results = [
 				'status' => 'error',

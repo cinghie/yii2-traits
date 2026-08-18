@@ -23,9 +23,6 @@ use yii\base\InvalidParamException;
  */
 trait TaggableTrait
 {
-	/**
-	 * @inheritdoc
-	 */
 	public function behaviors()
 	{
 		return [
@@ -35,26 +32,6 @@ trait TaggableTrait
 		];
 	}
 
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-	 * It's recommended to use getTaggableRules() instance method instead.
-	 * 
-	 * @return array
-	 */
-	public static function rules()
-	{
-		return [
-			[['tagNames'], 'safe'],
-		];
-	}
-
-	/**
-	 * Instance method to get rules without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getTaggableRules()
 	{
 		return [
@@ -62,26 +39,6 @@ trait TaggableTrait
 		];
 	}
 
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-	 * It's recommended to use getTaggableAttributeLabels() instance method instead.
-	 * 
-	 * @return array
-	 */
-	public static function attributeLabels()
-	{
-		return [
-			'tagNames' => Yii::t('traits', 'TagNames'),
-		];
-	}
-
-	/**
-	 * Instance method to get attribute labels without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getTaggableAttributeLabels()
 	{
 		return [
@@ -89,12 +46,6 @@ trait TaggableTrait
 		];
 	}
 
-	/**
-	 * Generate DetailView for Tags
-	 *
-	 * @return array
-	 * @throws InvalidParamException
-	 */
 	public function getTagsDetailView()
 	{
 		return [

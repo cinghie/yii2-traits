@@ -30,6 +30,11 @@ use yii\base\Model;
  */
 trait SocialTrait
 {
+	/**
+	 * Trait-specific validation rules to be merged by the consuming Yii model.
+	 *
+	 * @return array
+	 */
 	public function getSocialRules()
 	{
 		return [
@@ -37,6 +42,11 @@ trait SocialTrait
 		];
 	}
 
+	/**
+	 * Trait-specific attribute labels to be merged by the consuming Yii model.
+	 *
+	 * @return array
+	 */
 	public function getSocialAttributeLabels()
 	{
 		return [
@@ -49,39 +59,123 @@ trait SocialTrait
 		];
 	}
 
+	/**
+	 * Get Facebook Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getFacebookWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'facebook', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-facebook"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'facebook', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-facebook"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get Instagram Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getInstagramWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'instagram', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-instagram"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'instagram', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-instagram"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get Linkedin Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getLinkedinWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'linkedin', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-linkedin"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'linkedin', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-linkedin"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get Pinterest Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getPinterestWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'pinterest', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-pinterest"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'pinterest', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-pinterest"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get Twitter Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getTwitterWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'twitter', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-twitter"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'twitter', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-twitter"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get Pinterest Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getYouTubeWidget($form)
 	{
 		/** @var Model $this */
-		return $form->field($this, 'youtube', ['addon' => ['prepend' => ['content'=>'<i class="fab fa-youtube"></i>']]])->textInput(['maxlength' => true]);
+		return $form->field($this, 'youtube', [
+			'addon' => [
+				'prepend' => [
+					'content'=>'<i class="fab fa-youtube"></i>'
+				]
+			]
+		])->textInput(['maxlength' => true]);
 	}
 }

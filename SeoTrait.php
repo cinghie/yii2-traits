@@ -33,12 +33,6 @@ use yii\base\Model;
  */
 trait SeoTrait
 {
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically (e.g., SeoTrait::rules())
-     * may generate a deprecation warning. It's recommended to use getSeoRules() instance method instead.
-     */
     public static function rules()
     {
         return [
@@ -48,11 +42,6 @@ trait SeoTrait
         ];
     }
 
-    /**
-     * Instance method to get rules without deprecation warning
-     * 
-     * @return array
-     */
     public function getSeoRules()
     {
         return [
@@ -62,31 +51,7 @@ trait SeoTrait
         ];
     }
 
-    /**
-     * @inheritdoc
-     * 
-     * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-     * It's recommended to use getSeoAttributeLabels() instance method instead.
-     * 
-     * @return array
-     */
     public static function attributeLabels()
-    {
-        return [
-            'author' => Yii::t('traits', 'Author'),
-            'copyright' => Yii::t('traits', 'Copyright'),
-            'metadesc' => Yii::t('traits', 'Metadesc'),
-            'metakey' => Yii::t('traits', 'Metakey'),
-            'robots' => Yii::t('traits', 'Robots'),
-        ];
-    }
-
-    /**
-     * Instance method to get attribute labels without deprecation warning
-     * 
-     * @return array
-     */
-    public function getSeoAttributeLabels()
     {
         return [
             'author' => Yii::t('traits', 'Author'),
@@ -97,14 +62,11 @@ trait SeoTrait
         ];
     }
 
-	/**
-	 * Generate Robots Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws Exception
-	 */
+    public function getSeoAttributeLabels()
+    {
+        return static::attributeLabels();
+    }
+
     public function getRobotsWidget($form)
     {
         /** @var $this Model */
@@ -118,14 +80,6 @@ trait SeoTrait
         ]);
     }
 
-	/**
-	 * Generate Author Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getAuthorWidget($form)
     {
         /** @var $this Model */
@@ -138,14 +92,6 @@ trait SeoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-	/**
-	 * Generate Copyright Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getCopyrightWidget($form)
     {
         /** @var $this Model */
@@ -158,14 +104,6 @@ trait SeoTrait
         ])->textInput(['maxlength' => true]);
     }
 
-	/**
-	 * Generate Meta Description Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getMetaDescriptionWidget($form)
     {
         /** @var $this Model */
@@ -178,14 +116,6 @@ trait SeoTrait
         ])->textarea(['rows' => 5]);
     }
 
-	/**
-	 * Generate Meta Key Form Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
     public function getMetaKeyWidget($form)
     {
         /** @var $this Model */
@@ -198,25 +128,16 @@ trait SeoTrait
         ])->textarea(['rows' => 5]);
     }
 
-    /**
-     * Get Robots Options
-     *
-     * @return array
-     */
     public static function getRobotsOptions()
     {
         return [
             'index, follow' => 'index, follow',
-            'no index, no follow' => 'no index, no follow',
-            'no index, follow' => 'no index, follow',
-            'index, no follow' => 'index, no follow'
+            'noindex, nofollow' => 'noindex, nofollow',
+            'noindex, follow' => 'noindex, follow',
+            'index, nofollow' => 'index, nofollow'
         ];
     }
 
-    /**
-     * @return string
-     * @throws Throwable
-     */
     public function getDetailSeoView()
     {
         return DetailView::widget([
@@ -236,33 +157,23 @@ trait SeoTrait
             'attributes' => [
                 [
                     'attribute' => 'metadesc:ntext',
-                    'valueColOptions'=> [
-                        'style' => 'width:30%'
-                    ],
+                    'valueColOptions'=> ['style' => 'width:30%'],
                 ],
                 [
                     'attribute' => 'metakey:ntext',
-                    'valueColOptions'=> [
-                        'style' => 'width:30%'
-                    ],
+                    'valueColOptions'=> ['style' => 'width:30%'],
                 ],
                 [
                     'attribute' => 'robots',
-                    'valueColOptions'=> [
-                        'style' => 'width:30%'
-                    ],
+                    'valueColOptions'=> ['style' => 'width:30%'],
                 ],
                 [
                     'attribute' => 'author',
-                    'valueColOptions'=> [
-                        'style' => 'width:30%'
-                    ],
+                    'valueColOptions'=> ['style' => 'width:30%'],
                 ],
                 [
                     'attribute' => 'copyright',
-                    'valueColOptions'=> [
-                        'style' => 'width:30%'
-                    ],
+                    'valueColOptions'=> ['style' => 'width:30%'],
                 ],
             ],
         ]);

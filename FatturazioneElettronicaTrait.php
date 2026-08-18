@@ -26,11 +26,7 @@ use yii\base\Model;
  */
 trait FatturazioneElettronicaTrait
 {
-	/**
-	 * Trait-specific validation rules to be merged by the consuming Yii model.
-	 *
-	 * @return array
-	 */
+	/** Validation rules contributed by this trait. */
 	public function getFatturazioneElettronicaRules()
 	{
 		return [
@@ -39,11 +35,7 @@ trait FatturazioneElettronicaTrait
 		];
 	}
 
-	/**
-	 * Trait-specific attribute labels to be merged by the consuming Yii model.
-	 *
-	 * @return array
-	 */
+	/** Attribute labels contributed by this trait. */
 	public function getFatturazioneElettronicaAttributeLabels()
 	{
 		return [

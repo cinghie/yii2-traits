@@ -21,7 +21,7 @@ use yii\base\InvalidConfigException;
  */
 trait AttachmentTrait
 {
-    public static function rules()
+    public function getAttachmentRules()
     {
         return [
             [['size'], 'integer'],
@@ -30,12 +30,7 @@ trait AttachmentTrait
         ];
     }
 
-    public function getAttachmentRules()
-    {
-        return static::rules();
-    }
-
-    public static function attributeLabels()
+    public function getAttachmentAttributeLabels()
     {
         return [
             'alias' => Yii::t('traits', 'Alias'),
@@ -45,11 +40,6 @@ trait AttachmentTrait
             'size' => Yii::t('traits', 'Size'),
             'title' => Yii::t('traits', 'Title'),
         ];
-    }
-
-    public function getAttachmentAttributeLabels()
-    {
-        return static::attributeLabels();
     }
 
     protected function getAttachmentService()

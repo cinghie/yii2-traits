@@ -17,7 +17,6 @@ use Yii;
 use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
-use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -67,10 +66,10 @@ trait OrderingTrait
 	{
 		$className = is_object($class) ? get_class($class) : $class;
 		if (!is_string($className) || !is_a($className, ActiveRecord::class, true)) {
-			throw new InvalidArgumentException('Ordering class must be an ActiveRecord class.');
+			throw new \InvalidArgumentException('Ordering class must be an ActiveRecord class.');
 		}
 		if ($this instanceof ActiveRecord && !is_a($this, $className)) {
-			throw new InvalidArgumentException('Ordering class must be compatible with the current ActiveRecord.');
+			throw new \InvalidArgumentException('Ordering class must be compatible with the current ActiveRecord.');
 		}
 
 		$newOrdering = (int)$this->ordering;

@@ -26,6 +26,11 @@ use yii\base\Model;
  */
 trait FatturazioneElettronicaTrait
 {
+	/**
+	 * Trait-specific validation rules to be merged by the consuming Yii model.
+	 *
+	 * @return array
+	 */
 	public function getFatturazioneElettronicaRules()
 	{
 		return [
@@ -34,6 +39,11 @@ trait FatturazioneElettronicaTrait
 		];
 	}
 
+	/**
+	 * Trait-specific attribute labels to be merged by the consuming Yii model.
+	 *
+	 * @return array
+	 */
 	public function getFatturazioneElettronicaAttributeLabels()
 	{
 		return [
@@ -42,6 +52,14 @@ trait FatturazioneElettronicaTrait
 		];
 	}
 
+	/**
+	 * Get PEC Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getPecWidget($form)
 	{
 		/** @var $this Model */
@@ -54,6 +72,14 @@ trait FatturazioneElettronicaTrait
 		])->textInput(['maxlength' => true]);
 	}
 
+	/**
+	 * Get SDI Widget
+	 *
+	 * @param ActiveForm $form
+	 *
+	 * @return ActiveField
+	 * @throws InvalidConfigException
+	 */
 	public function getSdiWidget($form)
 	{
 		/** @var $this Model */

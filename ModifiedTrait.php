@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  */
 trait ModifiedTrait
 {
-    public static function rules()
+    public function getModifiedRules()
     {
         return [
             [['modified'], 'safe'],
@@ -28,22 +28,12 @@ trait ModifiedTrait
         ];
     }
 
-    public function getModifiedRules()
-    {
-        return static::rules();
-    }
-
-    public static function attributeLabels()
+    public function getModifiedAttributeLabels()
     {
         return [
             'modified' => Yii::t('traits', 'Modified'),
             'modified_by' => Yii::t('traits', 'Modified By'),
         ];
-    }
-
-    public function getModifiedAttributeLabels()
-    {
-        return static::attributeLabels();
     }
 
     public function getModifiedBy()

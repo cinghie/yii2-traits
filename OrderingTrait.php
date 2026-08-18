@@ -17,6 +17,7 @@ use Yii;
 use kartik\form\ActiveField;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -53,16 +54,25 @@ trait OrderingTrait
 	 * Set Model Ordering on Class.
 	 *
 	 * Sibling shifts and the persisted ordering of the current ActiveRecord are
-	 * committed in one serializable transaction. The caller may still save the
-	 * complete model afterwards, as before.
+	 * committed in one serializable transaction. `$lastOrdering` is retained for
+	 * backwards compatibility but move-to-last now calculates the scoped maximum
+	 * inside the transaction.
 	 *
 	 * @param Model|string $class
 	 * @param string $fieldOrdering
 	 * @param int $oldOrdering
-	 * @param int $lastOrdering
+	 * @param int $lastOrdering Deprecated input retained for API compatibility.
 	 */
-	public function setOrdering($class,$fieldOrdering,$oldOrdering,$lastOrdering)
+	public function setOrdering($class, $fieldOrdering, $oldOrdering, $lastOrdering)
 	{
+		$className = is_object($class) ? get_class($class) : $class;
+		if (!is_string($className) || !is_a($className, ActiveRecord::class, true)) {
+			throw new InvalidArgumentException('Ordering class must be an ActiveRecord class.');
+		}
+		if ($this instanceof ActiveRecord && !is_a($this, $className)) {
+			throw new InvalidArgumentException('Ordering class must be compatible with the current ActiveRecord.');
+		}
+
 		$newOrdering = (int)$this->ordering;
 		$oldOrdering = (int)$oldOrdering;
 
@@ -70,7 +80,7 @@ trait OrderingTrait
 			return;
 		}
 
-		$db = $class::getDb();
+		$db = $className::getDb();
 		$transaction = $db->beginTransaction(Transaction::SERIALIZABLE);
 
 		try {
@@ -79,47 +89,46 @@ trait OrderingTrait
 			} elseif ($newOrdering === 0) {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
-					['<','ordering', $oldOrdering],
+					['<', 'ordering', $oldOrdering],
 				];
 
-				$class::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
+				$className::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
 				$this->setMinOrder();
 			} elseif ($newOrdering === 999999999) {
+				$scope = [$fieldOrdering => $this->$fieldOrdering];
+				$scopedMaximum = (int)$className::find()->where($scope)->max('ordering');
+
 				$condition = ['and',
-					[$fieldOrdering => $this->$fieldOrdering],
-					['>','ordering', $oldOrdering],
+					$scope,
+					['>', 'ordering', $oldOrdering],
 				];
 
-				$class::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
-				$this->ordering = max(1, (int)$lastOrdering);
+				$className::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
+				$this->ordering = max(1, $scopedMaximum);
 			} elseif ($newOrdering > $oldOrdering) {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
-					['>','ordering', $oldOrdering],
-					['<=','ordering', $newOrdering],
+					['>', 'ordering', $oldOrdering],
+					['<=', 'ordering', $newOrdering],
 				];
 
-				$class::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
+				$className::updateAll(['ordering' => new Expression('ordering - 1')], $condition);
 				$this->ordering = $newOrdering;
 			} else {
 				$condition = ['and',
 					[$fieldOrdering => $this->$fieldOrdering],
-					['<','ordering', $oldOrdering],
-					['>=','ordering', $newOrdering],
+					['<', 'ordering', $oldOrdering],
+					['>=', 'ordering', $newOrdering],
 				];
 
-				$class::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
+				$className::updateAll(['ordering' => new Expression('ordering + 1')], $condition);
 				$this->ordering = max(1, $newOrdering);
 			}
 
-			// Persist the moved row inside the same transaction when the trait is
-			// hosted by an existing ActiveRecord. This prevents a concurrent request
-			// from observing shifted siblings while the moved row still has its old
-			// ordering value.
 			if ($this instanceof ActiveRecord && !$this->isNewRecord) {
 				$primaryKey = $this->getPrimaryKey(true);
 				if ($primaryKey) {
-					$class::updateAll(['ordering' => $this->ordering], $primaryKey);
+					$className::updateAll(['ordering' => $this->ordering], $primaryKey);
 				}
 			}
 
@@ -132,9 +141,9 @@ trait OrderingTrait
 		}
 	}
 
-	public function setMaxOrdering($class,$condition)
+	public function setMaxOrdering($class, $condition)
 	{
-		$this->ordering = $this->getLastOrdering($class,$condition);
+		$this->ordering = $this->getLastOrdering($class, $condition);
 	}
 
 	public function setMinOrder()
@@ -142,19 +151,19 @@ trait OrderingTrait
 		$this->ordering = 1;
 	}
 
-	public function getLastOrdering($class,$condition)
+	public function getLastOrdering($class, $condition)
 	{
 		return $class::find()->where($condition)->max('ordering');
 	}
 
 	public function getOrderingWidget($form, $class, $orderingField, $selectField, $condition)
 	{
-		if($this->isNewRecord) {
+		if ($this->isNewRecord) {
 			$options = ['disabled' => 'disabled'];
-			$orderingSelect = [ -1 => Yii::t('traits', 'Save to order') ];
-		} elseif(!$this->isNewRecord && !$this->$orderingField) {
+			$orderingSelect = [-1 => Yii::t('traits', 'Save to order')];
+		} elseif (!$this->isNewRecord && !$this->$orderingField) {
 			$options = ['disabled' => 'disabled'];
-			$orderingSelect = [ -1 => Yii::t('traits', 'Select a category to order') ];
+			$orderingSelect = [-1 => Yii::t('traits', 'Select a category to order')];
 		} else {
 			$options = [];
 			$orderingSelect = $this->getOrderingSelect2($class, $orderingField, $selectField, $condition);
@@ -164,25 +173,25 @@ trait OrderingTrait
 			'data' => $orderingSelect,
 			'options' => $options,
 			'addon' => [
-				'prepend' => ['content'=>'<i class="fa fa-sort"></i>']
+				'prepend' => ['content' => '<i class="fa fa-sort"></i>'],
 			],
 		]);
 	}
 
 	public function getOrderingSelect2($class, $orderingField = '', array $selectField = [], array $condition = [])
 	{
-		$array = [ 0 => Yii::t('traits','First Element') ];
+		$array = [0 => Yii::t('traits', 'First Element')];
 		$items = $class::find()->select($selectField)->where($condition)->orderby('ordering ASC')->all();
 
-		if(count($items) === 1) {
+		if (count($items) === 1) {
 			return $array;
 		}
 
-		foreach($items as $item) {
+		foreach ($items as $item) {
 			$array[$item[$selectField[0]]] = $item[$selectField[1]];
 		}
 
-		$array[999999999] = Yii::t('traits','Last Element');
+		$array[999999999] = Yii::t('traits', 'Last Element');
 		return $array;
 	}
 }

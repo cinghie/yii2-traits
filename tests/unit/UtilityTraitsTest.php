@@ -97,6 +97,40 @@ final class UtilityTraitsTest extends TestCase
 
         $this->assertFalse($model->hasErrors('parent_id'));
     }
+
+    public function testParentsReturnsNearestFirstAncestorChain(): void
+    {
+        ParentTraitTestHost::$rows = [
+            2 => ['id' => 2, 'parent_id' => 3],
+            3 => ['id' => 3, 'parent_id' => 4],
+            4 => ['id' => 4, 'parent_id' => null],
+        ];
+
+        $model = new ParentTraitTestHost();
+        $model->id = 1;
+        $model->parent_id = 2;
+
+        $parents = $model->getParents();
+
+        $this->assertSame([2, 3, 4], array_map(static function ($parent) {
+            return (int)$parent->id;
+        }, $parents));
+        $this->assertSame($parents, $model->getAncestors());
+    }
+
+    public function testAncestorsStopsAtSafetyLimit(): void
+    {
+        ParentTraitTestHost::$rows = [
+            2 => ['id' => 2, 'parent_id' => 3],
+            3 => ['id' => 3, 'parent_id' => 4],
+            4 => ['id' => 4, 'parent_id' => null],
+        ];
+
+        $model = new ParentTraitTestHost();
+        $model->parent_id = 2;
+
+        $this->assertCount(2, $model->getAncestors(2));
+    }
 }
 
 final class SeoTraitTestHost

@@ -27,6 +27,7 @@ use yii\base\Model;
  */
 trait TitleAliasTrait
 {
+    /** Validation rules contributed by this trait. */
     public function getTitleAliasRules()
     {
         return [
@@ -35,6 +36,7 @@ trait TitleAliasTrait
         ];
     }
 
+    /** Attribute labels contributed by this trait. */
     public function getTitleAliasAttributeLabels()
     {
         return [
@@ -43,6 +45,7 @@ trait TitleAliasTrait
         ];
     }
 
+    /** Generate an alias from a title. */
 	public function generateAlias($title)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
@@ -58,6 +61,7 @@ trait TitleAliasTrait
 		return $slugify->slugify($title);
 	}
 
+    /** Fill the alias when it is missing from submitted data. */
 	public function setAlias($post,$field)
 	{
 		$slugifyOptions = Yii::$app->controller->module->slugifyOptions ?? [
@@ -76,6 +80,7 @@ trait TitleAliasTrait
 		}
 	}
 
+    /** Normalize a string into a basic alias. */
 	public function purgeAlias($string)
 	{
 		$string = str_replace(array('-','_'), ' ', $string);
@@ -83,6 +88,7 @@ trait TitleAliasTrait
 		return strtolower(trim($string));
 	}
 
+    /** Render the title field. */
     public function getTitleWidget($form)
     {
         /** @var $this Model */
@@ -95,6 +101,7 @@ trait TitleAliasTrait
         ])->textInput(['maxlength' => true]);
     }
 
+    /** Render the alias field. */
     public function getAliasWidget($form)
     {
         /** @var $this Model */

@@ -26,25 +26,6 @@ use yii\base\Model;
  */
 trait FatturazioneElettronicaTrait
 {
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically (e.g., FatturazioneElettronicaTrait::rules())
-	 * may generate a deprecation warning. It's recommended to use getFatturazioneElettronicaRules() instance method instead.
-	 */
-	public static function rules()
-	{
-		return  [
-			[['sdi'], 'string', 'max' => 7],
-			[['pec'], 'string', 'max' => 100],
-		];
-	}
-
-	/**
-	 * Instance method to get rules without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getFatturazioneElettronicaRules()
 	{
 		return [
@@ -53,27 +34,6 @@ trait FatturazioneElettronicaTrait
 		];
 	}
 
-	/**
-	 * @inheritdoc
-	 * 
-	 * Note: In PHP 8.1+, calling this method statically will generate a deprecation warning.
-	 * It's recommended to use getFatturazioneElettronicaAttributeLabels() instance method instead.
-	 * 
-	 * @return array
-	 */
-	public static function attributeLabels()
-	{
-		return [
-			'pec' => Yii::t('traits', 'PEC'),
-			'sdi' => Yii::t('traits', 'SDI'),
-		];
-	}
-
-	/**
-	 * Instance method to get attribute labels without deprecation warning
-	 * 
-	 * @return array
-	 */
 	public function getFatturazioneElettronicaAttributeLabels()
 	{
 		return [
@@ -82,14 +42,6 @@ trait FatturazioneElettronicaTrait
 		];
 	}
 
-	/**
-	 * Get PEC Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
 	public function getPecWidget($form)
 	{
 		/** @var $this Model */
@@ -102,14 +54,6 @@ trait FatturazioneElettronicaTrait
 		])->textInput(['maxlength' => true]);
 	}
 
-	/**
-	 * Get SDI Widget
-	 *
-	 * @param ActiveForm $form
-	 *
-	 * @return ActiveField
-	 * @throws InvalidConfigException
-	 */
 	public function getSdiWidget($form)
 	{
 		/** @var $this Model */

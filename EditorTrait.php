@@ -2,20 +2,23 @@
 
 namespace cinghie\traits;
 
-use Yii;
+use cinghie\traits\services\RuntimeConfig;
 use cinghie\traits\ui\EditorUi;
 
 /**
  * Backwards-compatible façade for editor rendering.
  *
- * UI implementation lives in ui/EditorUi so models using this trait no longer
- * contain editor-specific rendering logic.
+ * UI implementation lives in ui/EditorUi and runtime editor selection is
+ * resolved outside the model trait.
  */
 trait EditorTrait
 {
     public function getEditorWidget($form, $field, $requestEditor = '', $value = '', $options = [])
     {
-        $editor = $requestEditor !== '' ? $requestEditor : Yii::$app->controller->module->editor;
+        $editor = $requestEditor !== ''
+            ? $requestEditor
+            : RuntimeConfig::get($this, 'editor', '', 'editor');
+
         return EditorUi::editorWidget($this, $form, $field, $editor, $value, $options);
     }
 

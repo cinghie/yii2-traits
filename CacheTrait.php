@@ -19,9 +19,11 @@ use yii\base\ViewNotFoundException;
 use yii\caching\Cache;
 use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
+use yii\web\Request;
 use yii\web\Response;
 
 /**
@@ -29,16 +31,10 @@ use yii\web\Response;
  */
 trait CacheTrait
 {
-    /**
-     * @return mixed
-     * @throws InvalidCallException
-     * @throws ViewNotFoundException
-     */
     public function actionCache()
     {
-        /** @var $this yii\web\View */
-        $dataProvider = new ArrayDataProvider(['allModels'=>$this->findCaches()]);
-        return $this->render('cache', ['dataProvider'=>$dataProvider]);
+        $dataProvider = new ArrayDataProvider(['allModels' => $this->findCaches()]);
+        return $this->render('cache', ['dataProvider' => $dataProvider]);
     }
 
     /**
@@ -54,15 +50,26 @@ trait CacheTrait
     }
 
     /**
-     * Require POST and explicit RBAC authorization before mutating cache.
+     * Require POST, explicit CSRF validation and RBAC authorization before
+     * mutating cache. CSRF is validated directly on the web request so these
+     * actions remain protected even if the host controller disables its own
+     * automatic CSRF check.
      *
+     * @throws BadRequestHttpException
      * @throws ForbiddenHttpException
      * @throws MethodNotAllowedHttpException
      */
     protected function ensureCacheMutationAllowed()
     {
-        if (!Yii::$app->request->isPost) {
+        $request = Yii::$app->request;
+        if (!$request->isPost) {
             throw new MethodNotAllowedHttpException('Cache mutations require a POST request.');
+        }
+
+        if ($request instanceof Request) {
+            if (!$request->enableCsrfValidation || !$request->validateCsrfToken()) {
+                throw new BadRequestHttpException('Unable to verify your data submission.');
+            }
         }
 
         $user = Yii::$app->user;
@@ -72,62 +79,35 @@ trait CacheTrait
         }
     }
 
-	/**
-	 * @param $id
-	 *
-	 * @return Response
-	 */
     public function actionFlushCache($id)
     {
         $this->ensureCacheMutationAllowed();
 
-        /** @var $this Response */
         if ($this->getCache($id)->flush()) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache has been successfully flushed'));
         }
         return $this->redirect(['cache']);
     }
 
-	/**
-	 * @param $id
-	 * @param $key
-	 *
-	 * @return Response
-	 */
     public function actionFlushCacheKey($id, $key)
     {
         $this->ensureCacheMutationAllowed();
 
-        /** @var $this Response */
         if ($this->getCache($id)->delete($key)) {
             Yii::$app->session->setFlash('success', Yii::t('traits', 'Cache entry has been successfully deleted'));
         }
         return $this->redirect(['cache']);
     }
 
-	/**
-	 * @param $id
-	 * @param $tag
-	 *
-	 * @return Response
-	 */
     public function actionFlushCacheTag($id, $tag)
     {
         $this->ensureCacheMutationAllowed();
 
-        /** @var $this Response */
         TagDependency::invalidate($this->getCache($id), $tag);
         Yii::$app->session->setFlash('success', Yii::t('traits', 'TagDependency was invalidated'));
         return $this->redirect(['cache']);
     }
 
-    /**
-     * @param $id
-     *
-     * @return \yii\caching\Cache|null
-     * @throws InvalidConfigException
-     * @throws HttpException
-     */
     protected function getCache($id)
     {
         if (!array_key_exists($id, $this->findCaches())) {
@@ -136,13 +116,6 @@ trait CacheTrait
         return Yii::$app->get($id);
     }
 
-    /**
-     * Returns array of caches in the system, keys are cache components names, values are class names.
-     *
-     * @param array $cachesNames caches to be found
-     *
-     * @return array
-     */
     private function findCaches(array $cachesNames = [])
     {
         $caches = [];
@@ -153,23 +126,16 @@ trait CacheTrait
                 continue;
             }
             if ($component instanceof Cache) {
-                $caches[$name] = ['name'=>$name, 'class'=>get_class($component)];
+                $caches[$name] = ['name' => $name, 'class' => get_class($component)];
             } elseif (is_array($component) && isset($component['class']) && $this->isCacheClass($component['class'])) {
-                $caches[$name] = ['name'=>$name, 'class'=>$component['class']];
+                $caches[$name] = ['name' => $name, 'class' => $component['class']];
             } elseif (is_string($component) && $this->isCacheClass($component)) {
-                $caches[$name] = ['name'=>$name, 'class'=>$component];
+                $caches[$name] = ['name' => $name, 'class' => $component];
             }
         }
         return $caches;
     }
 
-    /**
-     * Checks if given class is a Cache class.
-     *
-     * @param string $className class name.
-     *
-     * @return boolean
-     */
     private function isCacheClass($className)
     {
         return is_subclass_of($className, Cache::class);

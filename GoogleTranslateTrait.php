@@ -12,12 +12,12 @@
 
 namespace cinghie\traits;
 
-use cinghie\traits\services\RuntimeConfig;
 use Google\Cloud\Translate\V3\Client\TranslationServiceClient;
 use Google\Cloud\Translate\V3\TranslateTextRequest;
+use Yii;
+use cinghie\traits\services\RuntimeConfig;
 use RuntimeException;
 use Throwable;
-use Yii;
 
 /**
  * Trait GoogleTranslateTrait

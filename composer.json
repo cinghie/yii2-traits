@@ -47,7 +47,7 @@
         "roave/security-advisories": "dev-latest"
     },
     "suggest": {
-        "google/cloud-translate": "Required only when using GoogleTranslateTrait; choose a release compatible with your PHP runtime.",
+        "google/cloud-translate": "Required only when using GoogleTranslateTrait; choose a release compatible with your PHP runtime."
     },
     "autoload": {
         "psr-4": {

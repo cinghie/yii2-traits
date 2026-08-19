@@ -7,7 +7,6 @@
  * @github https://github.com/cinghie/yii2-traits
  * @license GNU GENERAL PUBLIC LICENSE VERSION 3
  * @package yii2-traits
- * @version 1.2.3
  */
 
 namespace cinghie\traits;
@@ -64,6 +63,7 @@ trait GoogleTranslateTrait
         }
 
         $lang = str_replace(['ch', 'pr'], ['zh', 'pt'], $lang);
+        $translate = null;
 
         try {
             $translate = new TranslationServiceClient();
@@ -74,10 +74,6 @@ trait GoogleTranslateTrait
 
             $response = $translate->translateText($request);
             $translations = $response->getTranslations();
-
-            if (method_exists($translate, 'close')) {
-                $translate->close();
-            }
 
             return isset($translations[0])
                 ? (string)$translations[0]->getTranslatedText()
@@ -90,6 +86,10 @@ trait GoogleTranslateTrait
             }
 
             return '';
+        } finally {
+            if ($translate !== null && method_exists($translate, 'close')) {
+                $translate->close();
+            }
         }
     }
 

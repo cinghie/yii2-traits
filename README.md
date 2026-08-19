@@ -7,54 +7,54 @@ Yii2 Traits
 ![Latest Commit](https://img.shields.io/github/last-commit/cinghie/yii2-traits.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/cinghie/yii2-traits.svg)](https://packagist.org/packages/cinghie/yii2-traits)
 
-Yii2 Traits is a library with most used Traits, to minimize code on development new Modules.
-It contains a large number of features already implemented:
+Yii2 Traits is a library with commonly used traits designed to reduce duplicated code across Yii2 modules.
+It contains reusable implementations for:
 
     - attributes
     - attributeLabels()
-    - rules(()
+    - rules()
     - messages
     - common functions
     - widgets
 
 ## Requirements
 
-- PHP 7.4 or later
-- Yii 2.0
+- PHP 8.1 or later
+- Yii 2.0.55 or later
 
-The base package intentionally keeps runtime requirements minimal. Composer installs only PHP and Yii2 requirements by default. Feature-specific integrations are optional and must be installed explicitly when the corresponding trait functionality is used.
+`cinghie/yii2-traits` is also a shared runtime foundation for other Cinghie modules. For this reason, the integrations used by its traits are required Composer dependencies and are installed automatically with the package.
 
-### Optional dependencies
+### Required runtime dependencies
 
-| Package | Required for |
+| Package | Used for |
 | --- | --- |
 | `2amigos/yii2-ckeditor-widget` | CKEditor support in `EditorTrait` |
 | `2amigos/yii2-taggable-behavior` | `TaggableTrait` |
 | `2amigos/yii2-tinymce-widget` | TinyMCE support in `EditorTrait` |
-| `cinghie/yii2-user-extended` | `UserHelpersTrait` integrations based on yii2-user-extended |
+| `cinghie/yii2-user-extended` | User helper integrations |
 | `cocur/slugify` | Slug generation in `NameAliasTrait` and `TitleAliasTrait` |
-| `dektrium/yii2-user` | `CreatedTrait`, `ModifiedTrait` and `UserTrait` user relations |
+| `dektrium/yii2-user` | User relations in `CreatedTrait`, `ModifiedTrait` and `UserTrait` |
 | `google/cloud-translate` | `GoogleTranslateTrait` |
-| `james-heinrich/getid3` | Attachment/media metadata in `AttachmentTrait` |
-| `kartik-v/yii2-detail-view` | DetailView helpers exposed by UI-oriented traits |
-| `kartik-v/yii2-helpers` | Helpers that render Kartik HTML helpers |
-| `kartik-v/yii2-markdown` | Markdown editor support in `EditorTrait` |
+| `james-heinrich/getid3` | Attachment and media metadata |
+| `kartik-v/yii2-detail-view` | DetailView helpers |
+| `kartik-v/yii2-helpers` | Kartik HTML helpers |
+| `kartik-v/yii2-markdown` | Markdown editor support |
 | `kartik-v/yii2-mpdf` | `PDFTrait` |
 | `kartik-v/yii2-social` | `SocialTrait` |
-| `kartik-v/yii2-widgets` | Kartik form widgets such as Select2, DateTimePicker and FileInput |
-| `php-ffmpeg/php-ffmpeg` | Video thumbnail generation in `AttachmentTrait` |
+| `kartik-v/yii2-widgets` | Form widgets such as Select2, DateTimePicker and FileInput |
+| `php-ffmpeg/php-ffmpeg` | Video thumbnail generation |
 | `vova07/yii2-imperavi-widget` | Imperavi support in `EditorTrait` |
 
-Composer also exposes these integrations through the package `suggest` metadata.
+These dependencies are part of the package runtime contract and must not be removed from an application that uses `cinghie/yii2-traits` or modules depending on it.
 
 ## Installation
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+The preferred way to install this extension is through [Composer](https://getcomposer.org/).
 
 Either run
 
 ```
-$ php composer.phar require cinghie/yii2-traits "*"
+php composer.phar require cinghie/yii2-traits "*"
 ```
 
 or add
@@ -63,20 +63,16 @@ or add
 "cinghie/yii2-traits": "*"
 ```
 
-This installs the minimal runtime package. Install only the optional packages required by the traits and integrations used by your application. For example:
+to the `require` section of your application's `composer.json` file.
 
-```
-$ php composer.phar require cocur/slugify kartik-v/yii2-widgets
-```
+Composer installs the complete runtime dependency set automatically, including the editor, media, user, PDF, social and Google Cloud Translate integrations required by the traits and by other Cinghie modules.
 
 ## Configuration
 
-Add in your configuration file the translations:
+Add the translations to your configuration file:
 
-```	
-'components' => [ 
-
-    // Internationalization
+```
+'components' => [
     'i18n' => [
         'translations' => [
             'traits' => [
@@ -85,11 +81,10 @@ Add in your configuration file the translations:
             ],
         ],
     ],
-                   	
 ],
 ```
 
-If Markdown support from `EditorTrait` is used, install `kartik-v/yii2-markdown` and add the Kartik Markdown module as required by that package:
+If Markdown support from `EditorTrait` is used, add the Kartik Markdown module configuration required by that package:
 
 ```
 'modules' => [
@@ -103,53 +98,56 @@ No Kartik Grid module is required by `yii2-traits` itself.
 
 ## Usage Example
 
-To include a Trait in your Model:
+To include a trait in your model:
 
-```	
-class YourModel extends ActiveRecord 
+```
+class YourModel extends ActiveRecord
 {
     use \cinghie\traits\CreatedTrait;
 }
 ```
 
-Merge rules() and attributeLabels():
+Merge trait rules and attribute labels in the Yii2 model instance methods:
 
-```	
+```
 public function rules()
 {
     return array_merge(
+        parent::rules(),
         $this->getCreatedRules(),
         [your_rules]
     );
-}    
+}
 
 public function attributeLabels()
 {
     return array_merge(
+        parent::attributeLabels(),
         $this->getCreatedAttributeLabels(),
         [your_attributeLabels]
     );
 }
 ```
 
-All functions implemented in the Traits can be called like as any function of the model
+All functions implemented in the traits can be called like any other model method:
 
 ```
-if( $model->isCurrentUserCreator() ) { 
+if ($model->isCurrentUserCreator()) {
     // your code
-}    
+}
 ```
 
 ## Traits
 
-### AccessTrait 
+### AccessTrait
 
     - int $access
     - getAccessWidget($form): Generate Access Form Widget
     - function getAccessGridView(): Generate GridView Access
     - function getAccessDetailView(): Generate DetailView Access
-    
-### AddressTrait 
+
+### AddressTrait
+
     - string $name
     - string $latitude
     - string $longitude
@@ -163,7 +161,7 @@ if( $model->isCurrentUserCreator() ) {
 
 ### AttachmentTrait
 
-Optional integrations: `kartik-v/yii2-widgets`, `james-heinrich/getid3`, and `php-ffmpeg/php-ffmpeg` depending on the methods used.
+The required Kartik widgets, getID3 and PHP-FFMpeg integrations are installed automatically by Composer.
 
     - string $extension
     - string $filename
@@ -177,8 +175,8 @@ Optional integrations: `kartik-v/yii2-widgets`, `james-heinrich/getid3`, and `ph
     - function deleteFile(): delete file attached
     - function getAttachmentType(): Generate Attachment type from mimetype
     - function formatSize(): Format size in readable size
-    - function generateMd5FileName($filename, $extension): Generate a MD5 filename by original filename
-    - function getAttachmentTypeIcon(): Get Attachmente Type Image by Type
+    - function generateMd5FileName($filename, $extension): Generate a random filename while preserving the legacy method name
+    - function getAttachmentTypeIcon(): Get Attachment Type Image by Type
 
 ### CacheTrait
 
@@ -192,7 +190,7 @@ Optional integrations: `kartik-v/yii2-widgets`, `james-heinrich/getid3`, and `ph
 
 ### CreatedTrait
 
-Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
+User and UI dependencies are installed automatically by Composer.
 
     - string $created
     - int $created_by
@@ -204,11 +202,11 @@ Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packa
     - function getCreatedByGridView(): Generate GridView for CreatedBy
     - function getCreatedByDetailView(): Generate DetailView for CreatedBy
     - function isCurrentUserCreator(): Check if current user is the created_by
-    - function isUserCreator($user_id): Check if user_id params is the created_by    
-  
+    - function isUserCreator($user_id): Check if user_id params is the created_by
+
 ### EditorTrait
 
-Install only the editor integrations you use: `2amigos/yii2-ckeditor-widget`, `2amigos/yii2-tinymce-widget`, `vova07/yii2-imperavi-widget`, or `kartik-v/yii2-markdown`.
+CKEditor, TinyMCE, Imperavi and Markdown integrations are installed automatically by Composer.
 
     - function getEditorWidget($form, $field, $requestEditor = '', $value = ''): Generate Editor Widget
     - function getCKEditorWidget($form, $field, $value, $options, $preset): Get a CKEditor Editor Widget
@@ -219,7 +217,7 @@ Install only the editor integrations you use: `2amigos/yii2-ckeditor-widget`, `2
 
 ### ImageTrait
 
-UI helpers require `kartik-v/yii2-widgets`.
+Kartik UI dependencies are installed automatically by Composer.
 
     - string $image
     - string $image_caption
@@ -231,10 +229,10 @@ UI helpers require `kartik-v/yii2-widgets`.
     - function getUploadMaxSize(): Get Upload Max Size
     - function getImagesAllowed(): Get Allowed images
     - function getImagesAccept(): Get Allowed images in Accept Format
-    
+
 ### LanguageTrait
 
-UI helpers require `kartik-v/yii2-widgets`.
+Kartik UI dependencies are installed automatically by Composer.
 
     - string $language
     - function getLang(): Get language code (2 chars)
@@ -244,7 +242,7 @@ UI helpers require `kartik-v/yii2-widgets`.
 
 ### ModifiedTrait
 
-Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
+User and UI dependencies are installed automatically by Composer.
 
     - string $modified
     - int $modified_by
@@ -260,7 +258,7 @@ Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packa
 
 ### NameAliasTrait
 
-Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widgets`.
+Slugify and Kartik UI dependencies are installed automatically by Composer.
 
     - string $alias
     - string $name
@@ -269,36 +267,36 @@ Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widg
     - function purgeAlias($string): Purge alias by string
     - function getNameWidget($form): Generate Name Form Widget
     - function getAliasWidget($form): Generate Alias Form Widget
-    
+
 ### OrderingTrait
 
-UI helpers require `kartik-v/yii2-widgets`.
+Kartik UI dependencies are installed automatically by Composer.
 
     - integer $ordering
     - function setOrdering($class,$fieldOrdering,$oldOrdering,$lastOrdering): Set Model Ordering on Class
     - function setMinOrder(): Set Min Ordering
     - function setMaxOrdering($class,$condition): Set Max Ordering
     - function getLastOrdering($class,$condition): Get Max ordering in field
-    - function getOrderingWidget($form, $class, $orderingField, $selectField, $condition): Generate Ordering Form Widget    
+    - function getOrderingWidget($form, $class, $orderingField, $selectField, $condition): Generate Ordering Form Widget
     - function getOrderingSelect2($class, $orderingField = '', array $selectField = [], array $condition = []): Return array with all Items by $cat_id
-    
-### ParentTrait      
 
-UI helpers require `kartik-v/yii2-widgets`.
+### ParentTrait
+
+Kartik UI dependencies are installed automatically by Composer.
 
     - int $parent_id
     - getParentWidget($form, $items): Generate Parent Form Widget
     - getParentGridView($field, $url, $hideItem): Generate Parent Grid View
- 
-### SeoTrait    
 
-UI helpers require `kartik-v/yii2-widgets`.
+### SeoTrait
+
+Kartik UI dependencies are installed automatically by Composer.
 
     - string $robots
     - string $author
     - string $copyright
     - string $metadesc
-    - string $metakey    
+    - string $metakey
     - function getRobotsWidget($form): Generate Robots Form Widget
     - function getAuthorWidget($form): Generate Author Form Widget
     - function getCopyrightWidget($form): Generate Copyright Form Widget
@@ -309,32 +307,32 @@ UI helpers require `kartik-v/yii2-widgets`.
 ### SequentialTrait
 
     - string generateSequentialCode($number, $prefix, $sequence): Generate Sequential Code
-    
+
 ### StateTrait
 
-UI helpers require `kartik-v/yii2-widgets` and DetailView helpers require `kartik-v/yii2-detail-view`.
+Kartik widget and DetailView dependencies are installed automatically by Composer.
 
     - int $state
     - function active(): Active model state (Set 1)
-    - function deactive():  Inactive model state (Set 0)
+    - function deactive(): Inactive model state (Set 0)
     - function getStateWidget($form): Generate State Form Widget
     - function getStateGridView(): Generate GridView for State
     - function getStateDetailView(): Generate DetailView for State
     - function getStateSelect2(): Return an array with states
-    
+
 ### TaggableTrait
 
-Requires `2amigos/yii2-taggable-behavior`.
+The taggable behavior dependency is installed automatically by Composer.
 
     - int $tagNames
     - function getTagsDetailView(): Generate DetailView for Tags
-    
+
 ### TitleAliasTrait
 
-Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widgets`.
+Slugify and Kartik UI dependencies are installed automatically by Composer.
 
     - string $alias
-    - string $title  
+    - string $title
     - function generateAlias($name): Generate URL alias by string
     - function setAlias($post,$field): Set alias from post
     - function purgeAlias($string): Purge alias by string
@@ -343,29 +341,29 @@ Slug generation requires `cocur/slugify`; UI helpers require `kartik-v/yii2-widg
 
 ### UserHelperTrait
 
-Requires `cinghie/yii2-user-extended`.
+`cinghie/yii2-user-extended` is installed automatically by Composer.
 
     - function getUserByEmail($email): Get the User by user email
     - function getCurrentUser($field = ''): Get current User or Current User field
-    - function getCurrentUserProfile($field = ''):  Get current User Profile object or fied if on param
+    - function getCurrentUserProfile($field = ''): Get current User Profile object or field if on param
     - function getCurrentUserSelect2(): Return an array with current User
     - function getRolesSelect2(): Return an array with the User's Roles adding "Public" on first position
     - function getUsersSelect2(): Return array with all Users (not blocked or not unconfirmed)
-    
+
 ### UserTrait
 
-Requires `dektrium/yii2-user`; UI helpers also require the relevant Kartik packages.
+User and UI dependencies are installed automatically by Composer.
 
     - int $user_id
     - User user
-    - function getUser(): Relation with User Model    
+    - function getUser(): Relation with User Model
     - function getUserWidget($form): Generate User Form Widget
     - function getUserGridView(): Generate GridView for User
     - function getUserDetailView(): Generate DetailView for User
-    
+
 ### VideoTrait
 
-UI helpers require `kartik-v/yii2-widgets`.
+Kartik UI dependencies are installed automatically by Composer.
 
     - string $video
     - string $video_caption
@@ -376,10 +374,10 @@ UI helpers require `kartik-v/yii2-widgets`.
     - function getVideoTypeWidget($form): Generate Video Type Form Widget
     - function getVideoCaptionWidget($form): Generate Video Caption Form Widget
     - function getVideoCreditsWidget($form): Generate Video Credits Form Widget
-    
+
 ### ViewsHelperTrait
 
-Some helpers use `kartik-v/yii2-helpers` and `kartik-v/yii2-detail-view`.
+Kartik helper and DetailView dependencies are installed automatically by Composer.
 
     - function getCreateButton(array $url = ['create']): Return action create button
     - function getUpdateButton($id = 0): Return action update button
@@ -400,4 +398,3 @@ Some helpers use `kartik-v/yii2-helpers` and `kartik-v/yii2-detail-view`.
     - function getSendButtonJavascript(): Return javascript for action deactive button
     - function getStandardButton($icon,$title,$url, array $aClass = [ 'class' => 'btn btn-mini' ], $divClass = 'pull-right text-center' ): Return standard button
     - function getEntryInformationsDetailView(): Generate DetailView for Entry Informations
-

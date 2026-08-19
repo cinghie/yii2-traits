@@ -4,17 +4,17 @@
 
 ### Changed
 
-- Declared PHP 7.4 as the minimum supported runtime.
-- Allowed Cocur Slugify 3.x on PHP 7.4 while retaining support for 4.x on modern PHP.
-- Allowed PHP-FFMpeg 0.19 on PHP 7.4 while retaining support for 1.x on modern PHP.
-- Made Google Cloud Translate optional so PHP 7.4 installations are not forced onto an obsolete dependency chain; `GoogleTranslateTrait` now reports a clear configuration error when the client is absent.
+- Raised the minimum supported runtime to PHP 8.1 so the package can use the current stable Google Cloud Translate, PHP-FFMpeg and Slugify releases.
+- Made the integrations used by the traits required runtime dependencies because `yii2-traits` is also a shared foundation for other Cinghie modules.
+- Added `google/cloud-translate` as a required dependency and aligned `GoogleTranslateTrait` with an always-installed SDK.
+- Refreshed runtime dependency constraints to current stable releases where compatible with the PHP 8.1 baseline, including Yii 2.0.55, Cocur Slugify 4.7.1, Google Cloud Translate 2.3.1 and PHP-FFMpeg 1.4.0.
+- Replaced development branch constraints for Dektrium User and Cinghie User Extended with stable release constraints.
 - Removed the PHP 8 deprecation caused by required parameters following the optional API-key parameter in `GoogleTranslateTrait`.
-- Added CI coverage for PHP 7.4 through PHP 8.5 and made the smoke tests portable between a package checkout and an application installation.
-- Added a PHP 7.4-based Composer lock for reproducible standalone CI installs, plus a PHPUnit suite configured to fail on warnings and risky tests.
+- Updated CI coverage to PHP 8.1 through PHP 8.5 and retained required-runtime, PHPUnit, syntax, audit and standalone smoke-test validation.
 
 ### Known technical debt
 
-- Some runtime dependencies selected by the existing traits are abandoned: the 2amigos editor/tag widgets, KCFinder, Facebook Graph SDK and Swiftmailer. They currently resolve without known Composer security advisories, but should be replaced or isolated in future releases.
+- Some required legacy integrations are abandoned upstream: the 2amigos editor/tag widgets, KCFinder, Facebook Graph SDK and Swiftmailer. They currently resolve without known Composer security advisories, but should be replaced or isolated in future releases.
 
 ## 2026-07-30
 

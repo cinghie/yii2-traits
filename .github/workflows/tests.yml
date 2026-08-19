@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   minimal-runtime:
-    name: Minimal runtime dependencies
+    name: Required runtime dependencies
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           coverage: none
           tools: composer:v2
 
@@ -30,7 +30,7 @@ jobs:
       - name: Install runtime dependencies only
         run: composer install --no-dev --prefer-dist --no-interaction --no-progress
 
-      - name: Run minimal runtime smoke test
+      - name: Run runtime smoke test
         run: php tests/minimal_install_smoke.php
 
   compatibility:
@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Checkout
@@ -70,4 +70,4 @@ jobs:
       - name: Run standalone smoke tests
         run: |
           php tests/state_trait_bc_smoke.php
-          php tests/google_translate_optional_smoke.php
+          php tests/google_translate_required_smoke.php

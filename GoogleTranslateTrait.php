@@ -12,11 +12,12 @@
 
 namespace cinghie\traits;
 
+use Google\Cloud\Translate\V3\Client\TranslationServiceClient;
+use Google\Cloud\Translate\V3\TranslateTextRequest;
+use Yii;
 use cinghie\traits\services\RuntimeConfig;
-use Google\Cloud\Translate\TranslateClient;
 use RuntimeException;
 use Throwable;
-use Yii;
 
 /**
  * Trait GoogleTranslateTrait
@@ -24,43 +25,63 @@ use Yii;
 trait GoogleTranslateTrait
 {
     /**
-     * Get Translation from Google Cloud Translate.
+     * Get a translation using Google Cloud Translation V3.
      *
-     * @param string $apiKey
-     * @param string $lang
-     * @param string $text
+     * The first parameter is retained for backwards compatibility. Current
+     * Google Cloud Translation releases authenticate through Application
+     * Default Credentials; configure `googleTranslateProjectId` in yii2Traits.
      *
+     * @param string $apiKey Legacy API-key parameter, retained for compatibility.
+     * @param string $lang Target language code.
+     * @param string $text Text to translate.
      * @return string
      */
     public function getGoogleCloudTranslation($apiKey = '', $lang = '', $text = '')
     {
-        if (!class_exists(TranslateClient::class)) {
+        if (!class_exists(TranslationServiceClient::class) || !class_exists(TranslateTextRequest::class)) {
             throw new RuntimeException(Yii::t(
                 'traits',
-                'Google Cloud Translate is not installed. Install a version compatible with your PHP runtime.'
+                'Google Cloud Translate runtime dependency is not available.'
             ));
         }
 
-        if (!$apiKey) {
-            $apiKey = (string)RuntimeConfig::get($this, 'googleTranslateApiKey', '', 'googleTranslateApiKey');
+        if ($text === '') {
+            return '';
+        }
+
+        $projectId = (string)RuntimeConfig::get(
+            $this,
+            'googleTranslateProjectId',
+            '',
+            'googleTranslateProjectId'
+        );
+
+        if ($projectId === '') {
+            throw new RuntimeException(Yii::t(
+                'traits',
+                'Google Cloud Translate requires googleTranslateProjectId and Application Default Credentials.'
+            ));
         }
 
         $lang = str_replace(['ch', 'pr'], ['zh', 'pt'], $lang);
 
-        $translate = new TranslateClient([
-            'key' => $apiKey,
-        ]);
-
-        if (!$text) {
-            return '';
-        }
-
         try {
-            $translation = $translate->translate($text, [
-                'target' => $lang,
-            ]);
+            $translate = new TranslationServiceClient();
+            $request = (new TranslateTextRequest())
+                ->setParent(TranslationServiceClient::locationName($projectId, 'global'))
+                ->setTargetLanguageCode($lang)
+                ->setContents([$text]);
 
-            return isset($translation['text']) ? (string)$translation['text'] : '';
+            $response = $translate->translateText($request);
+            $translations = $response->getTranslations();
+
+            if (method_exists($translate, 'close')) {
+                $translate->close();
+            }
+
+            return isset($translations[0])
+                ? (string)$translations[0]->getTranslatedText()
+                : '';
         } catch (Throwable $e) {
             $message = $this->formatGoogleTranslateError($e);
 
@@ -73,8 +94,7 @@ trait GoogleTranslateTrait
     }
 
     /**
-     * Convert Google JSON errors and ordinary transport/runtime exceptions into
-     * a safe human-readable message without throwing a second exception.
+     * Convert Google and transport errors into a safe readable message.
      *
      * @param Throwable $e
      * @return string

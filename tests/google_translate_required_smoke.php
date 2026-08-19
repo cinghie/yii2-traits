@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GoogleTranslateTrait requires the Google Cloud Translate SDK at runtime.
+ * GoogleTranslateTrait requires the Google Cloud Translate V3 SDK at runtime.
  */
 $packageRoot = dirname(__DIR__);
 $autoload = $packageRoot . '/vendor/autoload.php';
@@ -13,10 +13,11 @@ if (!is_file($autoload)) {
 require $autoload;
 
 use cinghie\traits\GoogleTranslateTrait;
-use Google\Cloud\Translate\TranslateClient;
+use Google\Cloud\Translate\V3\Client\TranslationServiceClient;
+use Google\Cloud\Translate\V3\TranslateTextRequest;
 
-if (!class_exists(TranslateClient::class, true)) {
-	fwrite(STDERR, "FAIL: required Google Cloud Translate SDK is not autoloadable\n");
+if (!class_exists(TranslationServiceClient::class, true) || !class_exists(TranslateTextRequest::class, true)) {
+	fwrite(STDERR, "FAIL: required Google Cloud Translate V3 SDK is not autoloadable\n");
 	exit(1);
 }
 
@@ -29,4 +30,4 @@ if (!method_exists($host, 'getGoogleCloudTranslation')) {
 	exit(1);
 }
 
-echo "OK required Google Cloud Translate runtime dependency\n";
+echo "OK required Google Cloud Translate V3 runtime dependency\n";

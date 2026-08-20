@@ -26,6 +26,7 @@
     "require": {
         "php": ">=8.1.0",
         "yiisoft/yii2": "^2.0.55",
+        "asofter/yii2-imperavi-redactor": "dev-master",
         "2amigos/yii2-ckeditor-widget": "^2.2.0",
         "2amigos/yii2-taggable-behavior": "^1.0.2",
         "2amigos/yii2-tinymce-widget": "^1.1.3",

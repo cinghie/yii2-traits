@@ -30,6 +30,9 @@ trait ParentTrait
     public function getParentRules()
     {
         return [
+            [['parent_id'], 'filter', 'filter' => static function ($value) {
+                return $value === '' || $value === 0 || $value === '0' ? null : $value;
+            }],
             [['parent_id'], 'integer'],
             [['parent_id'], 'exist', 'skipOnEmpty' => true, 'skipOnError' => true, 'targetClass' => static::class, 'targetAttribute' => ['parent_id' => 'id']],
             [['parent_id'], 'validateParentHierarchy'],

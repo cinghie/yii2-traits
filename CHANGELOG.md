@@ -6,7 +6,8 @@
 
 - Extended `ParentTrait::getParentWidget()` with an optional third Select2 widget-options argument so consumers can configure paginated AJAX providers without overriding the shared trait.
 - Preserved backward compatibility for existing one- and two-argument calls; the historical local `data` map and folder addon remain defaults and consumer options are merged on top.
-- Added regression coverage for the method signature/defaults and consumer option merging.
+- Normalized empty parent selections (`''`, `0`, and `'0'`) to `NULL` in `ParentTrait::getParentRules()` **before** integer/existence/hierarchy validation. This fixes false validation failures for root/no-parent records while keeping existence and cycle checks authoritative for real parent IDs.
+- Added regression coverage for the widget signature/defaults, consumer option merging, and zero-parent normalization order.
 
 ## 1.3.1 - 2026-08-20
 

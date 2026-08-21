@@ -1,5 +1,13 @@
 # Changelog — cinghie/yii2-traits
 
+## 2026-08-21
+
+### Changed
+
+- Extended `ParentTrait::getParentWidget()` with an optional third Select2 widget-options argument so consumers can configure paginated AJAX providers without overriding the shared trait.
+- Preserved backward compatibility for existing one- and two-argument calls; the historical local `data` map and folder addon remain defaults and consumer options are merged on top.
+- Added regression coverage for the method signature/defaults and consumer option merging.
+
 ## 1.3.1 - 2026-08-20
 
 ### Changed

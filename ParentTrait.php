@@ -15,6 +15,7 @@ namespace cinghie\traits;
 use Yii;
 use kartik\widgets\Select2;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -131,17 +132,29 @@ trait ParentTrait
         return $this->hasMany(static::class, ['parent_id' => 'id'])->from(static::tableName() . ' AS child');
     }
 
-    public function getParentWidget($form, $items)
+    /**
+     * Render the parent selector.
+     *
+     * The third argument is intentionally generic so consumers can add Select2
+     * options such as a paginated AJAX provider without overriding this trait.
+     * Existing two-argument calls remain fully backward compatible.
+     */
+    public function getParentWidget($form, $items = [], array $widgetOptions = [])
     {
         /** @var $this Model */
-        return $form->field($this, 'parent_id')->widget(Select2::class, [
+        $options = [
             'data' => $items,
             'addon' => [
                 'prepend' => [
                     'content' => '<i class="fa fa-folder-open"></i>',
                 ],
             ],
-        ]);
+        ];
+
+        return $form->field($this, 'parent_id')->widget(
+            Select2::class,
+            ArrayHelper::merge($options, $widgetOptions)
+        );
     }
 
     public function getParentGridView($field, $url, $hideItem = false)

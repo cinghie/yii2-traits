@@ -59,6 +59,9 @@ trait CreatedTrait
     {
         if ($this->isNewRecord) {
             $data = $this->getCurrentUserSelect2();
+            if (($this->created_by === null || $this->created_by === '') && Yii::$app->user->id) {
+                $this->created_by = Yii::$app->user->id;
+            }
         } elseif ($this->created_by && $this->createdBy) {
             $data = [$this->created_by => $this->createdBy->username];
         } else {

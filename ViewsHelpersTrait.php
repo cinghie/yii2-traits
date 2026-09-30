@@ -210,6 +210,10 @@ trait ViewsHelpersTrait
      */
     public function getActiveButton($id = 0)
     {
+        if (method_exists($this, 'getStateActionActiveButton')) {
+            return $this->getStateActionActiveButton($id);
+        }
+
         if($id) {
             return $this->getStandardButton('fa fa-check-circle text-green', Yii::t('traits','Active'), ['changestate', 'id' => $id], [
                 'class' => 'btn btn-mini btn-active',
@@ -265,6 +269,10 @@ trait ViewsHelpersTrait
      */
     public function getDeactiveButton($id = 0)
     {
+        if (method_exists($this, 'getStateActionDeactiveButton')) {
+            return $this->getStateActionDeactiveButton($id);
+        }
+
         if($id) {
             return $this->getStandardButton('fa fa-stop-circle text-red', Yii::t('traits','Deactive'), ['changestate', 'id' => $id], [
                 'class' => 'btn btn-mini btn-deactive',

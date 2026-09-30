@@ -1,5 +1,13 @@
 # Changelog — cinghie/yii2-traits
 
+## 2026-09-30
+
+### Changed
+
+- `StateTrait` now renders record-level Active / Deactive buttons that disable the action matching the current `state` (active record: Active is inert; inactive record: Deactive is inert). Index/bulk toolbar calls without an id stay enabled and keep the same `btn-active` / `btn-deactive` classes used by existing `activemultiple` / `deactivemultiple` JavaScript.
+- Button HTML still goes through `ViewsHelpersTrait::getStandardButton()` when that helper exists; hosts that only `use StateTrait` (smoke tests, `deactive as inactive` aliases) skip rendering and keep `active()` / `deactive()` unchanged.
+- `ViewsHelpersTrait::getActiveButton()` / `getDeactiveButton()` delegate to those helpers when the host uses `StateTrait`, so CRM/contacts/commerce/essentials views inherit the behaviour without per-view changes. Ship both files together.
+
 ## 2026-08-21
 
 ### Changed

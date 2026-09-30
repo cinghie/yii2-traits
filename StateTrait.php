@@ -154,4 +154,95 @@ trait StateTrait
             '0' => Yii::t('traits', 'Inactived')
         ];
     }
+
+    /**
+     * Whether the record is currently active (`state = 1`).
+     */
+    public function isStateActive(): bool
+    {
+        return (int) $this->state === 1;
+    }
+
+    /**
+     * View-page Active button: enabled only when the record is inactive.
+     * Index/bulk toolbar (`$id` empty) stays enabled for grid selection.
+     *
+     * @param int $id
+     * @param string|null $title
+     * @return string
+     */
+    public function getStateActionActiveButton($id = 0, $title = null)
+    {
+        if (!method_exists($this, 'getStandardButton')) {
+            return '';
+        }
+
+        return $this->renderStateActionButton(
+            $id,
+            1,
+            $title !== null ? $title : Yii::t('traits', 'Active'),
+            'fa fa-check-circle text-green',
+            'btn-active'
+        );
+    }
+
+    /**
+     * View-page Deactive button: enabled only when the record is active.
+     *
+     * @param int $id
+     * @param string|null $title
+     * @return string
+     */
+    public function getStateActionDeactiveButton($id = 0, $title = null)
+    {
+        if (!method_exists($this, 'getStandardButton')) {
+            return '';
+        }
+
+        return $this->renderStateActionButton(
+            $id,
+            0,
+            $title !== null ? $title : Yii::t('traits', 'Deactive'),
+            'fa fa-stop-circle text-red',
+            'btn-deactive'
+        );
+    }
+
+    /**
+     * @param int $id
+     * @param int $targetState
+     * @param string $title
+     * @param string $icon
+     * @param string $buttonClass
+     * @return string
+     */
+    protected function renderStateActionButton($id, $targetState, $title, $icon, $buttonClass)
+    {
+        if (!method_exists($this, 'getStandardButton')) {
+            return '';
+        }
+
+        $recordId = (int) $id;
+        $alreadyAtTarget = $recordId > 0 && (int) $this->state === (int) $targetState;
+
+        if ($alreadyAtTarget) {
+            return $this->getStandardButton($icon, $title, '#', [
+                'class' => 'btn btn-mini ' . $buttonClass . ' disabled',
+                'aria-disabled' => 'true',
+                'tabindex' => '-1',
+                'onclick' => 'return false;',
+            ]);
+        }
+
+        if ($recordId > 0) {
+            return $this->getStandardButton($icon, $title, ['changestate', 'id' => $recordId], [
+                'class' => 'btn btn-mini ' . $buttonClass,
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]);
+        }
+
+        return $this->getStandardButton($icon, $title, '#', ['class' => 'btn btn-mini ' . $buttonClass]);
+    }
 }
